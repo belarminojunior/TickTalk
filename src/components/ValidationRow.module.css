@@ -1,0 +1,117 @@
+.row {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 72px;
+  padding: 10px 14px 10px 26px;
+  border-radius: 16px;
+}
+
+.valid,
+.annulled {
+  background: var(--ink);
+  color: var(--side);
+}
+
+.annulled {
+  box-shadow: inset 0 0 0 3px var(--danger);
+}
+
+.missed {
+  background: color-mix(in srgb, var(--side-paper) 62%, var(--side));
+  color: rgba(20, 20, 20, 0.82);
+  border: 2.5px dashed rgba(20, 20, 20, 0.55);
+  justify-content: space-between;
+  padding-right: 26px;
+}
+
+.mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+
+.annulled .mark {
+  color: var(--danger-text);
+}
+
+.word {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1.1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.annulled .word {
+  color: var(--danger-text);
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}
+
+.annulledTag {
+  color: var(--danger-text);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.missedTag {
+  font-weight: 700;
+  font-size: 16px;
+  flex: none;
+}
+
+.toggle {
+  margin-left: auto;
+  flex: none;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 12px;
+  background: var(--panel-2);
+}
+
+.toggleBtn {
+  min-height: 48px;
+  min-width: 96px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--chalk);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.onValid {
+  background: var(--side);
+  color: var(--ink);
+}
+
+.onAnnul {
+  background: var(--danger);
+  color: var(--ink);
+}
+
+.rulesPanel {
+  padding: 24px 28px;
+}
+
+.rules {
+  margin: 14px 0 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 17px;
+}
+
+@media (max-width: 720px) {
+  .row { flex-wrap: wrap; padding-left: 16px; }
+  .word { font-size: 24px; }
+  .toggle { margin-left: 0; }
+}

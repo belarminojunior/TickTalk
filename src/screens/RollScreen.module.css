@@ -1,0 +1,201 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(20, 14, 10, 0.72);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.caption {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 40px;
+}
+
+.flying {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.flyingInner {
+  will-change: transform;
+}
+
+.flyingInner > div {
+  transform: none;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.center {
+  text-align: center;
+}
+
+.diePanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 26px;
+}
+
+.dieText {
+  display: contents;
+}
+
+.dieText h3 {
+  order: -1;
+}
+
+.dieHolder {
+  height: 160px;
+  display: grid;
+  place-items: center;
+}
+
+.dieGhost {
+  width: 132px;
+  height: 132px;
+  border-radius: 26px;
+  border: 2px dashed #444;
+}
+
+.faces {
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.equationPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px 26px;
+}
+
+.equation {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 8px;
+}
+
+.term {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.term strong {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.term strong.big {
+  font-size: 64px;
+}
+
+.term span {
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.sideNum[data-side='blue'] { color: var(--blue); }
+.sideNum[data-side='yellow'] { color: var(--yellow); }
+.yellowNum { color: var(--yellow); }
+
+.op {
+  color: var(--muted);
+  font-size: 30px;
+}
+
+.sequencePanel {
+  padding: 22px 26px;
+}
+
+.sequence {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seqItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: var(--panel-2);
+}
+
+.seqName {
+  flex: 1;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.seqLabel {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.seqNext {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.seqNext .seqLabel {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.buttons {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 6px;
+  background: linear-gradient(to bottom, transparent, var(--table) 14px);
+}
+
+/* Portátil (≈768 px de altura): tudo cabe sem scroll. */
+@media (max-height: 820px) {
+  .column { gap: 12px; }
+  .diePanel { flex-direction: row; justify-content: space-between; padding: 16px 22px; gap: 16px; }
+  .diePanel .center { text-align: left; }
+  .dieText { display: flex; flex-direction: column; gap: 8px; }
+  .dieHolder { height: 96px; order: 2; }
+  .dieHolder > div { --die-size: 84px !important; }
+  .dieGhost { width: 84px; height: 84px; border-radius: 18px; }
+  .faces { font-size: 14px; }
+  .equationPanel { padding: 16px 22px; gap: 12px; }
+  .term strong { font-size: 38px; }
+  .term strong.big { font-size: 48px; }
+  .seqItem { min-height: 44px; }
+  .sequencePanel { padding: 16px 22px; }
+  .sequence { margin-top: 10px; gap: 6px; }
+  .buttons { gap: 8px; }
+  .buttons :global(.btn-lg) { min-height: 54px; font-size: 18px; }
+}

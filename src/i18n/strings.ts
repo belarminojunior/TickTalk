@@ -1,0 +1,567 @@
+import type { Language, PackId, ScreenMode, Side } from '../game/types';
+
+/** Junta nomes: "Pedro e Lúcia", "Ana, Pedro e Lúcia". */
+function joinNames(names: string[], and: string): string {
+  if (names.length <= 1) return names[0] ?? '';
+  return `${names.slice(0, -1).join(', ')} ${and} ${names[names.length - 1]}`;
+}
+
+const ARTICLES: [RegExp, string, boolean][] = [
+  [/^os\s+/i, 'dos ', true],
+  [/^as\s+/i, 'das ', true],
+  [/^o\s+/i, 'do ', false],
+  [/^a\s+/i, 'da ', false],
+];
+
+/** "Os Leões" → "dos Leões"; "Tigres" → "de Tigres". */
+export function ofTeamPt(name: string): string {
+  for (const [re, contracted] of ARTICLES) if (re.test(name)) return contracted + name.replace(re, '');
+  return `de ${name}`;
+}
+
+/** "Os Leões" é plural → "validam"; "Equipa Azul" → "valida". */
+export function isPluralPt(name: string): boolean {
+  return /^(os|as)\s+/i.test(name);
+}
+
+/** Não se sabe o género de quem joga, por isso o nome vai sem artigo ("a Tomás", não "à"/"ao"). */
+function toPersonPt(name: string): string {
+  return name;
+}
+
+const pt = {
+  langName: 'Português',
+  tagline: 'Explica cinco palavras antes que o tempo acabe.',
+  interfaceLanguage: 'Língua da interface',
+
+  // Configuração
+  howToPlay: 'Como vão jogar?',
+  modeTitle: { phone: 'PC + telemóvel de quem explica', windows: 'Duas janelas no PC', single: 'Um só ecrã' } as Record<ScreenMode, string>,
+  modeDesc: {
+    phone: 'O PC mostra a mesa a todos. Quem explica abre a carta no telemóvel, na mesma rede Wi-Fi.',
+    windows: 'Com um segundo monitor ou TV: a mesa numa janela, a carta noutra virada para quem explica.',
+    single: 'Quem explica fica com o PC durante a vez. A mesa aparece no fim, para validar.',
+  } as Record<ScreenMode, string>,
+  recommended: 'Recomendado',
+  connectPhone: 'Liga o telemóvel',
+  connectPhoneHelpBefore: 'Lê o código com a câmara ou abre ',
+  connectPhoneHelpAfter: '. O telemóvel passa de mão em mão a cada vez.',
+  qrAlt: (url: string): string => `Código QR para abrir ${url}`,
+  phonesConnected: (n: number): string =>
+    n === 0 ? 'Nenhum telemóvel ligado' : n === 1 ? '1 telemóvel ligado' : `${n} telemóveis ligados`,
+  serverConnecting: 'A procurar o servidor local…',
+  serverMissing: 'Servidor local não encontrado. Arranca o jogo com “npm run play” para usar o telemóvel.',
+  sameWifi: 'O telemóvel tem de estar na mesma rede Wi-Fi que este PC.',
+  openWindowTitle: 'Abre a janela de quem explica',
+  openWindowHelp: 'Arrasta a nova janela para o segundo monitor ou TV, virada para quem explica.',
+  openWindow: 'Abrir janela de quem explica',
+  windowsConnected: (n: number): string => (n === 0 ? 'Janela ainda não aberta' : 'Janela de quem explica ligada'),
+  singleNote: 'Na vez de cada um, o ecrã mostra só a carta. Os outros não espreitam!',
+  teams: 'Equipas',
+  teamName: 'Nome da equipa',
+  players: 'Jogadores, pela ordem em que explicam',
+  playersPlaceholder: 'Ana, Pedro, Lúcia',
+  teamPlaceholder: (n: number): string => `Equipa ${n}`,
+  addTeam: 'Adicionar equipa (até 6)',
+  removeTeam: (name: string): string => `Remover ${name || 'equipa'}`,
+  changeColor: (name: string): string => `Mudar a cor do peão de ${name || 'equipa'}`,
+  houseRules: 'Regras da casa',
+  timePerTurn: 'Tempo por vez',
+  whoValidates: 'Quem valida no fim da vez',
+  nextTeam: 'Próxima equipa',
+  noValidation: 'Sem validação',
+  dieSetting: 'Dado',
+  withDie: 'Com dado (0–2)',
+  withoutDie: 'Sem dado',
+  dieHelp: 'No fim da vez lança-se o dado (0, 0, 1, 1, 2, 2) e desconta-se das palavras válidas.',
+  noDieHelp: 'Sem dado: avança-se uma casa por cada palavra válida e a vez passa à equipa seguinte, pela ordem.',
+  cardLanguage: 'Língua das cartas',
+  packs: 'Pacotes de palavras',
+  packName: {
+    pessoas: 'Pessoas',
+    lugares: 'Lugares',
+    coisas: 'Coisas',
+    entretenimento: 'Entretenimento',
+    mocambique: 'Moçambique',
+  } as Record<PackId, string>,
+  cardsInDeck: (n: number): string => (n === 1 ? '1 carta no baralho' : `${n} cartas no baralho`),
+  continueSaved: 'Continuar jogo guardado',
+  startGame: 'Começar o jogo',
+  errors: {
+    tooFewTeams: 'Precisam de pelo menos 2 equipas.',
+    teamName: 'Dá um nome a esta equipa.',
+    teamPlayers: 'Cada equipa precisa de pelo menos 2 jogadores, separados por vírgulas.',
+    duplicatePlayers: 'Há nomes repetidos nesta equipa.',
+    noPacks: 'Escolhe pelo menos um pacote de palavras.',
+    noCards: 'Não há cartas com estes pacotes. Junta mais um pacote.',
+  },
+  noPhoneWarning: 'Ainda não há nenhum telemóvel ligado. Podes começar na mesma e ligá-lo depois.',
+  noWindowWarning: 'A janela de quem explica ainda não está aberta. Podes começar e abri-la depois.',
+
+  // Mesa
+  roundLine: (round: number): string => `Ronda ${round} · ganha quem chegar primeiro à chegada`,
+  roundEndLine: (round: number, team: string): string => `Ronda ${round} · fim da vez ${ofTeamPt(team)}`,
+  live: {
+    phone: 'Ao vivo · a tela de quem explica está ligada',
+    windows: 'Ao vivo · a janela de quem explica está ligada',
+    single: 'Ao vivo',
+  } as Record<ScreenMode, string>,
+  describerOffline: { phone: 'Telemóvel desligado', windows: 'Janela de quem explica fechada', single: '' } as Record<ScreenMode, string>,
+  rules: 'Regras',
+  soundOn: 'Som ligado',
+  soundOff: 'Som desligado',
+  startSquare: 'Partida',
+  finishSquare: 'Chegada',
+  houseColor: (side: Side): string => (side === 'blue' ? 'Casa azul' : 'Casa amarela'),
+  sideName: (side: Side): string => (side === 'blue' ? 'azul' : 'amarelo'),
+  sideLabel: (side: Side): string => (side === 'blue' ? 'Lado azul' : 'Lado amarelo'),
+  teamSide: (team: string, side: Side): string => `${team} · lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
+  isExplaining: (name: string): string => `${name} está a explicar`,
+  guessing: (names: string[]): string => `${joinNames(names, 'e')} ${names.length === 1 ? 'adivinha' : 'adivinham'}`,
+  seconds: 'segundos',
+  ofFiveGuessed: 'de 5 acertadas',
+  hiddenNote: 'As palavras ficam escondidas até o tempo acabar. Depois, a equipa adversária valida.',
+  hiddenNoteNoValidation: 'As palavras ficam escondidas até o tempo acabar.',
+  ifTimeEndedNow: 'Se o tempo acabasse agora',
+  dieN: (n: number): string => `dado ${n}`,
+  plusSquares: (n: number): string => (n === 1 ? '+1 casa' : `+${n} casas`),
+  onePerWord: '1 casa por palavra válida',
+  liveHits: 'Acertos ao vivo',
+  hitLine: (n: number): string => `Palavra ${n} acertada`,
+  atSeconds: (s: number): string => `aos ${s} s`,
+  noHitsYet: 'Ainda sem acertos.',
+  slotLabel: (n: number, hit: boolean): string => `Palavra ${n}: ${hit ? 'acertada' : 'por acertar'}`,
+  passDevice: { phone: 'Passa o telemóvel', windows: 'Vira a janela', single: 'Passa o ecrã' } as Record<ScreenMode, string>,
+  passTo: (mode: ScreenMode, name: string, team: string): string =>
+    mode === 'windows'
+      ? `Vira a janela para ${toPersonPt(name)} (${team})`
+      : `${mode === 'phone' ? 'Passa o telemóvel' : 'Passa o ecrã'} a ${name} (${team})`,
+  handoffHelp: (mode: ScreenMode): string =>
+    mode === 'phone'
+      ? 'Quando estiver tudo pronto, carrega em Começar no telemóvel.'
+      : mode === 'windows'
+        ? 'Quando estiver tudo pronto, carrega em Começar na janela de quem explica.'
+        : 'Quando estiver tudo pronto, carrega em Começar.',
+  readyStatus: (name: string): string => `${name} está pronto/a. O tempo começa já a seguir.`,
+  skipDescriber: 'Trocar quem explica',
+  waitingDescriber: { phone: 'À espera do telemóvel…', windows: 'À espera da janela de quem explica…', single: '' } as Record<ScreenMode, string>,
+  paused: 'Pausa',
+  pausedHelp: 'O tempo parou.',
+  disconnectedHelp: 'O tempo parou. Abre outra vez a página no telemóvel para continuar.',
+  reconnectedHelp: 'A ligação caiu e o tempo parou. Carrega em Retomar quando estiverem prontos.',
+  resume: 'Retomar',
+  pause: 'Pausar',
+  timeUp: 'Tempo esgotado!',
+  allFive: 'Cinco em cinco!',
+  endedEarly: 'Vez terminada',
+  continue: 'Continuar',
+
+  // Validação
+  timeUpPill: 'Tempo esgotado',
+  validatesTitle: (validator: string, team: string): string =>
+    `${validator} ${isPluralPt(validator) ? 'validam' : 'valida'} a vez ${ofTeamPt(team)}`,
+  checkTitle: (team: string): string => `Confirmem a vez ${ofTeamPt(team)}`,
+  validateSubtitle: (describer: string, die: boolean): string =>
+    `Vejam as palavras que ${toPersonPt(describer)} marcou como acertadas. Se alguma regra foi quebrada, anulem essa palavra. ${die ? 'Depois lança-se o dado.' : 'Depois o peão avança.'}`,
+  valid: 'Válida',
+  annul: 'Anular',
+  annulled: 'Anulada',
+  notGuessed: 'não acertada',
+  validationGroup: (word: string): string => `Validar “${word}”`,
+  cardHeader: (side: Side, n: number | null): string => `${side === 'blue' ? 'Lado azul' : 'Lado amarelo'}${n ? ` · carta ${n}` : ''}`,
+  turnResult: 'Resultado da vez',
+  markedWord: (n: number): string => (n === 1 ? 'marcada' : 'marcadas'),
+  annulledWord: (n: number): string => (n === 1 ? 'anulada' : 'anuladas'),
+  validWords: (n: number): string => (n === 1 ? 'palavra válida' : 'palavras válidas'),
+  annulIf: 'Anula se quem explicou',
+  annulRules: [
+    'disse a palavra ou uma parte dela',
+    'soletrou ou disse a letra inicial',
+    'usou “rima com” ou “soa como”',
+    'traduziu diretamente para outra língua',
+    'apontou para um objeto com o nome',
+  ],
+  confirmRoll: 'Confirmar e lançar o dado',
+  confirmAdvance: 'Confirmar e avançar',
+  finalNote: 'Só a equipa adversária pode anular. A decisão é final.',
+
+  // Dado e fim da vez
+  rolling: 'A lançar o dado…',
+  dieRolled: (n: number): string => `Saiu ${n}`,
+  modeDie: 'Modo com dado',
+  modeNoDie: 'Modo sem dado',
+  dieReturned: 'O dado voltou',
+  dieFaces: 'Faces do dado: 0 · 0 · 1 · 1 · 2 · 2',
+  validLabel: (n: number): string => (n === 1 ? 'válida' : 'válidas'),
+  dieLabel: 'dado',
+  squaresLabel: (n: number): string => (n === 1 ? 'casa' : 'casas'),
+  squareN: (n: number): string => (n <= 0 ? 'Partida' : n >= 36 ? 'Chegada' : `Casa ${n}`),
+  noDieHeader: 'Sem dado · cada palavra válida = 1 casa',
+  cardFlips: (side: Side): string => `A carta vira para o ${side === 'blue' ? 'azul' : 'amarelo'}`,
+  cardFlipsHelp: (team: string, side: Side): string =>
+    `${team} ${isPluralPt(team) ? 'estão' : 'está'} agora numa casa ${side === 'blue' ? 'azul' : 'amarela'}. Na próxima vez ${isPluralPt(team) ? 'leem' : 'lê'} o lado ${side === 'blue' ? 'azul' : 'amarelo'}.`,
+  cardStays: (side: Side): string => `A carta continua ${side === 'blue' ? 'azul' : 'amarela'}`,
+  cardStaysHelp: (team: string, side: Side): string =>
+    `${team} ${isPluralPt(team) ? 'continuam' : 'continua'} numa casa ${side === 'blue' ? 'azul' : 'amarela'}, por isso ${isPluralPt(team) ? 'leem' : 'lê'} o mesmo lado.`,
+  sequence: 'Sequência das equipas',
+  seqLabel: { justPlayed: 'jogou agora', next: 'a seguir', later: 'depois' },
+  passTurn: (player: string, team: string): string => `Passar a vez · ${player} (${team})`,
+  undo: 'Desfazer esta vez',
+  pawnMoving: 'O peão está a andar…',
+  noMove: 'O peão fica onde está.',
+
+  // Vitória
+  victory: (team: string): string => `Vitória ${ofTeamPt(team)}!`,
+  victorySub: 'Chegaram primeiro à Chegada.',
+  ranking: 'Classificação',
+  playAgain: 'Jogar outra vez',
+  newSetup: 'Nova configuração',
+
+  // Regras
+  rulesTitle: 'Regras do Tick Talk',
+  backToSetup: 'Voltar à configuração',
+  backToSetupHelp: 'O jogo fica guardado: podes continuá-lo depois em “Continuar jogo guardado”.',
+  close: 'Fechar',
+  rulesSections: [
+    {
+      title: 'O objetivo',
+      body: 'Chegar primeiro à Chegada (casa 36). As equipas jogam por ordem e, dentro de cada equipa, quem explica muda a cada vez.',
+    },
+    {
+      title: 'A vez',
+      body: 'Quem explica vê uma carta com 5 palavras e tenta que a sua equipa as adivinhe antes que o tempo acabe. Lê o lado da carta da cor da casa onde está o peão: casa azul, lado azul; casa amarela, lado amarelo.',
+    },
+    {
+      title: 'Não vale',
+      body: 'Dizer a palavra ou parte dela, soletrar ou dizer a letra inicial, usar “rima com” ou “soa como”, traduzir para outra língua, ou apontar para um objeto com o nome.',
+    },
+    {
+      title: 'Validação',
+      body: 'No fim, a equipa seguinte vê as palavras marcadas e pode anular as que quebraram as regras. A decisão é final.',
+    },
+    {
+      title: 'Dado e avanço',
+      body: 'Com dado: lança-se o dado (0, 0, 1, 1, 2, 2) e avança-se o número de palavras válidas menos o dado (nunca para trás). Sem dado: avança-se uma casa por cada palavra válida.',
+    },
+  ],
+  shortcuts: 'Atalhos de teclado',
+  shortcutsDescriber: 'Na tela de quem explica',
+  shortcutsTable: 'Na mesa',
+  shortcutList: {
+    describer: [
+      ['Espaço', 'pronto/a, depois começar'],
+      ['1–5', 'marcar ou desmarcar uma palavra'],
+      ['P', 'pausar ou retomar'],
+      ['Enter', 'terminar a vez'],
+    ],
+    table: [
+      ['Espaço', 'continuar'],
+      ['Z', 'desfazer esta vez'],
+      ['?', 'regras'],
+      ['Esc', 'fechar'],
+    ],
+  } as Record<'describer' | 'table', [string, string][]>,
+
+  // Quem explica
+  youExplain: (name: string): string => `${name}, és tu a explicar`,
+  teamLine: (team: string, square: number, side: Side): string =>
+    `${team} · ${square <= 0 ? 'Partida' : `casa ${square}`} · lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
+  hitsCount: (n: number): string => `${n} de 5 acertadas`,
+  describerHelp1: 'Toca na palavra quando a tua equipa acertar (ou tecla 1–5).',
+  describerHelp2: 'Não digas a palavra, partes dela, nem “rima com”.',
+  endTurn: 'Terminar a vez',
+  handoffTitle: (mode: ScreenMode, name: string): string =>
+    mode === 'windows' ? `Vira o ecrã para ${toPersonPt(name)}` : `${mode === 'phone' ? 'Passa o telemóvel' : 'Passa o ecrã'} a ${name}`,
+  handoffDevice: { phone: 'Passa o telemóvel', windows: 'Vira o ecrã', single: 'Passa o ecrã' } as Record<ScreenMode, string>,
+  imReady: 'Estou pronto/a',
+  start: 'Começar',
+  readyHint: 'Esconde o ecrã dos outros. O tempo começa quando carregares em Começar.',
+  cardBack: 'Carta virada para baixo',
+  flippedNotice: (side: Side): string => `A carta virou para o lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
+  lookAtTable: 'Tempo! Olha para a mesa.',
+  lookAtTableHelp: 'A equipa adversária está a validar as palavras.',
+  lookAtTableHelpNoValidation: 'O resultado aparece na mesa.',
+  waitingGame: 'À espera que o jogo comece…',
+  waitingGameHelp: 'Escolhe as equipas no PC e carrega em “Começar o jogo”.',
+  waitingHost: 'À espera da mesa…',
+  waitingHostHelp: 'Confirma que o jogo está aberto no PC.',
+  reconnecting: 'A ligar outra vez…',
+  replacedHostTitle: 'O Tick Talk está aberto noutra janela',
+  replacedHostHelp: 'Só uma mesa pode estar ligada ao servidor de cada vez. Fecha a outra janela ou separador, ou continua aqui.',
+  replacedDescriberTitle: 'Esta página está aberta noutro separador',
+  replacedDescriberHelp: 'Só um separador pode estar ligado de cada vez. Fecha o outro, ou continua aqui.',
+  useThisWindow: 'Usar esta janela',
+  busy: 'Já há alguém a explicar',
+  busyHelp: 'Só um telemóvel pode explicar de cada vez. Esta página liga-se sozinha quando o outro sair.',
+  gameOver: 'Fim do jogo!',
+  pausedWordsHidden: 'As palavras ficam escondidas durante a pausa.',
+  wordButton: (n: number, word: string): string => `${n}. ${word}`,
+  secondsLeft: (s: number): string => `${s} segundos`,
+};
+
+export type Strings = typeof pt;
+
+/** "The Lions" → "the Lions'"; usado em frases como "check the Lions' turn". */
+function possessiveEn(name: string): string {
+  return /s$/i.test(name) ? `${name}’` : `${name}’s`;
+}
+
+const en: Strings = {
+  langName: 'English',
+  tagline: 'Describe five words before time runs out.',
+  interfaceLanguage: 'Interface language',
+
+  howToPlay: 'How will you play?',
+  modeTitle: { phone: 'PC + describer’s phone', windows: 'Two windows on the PC', single: 'One screen' },
+  modeDesc: {
+    phone: 'The PC shows the table to everyone. The describer opens the card on a phone, on the same Wi-Fi.',
+    windows: 'With a second monitor or TV: the table in one window, the card in another facing the describer.',
+    single: 'The describer holds the PC during the turn. The table comes back at the end, to check.',
+  },
+  recommended: 'Recommended',
+  connectPhone: 'Connect the phone',
+  connectPhoneHelpBefore: 'Scan the code with the camera or open ',
+  connectPhoneHelpAfter: '. The phone is passed from hand to hand each turn.',
+  qrAlt: (url) => `QR code to open ${url}`,
+  phonesConnected: (n) => (n === 0 ? 'No phone connected' : n === 1 ? '1 phone connected' : `${n} phones connected`),
+  serverConnecting: 'Looking for the local server…',
+  serverMissing: 'Local server not found. Start the game with “npm run play” to use a phone.',
+  sameWifi: 'The phone must be on the same Wi-Fi network as this PC.',
+  openWindowTitle: 'Open the describer’s window',
+  openWindowHelp: 'Drag the new window to the second monitor or TV, facing the describer.',
+  openWindow: 'Open describer window',
+  windowsConnected: (n) => (n === 0 ? 'Window not open yet' : 'Describer window connected'),
+  singleNote: 'On each turn, the screen only shows the card. No peeking!',
+  teams: 'Teams',
+  teamName: 'Team name',
+  players: 'Players, in the order they describe',
+  playersPlaceholder: 'Ann, Peter, Lucy',
+  teamPlaceholder: (n) => `Team ${n}`,
+  addTeam: 'Add team (up to 6)',
+  removeTeam: (name) => `Remove ${name || 'team'}`,
+  changeColor: (name) => `Change ${name || 'team'} pawn colour`,
+  houseRules: 'House rules',
+  timePerTurn: 'Time per turn',
+  whoValidates: 'Who checks at the end of the turn',
+  nextTeam: 'Next team',
+  noValidation: 'No checking',
+  dieSetting: 'Die',
+  withDie: 'With die (0–2)',
+  withoutDie: 'No die',
+  dieHelp: 'At the end of the turn the die is rolled (0, 0, 1, 1, 2, 2) and taken off the valid words.',
+  noDieHelp: 'No die: move one square per valid word, and play passes to the next team, in order.',
+  cardLanguage: 'Card language',
+  packs: 'Word packs',
+  packName: {
+    pessoas: 'People',
+    lugares: 'Places',
+    coisas: 'Things',
+    entretenimento: 'Entertainment',
+    mocambique: 'Mozambique',
+  },
+  cardsInDeck: (n) => (n === 1 ? '1 card in the deck' : `${n} cards in the deck`),
+  continueSaved: 'Continue saved game',
+  startGame: 'Start the game',
+  errors: {
+    tooFewTeams: 'You need at least 2 teams.',
+    teamName: 'Give this team a name.',
+    teamPlayers: 'Each team needs at least 2 players, separated by commas.',
+    duplicatePlayers: 'There are repeated names in this team.',
+    noPacks: 'Choose at least one word pack.',
+    noCards: 'No cards match these packs. Add another pack.',
+  },
+  noPhoneWarning: 'No phone is connected yet. You can start anyway and connect it later.',
+  noWindowWarning: 'The describer window isn’t open yet. You can start and open it later.',
+
+  roundLine: (round) => `Round ${round} · first to the finish wins`,
+  roundEndLine: (round, team) => `Round ${round} · end of ${possessiveEn(team)} turn`,
+  live: {
+    phone: 'Live · the describer’s screen is connected',
+    windows: 'Live · the describer’s window is connected',
+    single: 'Live',
+  },
+  describerOffline: { phone: 'Phone disconnected', windows: 'Describer window closed', single: '' },
+  rules: 'Rules',
+  soundOn: 'Sound on',
+  soundOff: 'Sound off',
+  startSquare: 'Start',
+  finishSquare: 'Finish',
+  houseColor: (side) => (side === 'blue' ? 'Blue square' : 'Yellow square'),
+  sideName: (side) => (side === 'blue' ? 'blue' : 'yellow'),
+  sideLabel: (side) => (side === 'blue' ? 'Blue side' : 'Yellow side'),
+  teamSide: (team, side) => `${team} · ${side} side`,
+  isExplaining: (name) => `${name} is describing`,
+  guessing: (names) => `${joinNames(names, 'and')} ${names.length === 1 ? 'guesses' : 'guess'}`,
+  seconds: 'seconds',
+  ofFiveGuessed: 'of 5 guessed',
+  hiddenNote: 'The words stay hidden until time runs out. Then the other team checks them.',
+  hiddenNoteNoValidation: 'The words stay hidden until time runs out.',
+  ifTimeEndedNow: 'If time ran out now',
+  dieN: (n) => `die ${n}`,
+  plusSquares: (n) => (n === 1 ? '+1 square' : `+${n} squares`),
+  onePerWord: '1 square per valid word',
+  liveHits: 'Live hits',
+  hitLine: (n) => `Word ${n} guessed`,
+  atSeconds: (s) => `at ${s} s`,
+  noHitsYet: 'No hits yet.',
+  slotLabel: (n, hit) => `Word ${n}: ${hit ? 'guessed' : 'not yet'}`,
+  passDevice: { phone: 'Pass the phone', windows: 'Turn the window', single: 'Pass the screen' },
+  passTo: (mode, name, team) =>
+    mode === 'windows'
+      ? `Turn the window towards ${name} (${team})`
+      : `${mode === 'phone' ? 'Pass the phone' : 'Pass the screen'} to ${name} (${team})`,
+  handoffHelp: (mode) =>
+    mode === 'phone'
+      ? 'When everyone is ready, press Start on the phone.'
+      : mode === 'windows'
+        ? 'When everyone is ready, press Start in the describer window.'
+        : 'When everyone is ready, press Start.',
+  readyStatus: (name) => `${name} is ready. The timer starts next.`,
+  skipDescriber: 'Change describer',
+  waitingDescriber: { phone: 'Waiting for the phone…', windows: 'Waiting for the describer window…', single: '' },
+  paused: 'Paused',
+  pausedHelp: 'The timer is stopped.',
+  disconnectedHelp: 'The timer is stopped. Open the page on the phone again to continue.',
+  reconnectedHelp: 'The connection dropped and the timer stopped. Press Resume when you’re ready.',
+  resume: 'Resume',
+  pause: 'Pause',
+  timeUp: 'Time’s up!',
+  allFive: 'Five out of five!',
+  endedEarly: 'Turn ended',
+  continue: 'Continue',
+
+  timeUpPill: 'Time’s up',
+  validatesTitle: (validator, team) => `${validator} check ${possessiveEn(team)} turn`,
+  checkTitle: (team) => `Confirm ${possessiveEn(team)} turn`,
+  validateSubtitle: (describer, die) =>
+    `Look at the words ${describer} marked as guessed. If a rule was broken, cancel that word. ${die ? 'Then roll the die.' : 'Then the pawn moves.'}`,
+  valid: 'Valid',
+  annul: 'Cancel',
+  annulled: 'Cancelled',
+  notGuessed: 'not guessed',
+  validationGroup: (word) => `Check “${word}”`,
+  cardHeader: (side, n) => `${side === 'blue' ? 'Blue side' : 'Yellow side'}${n ? ` · card ${n}` : ''}`,
+  turnResult: 'Turn result',
+  markedWord: () => 'marked',
+  annulledWord: () => 'cancelled',
+  validWords: (n) => (n === 1 ? 'valid word' : 'valid words'),
+  annulIf: 'Cancel if the describer',
+  annulRules: [
+    'said the word or part of it',
+    'spelled it or said the first letter',
+    'used “rhymes with” or “sounds like”',
+    'translated it directly into another language',
+    'pointed at an object with the name',
+  ],
+  confirmRoll: 'Confirm and roll the die',
+  confirmAdvance: 'Confirm and move',
+  finalNote: 'Only the other team can cancel. The decision is final.',
+
+  rolling: 'Rolling the die…',
+  dieRolled: (n) => `Rolled ${n}`,
+  modeDie: 'Die mode',
+  modeNoDie: 'No-die mode',
+  dieReturned: 'The die is back',
+  dieFaces: 'Die faces: 0 · 0 · 1 · 1 · 2 · 2',
+  validLabel: () => 'valid',
+  dieLabel: 'die',
+  squaresLabel: (n) => (n === 1 ? 'square' : 'squares'),
+  squareN: (n) => (n <= 0 ? 'Start' : n >= 36 ? 'Finish' : `Square ${n}`),
+  noDieHeader: 'No die · each valid word = 1 square',
+  cardFlips: (side) => `The card flips to ${side}`,
+  cardFlipsHelp: (team, side) => `${team} are now on a ${side} square. Next turn they read the ${side} side.`,
+  cardStays: (side) => `The card stays ${side}`,
+  cardStaysHelp: (team, side) => `${team} are still on a ${side} square, so they read the same side.`,
+  sequence: 'Team order',
+  seqLabel: { justPlayed: 'just played', next: 'up next', later: 'later' },
+  passTurn: (player, team) => `Next turn · ${player} (${team})`,
+  undo: 'Undo this turn',
+  pawnMoving: 'The pawn is moving…',
+  noMove: 'The pawn stays put.',
+
+  victory: (team) => `${team} win!`,
+  victorySub: 'First to reach the finish.',
+  ranking: 'Standings',
+  playAgain: 'Play again',
+  newSetup: 'New setup',
+
+  rulesTitle: 'Tick Talk rules',
+  backToSetup: 'Back to setup',
+  backToSetupHelp: 'The game is saved: you can pick it up later with “Continue saved game”.',
+  close: 'Close',
+  rulesSections: [
+    {
+      title: 'The goal',
+      body: 'Be the first to reach the Finish (square 36). Teams play in order and, within each team, the describer changes every turn.',
+    },
+    {
+      title: 'A turn',
+      body: 'The describer sees a card with 5 words and tries to get their team to guess them before time runs out. Read the side matching your pawn’s square: blue square, blue side; yellow square, yellow side.',
+    },
+    {
+      title: 'Not allowed',
+      body: 'Saying the word or part of it, spelling it or saying the first letter, using “rhymes with” or “sounds like”, translating it, or pointing at an object with the name.',
+    },
+    {
+      title: 'Checking',
+      body: 'At the end, the next team sees the marked words and may cancel any that broke the rules. Their decision is final.',
+    },
+    {
+      title: 'Die and moving',
+      body: 'With die: roll the die (0, 0, 1, 1, 2, 2) and move the number of valid words minus the die (never backwards). No die: move one square per valid word.',
+    },
+  ],
+  shortcuts: 'Keyboard shortcuts',
+  shortcutsDescriber: 'On the describer screen',
+  shortcutsTable: 'On the table',
+  shortcutList: {
+    describer: [
+      ['Space', 'ready, then start'],
+      ['1–5', 'mark or unmark a word'],
+      ['P', 'pause or resume'],
+      ['Enter', 'end the turn'],
+    ],
+    table: [
+      ['Space', 'continue'],
+      ['Z', 'undo this turn'],
+      ['?', 'rules'],
+      ['Esc', 'close'],
+    ],
+  },
+
+  youExplain: (name) => `${name}, you’re describing`,
+  teamLine: (team, square, side) => `${team} · ${square <= 0 ? 'Start' : `square ${square}`} · ${side} side`,
+  hitsCount: (n) => `${n} of 5 guessed`,
+  describerHelp1: 'Tap a word when your team gets it (or press 1–5).',
+  describerHelp2: 'Don’t say the word, parts of it, or “rhymes with”.',
+  endTurn: 'End turn',
+  handoffTitle: (mode, name) =>
+    mode === 'windows' ? `Turn the screen towards ${name}` : `${mode === 'phone' ? 'Pass the phone' : 'Pass the screen'} to ${name}`,
+  handoffDevice: { phone: 'Pass the phone', windows: 'Turn the screen', single: 'Pass the screen' },
+  imReady: 'I’m ready',
+  start: 'Start',
+  readyHint: 'Hide the screen from the others. The timer starts when you press Start.',
+  cardBack: 'Card face down',
+  flippedNotice: (side) => `The card flipped to the ${side} side`,
+  lookAtTable: 'Time! Look at the table.',
+  lookAtTableHelp: 'The other team is checking your words.',
+  lookAtTableHelpNoValidation: 'The result shows on the table.',
+  waitingGame: 'Waiting for the game to start…',
+  waitingGameHelp: 'Set up the teams on the PC and press “Start the game”.',
+  waitingHost: 'Waiting for the table…',
+  waitingHostHelp: 'Check that the game is open on the PC.',
+  reconnecting: 'Reconnecting…',
+  replacedHostTitle: 'Tick Talk is open in another window',
+  replacedHostHelp: 'Only one table can be connected to the server at a time. Close the other window or tab, or carry on here.',
+  replacedDescriberTitle: 'This page is open in another tab',
+  replacedDescriberHelp: 'Only one tab can be connected at a time. Close the other one, or carry on here.',
+  useThisWindow: 'Use this window',
+  busy: 'Someone is already describing',
+  busyHelp: 'Only one phone can describe at a time. This page connects by itself when the other one leaves.',
+  gameOver: 'Game over!',
+  pausedWordsHidden: 'The words are hidden while paused.',
+  wordButton: (n, word) => `${n}. ${word}`,
+  secondsLeft: (s) => `${s} seconds`,
+};
+
+export const STRINGS: Record<Language, Strings> = { pt, en };

@@ -1,0 +1,3682 @@
+[
+ {
+  "id": "pt-0001",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Oceano Índico",
+    "Iglu",
+    "Jardim zoológico",
+    "Jerusalém",
+    "Buenos Aires"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Páscoa",
+    "Natal",
+    "Realizador",
+    "Fotografia",
+    "Kizomba"
+   ]
+  }
+ },
+ {
+  "id": "pt-0002",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Arroz",
+    "Esquilo",
+    "Esparguete",
+    "Compota",
+    "Sumo"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "África do Sul",
+    "Timor-Leste",
+    "Cataratas Vitória",
+    "Grécia",
+    "Stonehenge"
+   ]
+  }
+ },
+ {
+  "id": "pt-0003",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Trompete",
+    "Super-herói",
+    "Basebol",
+    "Rap",
+    "Jardinagem"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Pombo",
+    "Chocolate",
+    "Caranguejo",
+    "Folha",
+    "Elefante"
+   ]
+  }
+ },
+ {
+  "id": "pt-0004",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Casaco",
+    "Rebuçado",
+    "Cogumelo",
+    "Abelha",
+    "Cato"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Campeonato do Mundo",
+    "Harpa",
+    "Matraquilhos",
+    "Saltar à corda",
+    "Truque de magia"
+   ]
+  }
+ },
+ {
+  "id": "pt-0005",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Zebra",
+    "Armário",
+    "Batatas fritas",
+    "Rato",
+    "Gelatina"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Farol",
+    "Grand Canyon",
+    "Lavandaria",
+    "Museu",
+    "Joanesburgo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0006",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Queijo",
+    "Micro-ondas",
+    "Balão",
+    "Tartaruga",
+    "Cão"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Manica",
+    "Mandioca",
+    "Corredor da Beira",
+    "Costa do Sol",
+    "Feijão nhemba"
+   ]
+  }
+ },
+ {
+  "id": "pt-0007",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Guitarra",
+    "Desporto radical",
+    "Auscultadores",
+    "Comédia",
+    "Banda desenhada"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Pilha",
+    "Cachorro-quente",
+    "Livro",
+    "Borracha",
+    "Cachecol"
+   ]
+  }
+ },
+ {
+  "id": "pt-0008",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Jamaica",
+    "Correios",
+    "Oficina",
+    "Quarto",
+    "Circo"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Dragão",
+    "Martelo",
+    "Cobertor",
+    "Manteiga",
+    "Telescópio"
+   ]
+  }
+ },
+ {
+  "id": "pt-0009",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Cinema",
+    "São Paulo",
+    "Itália",
+    "Madeira",
+    "Sótão"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Jogo de cartas",
+    "Filme de terror",
+    "Tango",
+    "Desenhos animados",
+    "Malabarista"
+   ]
+  }
+ },
+ {
+  "id": "pt-0010",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Jacques Cousteau",
+    "Merlin",
+    "Nemo",
+    "Mr. Bean",
+    "Joana d'Arc"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Coqueiro",
+    "Fortaleza de Maputo",
+    "Mambas",
+    "Esteira",
+    "Monte Namúli"
+   ]
+  }
+ },
+ {
+  "id": "pt-0011",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Matata",
+    "Mercado do Peixe",
+    "Pemba",
+    "Marrabenta",
+    "Parque do Limpopo"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Cuba",
+    "Vulcão",
+    "Rio Nilo",
+    "Madagáscar",
+    "Lisboa"
+   ]
+  }
+ },
+ {
+  "id": "pt-0012",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Stand-up comedy",
+    "Maratona",
+    "Telejornal",
+    "Ciclismo",
+    "Futebol"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Nacala",
+    "Recife de coral",
+    "Hino nacional",
+    "Frango à zambeziana",
+    "Sofala"
+   ]
+  }
+ },
+ {
+  "id": "pt-0013",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Rainha de Sabá",
+    "Homero",
+    "Bob Esponja",
+    "Hello Kitty",
+    "Beethoven"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Barra",
+    "Tufo",
+    "Gorongosa",
+    "Rádio Moçambique",
+    "Chapa"
+   ]
+  }
+ },
+ {
+  "id": "pt-0014",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Las Vegas",
+    "Torre de Pisa",
+    "Restaurante",
+    "Suécia",
+    "Quinta"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Vasco da Gama",
+    "Bugs Bunny",
+    "Amália Rodrigues",
+    "Pai Natal",
+    "Buzz Lightyear"
+   ]
+  }
+ },
+ {
+  "id": "pt-0015",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Batuque",
+    "Catembe",
+    "Estádio da Machava",
+    "Estádio do Zimpeto",
+    "Ponte Maputo-Katembe"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Onda",
+    "Colher",
+    "Sanduíche",
+    "Ventoinha",
+    "Lâmpada"
+   ]
+  }
+ },
+ {
+  "id": "pt-0016",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Escola",
+    "Cascata",
+    "Varanda",
+    "Planetário",
+    "Tanzânia"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Pulseira",
+    "Lanterna",
+    "Coroa",
+    "Lobo",
+    "Pá"
+   ]
+  }
+ },
+ {
+  "id": "pt-0017",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Torre de Belém",
+    "Rio de Janeiro",
+    "Atenas",
+    "Noruega",
+    "Cabeleireiro"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Divertida-Mente",
+    "Ópera",
+    "Trailer",
+    "Óscar",
+    "Reggae"
+   ]
+  }
+ },
+ {
+  "id": "pt-0018",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Charadas",
+    "Jurassic Park",
+    "Dominó",
+    "Rock",
+    "Basquetebol"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Beira",
+    "Peixe seco",
+    "Feira Popular",
+    "Baía de Maputo",
+    "Polana"
+   ]
+  }
+ },
+ {
+  "id": "pt-0019",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Lareira",
+    "Polvo",
+    "Ovo",
+    "Galinha",
+    "Sofá"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Ténis",
+    "Musical",
+    "Telenovela",
+    "Saxofone",
+    "Mímica"
+   ]
+  }
+ },
+ {
+  "id": "pt-0020",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Sala de estar",
+    "Nova Iorque",
+    "Hospital",
+    "Elevador",
+    "Amazónia"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Salto em altura",
+    "Trampolim",
+    "Procurar o Nemo",
+    "Desenho",
+    "Bateria"
+   ]
+  }
+ },
+ {
+  "id": "pt-0021",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Gaveta",
+    "Almofada",
+    "Tomada",
+    "Café",
+    "Chapéu"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Tenda",
+    "Polo Sul",
+    "Paris",
+    "Estados Unidos",
+    "Irlanda"
+   ]
+  }
+ },
+ {
+  "id": "pt-0022",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Rio Zambeze",
+    "Caril de amendoim",
+    "Rissóis de camarão",
+    "Cahora Bassa",
+    "Makwaela"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Caneta",
+    "Hipopótamo",
+    "Tigre",
+    "Leite",
+    "Televisão"
+   ]
+  }
+ },
+ {
+  "id": "pt-0023",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Ponta do Ouro",
+    "Piri-piri",
+    "Coco",
+    "Cabo Delgado",
+    "Palhota"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Galápagos",
+    "Quénia",
+    "Ilha da Páscoa",
+    "Sydney",
+    "Angola"
+   ]
+  }
+ },
+ {
+  "id": "pt-0024",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Iuri Gagarin",
+    "Garfield",
+    "Moisés",
+    "Scooby-Doo",
+    "Ali Babá"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Escorrega",
+    "Consola",
+    "Palavras cruzadas",
+    "Tricô",
+    "Breakdance"
+   ]
+  }
+ },
+ {
+  "id": "pt-0025",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Flor",
+    "Pato",
+    "Frigideira",
+    "Candeeiro",
+    "Coala"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Sintra",
+    "Mercado",
+    "Lua",
+    "Antártida",
+    "Cairo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0026",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Casamento",
+    "Escondidas",
+    "Bowling",
+    "Salsa",
+    "Episódio"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Escada",
+    "Gelado",
+    "Janela",
+    "Anel",
+    "Copo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0027",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Microfone",
+    "Ballet",
+    "Pedra, papel, tesoura",
+    "Culinária",
+    "Fogo de artifício"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Berlim",
+    "Amesterdão",
+    "Brasil",
+    "Havana",
+    "Grande Muralha da China"
+   ]
+  }
+ },
+ {
+  "id": "pt-0028",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Hollywood",
+    "Alpes",
+    "Fábrica",
+    "Marte",
+    "Bombas de gasolina"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Bolo",
+    "Banana",
+    "Sal",
+    "Croissant",
+    "Avião"
+   ]
+  }
+ },
+ {
+  "id": "pt-0029",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Xima",
+    "Chamuças",
+    "Angoche",
+    "Embondeiro",
+    "Timbila"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "México",
+    "Estátua da Liberdade",
+    "Talho",
+    "Havai",
+    "Ópera de Sydney"
+   ]
+  }
+ },
+ {
+  "id": "pt-0030",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Vilankulo",
+    "Monte Binga",
+    "Casa de Ferro",
+    "Tubarão-baleia",
+    "Maçala"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Capitão Gancho",
+    "Drácula",
+    "Piu-Piu",
+    "Simbad, o Marinheiro",
+    "Homem-Aranha"
+   ]
+  }
+ },
+ {
+  "id": "pt-0031",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Marilyn Monroe",
+    "Dom Quixote",
+    "Charles Dickens",
+    "Coelho da Páscoa",
+    "Lobo Mau"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Sudoku",
+    "Origami",
+    "Acrobata",
+    "Apanhada",
+    "Râguebi"
+   ]
+  }
+ },
+ {
+  "id": "pt-0032",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Karaté",
+    "Claquete",
+    "Fado",
+    "Esqui",
+    "Boxe"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Museu de História Natural",
+    "Tihove",
+    "Sumo de maçala",
+    "Lulas grelhadas",
+    "Pandza"
+   ]
+  }
+ },
+ {
+  "id": "pt-0033",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Marco Polo",
+    "Tom e Jerry",
+    "Taylor Swift",
+    "Peter Pan",
+    "Pato Donald"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Piscina",
+    "Casa de banho",
+    "Índia",
+    "Polo Norte",
+    "Recreio"
+   ]
+  }
+ },
+ {
+  "id": "pt-0034",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Joaninha",
+    "Ananás",
+    "Lápis",
+    "Moeda",
+    "Porco"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Biblioteca",
+    "Tailândia",
+    "Mónaco",
+    "Garagem",
+    "Gana"
+   ]
+  }
+ },
+ {
+  "id": "pt-0035",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Dhow",
+    "Majika",
+    "Caril de caranguejo",
+    "Mafalala",
+    "Rio Rovuma"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Nigéria",
+    "Estádio",
+    "Algarve",
+    "Gruta",
+    "Argentina"
+   ]
+  }
+ },
+ {
+  "id": "pt-0036",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Titanic",
+    "Adivinha",
+    "Patins",
+    "Realidade virtual",
+    "Pesca"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Zeus",
+    "Luciano Pavarotti",
+    "Homer Simpson",
+    "Gulliver",
+    "Pantera Cor-de-Rosa"
+   ]
+  }
+ },
+ {
+  "id": "pt-0037",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Carrossel",
+    "Mamma Mia",
+    "Jogo da velha",
+    "Festival de música",
+    "Ator"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Dia da Independência",
+    "Cajueiro",
+    "Ilha de Benguerra",
+    "Maputo",
+    "Cesto de palha"
+   ]
+  }
+ },
+ {
+  "id": "pt-0038",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Feijão",
+    "Escova de dentes",
+    "Sabonete",
+    "Porta",
+    "Hiena"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Pequena Sereia",
+    "Gato das Botas",
+    "Chopin",
+    "Agatha Christie",
+    "Bill Gates"
+   ]
+  }
+ },
+ {
+  "id": "pt-0039",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Pião",
+    "Coruja",
+    "Sino",
+    "Chuva",
+    "Couve"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Machamba",
+    "Quelimane",
+    "Estação Central de Maputo",
+    "Catedral de Maputo",
+    "Txopela"
+   ]
+  }
+ },
+ {
+  "id": "pt-0040",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Montanha-russa",
+    "Música pop",
+    "Legendas",
+    "DJ",
+    "Toy Story"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Michael Jackson",
+    "Luís de Camões",
+    "Darth Vader",
+    "James Bond",
+    "Miguel Ângelo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0041",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Voleibol",
+    "Orquestra",
+    "Concerto",
+    "Mundial de futebol",
+    "Samba"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Yoda",
+    "Bambi",
+    "Charlie Brown",
+    "Woody",
+    "Sonic"
+   ]
+  }
+ },
+ {
+  "id": "pt-0042",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Xadrez",
+    "Ano Novo",
+    "Hip-hop",
+    "Banda",
+    "Pintura"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Savana",
+    "Mesquita",
+    "Maldivas",
+    "Suíça",
+    "Rotunda"
+   ]
+  }
+ },
+ {
+  "id": "pt-0043",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Batman",
+    "Malangatana",
+    "Minions",
+    "Fernão de Magalhães",
+    "Cupido"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Rio Save",
+    "Camarão grelhado",
+    "Montepuez",
+    "Tartaruga marinha",
+    "Matola"
+   ]
+  }
+ },
+ {
+  "id": "pt-0044",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Stevie Wonder",
+    "Van Gogh",
+    "Madonna",
+    "Eusébio",
+    "Moana"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Floresta",
+    "Deserto do Sara",
+    "Maurícias",
+    "China",
+    "Estação espacial"
+   ]
+  }
+ },
+ {
+  "id": "pt-0045",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Galo",
+    "Vela",
+    "Pinguim",
+    "Garfo",
+    "Cama"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Astérix",
+    "Shakespeare",
+    "Bela Adormecida",
+    "Zorro",
+    "Lucky Luke"
+   ]
+  }
+ },
+ {
+  "id": "pt-0046",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Palmeira",
+    "Cadeado",
+    "Panda",
+    "Batata",
+    "Tomate"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Esquadra da polícia",
+    "Portugal",
+    "Cidade do Cabo",
+    "Praia",
+    "Madrid"
+   ]
+  }
+ },
+ {
+  "id": "pt-0047",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Oceano Atlântico",
+    "Quartel de bombeiros",
+    "Etiópia",
+    "Himalaias",
+    "Prisão"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Confúcio",
+    "Gandalf",
+    "Noé",
+    "Sherlock Holmes",
+    "Martin Luther King"
+   ]
+  }
+ },
+ {
+  "id": "pt-0048",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Avatar",
+    "Taça dos Campeões",
+    "Carrinhos de choque",
+    "Tambor",
+    "Piano"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Pepino",
+    "Uvas",
+    "Mosquito",
+    "Vento",
+    "Toalha"
+   ]
+  }
+ },
+ {
+  "id": "pt-0049",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Roda gigante",
+    "Mergulho",
+    "Concurso de televisão",
+    "Os Simpsons",
+    "Jazz"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Zâmbia",
+    "Escada rolante",
+    "Dubai",
+    "Los Angeles",
+    "Aquário"
+   ]
+  }
+ },
+ {
+  "id": "pt-0050",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Ilha do Ibo",
+    "Mangal",
+    "Papaia",
+    "Capulana",
+    "Gaza"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Leopardo",
+    "Foguetão",
+    "Macaco",
+    "Pente",
+    "Puzzle"
+   ]
+  }
+ },
+ {
+  "id": "pt-0051",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Fórmula 1",
+    "Campismo",
+    "Xilofone",
+    "Ténis de mesa",
+    "Videojogo"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Maradona",
+    "Pelé",
+    "Neil Armstrong",
+    "Alfred Hitchcock",
+    "Mia Couto"
+   ]
+  }
+ },
+ {
+  "id": "pt-0052",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Deserto",
+    "Aeroporto",
+    "Lago",
+    "Cave",
+    "Farmácia"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Bússola",
+    "Flamingo",
+    "Relâmpago",
+    "Comboio",
+    "Selo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0053",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Medalha",
+    "Açúcar",
+    "Salada",
+    "Tesoura",
+    "Carteira"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Pocahontas",
+    "Miguel de Cervantes",
+    "Barack Obama",
+    "Mulher-Maravilha",
+    "Mário Coluna"
+   ]
+  }
+ },
+ {
+  "id": "pt-0054",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Cenoura",
+    "Pasta de dentes",
+    "Papagaio",
+    "Chá",
+    "Rádio"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Valsa",
+    "Cabra-cega",
+    "Palhaço",
+    "Dança contemporânea",
+    "Carnaval"
+   ]
+  }
+ },
+ {
+  "id": "pt-0055",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Críquete",
+    "Karaoke",
+    "Andebol",
+    "Desfile",
+    "Flash mob"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Roma",
+    "Canadá",
+    "Caraíbas",
+    "Castelo",
+    "Marraquexe"
+   ]
+  }
+ },
+ {
+  "id": "pt-0056",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Pirâmides",
+    "Ginásio",
+    "Montanha",
+    "Rússia",
+    "Indonésia"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Ioiô",
+    "Pão",
+    "Camisola",
+    "Coelho",
+    "Pizza"
+   ]
+  }
+ },
+ {
+  "id": "pt-0057",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Açores",
+    "Barcelona",
+    "Observatório",
+    "Austrália",
+    "Luanda"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Computador",
+    "Furacão",
+    "Troféu",
+    "Minhoca",
+    "Estrela"
+   ]
+  }
+ },
+ {
+  "id": "pt-0058",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Praia do Tofo",
+    "Bilene",
+    "Arquipélago de Bazaruto",
+    "Manga",
+    "Arte maconde"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Napoleão",
+    "Charles Darwin",
+    "Nelson Mandela",
+    "Shakira",
+    "Ulisses"
+   ]
+  }
+ },
+ {
+  "id": "pt-0059",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Cabana",
+    "Machu Picchu",
+    "Campo de futebol",
+    "Tóquio",
+    "Ponte"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Natação",
+    "Caça ao tesouro",
+    "Ginástica",
+    "Anedota",
+    "Judo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0060",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Alemanha",
+    "Ilha",
+    "Kilimanjaro",
+    "Oceano Pacífico",
+    "Taj Mahal"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Lichinga",
+    "Namaacha",
+    "Caminho de ferro",
+    "Moçambola",
+    "Rio Limpopo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0061",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Areia",
+    "Boneca",
+    "Barco",
+    "Lagarto",
+    "Espelho"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Thomas Edison",
+    "Lewis Hamilton",
+    "Júlio Verne",
+    "Hans Christian Andersen",
+    "Peppa Pig"
+   ]
+  }
+ },
+ {
+  "id": "pt-0062",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "O Feiticeiro de Oz",
+    "Concurso de talentos",
+    "O Rei Leão",
+    "Damas",
+    "Marioneta"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Golfinho",
+    "Canguru",
+    "Garrafa",
+    "Panela",
+    "Aranha"
+   ]
+  }
+ },
+ {
+  "id": "pt-0063",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Acordeão",
+    "Aniversário",
+    "Ukulele",
+    "Escultura",
+    "Violino"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Eça de Queirós",
+    "Bob Marley",
+    "Eduardo Mondlane",
+    "Michael Jordan",
+    "Lionel Messi"
+   ]
+  }
+ },
+ {
+  "id": "pt-0064",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Alho",
+    "Mel",
+    "Gravata",
+    "Sapo",
+    "Parafuso"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Mar Mediterrâneo",
+    "Selva",
+    "Estação de comboios",
+    "Teatro",
+    "Acrópole"
+   ]
+  }
+ },
+ {
+  "id": "pt-0065",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Indiana Jones",
+    "Romeu e Julieta",
+    "Cristóvão Colombo",
+    "Homem de Ferro",
+    "Barbie"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Nuvem",
+    "Concha",
+    "Morcego",
+    "Pipocas",
+    "Fogo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0066",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Música clássica",
+    "Golfe",
+    "Passadeira vermelha",
+    "Violoncelo",
+    "Câmara de filmar"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Coliseu",
+    "Chile",
+    "Igreja",
+    "Hotel",
+    "Parque de estacionamento"
+   ]
+  }
+ },
+ {
+  "id": "pt-0067",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Supermercado",
+    "Pequim",
+    "Vaticano",
+    "Cabo Verde",
+    "Monte Evereste"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Serena Williams",
+    "Mowgli",
+    "Rei Salomão",
+    "Três Porquinhos",
+    "Pedro Álvares Cabral"
+   ]
+  }
+ },
+ {
+  "id": "pt-0068",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "São Tomé e Príncipe",
+    "Cristo Redentor",
+    "Londres",
+    "França",
+    "Palácio"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Vassoura",
+    "Abacate",
+    "Gorila",
+    "Vaca",
+    "Luvas"
+   ]
+  }
+ },
+ {
+  "id": "pt-0069",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Galileu",
+    "Obélix",
+    "Aladino",
+    "Fernando Pessoa",
+    "Aristóteles"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Ioga",
+    "Os Incríveis",
+    "Maracas",
+    "Frozen",
+    "Vela desportiva"
+   ]
+  }
+ },
+ {
+  "id": "pt-0070",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Prego",
+    "Ambulância",
+    "Pavão",
+    "Bicicleta",
+    "Burro"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Tarzan",
+    "Infante D. Henrique",
+    "Shrek",
+    "Rato Mickey",
+    "Sininho"
+   ]
+  }
+ },
+ {
+  "id": "pt-0071",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Sapatos",
+    "Mochila",
+    "Óculos",
+    "Bandeira",
+    "Formiga"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Espanha",
+    "Nova Zelândia",
+    "Coreia do Sul",
+    "Islândia",
+    "Pirâmide maia"
+   ]
+  }
+ },
+ {
+  "id": "pt-0072",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Cometa",
+    "Chaminé",
+    "Prato",
+    "Submarino",
+    "Chávena"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Moscovo",
+    "Dakar",
+    "Centro comercial",
+    "Lagos",
+    "Cataratas do Niágara"
+   ]
+  }
+ },
+ {
+  "id": "pt-0073",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Lagosta",
+    "Xitende",
+    "Mussiro",
+    "Praça da Independência",
+    "Ilha de Moçambique"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Flauta",
+    "Mágico",
+    "Corrida de sacos",
+    "Hip-hop dance",
+    "Documentário"
+   ]
+  }
+ },
+ {
+  "id": "pt-0074",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Ed Sheeran",
+    "Mafalda",
+    "Fada dos Dentes",
+    "Super-Homem",
+    "Michael Phelps"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Raia-manta",
+    "Jardim Tunduru",
+    "Matapa",
+    "Inhambane",
+    "Xai-Xai"
+   ]
+  }
+ },
+ {
+  "id": "pt-0075",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Turquia",
+    "Inglaterra",
+    "Nairobi",
+    "Zimbabué",
+    "Malawi"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Cristiano Ronaldo",
+    "Pikachu",
+    "Harry Potter",
+    "Walt Disney",
+    "Steve Jobs"
+   ]
+  }
+ },
+ {
+  "id": "pt-0076",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Unicórnio",
+    "Melancia",
+    "Baleia",
+    "Trovoada",
+    "Girassol"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Júlio César",
+    "Paulina Chiziane",
+    "Branca de Neve",
+    "Super Mario",
+    "Hulk"
+   ]
+  }
+ },
+ {
+  "id": "pt-0077",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Marginal de Maputo",
+    "Nampula",
+    "Amendoim torrado",
+    "Lago Niassa",
+    "Badjias"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Skate",
+    "Kuduro",
+    "Ratatui",
+    "Selfie",
+    "Série"
+   ]
+  }
+ },
+ {
+  "id": "pt-0078",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Pica-Pau",
+    "Mahatma Gandhi",
+    "Nikola Tesla",
+    "Steven Spielberg",
+    "Marie Curie"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Castanha de caju",
+    "Tete",
+    "Xipamanine",
+    "Zambézia",
+    "Xigubo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0079",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Ilha de Santa Carolina",
+    "Pilão",
+    "Metical",
+    "Chimoio",
+    "Mapiko"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Semáforo",
+    "Holanda",
+    "Padaria",
+    "Egito",
+    "Rio Amazonas"
+   ]
+  }
+ },
+ {
+  "id": "pt-0080",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Parque de diversões",
+    "Sagrada Família",
+    "Torre Eiffel",
+    "Big Ben",
+    "Banco"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Secador de cabelo",
+    "Morango",
+    "Neve",
+    "Tubarão",
+    "Bola"
+   ]
+  }
+ },
+ {
+  "id": "pt-0081",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Mercado Central",
+    "Bandeira de Moçambique",
+    "Dugongo",
+    "Pão de Inhambane",
+    "Bolo de mandioca"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Sala de aula",
+    "Japão",
+    "Moinho",
+    "Passadeira",
+    "Istambul"
+   ]
+  }
+ },
+ {
+  "id": "pt-0082",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Aquiles",
+    "Zinedine Zidane",
+    "Tintim",
+    "Ayrton Senna",
+    "Frankenstein"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Hong Kong",
+    "Guiné-Bissau",
+    "Porto de pesca",
+    "Universidade",
+    "Túnel"
+   ]
+  }
+ },
+ {
+  "id": "pt-0083",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Apito",
+    "Arco-íris",
+    "Trator",
+    "Caderno",
+    "Castelo de areia"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Cozinha",
+    "Marrocos",
+    "Veneza",
+    "Singapura",
+    "Aquário"
+   ]
+  }
+ },
+ {
+  "id": "pt-0084",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Envelope",
+    "Mota",
+    "Mapa",
+    "Camaleão",
+    "Pedra"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Escalada",
+    "Podcast",
+    "Star Wars",
+    "Blues",
+    "Bingo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0085",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Luanda",
+    "Moinho",
+    "Nova Iorque",
+    "Londres",
+    "Marte"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Chita",
+    "Girafa",
+    "Caracol",
+    "Cebola",
+    "Chinelos"
+   ]
+  }
+ },
+ {
+  "id": "pt-0086",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Pastel de nata",
+    "Gelo",
+    "Cavalo",
+    "Chave",
+    "Guarda-chuva"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Pote de barro",
+    "Machimbombo",
+    "Reserva do Niassa",
+    "Macaneta",
+    "Ngalanga"
+   ]
+  }
+ },
+ {
+  "id": "pt-0087",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Milho",
+    "Sopa",
+    "Crocodilo",
+    "Limão",
+    "Avestruz"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Abraham Lincoln",
+    "Rainha Isabel II",
+    "Alice no País das Maravilhas",
+    "Capuchinho Vermelho",
+    "Madre Teresa"
+   ]
+  }
+ },
+ {
+  "id": "pt-0088",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Surf",
+    "Paraquedismo",
+    "Coro",
+    "Atletismo",
+    "Teatro de fantoches"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Faca",
+    "Régua",
+    "Iogurte",
+    "Veado",
+    "Eclipse"
+   ]
+  }
+ },
+ {
+  "id": "pt-0089",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Balde",
+    "Ovelha",
+    "Microscópio",
+    "Árvore",
+    "Camelo"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Piquenique",
+    "Canoagem",
+    "Berlindes",
+    "Hóquei",
+    "Baloiço"
+   ]
+  }
+ },
+ {
+  "id": "pt-0090",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Tutankamon",
+    "Pablo Picasso",
+    "Florence Nightingale",
+    "Roger Federer",
+    "Simba"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Gato",
+    "Despertador",
+    "Águia",
+    "Aspirador",
+    "Cabra"
+   ]
+  }
+ },
+ {
+  "id": "pt-0091",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Havai",
+    "Portugal",
+    "Algarve",
+    "Tóquio",
+    "Ilha"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Panqueca",
+    "Autocarro",
+    "Telemóvel",
+    "Jornal",
+    "Dinossauro"
+   ]
+  }
+ },
+ {
+  "id": "pt-0092",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Lavandaria",
+    "Coliseu",
+    "Sintra",
+    "Tenda",
+    "Cozinha"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Freddie Mercury",
+    "Snoopy",
+    "Estrumpfes",
+    "Rosa Parks",
+    "Whitney Houston"
+   ]
+  }
+ },
+ {
+  "id": "pt-0093",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Ilha da Inhaca",
+    "Mucapata",
+    "Xitende",
+    "Estádio do Zimpeto",
+    "Manga"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Maçã",
+    "Frigorífico",
+    "Helicóptero",
+    "Rosa",
+    "Urso polar"
+   ]
+  }
+ },
+ {
+  "id": "pt-0094",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Arquipélago de Bazaruto",
+    "Mafalala",
+    "Praia do Tofo",
+    "Cabo Delgado",
+    "Pão de Inhambane"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Jogos Olímpicos",
+    "Patinagem",
+    "Comando",
+    "Podcast",
+    "Ukulele"
+   ]
+  }
+ },
+ {
+  "id": "pt-0095",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Palhota",
+    "Inhambane",
+    "Mussiro",
+    "Ilha de Moçambique",
+    "Montepuez"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Palácio",
+    "Lua",
+    "Ginásio",
+    "Veneza",
+    "Selva"
+   ]
+  }
+ },
+ {
+  "id": "pt-0096",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Pitágoras",
+    "Ronaldinho",
+    "Buda",
+    "Charlie Chaplin",
+    "Muhammad Ali"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Lagos",
+    "Varanda",
+    "Timor-Leste",
+    "Alpes",
+    "Rio Amazonas"
+   ]
+  }
+ },
+ {
+  "id": "pt-0097",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Aeroporto",
+    "Stonehenge",
+    "Antártida",
+    "Savana",
+    "Madeira"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Telhado",
+    "Hambúrguer",
+    "Cadeira",
+    "Máquina de lavar",
+    "Meias"
+   ]
+  }
+ },
+ {
+  "id": "pt-0098",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "José Saramago",
+    "Rapunzel",
+    "Leonardo da Vinci",
+    "Mozart",
+    "Isaac Newton"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Hip-hop dance",
+    "Natal",
+    "Jazz",
+    "Claquete",
+    "Taça dos Campeões"
+   ]
+  }
+ },
+ {
+  "id": "pt-0099",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Papagaio de papel",
+    "Borboleta",
+    "Colar",
+    "Rinoceronte",
+    "Íman"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Frida Kahlo",
+    "Elvis Presley",
+    "Louis Armstrong",
+    "Simone Biles",
+    "Bach"
+   ]
+  }
+ },
+ {
+  "id": "pt-0100",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Rotunda",
+    "Egito",
+    "Grécia",
+    "Acrópole",
+    "Buenos Aires"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Cobra",
+    "Laranja",
+    "Relógio",
+    "Boneco de neve",
+    "Sol"
+   ]
+  }
+ },
+ {
+  "id": "pt-0101",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Raposa",
+    "Leão",
+    "Bolacha",
+    "Hipopótamo",
+    "Cavalo"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Cidade do Cabo",
+    "França",
+    "Marrocos",
+    "México",
+    "Sótão"
+   ]
+  }
+ },
+ {
+  "id": "pt-0102",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Ratatui",
+    "DJ",
+    "Andebol",
+    "Telenovela",
+    "Concurso de talentos"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Anne Frank",
+    "Adele",
+    "Beyoncé",
+    "Albert Einstein",
+    "Thor"
+   ]
+  }
+ },
+ {
+  "id": "pt-0103",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Teatro de fantoches",
+    "Trailer",
+    "Voleibol",
+    "Desporto radical",
+    "Boxe"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Pinóquio",
+    "Irmãos Grimm",
+    "Usain Bolt",
+    "Rei Artur",
+    "Capitão América"
+   ]
+  }
+ },
+ {
+  "id": "pt-0104",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Robin dos Bosques",
+    "Kung Fu Panda",
+    "Pantera Negra",
+    "Samora Machel",
+    "Popeye"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Guiné-Bissau",
+    "Planetário",
+    "Zimbabué",
+    "Irlanda",
+    "Campo de futebol"
+   ]
+  }
+ },
+ {
+  "id": "pt-0105",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Gana",
+    "Maurícias",
+    "Torre de Belém",
+    "Esquadra da polícia",
+    "Bombas de gasolina"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Bolacha",
+    "Manteiga",
+    "Vassoura",
+    "Luvas",
+    "Lobo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0106",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Auscultadores",
+    "Salsa",
+    "Atletismo",
+    "Roda gigante",
+    "Os Incríveis"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Xipamanine",
+    "Feijão nhemba",
+    "Lulas grelhadas",
+    "Jardim Tunduru",
+    "Beira"
+   ]
+  }
+ },
+ {
+  "id": "pt-0107",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Rio Rovuma",
+    "Matapa",
+    "Nampula",
+    "Pote de barro",
+    "Arte maconde"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Rafael Nadal",
+    "Cleópatra",
+    "Vivaldi",
+    "Platão",
+    "Dumbo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0108",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Valsa",
+    "Escorrega",
+    "Basebol",
+    "Harpa",
+    "Maratona"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Elsa",
+    "Maria Mutola",
+    "Mulan",
+    "Robinson Crusoé",
+    "Salvador Dalí"
+   ]
+  }
+ },
+ {
+  "id": "pt-0109",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Futebol",
+    "Carnaval",
+    "Jogo de cartas",
+    "Maracas",
+    "Filme de terror"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "África do Sul",
+    "Argentina",
+    "Hong Kong",
+    "Angola",
+    "Farmácia"
+   ]
+  }
+ },
+ {
+  "id": "pt-0110",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Dominó",
+    "Comédia",
+    "Legendas",
+    "Breakdance",
+    "Violino"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Gato",
+    "Pião",
+    "Mel",
+    "Balão",
+    "Furacão"
+   ]
+  }
+ },
+ {
+  "id": "pt-0111",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Damas",
+    "Charadas",
+    "O Feiticeiro de Oz",
+    "Guitarra",
+    "Mergulho"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Cinderela",
+    "Cesária Évora",
+    "Hércules",
+    "Júlio César",
+    "Lionel Messi"
+   ]
+  }
+ },
+ {
+  "id": "pt-0112",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Série",
+    "Banda",
+    "Fogo de artifício",
+    "Realidade virtual",
+    "Flash mob"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Escada",
+    "Couve",
+    "Cobra",
+    "Elefante",
+    "Boneco de neve"
+   ]
+  }
+ },
+ {
+  "id": "pt-0113",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Suíça",
+    "Coreia do Sul",
+    "Lisboa",
+    "Himalaias",
+    "Mercado"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Anel",
+    "Secador de cabelo",
+    "Café",
+    "Cão",
+    "Laranja"
+   ]
+  }
+ },
+ {
+  "id": "pt-0114",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Hello Kitty",
+    "Simone Biles",
+    "Charles Darwin",
+    "Maradona",
+    "Tutankamon"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Sala de estar",
+    "Etiópia",
+    "Polo Sul",
+    "Parque de diversões",
+    "Fábrica"
+   ]
+  }
+ },
+ {
+  "id": "pt-0115",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Rato Mickey",
+    "Isaac Newton",
+    "Mowgli",
+    "Infante D. Henrique",
+    "Jacques Cousteau"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Stand-up comedy",
+    "Ano Novo",
+    "Desenhos animados",
+    "Corrida de sacos",
+    "Canoagem"
+   ]
+  }
+ },
+ {
+  "id": "pt-0116",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Estádio da Machava",
+    "Tubarão-baleia",
+    "Amendoim torrado",
+    "Monte Binga",
+    "Mandioca"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Joanesburgo",
+    "Cabana",
+    "Islândia",
+    "Banco",
+    "Ilha da Páscoa"
+   ]
+  }
+ },
+ {
+  "id": "pt-0117",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Hollywood",
+    "Passadeira",
+    "Hotel",
+    "Nova Zelândia",
+    "Jerusalém"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Régua",
+    "Macaco",
+    "Bolo",
+    "Pinguim",
+    "Sanduíche"
+   ]
+  }
+ },
+ {
+  "id": "pt-0118",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Toalha",
+    "Gorila",
+    "Palmeira",
+    "Chave",
+    "Sabonete"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Saxofone",
+    "Piquenique",
+    "Origami",
+    "Críquete",
+    "Truque de magia"
+   ]
+  }
+ },
+ {
+  "id": "pt-0119",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Prato",
+    "Formiga",
+    "Coruja",
+    "Colar",
+    "Pulseira"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Madre Teresa",
+    "Woody",
+    "Fernão de Magalhães",
+    "James Bond",
+    "Rainha de Sabá"
+   ]
+  }
+ },
+ {
+  "id": "pt-0120",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Pepino",
+    "Carteira",
+    "Minhoca",
+    "Pão",
+    "Abacate"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Tihove",
+    "Metical",
+    "Gaza",
+    "Feira Popular",
+    "Namaacha"
+   ]
+  }
+ },
+ {
+  "id": "pt-0121",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Tigre",
+    "Telhado",
+    "Queijo",
+    "Guarda-chuva",
+    "Batata"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Thomas Edison",
+    "Harry Potter",
+    "Freddie Mercury",
+    "Bambi",
+    "Darth Vader"
+   ]
+  }
+ },
+ {
+  "id": "pt-0122",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Grand Canyon",
+    "Quartel de bombeiros",
+    "Dubai",
+    "Turquia",
+    "Pirâmides"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Toy Story",
+    "Samba",
+    "Fado",
+    "Tango",
+    "Apanhada"
+   ]
+  }
+ },
+ {
+  "id": "pt-0123",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Rapunzel",
+    "Mário Coluna",
+    "Mulher-Maravilha",
+    "Marilyn Monroe",
+    "Pinóquio"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Singapura",
+    "Canadá",
+    "Oceano Pacífico",
+    "Biblioteca",
+    "São Tomé e Príncipe"
+   ]
+  }
+ },
+ {
+  "id": "pt-0124",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Foguetão",
+    "Borboleta",
+    "Vela",
+    "Urso polar",
+    "Tartaruga"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Pica-Pau",
+    "Rosa Parks",
+    "Peter Pan",
+    "Michael Phelps",
+    "Lewis Hamilton"
+   ]
+  }
+ },
+ {
+  "id": "pt-0125",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Mochila",
+    "Microscópio",
+    "Bicicleta",
+    "Martelo",
+    "Gelo"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Confúcio",
+    "Branca de Neve",
+    "Beethoven",
+    "Batman",
+    "Taylor Swift"
+   ]
+  }
+ },
+ {
+  "id": "pt-0126",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Morcego",
+    "Lanterna",
+    "Prego",
+    "Helicóptero",
+    "Avestruz"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Eusébio",
+    "Barack Obama",
+    "Iuri Gagarin",
+    "Sherlock Holmes",
+    "Van Gogh"
+   ]
+  }
+ },
+ {
+  "id": "pt-0127",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Xadrez",
+    "Avatar",
+    "Sudoku",
+    "O Rei Leão",
+    "Ópera"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Avião",
+    "Chá",
+    "Gelado",
+    "Alho",
+    "Selo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0128",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Apito",
+    "Cogumelo",
+    "Estrela",
+    "Armário",
+    "Pizza"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Popeye",
+    "Merlin",
+    "Coelho da Páscoa",
+    "Super Mario",
+    "Cupido"
+   ]
+  }
+ },
+ {
+  "id": "pt-0129",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Hiena",
+    "Camelo",
+    "Rinoceronte",
+    "Pato",
+    "Vaca"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Pelé",
+    "Zorro",
+    "Marie Curie",
+    "Joana d'Arc",
+    "Moana"
+   ]
+  }
+ },
+ {
+  "id": "pt-0130",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Chimoio",
+    "Capulana",
+    "Recife de coral",
+    "Rádio Moçambique",
+    "Lago Niassa"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Garrafa",
+    "Lâmpada",
+    "Cometa",
+    "Cenoura",
+    "Espelho"
+   ]
+  }
+ },
+ {
+  "id": "pt-0131",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Colher",
+    "Lareira",
+    "Cama",
+    "Janela",
+    "Croissant"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Steven Spielberg",
+    "Gato das Botas",
+    "Salvador Dalí",
+    "Bugs Bunny",
+    "Neil Armstrong"
+   ]
+  }
+ },
+ {
+  "id": "pt-0132",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Matraquilhos",
+    "Hip-hop",
+    "Banda desenhada",
+    "Microfone",
+    "Montanha-russa"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Drácula",
+    "Sonic",
+    "Martin Luther King",
+    "Tom e Jerry",
+    "Dumbo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0133",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Gelatina",
+    "Rosa",
+    "Ovo",
+    "Frigorífico",
+    "Cadeado"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Malabarista",
+    "Super-herói",
+    "Campismo",
+    "Golfe",
+    "Violoncelo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0134",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Raposa",
+    "Boneca",
+    "Açúcar",
+    "Ioiô",
+    "Melancia"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Vivaldi",
+    "Gulliver",
+    "Paulina Chiziane",
+    "Louis Armstrong",
+    "Piu-Piu"
+   ]
+  }
+ },
+ {
+  "id": "pt-0135",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Parafuso",
+    "Gaveta",
+    "Relâmpago",
+    "Barco",
+    "Trovoada"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Nikola Tesla",
+    "Beyoncé",
+    "Bela Adormecida",
+    "Capitão América",
+    "Nemo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0136",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Igreja",
+    "Jardim zoológico",
+    "Centro comercial",
+    "Maldivas",
+    "Oficina"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Samora Machel",
+    "Rei Salomão",
+    "Eça de Queirós",
+    "Charlie Chaplin",
+    "Yoda"
+   ]
+  }
+ },
+ {
+  "id": "pt-0137",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Morango",
+    "Tubarão",
+    "Chaminé",
+    "Eclipse",
+    "Sumo"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Cataratas Vitória",
+    "Estátua da Liberdade",
+    "Cabeleireiro",
+    "Istambul",
+    "Lago"
+   ]
+  }
+ },
+ {
+  "id": "pt-0138",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Candeeiro",
+    "Ananás",
+    "Pastel de nata",
+    "Concha",
+    "Bola"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Scooby-Doo",
+    "Florence Nightingale",
+    "Rei Artur",
+    "Bill Gates",
+    "Tintim"
+   ]
+  }
+ },
+ {
+  "id": "pt-0139",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Galileu",
+    "Charles Dickens",
+    "Três Porquinhos",
+    "Luciano Pavarotti",
+    "Bob Esponja"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Jornal",
+    "Sofá",
+    "Escova de dentes",
+    "Golfinho",
+    "Girassol"
+   ]
+  }
+ },
+ {
+  "id": "pt-0140",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Usain Bolt",
+    "Homem de Ferro",
+    "Sininho",
+    "Cesária Évora",
+    "Leonardo da Vinci"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Arco-íris",
+    "Burro",
+    "Pasta de dentes",
+    "Sal",
+    "Tesoura"
+   ]
+  }
+ },
+ {
+  "id": "pt-0141",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Joaninha",
+    "Papagaio de papel",
+    "Rebuçado",
+    "Árvore",
+    "Porta"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Esteira",
+    "Tufo",
+    "Marginal de Maputo",
+    "Lagosta",
+    "Matola"
+   ]
+  }
+ },
+ {
+  "id": "pt-0142",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Praça da Independência",
+    "Frango à zambeziana",
+    "Rissóis de camarão",
+    "Mambas",
+    "Catedral de Maputo"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Vulcão",
+    "Sala de aula",
+    "Farol",
+    "Teatro",
+    "Marraquexe"
+   ]
+  }
+ },
+ {
+  "id": "pt-0143",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Holanda",
+    "Parque de estacionamento",
+    "Deserto do Sara",
+    "Universidade",
+    "Los Angeles"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Pantera Cor-de-Rosa",
+    "Astérix",
+    "Alfred Hitchcock",
+    "Thor",
+    "Maria Mutola"
+   ]
+  }
+ },
+ {
+  "id": "pt-0144",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Makwaela",
+    "Sofala",
+    "Cajueiro",
+    "Baía de Maputo",
+    "Estação Central de Maputo"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Jogo da velha",
+    "Orquestra",
+    "Judo",
+    "Bateria",
+    "Pedra, papel, tesoura"
+   ]
+  }
+ },
+ {
+  "id": "pt-0145",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Óculos",
+    "Abelha",
+    "Trator",
+    "Ovelha",
+    "Comboio"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Chapa",
+    "Embondeiro",
+    "Ilha da Inhaca",
+    "Caminho de ferro",
+    "Xai-Xai"
+   ]
+  }
+ },
+ {
+  "id": "pt-0146",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Costa do Sol",
+    "Mapiko",
+    "Papaia",
+    "Barra",
+    "Mercado do Peixe"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Roger Federer",
+    "Cristóvão Colombo",
+    "Tarzan",
+    "Robin dos Bosques",
+    "Charlie Brown"
+   ]
+  }
+ },
+ {
+  "id": "pt-0147",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Trompete",
+    "Passadeira vermelha",
+    "Reggae",
+    "Titanic",
+    "Ténis de mesa"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Casa de Ferro",
+    "Moçambola",
+    "Rio Limpopo",
+    "Pemba",
+    "Xima"
+   ]
+  }
+ },
+ {
+  "id": "pt-0148",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Música pop",
+    "Fotografia",
+    "Palhaço",
+    "Procurar o Nemo",
+    "Bowling"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Agatha Christie",
+    "Shrek",
+    "Pedro Álvares Cabral",
+    "Pablo Picasso",
+    "Elvis Presley"
+   ]
+  }
+ },
+ {
+  "id": "pt-0149",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Super-Homem",
+    "Vasco da Gama",
+    "Bob Marley",
+    "Mr. Bean",
+    "Ed Sheeran"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Piscina",
+    "Estados Unidos",
+    "Indonésia",
+    "Cave",
+    "Quinta"
+   ]
+  }
+ },
+ {
+  "id": "pt-0150",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Veado",
+    "Cadeira",
+    "Garfo",
+    "Polvo",
+    "Lagarto"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Campeonato do Mundo",
+    "Jardinagem",
+    "Documentário",
+    "Os Simpsons",
+    "Rock"
+   ]
+  }
+ },
+ {
+  "id": "pt-0151",
+  "yellow": {
+   "pack": "entretenimento",
+   "words": [
+    "Consola",
+    "Esqui",
+    "Ioga",
+    "Páscoa",
+    "Ballet"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Buda",
+    "Nelson Mandela",
+    "Malangatana",
+    "Homero",
+    "Rafael Nadal"
+   ]
+  }
+ },
+ {
+  "id": "pt-0152",
+  "yellow": {
+   "pack": "pessoas",
+   "words": [
+    "Cristiano Ronaldo",
+    "Amália Rodrigues",
+    "Moisés",
+    "Zeus",
+    "Rainha Isabel II"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Cachecol",
+    "Mapa",
+    "Tomada",
+    "Leite",
+    "Bandeira"
+   ]
+  }
+ },
+ {
+  "id": "pt-0153",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Restaurante",
+    "Cabo Verde",
+    "Grande Muralha da China",
+    "Cataratas do Niágara",
+    "Barcelona"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Garfield",
+    "Walt Disney",
+    "Cinderela",
+    "Hércules",
+    "Eduardo Mondlane"
+   ]
+  }
+ },
+ {
+  "id": "pt-0154",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "China",
+    "Itália",
+    "Rússia",
+    "Cascata",
+    "Las Vegas"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Moeda",
+    "Porco",
+    "Computador",
+    "Girafa",
+    "Uvas"
+   ]
+  }
+ },
+ {
+  "id": "pt-0155",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Museu de História Natural",
+    "Castanha de caju",
+    "Dhow",
+    "Ngalanga",
+    "Mercado Central"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Câmara de filmar",
+    "Kizomba",
+    "Óscar",
+    "Ator",
+    "Desenho"
+   ]
+  }
+ },
+ {
+  "id": "pt-0156",
+  "yellow": {
+   "pack": "mocambique",
+   "words": [
+    "Gorongosa",
+    "Cahora Bassa",
+    "Lichinga",
+    "Tartaruga marinha",
+    "Piri-piri"
+   ]
+  },
+  "blue": {
+   "pack": "pessoas",
+   "words": [
+    "Obélix",
+    "Simba",
+    "Abraham Lincoln",
+    "Cleópatra",
+    "Pocahontas"
+   ]
+  }
+ },
+ {
+  "id": "pt-0157",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Circo",
+    "Chile",
+    "Garagem",
+    "Japão",
+    "Museu"
+   ]
+  },
+  "blue": {
+   "pack": "mocambique",
+   "words": [
+    "Bilene",
+    "Dia da Independência",
+    "Timbila",
+    "Badjias",
+    "Polana"
+   ]
+  }
+ },
+ {
+  "id": "pt-0158",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Chinelos",
+    "Castelo de areia",
+    "Folha",
+    "Panqueca",
+    "Autocarro"
+   ]
+  },
+  "blue": {
+   "pack": "lugares",
+   "words": [
+    "Cinema",
+    "Nigéria",
+    "Praia",
+    "Austrália",
+    "Brasil"
+   ]
+  }
+ },
+ {
+  "id": "pt-0159",
+  "yellow": {
+   "pack": "coisas",
+   "words": [
+    "Pombo",
+    "Almofada",
+    "Micro-ondas",
+    "Cachorro-quente",
+    "Cabra"
+   ]
+  },
+  "blue": {
+   "pack": "entretenimento",
+   "words": [
+    "Marioneta",
+    "Hóquei",
+    "Fórmula 1",
+    "Episódio",
+    "Karaoke"
+   ]
+  }
+ },
+ {
+  "id": "pt-0160",
+  "yellow": {
+   "pack": "lugares",
+   "words": [
+    "Madrid",
+    "Amazónia",
+    "Pequim",
+    "Oceano Atlântico",
+    "Roma"
+   ]
+  },
+  "blue": {
+   "pack": "coisas",
+   "words": [
+    "Iogurte",
+    "Esquilo",
+    "Sol",
+    "Sapatos",
+    "Panda"
+   ]
+  }
+ }
+]

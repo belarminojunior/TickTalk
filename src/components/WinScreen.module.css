@@ -1,0 +1,87 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: radial-gradient(circle at 50% 30%, rgba(247, 197, 30, 0.18), transparent 60%), rgba(20, 14, 10, 0.88);
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  overflow: auto;
+}
+
+.content {
+  position: relative;
+  z-index: 61;
+  width: min(620px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.title {
+  font-size: clamp(40px, 7vw, 72px);
+  line-height: 1;
+  color: var(--yellow);
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 19px;
+}
+
+.ranking {
+  width: 100%;
+  text-align: left;
+}
+
+.ranking ol {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ranking li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--panel-2);
+}
+
+.ranking li.first {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.place {
+  width: 22px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.name {
+  flex: 1;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.pos b {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 8px;
+}

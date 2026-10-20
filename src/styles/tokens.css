@@ -1,0 +1,32 @@
+:root {
+  --table: #2A1E15;        /* fundo da página (madeira) */
+  --board: #141414;        /* tabuleiro preto, painéis */
+  --panel-2: #262626;      /* linhas internas dos painéis */
+  --panel-line: #2B2B2B;
+  --outline: #6B5A4A;      /* botões com contorno, bordas de inputs */
+  --chalk: #F5F1EA;        /* texto principal, contorno branco do percurso */
+  --muted: #B8B2A8;        /* texto secundário */
+  --scrim: rgba(20,14,10,0.62); /* véu escuro sobre o tabuleiro desfocado */
+
+  --yellow: #F7C51E;  --yellow-paper: #FFFBEA;
+  --blue:   #2BB3E6;  --blue-paper:   #EAF8FE;
+  --ink: #141414;          /* texto e ícones sobre amarelo/azul */
+  --danger: #E23B3B;  --danger-text: #FF9B9B; /* anular */
+  --ok: #3CC46A;
+
+  /* peões: cor / aro / letra */
+  --pawn-red: #E23B3B;    --pawn-red-rim: #8E1F1F;    --pawn-red-fg: #141414;
+  --pawn-green: #2E9E4F;  --pawn-green-rim: #16592A;  --pawn-green-fg: #141414;
+  --pawn-purple: #7B3FA0; --pawn-purple-rim: #3F1C55; --pawn-purple-fg: #FFFFFF;
+  --pawn-orange: #F28C28; --pawn-orange-rim: #9A4E0C; --pawn-orange-fg: #141414;
+  --pawn-white: #F5F1EA;  --pawn-white-rim: #8A847A;  --pawn-white-fg: #141414;
+  --pawn-pink: #EE7FA8;   --pawn-pink-rim: #9E3A62;   --pawn-pink-fg: #141414;
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+
+  --radius-panel: 24px;
+  --radius-control: 14px;
+  --focus: 0 0 0 2px var(--table), 0 0 0 4px var(--yellow);
+  --shadow-deep: 0 30px 60px -20px rgba(0,0,0,0.65), 0 12px 24px -12px rgba(0,0,0,0.5);
+}

@@ -1,0 +1,25 @@
+.pawn {
+  --size: 40px;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 45%),
+    var(--pawn);
+  border: calc(var(--size) * 0.075 + 0.5px) solid var(--pawn-rim);
+  box-shadow:
+    0 calc(var(--size) * 0.08) 0 var(--pawn-rim),
+    0 calc(var(--size) * 0.14) calc(var(--size) * 0.22) rgba(0, 0, 0, 0.5);
+  color: var(--pawn-fg);
+}
+
+.letter {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: calc(var(--size) * 0.42);
+  line-height: 1;
+}

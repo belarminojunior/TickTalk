@@ -1,0 +1,242 @@
+.screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 28px 22px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.brandTitle {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.brandSub {
+  color: var(--muted);
+  font-size: 17px;
+  margin-top: 4px;
+}
+
+.headerCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.headerRight {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconButton {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1.5px solid var(--outline);
+  background: transparent;
+  color: var(--chalk);
+  display: grid;
+  place-items: center;
+}
+
+.iconButton:hover {
+  border-color: var(--chalk);
+}
+
+.modePill {
+  background: var(--board);
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(360px, 30vw, 500px);
+  gap: 28px;
+  align-items: start;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+/* O tabuleiro encolhe para caber na altura do ecrã (sem scroll num portátil 1366×768). */
+.boardBox {
+  width: min(100%, calc((100dvh - 250px) * 1.4072));
+  margin: 0 auto;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-height: calc(100dvh - 120px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-bottom: 4px;
+}
+
+.turnPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.turnHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.teamEyebrow {
+  color: var(--pawn, var(--muted));
+  filter: brightness(1.25);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.turnTitle {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.15;
+  margin: 2px 0 4px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.timerRow {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+}
+
+.bigCount {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 88px;
+  line-height: 0.9;
+  color: var(--side);
+}
+
+.counter span {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.pausedBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 18px 20px;
+  background: var(--panel-2);
+  border-radius: 16px;
+}
+
+.pausedBox strong {
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--yellow);
+}
+
+.pausedBox span {
+  color: var(--muted);
+}
+
+.waitBox {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.timeUp {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  background: rgba(20, 14, 10, 0.7);
+  display: grid;
+  place-items: center;
+  animation: fade-in 200ms ease-out;
+}
+
+.timeUpBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.timeUpTitle {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(56px, 9vw, 120px);
+  color: var(--yellow);
+  line-height: 1;
+  text-align: center;
+  animation: slam 420ms cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes slam {
+  0% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-height: 820px) {
+  .screen { gap: 12px; padding-top: 12px; padding-bottom: 14px; }
+  .brandTitle { font-size: 28px; }
+  .turnPanel { gap: 14px; }
+  .bigCount { font-size: 72px; }
+}
+
+@media (max-width: 1100px) {
+  .main { grid-template-columns: 1fr; }
+  .right { max-height: none; overflow: visible; }
+  .boardBox { width: 100%; }
+  .header { grid-template-columns: 1fr; }
+  .headerCenter, .headerRight { justify-content: flex-start; }
+}
+
+@media (max-width: 700px) {
+  .screen { padding: 12px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeUp, .timeUpTitle { animation: none; }
+}
