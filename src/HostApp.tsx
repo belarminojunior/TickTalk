@@ -24,7 +24,7 @@ const DEFAULT_TEAMS: TeamDraft[] = [
   { name: 'As Gazelas', color: 'green', players: '' },
 ];
 
-/** O que muda de forma relevante para guardar (sem o relógio, que muda 5 vezes por segundo). */
+/** What matters for saving (not the timer, which changes 5 times a second). */
 function saveKey(state: GameState): string {
   const { turn } = state;
   return JSON.stringify([
@@ -43,7 +43,7 @@ function saveKey(state: GameState): string {
 
 const SINGLE_SCREEN_DESCRIBER_PHASES = ['handoff', 'describing', 'paused'];
 
-/** A mesa (anfitrião): configuração, estado do jogo e ligação à tela de quem explica. */
+/** The table (host): setup, game state and the link to the describer screen. */
 export function HostApp() {
   const config = useConfig();
   const [initialSetup] = useState(loadSetup);
@@ -61,10 +61,10 @@ export function HostApp() {
   const local = useDescriberClient(link.localClient, config.now);
   const phoneUrl = usePhoneUrl(mode === 'phone');
 
-  // O relógio do anfitrião: o tempo só corre aqui.
+  // The host clock: time only runs here.
   useInterval(() => dispatch({ type: 'TICK', now: config.now() }), 200, state.phase === 'describing');
 
-  // Guardar no localStorage a cada mudança relevante.
+  // Save to localStorage on every relevant change.
   const stateRef = useRef(state);
   stateRef.current = state;
   const key = saveKey(state);
@@ -98,7 +98,7 @@ export function HostApp() {
     dispatch({ type: 'LOAD', state: saved.state });
   };
 
-  /** Volta à configuração. A meio do jogo, o jogo fica guardado para continuar depois. */
+  /** Back to setup. Mid-game, the game stays saved so it can be resumed later. */
   const newSetup = () => {
     if (state.phase === 'won') {
       clearSavedGame();
@@ -111,7 +111,7 @@ export function HostApp() {
   };
 
   const openDescriberWindow = useCallback(() => {
-    window.open('/explicar?via=janela', 'ticktalk-explicar', 'popup=yes,width=760,height=1000');
+    window.open('/explicar?via=window', 'ticktalk-explicar', 'popup=yes,width=760,height=1000');
   }, []);
 
   const toggleMute = () => {

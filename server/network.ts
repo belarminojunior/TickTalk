@@ -6,7 +6,7 @@ function isPrivate(ip: string): boolean {
   return /^10\./.test(ip) || /^192\.168\./.test(ip) || /^172\.(1[6-9]|2\d|3[01])\./.test(ip);
 }
 
-/** Endereços IPv4 do PC na rede local, os mais prováveis primeiro (Wi-Fi/Ethernet, 192.168.x). */
+/** The PC's local IPv4 addresses, most likely first (Wi-Fi/Ethernet, 192.168.x). */
 export function lanAddresses(): string[] {
   const found: { ip: string; score: number }[] = [];
   for (const [name, infos] of Object.entries(os.networkInterfaces())) {

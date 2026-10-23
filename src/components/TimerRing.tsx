@@ -4,13 +4,13 @@ export interface TimerRingProps {
   remainingMs: number;
   durationMs: number;
   size: number;
-  /** Texto pequeno por baixo do número (ex.: "segundos"). */
+  /** Small text under the number (e.g. "seconds"). */
   caption?: string;
   running?: boolean;
   label?: string;
 }
 
-/** Anel de tempo: os segundos ao centro, a pulsar nos últimos 5 s. */
+/** Timer ring: seconds in the centre, pulsing in the last 5 s. */
 export function TimerRing({ remainingMs, durationMs, size, caption, running = true, label }: TimerRingProps) {
   const seconds = Math.ceil(remainingMs / 1000);
   const fraction = durationMs > 0 ? Math.max(0, Math.min(1, remainingMs / durationMs)) : 0;

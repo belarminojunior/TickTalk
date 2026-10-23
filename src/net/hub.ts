@@ -1,7 +1,7 @@
 import { parseClientMessage, parseServerNotice, type DescriberCommand } from './protocol';
 import { SERVER_ID } from './transport';
 
-/** Tempo sem notícias até se considerar que a tela de quem explica caiu. */
+/** Silence after which the describer screen is considered gone. */
 export const PEER_TIMEOUT_MS = 6000;
 
 export type HubEvent =
@@ -12,8 +12,8 @@ export type HubEvent =
   | { type: 'peers-changed'; count: number };
 
 /**
- * Do lado do anfitrião: decide quem é o explicador ativo (só um de cada vez),
- * ignora mensagens inválidas e deteta quedas de ligação.
+ * Host side: decides who the active describer is (only one at a time),
+ * ignores invalid messages and detects dropped connections.
  */
 export class DescriberHub {
   private peers = new Map<string, number>();
@@ -58,7 +58,7 @@ export class DescriberHub {
     return events;
   }
 
-  /** O servidor avisou que o cliente saiu, ou chegou um "bye". */
+  /** The server reported the client left, or a "bye" arrived. */
   remove(id: string): HubEvent[] {
     if (!this.peers.has(id) && this.active !== id) return [];
     this.peers.delete(id);
@@ -71,7 +71,7 @@ export class DescriberHub {
     return events;
   }
 
-  /** Chamar com regularidade: remove quem deixou de dar sinal. */
+  /** Call regularly: removes peers that went silent. */
   sweep(now: number): HubEvent[] {
     const events: HubEvent[] = [];
     for (const [id, lastSeen] of [...this.peers]) {
@@ -80,7 +80,7 @@ export class DescriberHub {
     return events;
   }
 
-  /** Liberta o lugar de explicador (para outro telemóvel poder entrar). */
+  /** Frees the describer slot (so another phone can take it). */
   release(): void {
     this.active = null;
   }

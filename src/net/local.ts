@@ -1,6 +1,6 @@
 import { BaseTransport } from './transport';
 
-/** Barramento em memória partilhado pelos pontos da mesma janela. */
+/** In-memory bus shared by the endpoints in one window. */
 export class LocalBus {
   private endpoints = new Map<string, LocalTransport>();
 
@@ -13,12 +13,12 @@ export class LocalBus {
   }
 
   deliver(from: string, to: string, body: unknown): void {
-    // Entrega assíncrona, como numa rede: evita reentrância dentro de um render ou dispatch.
+    // Deliver asynchronously, like a network: avoids re-entrancy inside a render or dispatch.
     queueMicrotask(() => this.endpoints.get(to)?.receive(from, body));
   }
 }
 
-/** Um só ecrã: a mesa e a tela de quem explica vivem na mesma janela. */
+/** One screen: the table and the describer screen live in the same window. */
 export class LocalTransport extends BaseTransport {
   readonly kind = 'local' as const;
   private closed = false;
@@ -31,7 +31,7 @@ export class LocalTransport extends BaseTransport {
 
   send(to: string, body: unknown): void {
     if (this.closed) return;
-    // Copia como faria a rede, para ninguém partilhar objetos por engano.
+    // Copy as a network would, so nobody shares objects by accident.
     this.bus.deliver(this.id, to, JSON.parse(JSON.stringify(body ?? null)));
   }
 

@@ -1,6 +1,6 @@
 /*
- * O tabuleiro escala com a largura (unidades cqw do contentor).
- * Proporção: padding 2.2cqw, espaço 0.85cqw → casas quadradas com aspect-ratio ≈ 1.407.
+ * The board scales with its width (container cqw units).
+ * Proportions: padding 2.2cqw, gap 0.85cqw → square cells with aspect-ratio ≈ 1.407.
  */
 .wrap {
   container-type: inline-size;

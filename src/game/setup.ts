@@ -5,7 +5,7 @@ export const MIN_TEAMS = 2;
 export const MAX_TEAMS = 6;
 export const MIN_PLAYERS = 2;
 
-/** Linha do formulário: os jogadores vêm como texto separado por vírgulas. */
+/** A form row: players come as comma-separated text. */
 export interface TeamDraft {
   name: string;
   color: PawnColor;

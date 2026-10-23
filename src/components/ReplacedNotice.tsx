@@ -1,7 +1,7 @@
 import { useT } from '../i18n';
 import styles from './ReplacedNotice.module.css';
 
-/** Esta página foi substituída por outra com o mesmo papel; não volta a ligar sozinha. */
+/** Another page with the same role replaced this one; it will not reconnect on its own. */
 export function ReplacedNotice({ role, onTakeOver }: { role: 'host' | 'describer'; onTakeOver: () => void }) {
   const t = useT();
   return (

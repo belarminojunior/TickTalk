@@ -7,7 +7,7 @@ interface WakeLockLike {
   request(type: 'screen'): Promise<WakeLockSentinelLike>;
 }
 
-/** Mantém o ecrã ligado enquanto `active` (telemóvel de quem explica). */
+/** Keeps the screen on while `active` (the describer's phone). */
 export function useWakeLock(active: boolean): void {
   useEffect(() => {
     const wakeLock = (navigator as Navigator & { wakeLock?: WakeLockLike }).wakeLock;

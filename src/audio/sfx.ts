@@ -1,6 +1,6 @@
 /**
- * Efeitos sonoros sintetizados com a Web Audio API (sem ficheiros de áudio).
- * Tudo falha em silêncio se o browser não tiver áudio.
+ * Sound effects synthesised with the Web Audio API (no audio files).
+ * Everything fails silently if the browser has no audio.
  */
 export type Sfx = 'tick' | 'tock' | 'hit' | 'unhit' | 'horn' | 'dice' | 'hop' | 'win' | 'start';
 
@@ -26,7 +26,7 @@ function audio(): Ctx | null {
   return ctx;
 }
 
-/** Chamar num gesto do utilizador (clique/toque) para o browser deixar tocar som. */
+/** Call from a user gesture (click/tap) so the browser allows sound. */
 export function unlockAudio(): void {
   const c = audio();
   if (c && c.state === 'suspended') void c.resume().catch(() => undefined);
@@ -37,7 +37,7 @@ export function setMuted(value: boolean): void {
   try {
     window.localStorage.setItem('ticktalk.muted', value ? '1' : '0');
   } catch {
-    /* ignorar */
+    /* ignore */
   }
 }
 
@@ -116,7 +116,7 @@ const SOUNDS: Record<Sfx, (c: Ctx) => void> = {
 export function play(sound: Sfx): void {
   const c = audio();
   if (!c) return;
-  // Evita o mesmo som duas vezes seguidas (por exemplo, mesa e carta na mesma janela).
+  // Avoid the same sound twice in a row (e.g. table and card in the same window).
   const now = Date.now();
   if (now - (lastPlayed.get(sound) ?? 0) < 120) return;
   lastPlayed.set(sound, now);
@@ -124,6 +124,6 @@ export function play(sound: Sfx): void {
     if (c.state === 'suspended') void c.resume().catch(() => undefined);
     SOUNDS[sound](c);
   } catch {
-    /* sem som */
+    /* no sound */
   }
 }

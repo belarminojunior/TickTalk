@@ -1,10 +1,10 @@
 /**
- * Servidor local do Tick Talk:
- *  - serve a build (dist/) com fallback para a SPA (/, /explicar);
- *  - /api/info devolve os endereços do PC na rede local;
- *  - /ws reencaminha mensagens entre a mesa e o telemóvel de quem explica.
+ * Tick Talk local server:
+ *  - serves the build (dist/) with an SPA fallback (/, /explicar);
+ *  - /api/info returns the PC's local network addresses;
+ *  - /ws relays messages between the table and the describer's phone.
  *
- * Uso: `npm run play` (build + servidor em 0.0.0.0:5174) ou `npm run dev` (com o Vite).
+ * Usage: `npm run play` (build + server on 0.0.0.0:5174) or `npm run dev` (with Vite).
  */
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
@@ -18,7 +18,7 @@ import { Relay, isValidClientId, type Connection } from './relay';
 const DEV = process.argv.includes('--dev');
 const PORT = Number(process.env.TICKTALK_PORT ?? 5174);
 const HOST = process.env.TICKTALK_HOST ?? '0.0.0.0';
-/** Porta que o telemóvel deve abrir: no modo dev é a do Vite. */
+/** Port the phone should open: in dev mode it is Vite's. */
 const PAGE_PORT = DEV ? Number(process.env.VITE_PORT ?? 5173) : PORT;
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -83,7 +83,7 @@ function handleHttp(req: IncomingMessage, res: ServerResponse): void {
     serveFile(res, file, pathname.startsWith('/assets/'));
     return;
   }
-  // Rotas da SPA ("/", "/explicar"…) → index.html
+  // SPA routes ("/", "/explicar"…) → index.html
   serveFile(res, path.join(distDir, 'index.html'), false);
 }
 
@@ -134,7 +134,7 @@ wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
   }
 });
 
-// Deteta ligações mortas (telemóvel que perdeu o Wi-Fi sem avisar).
+// Detect dead connections (a phone that lost Wi-Fi without saying goodbye).
 const heartbeat = setInterval(() => {
   for (const ws of wss.clients) {
     if (!alive.get(ws)) {

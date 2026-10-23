@@ -2,19 +2,19 @@ import { CARDS } from './cards';
 import { PACK_IDS } from '../game/types';
 import { filterCards } from '../game/deck';
 
-describe.each(['pt', 'en'] as const)('cartas (%s)', (lang) => {
+describe.each(['pt', 'en'] as const)('cards (%s)', (lang) => {
   const cards = CARDS[lang];
 
-  it('tem pelo menos 150 cartas', () => {
+  it('has at least 150 cards', () => {
     expect(cards.length).toBeGreaterThanOrEqual(150);
   });
 
-  it('os ids são únicos', () => {
+  it('ids are unique', () => {
     expect(new Set(cards.map((c) => c.id)).size).toBe(cards.length);
     for (const c of cards) expect(c.id.startsWith(`${lang}-`)).toBe(true);
   });
 
-  it('cada lado tem 5 palavras únicas e não vazias, de um pacote conhecido', () => {
+  it('each side has 5 unique, non-empty words from a known pack', () => {
     for (const c of cards) {
       for (const side of [c.yellow, c.blue]) {
         expect(PACK_IDS).toContain(side.pack);
@@ -25,17 +25,17 @@ describe.each(['pt', 'en'] as const)('cartas (%s)', (lang) => {
     }
   });
 
-  it('os dois lados não partilham palavras', () => {
+  it('the two sides share no words', () => {
     for (const c of cards) {
       const yellow = new Set(c.yellow.words.map((w) => w.toLowerCase()));
       for (const w of c.blue.words) expect(yellow.has(w.toLowerCase())).toBe(false);
     }
   });
 
-  it('todos os pacotes têm cartas e o pacote Moçambique funciona com os outros', () => {
+  it('every pack has cards and the Mozambique pack works with the others', () => {
     for (const pack of PACK_IDS) {
       expect(cards.some((c) => c.yellow.pack === pack || c.blue.pack === pack)).toBe(true);
     }
-    expect(filterCards(cards, ['mocambique', 'lugares', 'coisas']).length).toBeGreaterThan(0);
+    expect(filterCards(cards, ['mozambique', 'places', 'things']).length).toBeGreaterThan(0);
   });
 });

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-/** Dispara `onTick` a intervalos regulares enquanto `active` (o relógio do anfitrião). */
+/** Calls `onTick` at regular intervals while `active` (the host clock). */
 export function useInterval(onTick: () => void, ms: number, active: boolean): void {
   const ref = useRef(onTick);
   ref.current = onTick;
@@ -12,8 +12,8 @@ export function useInterval(onTick: () => void, ms: number, active: boolean): vo
 }
 
 /**
- * Contagem suave: a partir de `remainingMs` válido no instante `anchor` (relógio local),
- * devolve o tempo restante, atualizado ~10 vezes por segundo enquanto `running`.
+ * Smooth countdown: from `remainingMs`, valid at instant `anchor` (local clock),
+ * returns the remaining time, updated ~10 times a second while `running`.
  */
 export function useCountdown(remainingMs: number, running: boolean, anchor: number, now: () => number): number {
   const compute = () => (running ? Math.max(0, remainingMs - (now() - anchor)) : remainingMs);
@@ -29,7 +29,7 @@ export function useCountdown(remainingMs: number, running: boolean, anchor: numb
   return value;
 }
 
-/** Espera `ms` (escalado) e chama `fn`; cancela ao desmontar ou quando as dependências mudam. */
+/** Waits `ms` and calls `fn`; cancelled on unmount or when the dependencies change. */
 export function useTimeout(fn: () => void, ms: number | null, deps: unknown[]): void {
   const ref = useRef(fn);
   ref.current = fn;

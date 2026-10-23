@@ -4,14 +4,14 @@ import styles from './Dice.module.css';
 
 export interface BigDieProps {
   value: number | null;
-  /** A rolar: troca de face e abana. */
+  /** Rolling: changes face and shakes. */
   rolling?: boolean;
   size?: number;
   className?: string;
   label?: string;
 }
 
-/** Dado grande (cubo branco ligeiramente rodado). */
+/** Big die (white cube, slightly rotated). */
 export function BigDie({ value, rolling = false, size = 132, className, label }: BigDieProps) {
   const [face, setFace] = useState(value ?? 0);
   useEffect(() => {

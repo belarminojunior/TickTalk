@@ -1,9 +1,10 @@
 import type { CSSProperties } from 'react';
 import { squareColor } from '../game/board';
 import { projection } from '../game/selectors';
-import type { Hit, ScoringMode, Side, Team } from '../game/types';
+import type { Hit, ScoringMode, Side, SideFlags, Team } from '../game/types';
 import { useT } from '../i18n';
 import { CheckIcon } from './Icons';
+import { MiniCard, TwoSidedCard } from './Card';
 import { Pawn, teamInitial } from './Pawn';
 import styles from './TablePanels.module.css';
 
@@ -14,35 +15,48 @@ export function sideVars(side: Side): CSSProperties {
   } as CSSProperties;
 }
 
-/** 5 ranhuras (3:4): acertadas na cor do lado com visto; por acertar tracejadas com "?". Nunca mostram palavras. */
-export function ProgressSlots({ marked, side }: { marked: boolean[]; side: Side }) {
+/**
+ * 10 slots, one row per side of the card. Guessed words show in the side colour with a tick,
+ * the rest are dashed with "?". The row of the side that is face up is marked. Never shows words.
+ */
+export function ProgressSlots({ marked, up }: { marked: SideFlags; up: Side }) {
   const t = useT();
   return (
-    <ol className={styles.slots} style={sideVars(side)} aria-label={t.liveHits}>
-      {marked.map((hit, i) => (
-        <li key={i} className={`${styles.slot} ${hit ? styles.slotHit : ''}`} aria-label={t.slotLabel(i + 1, hit)}>
-          {hit ? <CheckIcon size="42%" strokeWidth={3} /> : <span aria-hidden="true">?</span>}
-        </li>
+    <div className={styles.slotRows} aria-label={t.liveHits} role="group">
+      {(['blue', 'yellow'] as const).map((side) => (
+        <div key={side} className={`${styles.slotRow} ${side === up ? styles.slotRowUp : ''}`} style={sideVars(side)}>
+          <span className={`${styles.rowTag} ${styles[side]}`} aria-hidden="true" />
+          <ol className={styles.slots}>
+            {marked[side].map((hit, i) => (
+              <li key={i} className={`${styles.slot} ${hit ? styles.slotHit : ''}`} aria-label={t.slotLabel(side, i + 1, hit)}>
+                {hit ? <CheckIcon size="42%" strokeWidth={3} /> : <span aria-hidden="true">?</span>}
+              </li>
+            ))}
+          </ol>
+        </div>
       ))}
-    </ol>
+      <p className={styles.faceUp} aria-live="polite">
+        {t.faceUp(up)}
+      </p>
+    </div>
   );
 }
 
-/** Registo ao vivo: "+1 Palavra 4 acertada · aos 12 s" (o mais recente em cima). */
-export function LiveFeed({ hits, side }: { hits: Hit[]; side: Side }) {
+/** Live feed: "+1 Word 4 guessed · at 12 s" (newest first). */
+export function LiveFeed({ hits }: { hits: Hit[] }) {
   const t = useT();
   const list = [...hits].reverse();
   return (
-    <section className={`panel ${styles.feedPanel}`} style={sideVars(side)}>
+    <section className={`panel ${styles.feedPanel}`}>
       <h3 className="eyebrow">{t.liveHits}</h3>
       {list.length === 0 ? (
         <p className={styles.muted}>{t.noHitsYet}</p>
       ) : (
         <ul className={styles.feed} aria-live="polite">
           {list.map((h) => (
-            <li key={`${h.index}-${h.atMs}`} className={styles.feedItem}>
+            <li key={`${h.side}-${h.index}-${h.atMs}`} className={styles.feedItem} style={sideVars(h.side)}>
               <span className={styles.plusOne}>+1</span>
-              <span className={styles.feedText}>{t.hitLine(h.index + 1)}</span>
+              <span className={styles.feedText}>{t.hitLine(h.index + 1, h.side)}</span>
               <span className={styles.feedTime}>{t.atSeconds(Math.max(0, Math.round(h.atMs / 1000)))}</span>
             </li>
           ))}
@@ -52,7 +66,7 @@ export function LiveFeed({ hits, side }: { hits: Hit[]; side: Side }) {
   );
 }
 
-/** "Se o tempo acabasse agora": dado 0/1/2 → +X casas (ou sem dado: +X casas). */
+/** "If time ran out now": die 0/1/2 → +X squares (or, with no die, +X squares). */
 export function Projection({ marked, scoring }: { marked: number; scoring: ScoringMode }) {
   const t = useT();
   const rows = projection(marked, scoring);
@@ -78,7 +92,7 @@ export function Projection({ marked, scoring }: { marked: number; scoring: Scori
   );
 }
 
-/** Cartões das equipas por baixo do tabuleiro. */
+/** Team cards under the board. */
 export function TeamCards({ teams, activeIndex, positions }: { teams: Team[]; activeIndex: number | null; positions?: number[] }) {
   const t = useT();
   return (
@@ -114,23 +128,18 @@ export function TeamCards({ teams, activeIndex, positions }: { teams: Team[]; ac
   );
 }
 
-/** Mini-ilustração: duas cartas (a de trás e a da frente). */
-export function TwoCards({ from, to }: { from: Side; to: Side }) {
-  return (
-    <div className={styles.twoCards} aria-hidden="true">
-      <span className={`${styles.miniCard} ${styles[from]}`} />
-      <span className={`${styles.miniCard} ${styles.miniFront} ${styles[to]}`} />
-    </div>
-  );
-}
-
-/** Aviso "A carta vira para o amarelo" / "A carta continua azul". */
-export function CardFlipNotice({ team, from, to }: { team: string; from: Side; to: Side }) {
+/**
+ * "The card flips to yellow" / "The card stays blue", with a small two-sided card that
+ * turns over from the old colour to the new one once the pawn has landed (`settled`).
+ */
+export function CardFlipNotice({ team, from, to, settled }: { team: string; from: Side; to: Side; settled: boolean }) {
   const t = useT();
   const changed = from !== to;
   return (
     <section className={`panel ${styles.flipNotice}`}>
-      <TwoCards from={from} to={to} />
+      <div className={styles.cardStack} aria-hidden="true">
+        <TwoSidedCard size="mini" up={settled ? to : from} blue={<MiniCard side="blue" />} yellow={<MiniCard side="yellow" />} />
+      </div>
       <div>
         <h3 className={styles.flipTitle}>{changed ? t.cardFlips(to) : t.cardStays(to)}</h3>
         <p className={styles.muted}>{changed ? t.cardFlipsHelp(team, to) : t.cardStaysHelp(team, to)}</p>
@@ -139,7 +148,7 @@ export function CardFlipNotice({ team, from, to }: { team: string; from: Side; t
   );
 }
 
-/** "Casa 13 → Casa 14" com as cores das casas. */
+/** "Square 13 → Square 14" with the square colours. */
 export function SquareChange({ from, to }: { from: number; to: number }) {
   const t = useT();
   return (

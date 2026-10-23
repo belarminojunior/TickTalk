@@ -2,13 +2,13 @@ import { BaseTransport, HOST_ID } from './transport';
 
 export type WsRole = 'host' | 'describer';
 
-/** Códigos com que o servidor fecha uma ligação substituída por outra página (ver server/relay.ts). */
+/** Close codes the server uses when another page replaces this one (see server/relay.ts). */
 export const REPLACED_CLOSE_CODES: readonly number[] = [4000, 4001];
 
 const MIN_BACKOFF = 500;
 const MAX_BACKOFF = 4000;
 
-/** URL do WebSocket no mesmo endereço que serviu a página. */
+/** WebSocket URL on the same address that served the page. */
 export function defaultWsUrl(role: WsRole, id: string): string {
   const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   const params = new URLSearchParams({ role, id });
@@ -16,8 +16,8 @@ export function defaultWsUrl(role: WsRole, id: string): string {
 }
 
 /**
- * PC + telemóvel: o servidor local reencaminha as mensagens.
- * Volta a ligar-se sozinho quando a ligação cai (com espera crescente).
+ * PC + phone: the local server relays the messages.
+ * Reconnects on its own when the connection drops (with growing back-off).
  */
 export class WebSocketTransport extends BaseTransport {
   readonly kind = 'websocket' as const;
@@ -68,8 +68,8 @@ export class WebSocketTransport extends BaseTransport {
       if (this.socket === socket) this.socket = null;
       if (this.closed) return;
       if (REPLACED_CLOSE_CODES.includes(event.code)) {
-        // Outra página ficou com o lugar. Voltar a ligar sozinho só faria as duas
-        // páginas expulsarem-se uma à outra para sempre; espera por takeOver().
+        // Another page took our place. Reconnecting on our own would make the two pages
+        // kick each other out forever; wait for takeOver() instead.
         this.setStatus('replaced');
         return;
       }
@@ -89,7 +89,7 @@ export class WebSocketTransport extends BaseTransport {
     }, delay);
   }
 
-  /** Força uma nova ligação já (por exemplo, quando o telemóvel volta do ecrã bloqueado). */
+  /** Forces a reconnect now (e.g. when the phone comes back from the lock screen). */
   reconnectNow(): void {
     if (this.closed || this.status === 'open' || this.status === 'replaced') return;
     if (this.retryTimer) clearTimeout(this.retryTimer);
@@ -99,7 +99,7 @@ export class WebSocketTransport extends BaseTransport {
     this.connect();
   }
 
-  /** Volta a ligar depois de ter sido substituída, ficando com o lugar (a outra página é que sai). */
+  /** Reconnects after being replaced, taking the place back (the other page is the one that leaves). */
   takeOver(): void {
     if (this.closed || this.status !== 'replaced') return;
     this.backoff = MIN_BACKOFF;

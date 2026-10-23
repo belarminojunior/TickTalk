@@ -1,6 +1,6 @@
 import type { Language, PackId, ScreenMode, Side } from '../game/types';
 
-/** Junta nomes: "Pedro e Lúcia", "Ana, Pedro e Lúcia". */
+/** Joins names: "Pedro e Lúcia", "Ana, Pedro e Lúcia". */
 function joinNames(names: string[], and: string): string {
   if (names.length <= 1) return names[0] ?? '';
   return `${names.slice(0, -1).join(', ')} ${and} ${names[names.length - 1]}`;
@@ -13,18 +13,18 @@ const ARTICLES: [RegExp, string, boolean][] = [
   [/^a\s+/i, 'da ', false],
 ];
 
-/** "Os Leões" → "dos Leões"; "Tigres" → "de Tigres". */
+/** Portuguese contraction: "Os Leões" → "dos Leões"; "Tigres" → "de Tigres". */
 export function ofTeamPt(name: string): string {
   for (const [re, contracted] of ARTICLES) if (re.test(name)) return contracted + name.replace(re, '');
   return `de ${name}`;
 }
 
-/** "Os Leões" é plural → "validam"; "Equipa Azul" → "valida". */
+/** "Os Leões" is plural → "validam"; "Equipa Azul" → "valida". */
 export function isPluralPt(name: string): boolean {
   return /^(os|as)\s+/i.test(name);
 }
 
-/** Não se sabe o género de quem joga, por isso o nome vai sem artigo ("a Tomás", não "à"/"ao"). */
+/** Player gender is unknown, so names go without an article ("a Tomás", not "à"/"ao"). */
 function toPersonPt(name: string): string {
   return name;
 }
@@ -34,7 +34,7 @@ const pt = {
   tagline: 'Explica cinco palavras antes que o tempo acabe.',
   interfaceLanguage: 'Língua da interface',
 
-  // Configuração
+  // Setup
   howToPlay: 'Como vão jogar?',
   modeTitle: { phone: 'PC + telemóvel de quem explica', windows: 'Duas janelas no PC', single: 'Um só ecrã' } as Record<ScreenMode, string>,
   modeDesc: {
@@ -78,11 +78,11 @@ const pt = {
   cardLanguage: 'Língua das cartas',
   packs: 'Pacotes de palavras',
   packName: {
-    pessoas: 'Pessoas',
-    lugares: 'Lugares',
-    coisas: 'Coisas',
-    entretenimento: 'Entretenimento',
-    mocambique: 'Moçambique',
+    people: 'Pessoas',
+    places: 'Lugares',
+    things: 'Coisas',
+    entertainment: 'Entretenimento',
+    mozambique: 'Moçambique',
   } as Record<PackId, string>,
   cardsInDeck: (n: number): string => (n === 1 ? '1 carta no baralho' : `${n} cartas no baralho`),
   continueSaved: 'Continuar jogo guardado',
@@ -98,7 +98,7 @@ const pt = {
   noPhoneWarning: 'Ainda não há nenhum telemóvel ligado. Podes começar na mesma e ligá-lo depois.',
   noWindowWarning: 'A janela de quem explica ainda não está aberta. Podes começar e abri-la depois.',
 
-  // Mesa
+  // Table
   roundLine: (round: number): string => `Ronda ${round} · ganha quem chegar primeiro à chegada`,
   roundEndLine: (round: number, team: string): string => `Ronda ${round} · fim da vez ${ofTeamPt(team)}`,
   live: {
@@ -119,7 +119,8 @@ const pt = {
   isExplaining: (name: string): string => `${name} está a explicar`,
   guessing: (names: string[]): string => `${joinNames(names, 'e')} ${names.length === 1 ? 'adivinha' : 'adivinham'}`,
   seconds: 'segundos',
-  ofFiveGuessed: 'de 5 acertadas',
+  ofTenGuessed: 'de 10 acertadas',
+  faceUp: (side: Side): string => `Agora: lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
   hiddenNote: 'As palavras ficam escondidas até o tempo acabar. Depois, a equipa adversária valida.',
   hiddenNoteNoValidation: 'As palavras ficam escondidas até o tempo acabar.',
   ifTimeEndedNow: 'Se o tempo acabasse agora',
@@ -127,10 +128,11 @@ const pt = {
   plusSquares: (n: number): string => (n === 1 ? '+1 casa' : `+${n} casas`),
   onePerWord: '1 casa por palavra válida',
   liveHits: 'Acertos ao vivo',
-  hitLine: (n: number): string => `Palavra ${n} acertada`,
+  hitLine: (n: number, side: Side): string => `Palavra ${n} · lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
   atSeconds: (s: number): string => `aos ${s} s`,
   noHitsYet: 'Ainda sem acertos.',
-  slotLabel: (n: number, hit: boolean): string => `Palavra ${n}: ${hit ? 'acertada' : 'por acertar'}`,
+  slotLabel: (side: Side, n: number, hit: boolean): string =>
+    `Lado ${side === 'blue' ? 'azul' : 'amarelo'}, palavra ${n}: ${hit ? 'acertada' : 'por acertar'}`,
   passDevice: { phone: 'Passa o telemóvel', windows: 'Vira a janela', single: 'Passa o ecrã' } as Record<ScreenMode, string>,
   passTo: (mode: ScreenMode, name: string, team: string): string =>
     mode === 'windows'
@@ -152,11 +154,11 @@ const pt = {
   resume: 'Retomar',
   pause: 'Pausar',
   timeUp: 'Tempo esgotado!',
-  allFive: 'Cinco em cinco!',
+  allWords: 'Dez em dez!',
   endedEarly: 'Vez terminada',
   continue: 'Continuar',
 
-  // Validação
+  // Validation
   timeUpPill: 'Tempo esgotado',
   validatesTitle: (validator: string, team: string): string =>
     `${validator} ${isPluralPt(validator) ? 'validam' : 'valida'} a vez ${ofTeamPt(team)}`,
@@ -185,7 +187,7 @@ const pt = {
   confirmAdvance: 'Confirmar e avançar',
   finalNote: 'Só a equipa adversária pode anular. A decisão é final.',
 
-  // Dado e fim da vez
+  // Die and end of turn
   rolling: 'A lançar o dado…',
   dieRolled: (n: number): string => `Saiu ${n}`,
   modeDie: 'Modo com dado',
@@ -208,16 +210,23 @@ const pt = {
   passTurn: (player: string, team: string): string => `Passar a vez · ${player} (${team})`,
   undo: 'Desfazer esta vez',
   pawnMoving: 'O peão está a andar…',
+  turnOver: 'Fim da vez',
+  nextUp: (player: string, team: string): string => `A seguir: ${player} (${team})`,
+  passOnDevice: {
+    phone: 'Quem explica passa a vez no telemóvel.',
+    windows: 'Quem explica passa a vez na janela de quem explica.',
+    single: '',
+  } as Record<ScreenMode, string>,
   noMove: 'O peão fica onde está.',
 
-  // Vitória
+  // Victory
   victory: (team: string): string => `Vitória ${ofTeamPt(team)}!`,
   victorySub: 'Chegaram primeiro à Chegada.',
   ranking: 'Classificação',
   playAgain: 'Jogar outra vez',
   newSetup: 'Nova configuração',
 
-  // Regras
+  // Rules
   rulesTitle: 'Regras do Tick Talk',
   backToSetup: 'Voltar à configuração',
   backToSetupHelp: 'O jogo fica guardado: podes continuá-lo depois em “Continuar jogo guardado”.',
@@ -229,7 +238,7 @@ const pt = {
     },
     {
       title: 'A vez',
-      body: 'Quem explica vê uma carta com 5 palavras e tenta que a sua equipa as adivinhe antes que o tempo acabe. Lê o lado da carta da cor da casa onde está o peão: casa azul, lado azul; casa amarela, lado amarelo.',
+      body: 'A carta tem dois lados, azul e amarelo, com 5 palavras cada. A vez começa no lado da cor da casa onde está o peão (casa azul, lado azul; casa amarela, lado amarelo). Sempre que a equipa acerta uma palavra, a carta vira para o outro lado: há 10 palavras para explicar antes que o tempo acabe.',
     },
     {
       title: 'Não vale',
@@ -249,8 +258,9 @@ const pt = {
   shortcutsTable: 'Na mesa',
   shortcutList: {
     describer: [
-      ['Espaço', 'pronto/a, depois começar'],
-      ['1–5', 'marcar ou desmarcar uma palavra'],
+      ['Espaço', 'pronto/a, começar; no fim, passar a vez'],
+      ['1–5', 'marcar uma palavra (a carta vira)'],
+      ['Backspace', 'desfazer o último acerto'],
       ['P', 'pausar ou retomar'],
       ['Enter', 'terminar a vez'],
     ],
@@ -262,12 +272,13 @@ const pt = {
     ],
   } as Record<'describer' | 'table', [string, string][]>,
 
-  // Quem explica
+  // Describer
   youExplain: (name: string): string => `${name}, és tu a explicar`,
   teamLine: (team: string, square: number, side: Side): string =>
     `${team} · ${square <= 0 ? 'Partida' : `casa ${square}`} · lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
-  hitsCount: (n: number): string => `${n} de 5 acertadas`,
-  describerHelp1: 'Toca na palavra quando a tua equipa acertar (ou tecla 1–5).',
+  hitsCount: (n: number): string => `${n} de 10 acertadas`,
+  describerHelp1: 'Toca na palavra quando a tua equipa acertar (ou tecla 1–5): a carta vira para o outro lado.',
+  undoHit: 'Desfazer último acerto',
   describerHelp2: 'Não digas a palavra, partes dela, nem “rima com”.',
   endTurn: 'Terminar a vez',
   handoffTitle: (mode: ScreenMode, name: string): string =>
@@ -276,7 +287,6 @@ const pt = {
   imReady: 'Estou pronto/a',
   start: 'Começar',
   readyHint: 'Esconde o ecrã dos outros. O tempo começa quando carregares em Começar.',
-  cardBack: 'Carta virada para baixo',
   flippedNotice: (side: Side): string => `A carta virou para o lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
   lookAtTable: 'Tempo! Olha para a mesa.',
   lookAtTableHelp: 'A equipa adversária está a validar as palavras.',
@@ -353,11 +363,11 @@ const en: Strings = {
   cardLanguage: 'Card language',
   packs: 'Word packs',
   packName: {
-    pessoas: 'People',
-    lugares: 'Places',
-    coisas: 'Things',
-    entretenimento: 'Entertainment',
-    mocambique: 'Mozambique',
+    people: 'People',
+    places: 'Places',
+    things: 'Things',
+    entertainment: 'Entertainment',
+    mozambique: 'Mozambique',
   },
   cardsInDeck: (n) => (n === 1 ? '1 card in the deck' : `${n} cards in the deck`),
   continueSaved: 'Continue saved game',
@@ -393,7 +403,8 @@ const en: Strings = {
   isExplaining: (name) => `${name} is describing`,
   guessing: (names) => `${joinNames(names, 'and')} ${names.length === 1 ? 'guesses' : 'guess'}`,
   seconds: 'seconds',
-  ofFiveGuessed: 'of 5 guessed',
+  ofTenGuessed: 'of 10 guessed',
+  faceUp: (side) => `Now: ${side} side`,
   hiddenNote: 'The words stay hidden until time runs out. Then the other team checks them.',
   hiddenNoteNoValidation: 'The words stay hidden until time runs out.',
   ifTimeEndedNow: 'If time ran out now',
@@ -401,10 +412,10 @@ const en: Strings = {
   plusSquares: (n) => (n === 1 ? '+1 square' : `+${n} squares`),
   onePerWord: '1 square per valid word',
   liveHits: 'Live hits',
-  hitLine: (n) => `Word ${n} guessed`,
+  hitLine: (n, side) => `Word ${n} · ${side} side`,
   atSeconds: (s) => `at ${s} s`,
   noHitsYet: 'No hits yet.',
-  slotLabel: (n, hit) => `Word ${n}: ${hit ? 'guessed' : 'not yet'}`,
+  slotLabel: (side, n, hit) => `${side === 'blue' ? 'Blue' : 'Yellow'} side, word ${n}: ${hit ? 'guessed' : 'not yet'}`,
   passDevice: { phone: 'Pass the phone', windows: 'Turn the window', single: 'Pass the screen' },
   passTo: (mode, name, team) =>
     mode === 'windows'
@@ -426,7 +437,7 @@ const en: Strings = {
   resume: 'Resume',
   pause: 'Pause',
   timeUp: 'Time’s up!',
-  allFive: 'Five out of five!',
+  allWords: 'Ten out of ten!',
   endedEarly: 'Turn ended',
   continue: 'Continue',
 
@@ -477,6 +488,13 @@ const en: Strings = {
   passTurn: (player, team) => `Next turn · ${player} (${team})`,
   undo: 'Undo this turn',
   pawnMoving: 'The pawn is moving…',
+  turnOver: 'Turn over',
+  nextUp: (player, team) => `Up next: ${player} (${team})`,
+  passOnDevice: {
+    phone: 'The describer passes the turn on the phone.',
+    windows: 'The describer passes the turn in the describer window.',
+    single: '',
+  },
   noMove: 'The pawn stays put.',
 
   victory: (team) => `${team} win!`,
@@ -496,7 +514,7 @@ const en: Strings = {
     },
     {
       title: 'A turn',
-      body: 'The describer sees a card with 5 words and tries to get their team to guess them before time runs out. Read the side matching your pawn’s square: blue square, blue side; yellow square, yellow side.',
+      body: 'The card has two sides, blue and yellow, with 5 words each. The turn starts on the side matching your pawn’s square (blue square, blue side; yellow square, yellow side). Every time the team guesses a word, the card turns over to the other side: 10 words to describe before time runs out.',
     },
     {
       title: 'Not allowed',
@@ -516,8 +534,9 @@ const en: Strings = {
   shortcutsTable: 'On the table',
   shortcutList: {
     describer: [
-      ['Space', 'ready, then start'],
-      ['1–5', 'mark or unmark a word'],
+      ['Space', 'ready, start; at the end, next turn'],
+      ['1–5', 'mark a word (the card turns over)'],
+      ['Backspace', 'undo the last hit'],
       ['P', 'pause or resume'],
       ['Enter', 'end the turn'],
     ],
@@ -531,8 +550,9 @@ const en: Strings = {
 
   youExplain: (name) => `${name}, you’re describing`,
   teamLine: (team, square, side) => `${team} · ${square <= 0 ? 'Start' : `square ${square}`} · ${side} side`,
-  hitsCount: (n) => `${n} of 5 guessed`,
-  describerHelp1: 'Tap a word when your team gets it (or press 1–5).',
+  hitsCount: (n) => `${n} of 10 guessed`,
+  describerHelp1: 'Tap a word when your team gets it (or press 1–5): the card turns over to the other side.',
+  undoHit: 'Undo last hit',
   describerHelp2: 'Don’t say the word, parts of it, or “rhymes with”.',
   endTurn: 'End turn',
   handoffTitle: (mode, name) =>
@@ -541,7 +561,6 @@ const en: Strings = {
   imReady: 'I’m ready',
   start: 'Start',
   readyHint: 'Hide the screen from the others. The timer starts when you press Start.',
-  cardBack: 'Card face down',
   flippedNotice: (side) => `The card flipped to the ${side} side`,
   lookAtTable: 'Time! Look at the table.',
   lookAtTableHelp: 'The other team is checking your words.',

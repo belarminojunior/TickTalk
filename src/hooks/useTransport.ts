@@ -14,16 +14,16 @@ export type ServerStatus = 'connecting' | 'online' | 'offline';
 export const LOCAL_DESCRIBER_ID = 'local-describer';
 
 export interface HostLink {
-  /** Telas de quem explica ligadas (telemóveis ou janelas). */
+  /** Connected describer screens (phones or windows). */
   connected: number;
-  /** Há um explicador ativo ligado. */
+  /** An active describer is connected. */
   describerOnline: boolean;
   serverStatus: ServerStatus;
-  /** No modo "um só ecrã": o lado de quem explica, na mesma janela. */
+  /** In "one screen" mode: the describer end, in the same window. */
   localClient: Transport | null;
-  /** Outra janela abriu a mesa e ficou com a ligação ao servidor. */
+  /** Another window opened the table and took over the server connection. */
   replaced: boolean;
-  /** Volta a ficar com a ligação (a outra janela passa a estar "substituída"). */
+  /** Takes the connection back (the other window becomes "replaced"). */
   takeOver: () => void;
 }
 
@@ -40,7 +40,7 @@ function createHostTransports(mode: ScreenMode): { host: Transport; local: Trans
   return { host: new LocalTransport(bus, HOST_ID), local: new LocalTransport(bus, LOCAL_DESCRIBER_ID) };
 }
 
-/** Converte um comando de quem explica numa ação do reducer. */
+/** Turns a describer command into a reducer action. */
 export function commandToAction(command: DescriberCommand, now: number): GameAction {
   switch (command.type) {
     case 'READY':
@@ -49,18 +49,22 @@ export function commandToAction(command: DescriberCommand, now: number): GameAct
       return { type: 'START_TURN', now };
     case 'TOGGLE_WORD':
       return { type: 'TOGGLE_WORD', index: command.index, now };
+    case 'UNDO_HIT':
+      return { type: 'UNDO_HIT', now };
     case 'PAUSE':
       return { type: 'PAUSE', now };
     case 'RESUME':
       return { type: 'RESUME', now };
     case 'END_EARLY':
       return { type: 'END_EARLY', now };
+    case 'NEXT_TEAM':
+      return { type: 'NEXT_TEAM' };
   }
 }
 
 /**
- * Lado do anfitrião: abre o transporte do modo escolhido, aceita um explicador de cada vez,
- * envia-lhe a sua vista (com palavras) e traduz os comandos em ações.
+ * Host side: opens the transport for the chosen mode, accepts one describer at a time,
+ * sends it its view (with the words) and turns its commands into actions.
  */
 export function useHostLink(
   mode: ScreenMode,
@@ -132,7 +136,7 @@ export function useHostLink(
     };
   }, [mode, dispatch]);
 
-  // Cada mudança de estado (incluindo o tempo) segue para o explicador ativo.
+  // Every state change (timer included) goes to the active describer.
   useEffect(() => {
     const hub = hubRef.current;
     if (!link || !hub?.activeId) return;
@@ -167,19 +171,19 @@ export type DescriberStatus = 'connecting' | 'ready' | 'busy' | 'waitingHost' | 
 
 export interface DescriberClient {
   view: DescriberView | null;
-  /** Instante local em que a vista chegou (para a contagem suave). */
+  /** Local instant the view arrived (for the smooth countdown). */
   anchor: number;
   status: DescriberStatus;
-  /** Língua da mesa, mesmo antes de haver vista (por exemplo, quando está ocupado). */
+  /** The table's language, even before there is a view (e.g. when busy). */
   language: Language | null;
   send: (command: DescriberCommand) => void;
-  /** Depois de "replaced": volta a ligar esta página. */
+  /** After "replaced": reconnects this page. */
   takeOver: () => void;
 }
 
 const HOST_SILENCE_MS = 5000;
 
-/** Lado de quem explica: diz olá, dá sinal de vida, recebe a sua vista e envia comandos. */
+/** Describer side: says hello, sends heartbeats, receives its view and sends commands. */
 export function useDescriberClient(transport: Transport | null, now: () => number): DescriberClient {
   const [view, setView] = useState<DescriberView | null>(null);
   const [anchor, setAnchor] = useState(0);

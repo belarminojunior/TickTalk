@@ -1,13 +1,13 @@
 import type { Card, Deck, PackId } from './types';
 import { nextRandom } from './random';
 
-/** Uma carta entra no baralho só se os pacotes dos dois lados estiverem selecionados. */
+/** A card goes into the deck only if the packs of both sides are selected. */
 export function filterCards(cards: readonly Card[], packs: readonly PackId[]): Card[] {
   const selected = new Set(packs);
   return cards.filter((c) => selected.has(c.yellow.pack) && selected.has(c.blue.pack));
 }
 
-/** Fisher–Yates com seed. Devolve a ordem baralhada e o seed seguinte. */
+/** Seeded Fisher–Yates. Returns the shuffled order and the next seed. */
 export function shuffledOrder(length: number, seed: number): { order: number[]; seed: number } {
   const order = Array.from({ length }, (_, i) => i);
   let s = seed;
@@ -25,9 +25,9 @@ export function createDeck(cards: readonly Card[], seed: number): Deck {
   return { cards: [...cards], order, next: 0, seed: next };
 }
 
-/** Tira a próxima carta. Quando o baralho acaba, volta a baralhar. */
+/** Draws the next card. When the deck runs out, it is reshuffled. */
 export function drawCard(deck: Deck): { card: Card; deck: Deck } {
-  if (deck.cards.length === 0) throw new Error('Baralho vazio');
+  if (deck.cards.length === 0) throw new Error('Empty deck');
   let current = deck;
   if (current.next >= current.order.length) {
     const { order, seed } = shuffledOrder(current.cards.length, current.seed);

@@ -15,7 +15,7 @@ import styles from './RollScreen.module.css';
 const ROLL_MS = 1200;
 const SHOW_MS = 700;
 
-/** Fase "rolling": o dado rola grande ao centro (~1,2 s) e depois aplica-se o movimento. */
+/** "rolling" phase: the die rolls big in the centre (~1.2 s), then the move is applied. */
 export function RollOverlay({
   die,
   turnKey,
@@ -25,7 +25,7 @@ export function RollOverlay({
   onDone,
 }: {
   die: number | null;
-  /** Identifica a vez, para não lançar o dado duas vezes. */
+  /** Identifies the turn, so the die is never rolled twice. */
   turnKey: string;
   rng: Rng;
   scale: number;
@@ -61,7 +61,7 @@ export function RollOverlay({
   );
 }
 
-/** O dado grande volta do centro do ecrã para o seu lugar no tabuleiro. */
+/** The big die travels from the centre of the screen back to its spot on the board. */
 export function FlyingDie({ value, targetRef, scale, onDone }: { value: number; targetRef: RefObject<HTMLElement>; scale: number; onDone: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -88,8 +88,19 @@ export function FlyingDie({ value, targetRef, scale, onDone }: { value: number; 
       ],
       { duration, easing: 'cubic-bezier(0.5, 0, 0.2, 1)', fill: 'forwards' },
     );
-    anim.onfinish = () => doneRef.current();
-    return () => anim.cancel();
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      doneRef.current();
+    };
+    anim.onfinish = finish;
+    // Browsers pause animations in hidden or minimised windows; never let that stall the turn.
+    const fallback = setTimeout(finish, duration + 400);
+    return () => {
+      clearTimeout(fallback);
+      anim.cancel();
+    };
   }, [targetRef, reduced, scale]);
 
   return (
@@ -101,15 +112,19 @@ export function FlyingDie({ value, targetRef, scale, onDone }: { value: number; 
   );
 }
 
-/** Painéis do fim da vez (5a com dado / 5b sem dado). */
+/** End-of-turn panels (5a with die / 5b without). */
 export function EndTurnPanel({
   view,
   onNext,
   onUndo,
+  passHint,
 }: {
   view: TableView;
-  onNext: () => void;
+  /** Pass the turn from the table. Null when the describer's screen does it instead. */
+  onNext: (() => void) | null;
   onUndo: () => void;
+  /** Shown instead of the button when the turn is passed on the describer's screen. */
+  passHint: string;
 }) {
   const t = useT();
   const turn = view.turn!;
@@ -172,7 +187,7 @@ export function EndTurnPanel({
         </section>
       )}
 
-      <CardFlipNotice team={team.name} from={fromSide} to={toSide} />
+      <CardFlipNotice team={team.name} from={fromSide} to={toSide} settled={turn.settled} />
 
       {!withDie && (
         <section className={`panel ${styles.sequencePanel}`}>
@@ -190,9 +205,16 @@ export function EndTurnPanel({
       )}
 
       <div className={styles.buttons}>
-        <button type="button" className="btn btn-primary btn-lg btn-block" onClick={onNext} disabled={!turn.settled}>
-          {turn.settled ? t.passTurn(next.player, next.team.name) : t.pawnMoving}
-        </button>
+        {onNext ? (
+          <button type="button" className="btn btn-primary btn-lg btn-block" onClick={onNext} disabled={!turn.settled}>
+            {turn.settled ? t.passTurn(next.player, next.team.name) : t.pawnMoving}
+          </button>
+        ) : (
+          <p className={styles.passHint} role="status">
+            <strong>{t.nextUp(next.player, next.team.name)}</strong>
+            <span>{passHint}</span>
+          </p>
+        )}
         <button type="button" className="btn btn-outline btn-lg btn-block" onClick={onUndo} disabled={!view.canUndo}>
           <UndoIcon size={20} /> {t.undo}
         </button>

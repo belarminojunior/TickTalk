@@ -18,7 +18,7 @@ export interface SetupScreenProps {
   onTeams: (teams: TeamDraft[]) => void;
   link: HostLink;
   phoneUrl: string | null;
-  /** Cartas disponíveis com a língua e os pacotes escolhidos. */
+  /** Cards available for the chosen language and packs. */
   cardCount: number;
   hasSaved: boolean;
   onContinue: () => void;

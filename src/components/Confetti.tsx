@@ -15,7 +15,7 @@ interface Piece {
   color: string;
 }
 
-/** Confetes em canvas, sem biblioteca. Desligados com movimento reduzido. */
+/** Canvas confetti, no library. Off with reduced motion. */
 export function Confetti({ durationMs = 5000 }: { durationMs?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const reduced = useReducedMotion();

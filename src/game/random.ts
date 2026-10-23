@@ -1,6 +1,6 @@
 export type Rng = () => number;
 
-/** PRNG determinístico (mulberry32). Devolve o gerador e o próximo seed. */
+/** Deterministic PRNG (mulberry32). Returns the value and the next seed. */
 export function nextRandom(seed: number): { value: number; seed: number } {
   let t = (seed + 0x6d2b79f5) >>> 0;
   const nextSeed = t;

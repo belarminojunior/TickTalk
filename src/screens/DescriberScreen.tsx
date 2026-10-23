@@ -1,13 +1,13 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { play, unlockAudio } from '../audio/sfx';
 import { Board } from '../components/Board';
-import { CardBack, CardFace, FlipCard } from '../components/Card';
-import { PauseIcon, PlayIcon } from '../components/Icons';
+import { CardFace, HiddenWords, TwoSidedCard } from '../components/Card';
+import { PauseIcon, PlayIcon, UndoIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
 import { TimerRing } from '../components/TimerRing';
 import { WordButton } from '../components/WordButton';
 import type { DescriberView } from '../game/selectors';
-import type { ScreenMode } from '../game/types';
+import type { ScreenMode, Side } from '../game/types';
 import { useKeyboard } from '../hooks/useKeyboard';
 import { useCountdown } from '../hooks/useTimer';
 import type { DescriberCommand } from '../net/protocol';
@@ -23,25 +23,25 @@ export interface DescriberScreenProps {
   mode: ScreenMode;
   now: () => number;
   onCommand: (command: DescriberCommand) => void;
-  /** Ações extra no handoff (no modo "um só ecrã", por exemplo trocar quem explica). */
+  /** Extra handoff actions (in "one screen" mode, e.g. change describer). */
   handoffExtra?: ReactNode;
-  /** Quando outro separador ficou com a ligação: voltar a usar este. */
+  /** When another tab took the connection: use this one again. */
   onTakeOver?: () => void;
 }
 
 const LOCKED_PHASES = ['timeUp', 'validating', 'rolling', 'moving'];
 
-/** A tela de quem explica: a carta grande ao centro e o tabuleiro desfocado ao fundo. */
+/** The describer screen: the big card in the centre, the blurred board behind. */
 export function DescriberScreen({ view, anchor, status, mode, now, onCommand, handoffExtra, onTakeOver }: DescriberScreenProps) {
   const t = useT();
   const remaining = useCountdown(view?.timer.remainingMs ?? 0, !!view?.timer.running, anchor, now);
   const phase = view?.phase ?? 'setup';
   const describing = phase === 'describing';
-  const markedTotal = view?.marked.filter(Boolean).length ?? 0;
+  const markedTotal = view ? view.marked.blue.filter(Boolean).length + view.marked.yellow.filter(Boolean).length : 0;
 
   useTickSounds(remaining, describing);
 
-  // Buzina quando o tempo acaba (só uma vez por vez).
+  // Horn when time runs out (once per turn).
   const prevPhase = useRef(phase);
   useEffect(() => {
     if (prevPhase.current !== phase) {
@@ -51,10 +51,25 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
     }
   }, [phase]);
 
+  // Acts on the side that is face up; a correct word turns the card over.
   const toggle = (index: number) => {
     if (!view || !describing) return;
-    play(view.marked[index] ? 'unhit' : 'hit');
+    play(view.marked[view.up][index] ? 'unhit' : 'hit');
     onCommand({ type: 'TOGGLE_WORD', index });
+  };
+
+  const undoHit = () => {
+    if (!view || !describing || markedTotal === 0) return;
+    play('unhit');
+    onCommand({ type: 'UNDO_HIT' });
+  };
+
+  // End of turn: once the pawn has landed, the describer passes the turn from here.
+  const endOfTurn = phase === 'moving' ? view?.endOfTurn ?? null : null;
+  const passTurn = () => {
+    if (!endOfTurn?.settled) return;
+    unlockAudio();
+    onCommand({ type: 'NEXT_TEAM' });
   };
 
   const readyOrStart = () => {
@@ -64,7 +79,7 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
   };
 
   useKeyboard({
-    Space: readyOrStart,
+    Space: () => (endOfTurn ? passTurn() : readyOrStart()),
     '1': () => toggle(0),
     '2': () => toggle(1),
     '3': () => toggle(2),
@@ -74,6 +89,7 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
       if (phase === 'describing') onCommand({ type: 'PAUSE' });
       else if (phase === 'paused') onCommand({ type: 'RESUME' });
     },
+    Backspace: undoHit,
     Enter: () => {
       if (phase === 'describing' || phase === 'paused') onCommand({ type: 'END_EARLY' });
     },
@@ -92,11 +108,27 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
   const side = view?.side ?? 'blue';
   const team = view?.team;
   const describer = view?.describer ?? '';
-  const showFace = (describing || phase === 'paused') && !!view?.words;
+  // Before the turn the card shows its starting side; once it starts, whichever side is up.
+  const up = phase === 'handoff' ? side : view?.up ?? side;
 
-  const cardFace = (
-    <CardFace side={side} header={t.cardHeader(side, view?.cardNumber ?? null)}>
-      {phase === 'paused' ? (
+  const faceBody = (faceSide: Side): ReactNode => {
+    if (phase === 'handoff') return <HiddenWords />;
+    if (describing && view?.words) {
+      return view.words[faceSide].map((word, i) => (
+        <WordButton
+          key={`${view.cardNumber}-${faceSide}-${i}`}
+          index={i}
+          word={word}
+          marked={!!view.marked[faceSide][i]}
+          side={faceSide}
+          disabled={faceSide !== up}
+          onToggle={toggle}
+        />
+      ));
+    }
+    if (faceSide !== up) return <HiddenWords />;
+    if (phase === 'paused') {
+      return (
         <div className={styles.pausedCover}>
           <strong>{t.paused}</strong>
           <span>{view?.pauseReason === 'disconnected' ? t.reconnectedHelp : t.pausedWordsHidden}</span>
@@ -104,19 +136,36 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
             <PlayIcon size={20} /> {t.resume}
           </button>
         </div>
-      ) : (
-        (view?.words ?? []).map((word, i) => (
-          <WordButton
-            key={`${view?.cardNumber}-${i}`}
-            index={i}
-            word={word}
-            marked={!!view?.marked[i]}
-            side={side}
-            disabled={!describing}
-            onToggle={toggle}
-          />
-        ))
-      )}
+      );
+    }
+    if (endOfTurn) {
+      return (
+        <HiddenWords>
+          <div className={styles.lockNote} role="status">
+            <strong>{t.turnOver}</strong>
+            <span>
+              {t.plusSquares(endOfTurn.steps)} · {t.squareN(endOfTurn.to)}
+            </span>
+          </div>
+        </HiddenWords>
+      );
+    }
+    if (LOCKED_PHASES.includes(phase)) {
+      return (
+        <HiddenWords>
+          <div className={styles.lockNote} role="status">
+            <strong>{t.lookAtTable}</strong>
+            <span>{phase === 'validating' ? t.lookAtTableHelp : t.lookAtTableHelpNoValidation}</span>
+          </div>
+        </HiddenWords>
+      );
+    }
+    return <HiddenWords />;
+  };
+
+  const face = (faceSide: Side) => (
+    <CardFace side={faceSide} header={t.cardHeader(faceSide, view?.cardNumber ?? null)}>
+      {faceBody(faceSide)}
     </CardFace>
   );
 
@@ -177,15 +226,26 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
                   <h1>{t.gameOver}</h1>
                   {view.winner && <p>{t.victory(view.winner)}</p>}
                 </div>
-              ) : LOCKED_PHASES.includes(phase) ? (
-                <CardBack label={t.cardBack}>
-                  <div className={styles.lockNote} role="status">
-                    <strong>{t.lookAtTable}</strong>
-                    <span>{phase === 'validating' ? t.lookAtTableHelp : t.lookAtTableHelpNoValidation}</span>
-                  </div>
-                </CardBack>
               ) : (
-                <FlipCard flipped={showFace} back={<CardBack label={t.cardBack} />} front={cardFace} />
+                <TwoSidedCard up={up} blue={face('blue')} yellow={face('yellow')} />
+              )}
+
+              {endOfTurn && (
+                <div className={styles.below}>
+                  <div className={styles.handoffText}>
+                    <h2>{t.turnOver}</h2>
+                    <p>{t.nextUp(endOfTurn.nextPlayer, endOfTurn.nextTeam)}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-lg"
+                    onClick={passTurn}
+                    disabled={!endOfTurn.settled}
+                    autoFocus
+                  >
+                    {endOfTurn.settled ? t.passTurn(endOfTurn.nextPlayer, endOfTurn.nextTeam) : t.pawnMoving}
+                  </button>
+                </div>
               )}
 
               {phase === 'handoff' && (
@@ -221,9 +281,14 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
                       {t.describerHelp2}
                     </p>
                   </div>
-                  <button type="button" className="btn btn-dark btn-lg" onClick={() => onCommand({ type: 'END_EARLY' })}>
-                    {t.endTurn}
-                  </button>
+                  <div className={styles.turnButtons}>
+                    <button type="button" className="btn btn-outline" onClick={undoHit} disabled={!describing || markedTotal === 0}>
+                      <UndoIcon size={18} /> {t.undoHit}
+                    </button>
+                    <button type="button" className="btn btn-dark btn-lg" onClick={() => onCommand({ type: 'END_EARLY' })}>
+                      {t.endTurn}
+                    </button>
+                  </div>
                 </div>
               )}
             </>

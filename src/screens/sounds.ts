@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { play } from '../audio/sfx';
 
-/** Tique-taque nos últimos 5 segundos. */
+/** Tick-tock in the last 5 seconds. */
 export function useTickSounds(remainingMs: number, active: boolean): void {
   const lastSecond = useRef<number | null>(null);
   useEffect(() => {

@@ -14,7 +14,7 @@ function isEnvelope(x: unknown): x is Envelope {
   return typeof e.from === 'string' && typeof e.to === 'string';
 }
 
-/** Duas janelas no mesmo PC (e no mesmo browser): BroadcastChannel. */
+/** Two windows on the same PC (and the same browser): BroadcastChannel. */
 export class BroadcastChannelTransport extends BaseTransport {
   readonly kind = 'broadcast' as const;
   private channel: BroadcastChannel;

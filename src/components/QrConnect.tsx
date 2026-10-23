@@ -5,7 +5,7 @@ import styles from './QrConnect.module.css';
 
 export type ServerStatus = 'connecting' | 'online' | 'offline';
 
-/** QR code gerado localmente + endereço + estado da ligação do telemóvel. */
+/** QR code generated locally + address + phone connection status. */
 export function QrConnect({ url, connected, server, compact }: { url: string | null; connected: number; server: ServerStatus; compact?: boolean }) {
   const t = useT();
   const [dataUrl, setDataUrl] = useState<string | null>(null);

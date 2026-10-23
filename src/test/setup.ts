@@ -7,6 +7,6 @@ afterEach(() => {
   try {
     window.localStorage.clear();
   } catch {
-    /* ignorar */
+    /* ignore */
   }
 });

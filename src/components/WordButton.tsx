@@ -11,7 +11,7 @@ export interface WordButtonProps {
   onToggle: (index: number) => void;
 }
 
-/** Palavra da carta: tocar marca como acertada (preta, riscada, com visto); tocar outra vez desmarca. */
+/** A word on the card: tap to mark it guessed (black, struck through, ticked); tap again to unmark. */
 export function WordButton({ index, word, marked, side, disabled, onToggle }: WordButtonProps) {
   return (
     <button

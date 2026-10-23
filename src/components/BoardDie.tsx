@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import styles from './Dice.module.css';
 
-/** O dado pousado no tabuleiro, a mostrar o último valor. */
+/** The die resting on the board, showing the last value. */
 export const BoardDie = forwardRef<HTMLDivElement, { value: number }>(function BoardDie({ value }, ref) {
   return (
     <div ref={ref} className={styles.boardDie} data-testid="board-die">

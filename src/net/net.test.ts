@@ -3,8 +3,8 @@ import { LocalBus, LocalTransport } from './local';
 import { msg, parseClientMessage, parseHostMessage } from './protocol';
 import { HOST_ID, SERVER_ID } from './transport';
 
-describe('protocolo', () => {
-  it('ignora mensagens inválidas ou de outra versão', () => {
+describe('protocol', () => {
+  it('ignores invalid messages or another version', () => {
     expect(parseClientMessage(null)).toBeNull();
     expect(parseClientMessage('hello')).toBeNull();
     expect(parseClientMessage({ kind: 'hello' })).toBeNull();
@@ -16,7 +16,7 @@ describe('protocolo', () => {
     expect(parseHostMessage({ v: 1, kind: 'state', view: 'x' })).toBeNull();
   });
 
-  it('aceita mensagens válidas', () => {
+  it('accepts valid messages', () => {
     expect(parseClientMessage(msg.hello())).toEqual({ v: 1, kind: 'hello' });
     expect(parseClientMessage(msg.command({ type: 'TOGGLE_WORD', index: 4 }))).toEqual({
       v: 1,
@@ -24,11 +24,12 @@ describe('protocolo', () => {
       command: { type: 'TOGGLE_WORD', index: 4 },
     });
     expect(parseHostMessage(msg.busy('pt'))).toEqual({ v: 1, kind: 'busy', language: 'pt' });
+    expect(parseClientMessage(msg.command({ type: 'NEXT_TEAM' }))).toEqual({ v: 1, kind: 'command', command: { type: 'NEXT_TEAM' } });
   });
 });
 
 describe('DescriberHub', () => {
-  it('aceita o primeiro explicador e recusa um segundo', () => {
+  it('accepts the first describer and refuses a second', () => {
     const hub = new DescriberHub();
     expect(hub.receive('a', msg.hello(), 0)).toContainEqual({ type: 'accepted', id: 'a' });
     expect(hub.receive('b', msg.hello(), 0)).toContainEqual({ type: 'rejected', id: 'b' });
@@ -36,7 +37,7 @@ describe('DescriberHub', () => {
     expect(hub.connectedCount).toBe(2);
   });
 
-  it('ignora comandos de quem não é o explicador ativo', () => {
+  it('ignores commands from anyone but the active describer', () => {
     const hub = new DescriberHub();
     hub.receive('a', msg.hello(), 0);
     const events = hub.receive('b', msg.command({ type: 'END_EARLY' }), 0);
@@ -48,14 +49,14 @@ describe('DescriberHub', () => {
     });
   });
 
-  it('ignora lixo', () => {
+  it('ignores garbage', () => {
     const hub = new DescriberHub();
     expect(hub.receive('a', { v: 1, kind: 'nope' }, 0)).toEqual([]);
     expect(hub.receive('a', 42, 0)).toEqual([]);
     expect(hub.connectedCount).toBe(0);
   });
 
-  it('avisa quando o explicador se desliga (bye, servidor ou silêncio) e liberta o lugar', () => {
+  it('reports when the describer leaves (bye, server or silence) and frees the slot', () => {
     const hub = new DescriberHub(5000);
     hub.receive('a', msg.hello(), 0);
     expect(hub.receive('a', msg.bye(), 10)).toContainEqual({ type: 'describer-lost', id: 'a' });
@@ -74,7 +75,7 @@ describe('DescriberHub', () => {
     expect(hub.sweep(9500)).toContainEqual({ type: 'describer-lost', id: 'c' });
   });
 
-  it('um telemóvel à espera fica com o lugar quando o ativo sai', () => {
+  it('a waiting phone takes the slot when the active one leaves', () => {
     const hub = new DescriberHub();
     hub.receive('a', msg.hello(), 0);
     hub.receive('b', msg.hello(), 0);
@@ -84,7 +85,7 @@ describe('DescriberHub', () => {
 });
 
 describe('LocalTransport', () => {
-  it('entrega só ao destinatário, de forma assíncrona e com cópia', async () => {
+  it('delivers only to the recipient, asynchronously and as a copy', async () => {
     const bus = new LocalBus();
     const host = new LocalTransport(bus, HOST_ID);
     const a = new LocalTransport(bus, 'a');

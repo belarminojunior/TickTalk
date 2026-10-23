@@ -1,6 +1,6 @@
 import { WebSocketTransport } from './websocket';
 
-/** WebSocket falso: guarda as instâncias para o teste as abrir e fechar. */
+/** Fake WebSocket: keeps its instances so the test can open and close them. */
 class FakeSocket {
   static OPEN = 1;
   static instances: FakeSocket[] = [];
@@ -41,7 +41,7 @@ describe('WebSocketTransport', () => {
     vi.useRealTimers();
   });
 
-  it('volta a ligar sozinho quando a ligação cai', () => {
+  it('reconnects on its own when the connection drops', () => {
     const t = new WebSocketTransport('host', 'host', 'ws://test/ws');
     FakeSocket.instances[0].open();
     FakeSocket.instances[0].serverClose(1006);
@@ -51,7 +51,7 @@ describe('WebSocketTransport', () => {
     t.close();
   });
 
-  it('não volta a ligar quando outra página fica com o lugar (sem ping-pong entre mesas)', () => {
+  it('does not reconnect when another page takes its place (no ping-pong between tables)', () => {
     const t = new WebSocketTransport('host', 'host', 'ws://test/ws');
     FakeSocket.instances[0].open();
     FakeSocket.instances[0].serverClose(4000);
@@ -68,7 +68,7 @@ describe('WebSocketTransport', () => {
     t.close();
   });
 
-  it('o mesmo para um separador de quem explica duplicado', () => {
+  it('same for a duplicated describer tab', () => {
     const t = new WebSocketTransport('describer', 'c-1', 'ws://test/ws');
     FakeSocket.instances[0].open();
     FakeSocket.instances[0].serverClose(4001);

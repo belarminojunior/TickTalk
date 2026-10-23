@@ -1,6 +1,6 @@
 /**
- * Reencaminhador de mensagens entre a mesa (anfitrião) e as telas de quem explica.
- * Não conhece as regras do jogo: só entrega envelopes {to, body} e avisa quando alguém sai.
+ * Relays messages between the table (host) and the describer screens.
+ * Knows nothing about the game rules: it only delivers {to, body} envelopes and reports who leaves.
  */
 
 export const PROTOCOL_VERSION = 1;
@@ -34,7 +34,7 @@ function parse(data: string): { to: string; body: unknown } | null {
   }
 }
 
-/** Ligação fechada porque outra página ficou com o mesmo papel (o cliente não volta a ligar sozinho). */
+/** Connection closed because another page took the same role (the client does not reconnect by itself). */
 export const CLOSE_HOST_REPLACED = 4000;
 export const CLOSE_DESCRIBER_REPLACED = 4001;
 
@@ -50,7 +50,7 @@ export class Relay {
     return this.host !== null;
   }
 
-  /** Uma nova mesa substitui a anterior (por exemplo, depois de recarregar a página). */
+  /** A new table replaces the previous one (e.g. after a page reload). */
   addHost(conn: Connection): void {
     if (this.host && this.host !== conn) this.host.close(CLOSE_HOST_REPLACED, 'replaced');
     this.host = conn;

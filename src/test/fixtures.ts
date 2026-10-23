@@ -1,12 +1,12 @@
 import type { Card, PackId, Settings, TeamSetup } from '../game/types';
 import { DEFAULT_SETTINGS } from '../game/reducer';
 
-export function makeCard(n: number, yellowPack: PackId = 'coisas', bluePack: PackId = 'lugares'): Card {
+export function makeCard(n: number, yellowPack: PackId = 'things', bluePack: PackId = 'places'): Card {
   const id = `t-${String(n).padStart(4, '0')}`;
   return {
     id,
-    yellow: { pack: yellowPack, words: [1, 2, 3, 4, 5].map((k) => `Amarela${n}-${k}`) },
-    blue: { pack: bluePack, words: [1, 2, 3, 4, 5].map((k) => `Azul${n}-${k}`) },
+    yellow: { pack: yellowPack, words: [1, 2, 3, 4, 5].map((k) => `Yellow${n}-${k}`) },
+    blue: { pack: bluePack, words: [1, 2, 3, 4, 5].map((k) => `Blue${n}-${k}`) },
   };
 }
 

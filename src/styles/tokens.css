@@ -1,20 +1,20 @@
 :root {
-  --table: #2A1E15;        /* fundo da página (madeira) */
-  --board: #141414;        /* tabuleiro preto, painéis */
-  --panel-2: #262626;      /* linhas internas dos painéis */
+  --table: #2A1E15;        /* page background (wood) */
+  --board: #141414;        /* black board, panels */
+  --panel-2: #262626;      /* inner panel rows */
   --panel-line: #2B2B2B;
-  --outline: #6B5A4A;      /* botões com contorno, bordas de inputs */
-  --chalk: #F5F1EA;        /* texto principal, contorno branco do percurso */
-  --muted: #B8B2A8;        /* texto secundário */
-  --scrim: rgba(20,14,10,0.62); /* véu escuro sobre o tabuleiro desfocado */
+  --outline: #6B5A4A;      /* outlined buttons, input borders */
+  --chalk: #F5F1EA;        /* main text, white track outline */
+  --muted: #B8B2A8;        /* secondary text */
+  --scrim: rgba(20,14,10,0.62); /* dark veil over the blurred board */
 
   --yellow: #F7C51E;  --yellow-paper: #FFFBEA;
   --blue:   #2BB3E6;  --blue-paper:   #EAF8FE;
-  --ink: #141414;          /* texto e ícones sobre amarelo/azul */
-  --danger: #E23B3B;  --danger-text: #FF9B9B; /* anular */
+  --ink: #141414;          /* text and icons on yellow/blue */
+  --danger: #E23B3B;  --danger-text: #FF9B9B; /* cancel */
   --ok: #3CC46A;
 
-  /* peões: cor / aro / letra */
+  /* pawns: colour / rim / letter */
   --pawn-red: #E23B3B;    --pawn-red-rim: #8E1F1F;    --pawn-red-fg: #141414;
   --pawn-green: #2E9E4F;  --pawn-green-rim: #16592A;  --pawn-green-fg: #141414;
   --pawn-purple: #7B3FA0; --pawn-purple-rim: #3F1C55; --pawn-purple-fg: #FFFFFF;

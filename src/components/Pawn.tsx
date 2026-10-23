@@ -5,7 +5,7 @@ import styles from './Pawn.module.css';
 export interface PawnProps {
   color: PawnColor;
   label: string;
-  /** Tamanho CSS (px, cqw…). */
+  /** CSS size (px, cqw…). */
   size?: string | number;
   title?: string;
   className?: string;
@@ -16,7 +16,7 @@ export function teamInitial(name: string): string {
   return (cleaned[0] ?? name[0] ?? '?').toUpperCase();
 }
 
-/** Peão: disco na cor da equipa, aro mais escuro, sempre com a inicial. */
+/** Pawn: a disc in the team colour with a darker rim, always showing the initial. */
 export function Pawn({ color, label, size = 40, title, className }: PawnProps) {
   const style = {
     '--pawn': `var(--pawn-${color})`,

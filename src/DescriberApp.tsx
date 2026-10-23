@@ -13,11 +13,11 @@ function guessLanguage(): Language {
   return typeof navigator !== 'undefined' && /^en/i.test(navigator.language) ? 'en' : 'pt';
 }
 
-/** /explicar: a tela de quem explica, no telemóvel (WebSocket) ou numa segunda janela (BroadcastChannel). */
+/** /explicar: the describer screen, on a phone (WebSocket) or in a second window (BroadcastChannel). */
 export function DescriberApp() {
   const config = useConfig();
   const [mode] = useState<ScreenMode>(() =>
-    new URLSearchParams(window.location.search).get('via') === 'janela' ? 'windows' : 'phone',
+    new URLSearchParams(window.location.search).get('via') === 'window' ? 'windows' : 'phone',
   );
   const [transport, setTransport] = useState<Transport | null>(null);
 
@@ -31,7 +31,7 @@ export function DescriberApp() {
     return () => t.close();
   }, [mode]);
 
-  // Quando o telemóvel volta do ecrã bloqueado, tenta logo ligar outra vez.
+  // When the phone comes back from the lock screen, reconnect straight away.
   useEffect(() => {
     if (!(transport instanceof WebSocketTransport)) return;
     const onVisible = () => document.visibilityState === 'visible' && transport.reconnectNow();

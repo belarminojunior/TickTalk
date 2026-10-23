@@ -2,10 +2,10 @@ import { cardNumber, createDeck, drawCard, filterCards } from './deck';
 import { DIE_FACES, advanceFor, rollDie } from './dice';
 import { makeCard } from '../test/fixtures';
 
-describe('baralho', () => {
+describe('deck', () => {
   const cards = Array.from({ length: 10 }, (_, i) => makeCard(i + 1));
 
-  it('não repete cartas até o baralho acabar, e depois volta a baralhar', () => {
+  it('does not repeat cards until the deck runs out, then reshuffles', () => {
     let deck = createDeck(cards, 42);
     const seen = new Set<string>();
     for (let i = 0; i < cards.length; i++) {
@@ -24,33 +24,33 @@ describe('baralho', () => {
     expect(second.size).toBe(cards.length);
   });
 
-  it('só aceita cartas com os dois pacotes selecionados', () => {
-    const mixed = [makeCard(1, 'coisas', 'lugares'), makeCard(2, 'pessoas', 'lugares'), makeCard(3, 'mocambique', 'coisas')];
-    expect(filterCards(mixed, ['coisas', 'lugares']).map((c) => c.id)).toEqual(['t-0001']);
-    expect(filterCards(mixed, ['coisas', 'lugares', 'mocambique'])).toHaveLength(2);
+  it('only accepts cards whose two packs are selected', () => {
+    const mixed = [makeCard(1, 'things', 'places'), makeCard(2, 'people', 'places'), makeCard(3, 'mozambique', 'things')];
+    expect(filterCards(mixed, ['things', 'places']).map((c) => c.id)).toEqual(['t-0001']);
+    expect(filterCards(mixed, ['things', 'places', 'mozambique'])).toHaveLength(2);
   });
 
-  it('é determinístico com o mesmo seed', () => {
+  it('is deterministic for the same seed', () => {
     expect(createDeck(cards, 7).order).toEqual(createDeck(cards, 7).order);
     expect(createDeck(cards, 7).order).not.toEqual(createDeck(cards, 8).order);
   });
 
-  it('lê o número da carta a partir do id', () => {
+  it('reads the card number from the id', () => {
     expect(cardNumber({ id: 'pt-0128' })).toBe(128);
   });
 });
 
-describe('dado', () => {
-  it('tem 6 faces: 0, 0, 1, 1, 2, 2', () => {
+describe('die', () => {
+  it('has 6 faces: 0, 0, 1, 1, 2, 2', () => {
     expect([...DIE_FACES]).toEqual([0, 0, 1, 1, 2, 2]);
   });
-  it('só dá 0, 1 ou 2', () => {
+  it('only rolls 0, 1 or 2', () => {
     for (let i = 0; i < 600; i++) expect([0, 1, 2]).toContain(rollDie());
     expect(rollDie(() => 0)).toBe(0);
     expect(rollDie(() => 0.34)).toBe(1);
     expect(rollDie(() => 0.999999)).toBe(2);
   });
-  it('avanço: com dado max(0, válidas − dado); sem dado, válidas', () => {
+  it('advance: with die max(0, valid − die); without, valid', () => {
     expect(advanceFor(2, 1)).toBe(1);
     expect(advanceFor(1, 2)).toBe(0);
     expect(advanceFor(0, 2)).toBe(0);

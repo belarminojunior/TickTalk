@@ -8,7 +8,7 @@ export interface SegmentedOption<T extends string | number> {
   label: ReactNode;
 }
 
-/** Controlo segmentado: o selecionado fica amarelo com texto escuro. */
+/** Segmented control: the selected option is yellow with dark text. */
 export function Segmented<T extends string | number>({
   label,
   options,
@@ -45,7 +45,7 @@ export function Segmented<T extends string | number>({
   );
 }
 
-/** Caixa de seleção grande com visto amarelo. */
+/** Large checkbox with a yellow tick. */
 export function Checkbox({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
     <label className={styles.checkbox}>
@@ -60,7 +60,7 @@ export function Checkbox({ label, checked, onChange }: { label: string; checked:
   );
 }
 
-/** Janela modal com foco preso, Esc para fechar. */
+/** Modal dialog with a focus trap; Esc closes it. */
 export function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
   const t = useT();
   const ref = useRef<HTMLDivElement>(null);
@@ -107,12 +107,12 @@ export function Modal({ title, onClose, children }: { title: string; onClose: ()
   );
 }
 
-/** Logótipo: quadrado meio amarelo, meio azul. */
+/** Logo: a square, half yellow and half blue. */
 export function Logo({ size = 64 }: { size?: number }) {
   return <span className={styles.logo} style={{ width: size, height: size }} aria-hidden="true" />;
 }
 
-/** Quatro mini-casas alternadas (decoração da configuração). */
+/** Four alternating mini squares (setup decoration). */
 export function MiniSquares() {
   return (
     <span className={styles.miniSquares} aria-hidden="true">
@@ -124,7 +124,7 @@ export function MiniSquares() {
   );
 }
 
-/** Pastilha de estado com ponto (verde, vermelho a pulsar, cinzento). */
+/** Status pill with a dot (green, pulsing red, grey). */
 export function StatusPill({ tone, children }: { tone: 'live' | 'ok' | 'off' | 'warn'; children: ReactNode }) {
   return (
     <span className={`${styles.pill} ${styles[tone]}`} role="status">

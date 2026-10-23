@@ -4,13 +4,19 @@
     {
       "name": "play",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "play"],
+      "runtimeArgs": [
+        "run",
+        "play"
+      ],
       "port": 5174
     },
     {
       "name": "dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 5173
     }
   ]

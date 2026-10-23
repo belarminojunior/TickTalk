@@ -13,20 +13,20 @@ export interface BoardPawn {
   name: string;
   color: PawnColor;
   label: string;
-  /** 0 = Partida, 1..36. */
+  /** 0 = start, 1..36. */
   position: number;
 }
 
 export interface BoardProps {
   pawns: BoardPawn[];
-  /** Último valor do dado (ou null). */
+  /** Last die value (or null). */
   die?: number | null;
   showDie?: boolean;
-  /** Casa de destino em destaque. */
+  /** Destination square to highlight. */
   highlight?: number | null;
-  /** Peão que está a saltar (anima cada mudança de casa). */
+  /** Pawn that is hopping (animates each change of square). */
   movingId?: string | null;
-  /** Versão desfocada, só decorativa. */
+  /** Blurred version, decoration only. */
   blurred?: boolean;
   className?: string;
 }
@@ -38,7 +38,7 @@ function pawnSize(count: number): string {
   return '2.5cqw';
 }
 
-/** O tabuleiro: grelha 10 × 7 com o percurso em dois "U" ligados por uma ponte. */
+/** The board: a 10 × 7 grid with the track as two "U" shapes joined by a bridge. */
 export const Board = forwardRef<HTMLDivElement, BoardProps>(function Board(
   { pawns, die = null, showDie = true, highlight = null, movingId = null, blurred = false, className },
   dieRef,

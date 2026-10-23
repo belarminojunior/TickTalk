@@ -3,11 +3,13 @@ import { CardFace } from '../components/Card';
 import { ArrowRightIcon, DiceIcon } from '../components/Icons';
 import { sideVars } from '../components/TablePanels';
 import { RulesList, ValidationRow } from '../components/ValidationRow';
+import { otherSide } from '../game/reducer';
 import { turnSummary, validatorTeam, type TableView } from '../game/selectors';
+import type { Side } from '../game/types';
 import { useT } from '../i18n';
 import styles from './ValidationScreen.module.css';
 
-/** A equipa seguinte valida a vez: a carta revelada, Válida | Anular, e confirmar. */
+/** The next team checks the turn: the revealed card, Valid | Cancel, then confirm. */
 export function ValidationScreen({
   view,
   pawns,
@@ -16,7 +18,7 @@ export function ValidationScreen({
 }: {
   view: TableView;
   pawns: BoardPawn[];
-  onSet: (index: number, annulled: boolean) => void;
+  onSet: (side: Side, index: number, annulled: boolean) => void;
   onConfirm: () => void;
 }) {
   const t = useT();
@@ -25,7 +27,8 @@ export function ValidationScreen({
   const validator = validatorTeam(view);
   const { marked, annulled, valid } = turnSummary(turn);
   const withDie = view.settings.scoring === 'die';
-  const words = turn.words ?? [];
+  // The side the turn started on comes first.
+  const sides: Side[] = [turn.side, otherSide(turn.side)];
 
   return (
     <div className={styles.screen}>
@@ -42,20 +45,25 @@ export function ValidationScreen({
         </header>
 
         <div className={styles.grid}>
-          <CardFace side={turn.side} header={t.cardHeader(turn.side, turn.cardNumber)} className={styles.card}>
-            <ul className={styles.rows} style={sideVars(turn.side)}>
-              {words.map((word, i) => (
-                <ValidationRow
-                  key={i}
-                  index={i}
-                  word={word}
-                  marked={turn.marked[i]}
-                  annulled={turn.annulled[i]}
-                  onChange={onSet}
-                />
-              ))}
-            </ul>
-          </CardFace>
+          <div className={styles.cards}>
+            {sides.map((side) => (
+              <CardFace key={side} side={side} header={t.cardHeader(side, turn.cardNumber)} className={styles.card}>
+                <ul className={styles.rows} style={sideVars(side)}>
+                  {(turn.words?.[side] ?? []).map((word, i) => (
+                    <ValidationRow
+                      key={i}
+                      index={i}
+                      word={word}
+                      marked={turn.marked[side][i]}
+                      annulled={turn.annulled[side][i]}
+                      onChange={(index, annulled) => onSet(side, index, annulled)}
+                      compact
+                    />
+                  ))}
+                </ul>
+              </CardFace>
+            ))}
+          </div>
 
           <aside className={styles.side}>
             <section className={`panel ${styles.result}`} style={sideVars(turn.side)}>

@@ -16,7 +16,7 @@ function fake(): Connection & { sent: unknown[]; closed: number | null } {
 }
 
 describe('Relay', () => {
-  it('reencaminha do telemóvel para a mesa e da mesa só para o telemóvel certo', () => {
+  it('relays phone → table, and table → only the right phone', () => {
     const relay = new Relay();
     const host = fake();
     const a = fake();
@@ -31,7 +31,7 @@ describe('Relay', () => {
     expect(a.sent.some((m) => JSON.stringify(m).includes('secret'))).toBe(false);
   });
 
-  it('ignora lixo e mensagens que não vão para a mesa', () => {
+  it('ignores garbage and messages not addressed to the table', () => {
     const relay = new Relay();
     const host = fake();
     const a = fake();
@@ -43,7 +43,7 @@ describe('Relay', () => {
     expect(host.sent).toEqual([]);
   });
 
-  it('avisa a mesa quando um telemóvel sai, e os telemóveis quando a mesa sai', () => {
+  it('tells the table when a phone leaves, and the phones when the table leaves', () => {
     const relay = new Relay();
     const host = fake();
     const a = fake();
@@ -55,7 +55,7 @@ describe('Relay', () => {
     expect(host.sent).toContainEqual({ from: 'server', body: { v: 1, kind: 'peer-left', id: 'a' } });
   });
 
-  it('uma nova ligação com o mesmo id substitui a antiga', () => {
+  it('a new connection with the same id replaces the old one', () => {
     const relay = new Relay();
     const host = fake();
     const old = fake();
@@ -64,12 +64,12 @@ describe('Relay', () => {
     relay.addDescriber('a', old);
     relay.addDescriber('a', fresh);
     expect(old.closed).toBe(4001);
-    relay.removeDescriber('a', old); // o "close" atrasado da antiga não apaga a nova
+    relay.removeDescriber('a', old); // the old socket's late close must not remove the new one
     expect(relay.describerCount).toBe(1);
     expect(host.sent).not.toContainEqual({ from: 'server', body: { v: 1, kind: 'peer-left', id: 'a' } });
   });
 
-  it('valida os ids', () => {
+  it('validates ids', () => {
     expect(isValidClientId('c-abc123')).toBe(true);
     expect(isValidClientId('host')).toBe(false);
     expect(isValidClientId('../x')).toBe(false);

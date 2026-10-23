@@ -9,21 +9,24 @@ export interface ValidationRowProps {
   annulled: boolean;
   onChange?: (index: number, annulled: boolean) => void;
   readOnly?: boolean;
+  /** Smaller rows, for showing both sides of the card at once. */
+  compact?: boolean;
 }
 
-/** Linha da carta revelada: válida / anulada / não acertada. */
-export function ValidationRow({ index, word, marked, annulled, onChange, readOnly }: ValidationRowProps) {
+/** Row of the revealed card: valid / cancelled / not guessed. */
+export function ValidationRow({ index, word, marked, annulled, onChange, readOnly, compact }: ValidationRowProps) {
   const t = useT();
+  const size = compact ? styles.compact : '';
   if (!marked) {
     return (
-      <li className={`${styles.row} ${styles.missed}`}>
+      <li className={`${styles.row} ${styles.missed} ${size}`}>
         <span className={styles.word}>{word}</span>
         <span className={styles.missedTag}>{t.notGuessed}</span>
       </li>
     );
   }
   return (
-    <li className={`${styles.row} ${annulled ? styles.annulled : styles.valid}`} data-annulled={annulled}>
+    <li className={`${styles.row} ${annulled ? styles.annulled : styles.valid} ${size}`} data-annulled={annulled}>
       <span className={styles.mark} aria-hidden="true">
         {annulled ? <XIcon size={26} strokeWidth={3} /> : <CheckIcon size={26} strokeWidth={3} />}
       </span>
@@ -53,7 +56,7 @@ export function ValidationRow({ index, word, marked, annulled, onChange, readOnl
   );
 }
 
-/** "Anula se quem explicou…" */
+/** "Cancel if the describer…" */
 export function RulesList() {
   const t = useT();
   return (

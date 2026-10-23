@@ -1,10 +1,10 @@
-/** Identificador do anfitrião (a mesa) em todos os transportes. */
+/** Id of the host (the table) on every transport. */
 export const HOST_ID = 'host';
-/** Remetente das notificações do servidor WebSocket. */
+/** Sender of WebSocket server notices. */
 export const SERVER_ID = 'server';
 
 export type TransportKind = 'local' | 'broadcast' | 'websocket';
-/** "replaced": outra página com o mesmo papel tomou o lugar desta (não volta a ligar sozinha). */
+/** "replaced": another page with the same role took this one's place (no automatic reconnect). */
 export type LinkStatus = 'connecting' | 'open' | 'closed' | 'replaced';
 
 export type MessageHandler = (from: string, body: unknown) => void;
@@ -12,8 +12,8 @@ export type StatusHandler = (status: LinkStatus) => void;
 export type Unsubscribe = () => void;
 
 /**
- * Um ponto de ligação. O anfitrião usa o id "host"; cada tela de quem explica tem o seu id.
- * As mensagens levam sempre destino; cada implementação entrega só a quem se destinam.
+ * One endpoint. The host uses the id "host"; each describer screen has its own id.
+ * Messages always carry a recipient; each implementation delivers only to that recipient.
  */
 export interface Transport {
   readonly kind: TransportKind;
@@ -25,7 +25,7 @@ export interface Transport {
   close(): void;
 }
 
-/** Base comum: gere os ouvintes e o estado da ligação. */
+/** Shared base: manages listeners and the link status. */
 export abstract class BaseTransport implements Transport {
   abstract readonly kind: TransportKind;
   private messageHandlers = new Set<MessageHandler>();
@@ -67,7 +67,7 @@ export abstract class BaseTransport implements Transport {
   }
 }
 
-/** Id estável por separador, para a tela de quem explica se reconhecer depois de recarregar. */
+/** Stable per-tab id, so a describer screen is recognised after a reload. */
 export function stableClientId(): string {
   const key = 'ticktalk.clientId';
   const fresh = () => `c-${Math.random().toString(36).slice(2, 10)}`;

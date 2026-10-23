@@ -2,15 +2,15 @@ import { createContext, useContext, type ReactNode } from 'react';
 import type { Rng } from './game/random';
 import { randomSeed } from './game/random';
 
-/** Dependências do mundo exterior, para os testes as poderem simular. */
+/** Outside-world dependencies, so tests can fake them. */
 export interface AppConfig {
-  /** Relógio do anfitrião (ms). */
+  /** Host clock (ms). */
   now: () => number;
-  /** Gerador usado só para o dado. */
+  /** Random generator used only for the die. */
   rng: Rng;
-  /** Seed do baralho. */
+  /** Deck seed. */
   seed: () => number;
-  /** Multiplicador das durações das animações (0 = instantâneo). */
+  /** Animation duration multiplier (0 = instant). */
   animationScale: number;
 }
 

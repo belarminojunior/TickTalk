@@ -180,7 +180,27 @@
   background: linear-gradient(to bottom, transparent, var(--table) 14px);
 }
 
-/* Portátil (≈768 px de altura): tudo cabe sem scroll. */
+.passHint {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: var(--board);
+  box-shadow: inset 0 0 0 1.5px var(--yellow);
+}
+
+.passHint strong {
+  font-size: 18px;
+}
+
+.passHint span {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* Laptop (≈768 px tall): everything fits without scrolling. */
 @media (max-height: 820px) {
   .column { gap: 12px; }
   .diePanel { flex-direction: row; justify-content: space-between; padding: 16px 22px; gap: 16px; }

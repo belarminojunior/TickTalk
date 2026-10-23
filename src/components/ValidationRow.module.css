@@ -110,6 +110,43 @@
   font-size: 17px;
 }
 
+/* Compact rows: both sides of the card fit side by side on a laptop screen. */
+.compact {
+  min-height: 56px;
+  gap: 10px;
+  padding: 6px 8px 6px 14px;
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.compact.missed {
+  padding-right: 14px;
+}
+
+.compact .word {
+  font-size: 21px;
+}
+
+.compact .annulledTag {
+  font-size: 12px;
+}
+
+.compact .missedTag {
+  font-size: 13px;
+}
+
+.compact .toggle {
+  padding: 4px;
+  gap: 3px;
+}
+
+.compact .toggleBtn {
+  min-height: 40px;
+  min-width: 70px;
+  padding: 0 10px;
+  font-size: 15px;
+}
+
 @media (max-width: 720px) {
   .row { flex-wrap: wrap; padding-left: 16px; }
   .word { font-size: 24px; }

@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react';
 import type { Side } from '../game/types';
+import { WORDS_PER_CARD } from '../game/types';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import styles from './Card.module.css';
 
+/** One face of a card, in the colour of its side. */
 export function CardFace({
   side,
   header,
@@ -25,32 +27,60 @@ export function CardFace({
   );
 }
 
-/** Costas da carta: padrão bicolor com o nome do jogo. */
-export function CardBack({ label, children }: { label: string; children?: ReactNode }) {
+/** Five face-down word slots: the card is showing, but its words are not readable yet. */
+export function HiddenWords({ children }: { children?: ReactNode }) {
   return (
-    <section className={`${styles.card} ${styles.back}`} aria-label={label}>
-      <div className={styles.backPattern} aria-hidden="true">
-        <span className={styles.backLogo}>TICK<br />TALK</span>
-      </div>
-      {children && <div className={styles.backContent}>{children}</div>}
-    </section>
+    <div className={styles.hiddenWrap}>
+      <ol className={styles.hiddenList} aria-hidden="true">
+        {Array.from({ length: WORDS_PER_CARD }, (_, i) => (
+          <li key={i} className={styles.hiddenWord}>
+            <span className={styles.badge}>{i + 1}</span>
+            <span className={styles.hiddenBar} />
+          </li>
+        ))}
+      </ol>
+      {children && <div className={styles.overlay}>{children}</div>}
+    </div>
   );
 }
 
-/** Vira a carta em 3D (600 ms). Sem animação com movimento reduzido. */
-export function FlipCard({ flipped, back, front }: { flipped: boolean; back: ReactNode; front: ReactNode }) {
+/**
+ * A real two-sided card: blue on one face, yellow on the other.
+ * Changing `up` turns the card over in 3D (600 ms); with reduced motion it just swaps.
+ */
+export function TwoSidedCard({
+  up,
+  blue,
+  yellow,
+  size = 'large',
+}: {
+  up: Side;
+  blue: ReactNode;
+  yellow: ReactNode;
+  size?: 'large' | 'mini';
+}) {
   const reduced = useReducedMotion();
-  if (reduced) return <div className={styles.flipStatic}>{flipped ? front : back}</div>;
+  if (reduced) return <div className={styles.flipStatic}>{up === 'blue' ? blue : yellow}</div>;
   return (
-    <div className={`${styles.flip} ${flipped ? styles.flipped : ''}`}>
-      <div className={styles.flipInner}>
-        <div className={styles.flipBack} aria-hidden={flipped || undefined}>
-          {back}
+    <div className={`${styles.flip} ${size === 'mini' ? styles.flipMini : ''}`} data-up={up}>
+      <div className={`${styles.flipInner} ${up === 'yellow' ? styles.flipped : ''}`}>
+        <div className={styles.faceBlue} aria-hidden={up !== 'blue' || undefined}>
+          {blue}
         </div>
-        <div className={styles.flipFront} aria-hidden={!flipped || undefined}>
-          {front}
+        <div className={styles.faceYellow} aria-hidden={up !== 'yellow' || undefined}>
+          {yellow}
         </div>
       </div>
     </div>
+  );
+}
+
+/** Small card used on the table to show which side the team reads next. */
+export function MiniCard({ side }: { side: Side }) {
+  return (
+    <span className={`${styles.mini} ${styles[side]}`}>
+      <span className={styles.miniBrand}>TT</span>
+      <span className={styles.miniLines} />
+    </span>
   );
 }

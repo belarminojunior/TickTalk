@@ -6,7 +6,7 @@ export interface GridCell {
   col: number;
 }
 
-/** Coordenadas (linha, coluna) das casas 1–36 numa grelha de 10 colunas × 7 linhas. */
+/** (row, column) of squares 1–36 on a 10-column × 7-row grid. */
 export const BOARD_PATH: readonly GridCell[] = [
   [6, 4], [7, 4], [7, 3], [7, 2], [7, 1], [6, 1], [5, 1], [4, 1], [3, 1],
   [2, 1], [1, 1], [1, 2], [1, 3], [1, 4], [2, 4], [3, 4], [4, 4], [4, 5],
@@ -18,13 +18,13 @@ export const BOARD_PATH: readonly GridCell[] = [
 export const BOARD_COLS = 10;
 export const BOARD_ROWS = 7;
 
-/** Casa 0 = Partida (azul). Ímpar = azul, par = amarela. */
+/** Square 0 = start (blue). Odd = blue, even = yellow. */
 export function squareColor(square: number): Side {
   if (square <= 0) return 'blue';
   return square % 2 === 1 ? 'blue' : 'yellow';
 }
 
-/** Lado da carta que a equipa lê: a cor da casa onde está o peão. */
+/** Card side the team reads: the colour of the square its pawn is on. */
 export function sideFor(team: Pick<Team, 'position'>): Side {
   return squareColor(team.position);
 }

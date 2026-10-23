@@ -7,8 +7,8 @@ import { saveSetup } from './game/storage';
 import type { ScoringMode } from './game/types';
 
 /**
- * Ponta a ponta no modo "um só ecrã" (LocalTransport): a mesa e a tela de quem explica
- * vivem na mesma janela e falam pelo barramento local, como falariam pela rede.
+ * End to end in "one screen" mode (LocalTransport): the table and the describer screen
+ * live in the same window and talk over the local bus, as they would over the network.
  */
 function setup(scoring: ScoringMode) {
   saveSetup({
@@ -19,7 +19,7 @@ function setup(scoring: ScoringMode) {
     ],
   });
   let clock = 0;
-  // 0.5 → face 3 de [0, 0, 1, 1, 2, 2] → o dado dá 1.
+  // 0.5 → face 3 of [0, 0, 1, 1, 2, 2] → the die rolls 1.
   const rng = vi.fn(() => 0.5);
   const user = userEvent.setup();
   render(
@@ -36,7 +36,19 @@ function setup(scoring: ScoringMode) {
   };
 }
 
-const wordButtons = () => screen.getAllByRole('button', { pressed: false }).concat(screen.queryAllByRole('button', { pressed: true }));
+/** Word buttons on the face-up side (the other face is hidden from the accessibility tree). */
+const faceUpWords = () => screen.getAllByRole('button', { pressed: false }).concat(screen.queryAllByRole('button', { pressed: true }));
+const faceUp = () => document.querySelector('main [data-up]')?.getAttribute('data-up');
+
+/** Marks the word at `index` on whichever side is up; the card then turns over. */
+async function markWord(user: ReturnType<typeof userEvent.setup>, index: number) {
+  const before = faceUp();
+  const word = [...document.querySelectorAll<HTMLButtonElement>('main section[data-side] button[aria-pressed]')].filter(
+    (b) => b.closest('section')?.getAttribute('data-side') === before,
+  )[index];
+  await user.click(word);
+  await waitFor(() => expect(faceUp()).not.toBe(before));
+}
 
 async function readyAndStart(user: ReturnType<typeof userEvent.setup>) {
   await user.click(await screen.findByRole('button', { name: 'Estou pronto/a' }));
@@ -61,35 +73,38 @@ async function playTurnEndingEarly(user: ReturnType<typeof userEvent.setup>, val
   return screen.findByRole('button', { name: /Passar a vez/ }, { timeout: 3000 });
 }
 
-describe('jogo completo (um só ecrã)', () => {
-  it('com dado: 3 marcadas − 1 anulada − dado 1 = casa 1, e a carta continua azul', async () => {
+describe('full game (one screen)', () => {
+  it('with die: 3 marked − 1 cancelled − die 1 = square 1, and the card stays blue', async () => {
     const { user, rng, setClock } = setup('die');
     await user.click(screen.getByRole('button', { name: 'Começar o jogo' }));
 
-    // Vez dos Leões: a Ana explica.
+    // The Lions' turn: Ana describes.
     expect(await screen.findByText('Passa o ecrã a Ana')).toBeInTheDocument();
     await readyAndStart(user);
     expect(cardSide()).toBe('blue');
-    const words = wordButtons();
+    expect(faceUpWords()).toHaveLength(5);
+    // Each correct word turns the card over: blue 1 → yellow 3 → blue 4.
     for (const [i, at] of [[0, 2000], [2, 5000], [3, 9000]]) {
       setClock(at);
-      await user.click(words[i]);
+      await markWord(user, i);
     }
-    await waitFor(() => expect(screen.getByRole('heading', { name: '3 de 5 acertadas' })).toBeInTheDocument());
+    expect(faceUp()).toBe('yellow');
+    await waitFor(() => expect(screen.getByRole('heading', { name: '3 de 10 acertadas' })).toBeInTheDocument());
 
-    // O tempo acaba.
+    // Time runs out.
     act(() => setClock(31_000));
     const title = await screen.findByRole('heading', { name: 'As Gazelas validam a vez dos Leões' }, { timeout: 3000 });
     expect(title).toBeInTheDocument();
-    expect(screen.getAllByText('não acertada')).toHaveLength(2);
+    // Both sides of the card are shown: 3 guessed, 7 not.
+    expect(screen.getAllByText('não acertada')).toHaveLength(7);
 
-    // A adversária anula uma palavra.
+    // The other team cancels one word.
     const groups = screen.getAllByRole('group', { name: /^Validar/ });
     expect(groups).toHaveLength(3);
     await user.click(within(groups[1]).getByRole('button', { name: 'Anular' }));
     expect(screen.getByText('palavras válidas').parentElement?.querySelector('strong')).toHaveTextContent('2');
 
-    // Dado = 1 → 2 − 1 = 1 casa.
+    // Die = 1 → 2 − 1 = 1 square.
     await user.click(screen.getByRole('button', { name: 'Confirmar e lançar o dado' }));
     const pass = await screen.findByRole('button', { name: 'Passar a vez · Tomás (As Gazelas)' }, { timeout: 3000 });
     expect(rng).toHaveBeenCalledTimes(1);
@@ -98,28 +113,27 @@ describe('jogo completo (um só ecrã)', () => {
     expect(screen.getByText('A carta continua azul')).toBeInTheDocument();
     expect(screen.getByTestId('board-die')).toHaveTextContent('1');
 
-    // Vez das Gazelas (nenhuma palavra), validada pelos Leões.
+    // The Gazelles' turn (no words), checked by the Lions.
     await user.click(pass);
     expect(await screen.findByText('Passa o ecrã a Tomás')).toBeInTheDocument();
     await playTurnEndingEarly(user, /Os Leões validam a vez das Gazelas/, 'Confirmar e lançar o dado');
     await user.click(screen.getByRole('button', { name: 'Passar a vez · Pedro (Os Leões)' }));
 
-    // De volta aos Leões, na casa 1 (azul): a carta continua no lado azul.
+    // Back to the Lions on square 1 (blue): the card stays on the blue side.
     expect(await screen.findByText('Os Leões · casa 1 · lado azul')).toBeInTheDocument();
     await readyAndStart(user);
     expect(cardSide()).toBe('blue');
     expect(screen.getByText(/^Lado azul · carta \d+$/)).toBeInTheDocument();
   });
 
-  it('sem dado: 2 válidas → casa 2 (amarela), sem dado, e a carta vira para o amarelo', async () => {
+  it('no die: 2 valid → square 2 (yellow), no die shown, and the card flips to yellow', async () => {
     const { user, rng, setClock } = setup('noDie');
     await user.click(screen.getByRole('button', { name: 'Começar o jogo' }));
 
     await readyAndStart(user);
-    const words = wordButtons();
     for (const i of [0, 1, 4]) {
       setClock(1000 * (i + 1));
-      await user.click(words[i]);
+      await markWord(user, i);
     }
     act(() => setClock(31_000));
     await screen.findByRole('heading', { name: 'As Gazelas validam a vez dos Leões' }, { timeout: 3000 });
@@ -133,8 +147,11 @@ describe('jogo completo (um só ecrã)', () => {
     expect(screen.queryByTestId('board-die')?.parentElement).toHaveStyle({ visibility: 'hidden' });
     expect(within(teamCard('Os Leões')).getByText('2')).toBeInTheDocument();
     expect(screen.getByText('A carta vira para o amarelo')).toBeInTheDocument();
+    // Once the pawn has landed, the table's two-sided card has turned over to yellow.
+    const tableCard = screen.getByText('A carta vira para o amarelo').closest('section')!.querySelector('[data-up]');
+    expect(tableCard).toHaveAttribute('data-up', 'yellow');
 
-    // Sequência das equipas: Leões jogaram agora, Gazelas a seguir.
+    // Team order: the Lions just played, the Gazelles are next.
     const sequence = screen.getByRole('heading', { name: 'Sequência das equipas' }).parentElement!;
     const items = within(sequence).getAllByRole('listitem');
     expect(items[0]).toHaveTextContent('Os Leõesjogou agora');
@@ -146,8 +163,12 @@ describe('jogo completo (um só ecrã)', () => {
 
     expect(await screen.findByText('Os Leões · casa 2 · lado amarelo')).toBeInTheDocument();
     expect(screen.getByText('A carta virou para o lado amarelo')).toBeInTheDocument();
+    // The turn starts on the yellow side, and a correct word turns it over to blue.
+    expect(faceUp()).toBe('yellow');
     await readyAndStart(user);
     expect(cardSide()).toBe('yellow');
+    await markWord(user, 0);
+    expect(faceUp()).toBe('blue');
     expect(rng).not.toHaveBeenCalled();
   });
 });

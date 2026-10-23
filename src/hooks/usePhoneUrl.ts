@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const LOCAL_HOSTS = ['localhost', '127.0.0.1', '[::1]', '::1'];
 
-/** Endereço que o telemóvel deve abrir: http://<IP do PC na rede>:<porta>/explicar */
+/** Address the phone should open: http://<PC's LAN IP>:<port>/explicar */
 export function usePhoneUrl(enabled: boolean): string | null {
   const [url, setUrl] = useState<string | null>(null);
   useEffect(() => {

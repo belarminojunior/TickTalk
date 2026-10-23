@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * Gera src/data/cards.pt.json e src/data/cards.en.json a partir das listas de palavras abaixo.
- * Todas as palavras foram escritas para o Tick Talk. Edita as listas e corre `npm run cards`.
+ * Generates src/data/cards.pt.json and src/data/cards.en.json from the word lists below.
+ * Every word was written for Tick Talk. Edit the lists and run `npm run cards`.
  *
- * Regras: cada lado tem 5 palavras únicas de um só pacote; os dois lados de uma carta são de
- * pacotes diferentes (por isso nunca partilham palavras); a geração é determinística (seed fixo).
+ * Rules: each side has 5 unique words from a single pack; the two sides of a card come from
+ * different packs (so they never share words); generation is deterministic (fixed seed).
  */
 import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -21,7 +21,7 @@ const list = (text) =>
     .filter(Boolean);
 
 const PT = {
-  pessoas: list(`
+  people: list(`
     Albert Einstein; Leonardo da Vinci; Cleópatra; Napoleão; Mozart; Beethoven; Pablo Picasso; Shakespeare
     Luís de Camões; Fernando Pessoa; Vasco da Gama; Cristóvão Colombo; Nelson Mandela; Mahatma Gandhi
     Martin Luther King; Marie Curie; Isaac Newton; Galileu; Charles Darwin; Frida Kahlo; Michael Jackson
@@ -50,7 +50,7 @@ const PT = {
     Mafalda; Lucky Luke; Zorro; Barbie; Hello Kitty; Peppa Pig; Ronaldinho; Kung Fu Panda
     Rei Salomão; Rainha de Sabá; Noé; Moisés; Gulliver; Robinson Crusoé; Ali Babá; Simbad, o Marinheiro
   `),
-  lugares: list(`
+  places: list(`
     Portugal; Brasil; Angola; Cabo Verde; Guiné-Bissau; São Tomé e Príncipe; Timor-Leste; África do Sul
     Zimbabué; Malawi; Tanzânia; Zâmbia; Quénia; Egito; Marrocos; Nigéria; Gana; Etiópia; Madagáscar
     Maurícias; França; Espanha; Itália; Alemanha; Inglaterra; Irlanda; Grécia; Suíça; Holanda; Rússia
@@ -76,7 +76,7 @@ const PT = {
     Aquário; Planetário; Observatório; Estação espacial; Iglu; Cabana; Tenda; Moinho; Pirâmide maia
     Bombas de gasolina; Parque de estacionamento; Rotunda; Passadeira; Semáforo; Porto de pesca
   `),
-  coisas: list(`
+  things: list(`
     Arco-íris; Guarda-chuva; Bicicleta; Avião; Helicóptero; Comboio; Autocarro; Barco; Submarino
     Foguetão; Mota; Ambulância; Trator; Telemóvel; Computador; Televisão; Rádio; Frigorífico
     Micro-ondas; Máquina de lavar; Aspirador; Ventoinha; Candeeiro; Vela; Lanterna; Relógio; Despertador
@@ -101,7 +101,7 @@ const PT = {
     Relâmpago; Vento; Nuvem; Estrela; Cometa; Árvore; Flor; Rosa; Girassol; Cato; Palmeira; Folha
     Pedra; Areia; Concha; Fogo; Gelo; Onda; Furacão; Eclipse; Boneco de neve; Castelo de areia
   `),
-  entretenimento: list(`
+  entertainment: list(`
     Futebol; Basquetebol; Voleibol; Andebol; Ténis; Natação; Atletismo; Ciclismo; Boxe; Judo; Karaté
     Xadrez; Damas; Golfe; Surf; Esqui; Patinagem; Ginástica; Râguebi; Críquete; Basebol; Hóquei
     Fórmula 1; Maratona; Jogos Olímpicos; Campeonato do Mundo; Ioga; Ballet; Salto em altura
@@ -124,7 +124,7 @@ const PT = {
     Jogo da velha; Pedra, papel, tesoura; Mímica; Charadas; Stand-up comedy; Teatro de fantoches
     Desporto radical; Paraquedismo; Escalada; Canoagem; Vela desportiva; Mergulho; Skate; Patins
   `),
-  mocambique: list(`
+  mozambique: list(`
     Maputo; Matola; Beira; Nampula; Quelimane; Tete; Pemba; Inhambane; Xai-Xai; Lichinga; Chimoio
     Nacala; Vilankulo; Ilha de Moçambique; Ilha do Ibo; Ilha da Inhaca; Baía de Maputo; Catembe
     Ponta do Ouro; Praia do Tofo; Bilene; Arquipélago de Bazaruto; Gorongosa; Parque do Limpopo
@@ -148,7 +148,7 @@ const PT = {
 };
 
 const EN = {
-  pessoas: list(`
+  people: list(`
     Albert Einstein; Leonardo da Vinci; Cleopatra; Napoleon; Mozart; Beethoven; Pablo Picasso; Shakespeare
     Luís de Camões; Fernando Pessoa; Vasco da Gama; Christopher Columbus; Nelson Mandela; Mahatma Gandhi
     Martin Luther King; Marie Curie; Isaac Newton; Galileo; Charles Darwin; Frida Kahlo; Michael Jackson
@@ -178,7 +178,7 @@ const EN = {
     Gulliver; Robinson Crusoe; Ali Baba; Sinbad the Sailor; William Tell; Winnie the Pooh; Paddington
     Mary Poppins; Willy Wonka; Pippi Longstocking; Cookie Monster; Kermit the Frog; Wallace and Gromit
   `),
-  lugares: list(`
+  places: list(`
     Portugal; Brazil; Angola; Cape Verde; Guinea-Bissau; São Tomé and Príncipe; East Timor; South Africa
     Zimbabwe; Malawi; Tanzania; Zambia; Kenya; Egypt; Morocco; Nigeria; Ghana; Ethiopia; Madagascar
     Mauritius; France; Spain; Italy; Germany; England; Ireland; Greece; Switzerland; Netherlands; Russia
@@ -204,7 +204,7 @@ const EN = {
     Log cabin; Tent; Windmill; Petrol station; Car park; Roundabout; Zebra crossing; Traffic lights
     Fishing harbour; Skyscraper; Treehouse; Car wash; Ice rink
   `),
-  coisas: list(`
+  things: list(`
     Rainbow; Umbrella; Bicycle; Aeroplane; Helicopter; Train; Bus; Boat; Submarine; Rocket; Motorbike
     Ambulance; Tractor; Mobile phone; Computer; Television; Radio; Fridge; Microwave; Washing machine
     Vacuum cleaner; Fan; Lamp; Candle; Torch; Clock; Alarm clock; Glasses; Hat; Shoes; Flip-flops
@@ -228,7 +228,7 @@ const EN = {
     Comet; Tree; Flower; Rose; Sunflower; Cactus; Palm tree; Leaf; Stone; Sand; Seashell; Fire; Ice
     Wave; Hurricane; Eclipse; Snowman; Sandcastle
   `),
-  entretenimento: list(`
+  entertainment: list(`
     Football; Basketball; Volleyball; Handball; Tennis; Swimming; Athletics; Cycling; Boxing; Judo
     Karate; Chess; Draughts; Golf; Surfing; Skiing; Ice skating; Gymnastics; Rugby; Cricket; Baseball
     Hockey; Formula 1; Marathon; Olympic Games; World Cup; Yoga; Ballet; High jump; Sack race
@@ -250,7 +250,7 @@ const EN = {
     Puppet show; Extreme sports; Skydiving; Climbing; Canoeing; Sailing; Scuba diving; Skateboarding
     Roller skates; Hula hoop; Snakes and ladders; Board game; Musical statues; Musical chairs
   `),
-  mocambique: list(`
+  mozambique: list(`
     Maputo; Matola; Beira; Nampula; Quelimane; Tete; Pemba; Inhambane; Xai-Xai; Lichinga; Chimoio
     Nacala; Vilankulo; Mozambique Island; Ibo Island; Inhaca Island; Maputo Bay; Catembe; Ponta do Ouro
     Tofo Beach; Bilene; Bazaruto Archipelago; Gorongosa; Limpopo National Park; Niassa Reserve
@@ -299,7 +299,7 @@ function checkPools(pools, lang) {
   for (const [pack, words] of Object.entries(pools)) {
     for (const w of words) {
       const key = w.toLocaleLowerCase(lang);
-      if (owner.has(key)) throw new Error(`[${lang}] "${w}" aparece em ${owner.get(key)} e ${pack}`);
+      if (owner.has(key)) throw new Error(`[${lang}] "${w}" appears in both ${owner.get(key)} and ${pack}`);
       owner.set(key, pack);
     }
   }
@@ -312,23 +312,23 @@ function generate(lang, pools, seed) {
   const sides = CARDS_PER_LANGUAGE * 2;
   const total = packs.reduce((n, p) => n + pools[p].length, 0);
 
-  // Quantos lados por pacote, proporcional ao tamanho da lista.
+  // How many sides each pack gets, in proportion to the size of its list.
   const quotas = packs.map((p) => Math.floor((sides * pools[p].length) / total));
   let missing = sides - quotas.reduce((a, b) => a + b, 0);
   for (let i = 0; missing > 0; i = (i + 1) % packs.length, missing--) quotas[i]++;
   const labels = shuffle(packs.flatMap((p, i) => Array(quotas[i]).fill(p)), rng);
 
-  // Emparelha em cartas com dois pacotes diferentes.
+  // Pair the sides into cards with two different packs.
   const pairs = [];
   for (let i = 0; i < CARDS_PER_LANGUAGE; i++) pairs.push([labels[2 * i], labels[2 * i + 1]]);
   for (let i = 0; i < pairs.length; i++) {
     if (pairs[i][0] !== pairs[i][1]) continue;
     const j = pairs.findIndex((q, k) => k !== i && q[0] !== pairs[i][1] && q[1] !== pairs[i][1] && q[0] !== pairs[i][0]);
-    if (j < 0) throw new Error('Não consegui emparelhar os pacotes');
+    if (j < 0) throw new Error('Could not pair the packs');
     [pairs[i][1], pairs[j][0]] = [pairs[j][0], pairs[i][1]];
   }
 
-  // Palavras: percorre cada lista baralhada; quando acaba, volta a baralhar.
+  // Words: walk through each shuffled list; reshuffle when it runs out.
   const cursors = Object.fromEntries(packs.map((p) => [p, { order: shuffle(pools[p], rng), i: 0 }]));
   const take = (pack) => {
     const c = cursors[pack];
@@ -360,5 +360,5 @@ for (const [lang, pools, seed] of [
   const cards = generate(lang, pools, seed);
   writeFileSync(join(out, `cards.${lang}.json`), JSON.stringify(cards, null, 1) + '\n');
   const sizes = Object.entries(pools).map(([p, w]) => `${p} ${w.length}`).join(', ');
-  console.log(`cards.${lang}.json: ${cards.length} cartas (${sizes})`);
+  console.log(`cards.${lang}.json: ${cards.length} cards (${sizes})`);
 }

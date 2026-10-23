@@ -76,21 +76,23 @@ Se o PC tiver várias redes (VPN, máquinas virtuais), o terminal mostra todos o
 ## Regras
 
 - **Tabuleiro:** 36 casas, alternadas azul e amarela (ímpar = azul, par = amarela). A Partida conta como azul.
-- **Cartas:** cada carta tem um lado amarelo e um lado azul. Quem explica lê o lado da **cor da casa onde está o peão** da sua equipa. Quando o peão muda de cor, a carta vira na vez seguinte.
-- **A vez:** quem explica toca em cada palavra quando a equipa acerta. A mesa vê o contador e as ranhuras a encher, mas não as palavras.
+- **Cartas:** cada carta tem dois lados, azul e amarelo, com 5 palavras cada. A vez começa no lado da **cor da casa onde está o peão** da equipa.
+- **A vez:** quem explica toca na palavra quando a equipa acerta, e **a carta vira para o outro lado**. Há 10 palavras por vez (5 azuis + 5 amarelas). Um toque por engano desfaz-se com **Desfazer último acerto** (ou Backspace). A mesa vê o contador e as 10 ranhuras a encher, e qual lado está virado para cima, mas não as palavras.
 - **Não vale:** dizer a palavra ou parte dela, soletrar ou dizer a letra inicial, usar “rima com” / “soa como”, traduzir diretamente para outra língua, apontar para um objeto com o nome.
-- **Validação:** a equipa seguinte vê as palavras marcadas e pode anular as que quebraram as regras (ou escolhe-se “Sem validação”).
+- **Validação:** a equipa seguinte vê os dois lados da carta, com as palavras marcadas, e pode anular as que quebraram as regras (ou escolhe-se “Sem validação”).
 - **Com dado (0, 0, 1, 1, 2, 2):** avança-se `válidas − dado` casas (nunca para trás).
 - **Sem dado:** avança-se uma casa por cada palavra válida.
-- **Desfazer esta vez** volta à validação (um nível).
+- **Passar a vez:** no fim da vez, quem explica carrega em **Passar a vez** no telemóvel (ou na janela de quem explica) e entrega-o a quem joga a seguir. A mesa só mostra este botão no modo "Um só ecrã", ou se a tela de quem explica estiver desligada.
+- **Desfazer esta vez** (na mesa) volta à validação (um nível).
 - **Vitória:** a primeira equipa a chegar ou passar a casa 36.
 
 ### Atalhos de teclado
 
 | Tela de quem explica | | Mesa | |
 |---|---|---|---|
-| `Espaço` | pronto/a, depois começar | `Espaço` | continuar |
-| `1`–`5` | marcar/desmarcar palavra | `Z` | desfazer esta vez |
+| `Espaço` | pronto/a, começar; no fim, passar a vez | `Espaço` | continuar |
+| `1`–`5` | marcar palavra (a carta vira) | `Z` | desfazer esta vez |
+| `Backspace` | desfazer último acerto | | |
 | `P` | pausar / retomar | `?` | regras |
 | `Enter` | terminar a vez | `Esc` | fechar |
 

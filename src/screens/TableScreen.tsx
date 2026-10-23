@@ -9,7 +9,7 @@ import { RulesModal } from '../components/RulesModal';
 import { LiveFeed, ProgressSlots, Projection, TeamCards, sideVars } from '../components/TablePanels';
 import { TimerRing } from '../components/TimerRing';
 import { WinScreen } from '../components/WinScreen';
-import type { GameAction } from '../game/reducer';
+import { markedCount as countMarked, type GameAction } from '../game/reducer';
 import type { Rng } from '../game/random';
 import type { TableView } from '../game/selectors';
 import type { ScreenMode } from '../game/types';
@@ -42,7 +42,7 @@ export interface TableScreenProps {
   onPlayAgain: () => void;
 }
 
-/** Anima o peão casa a casa; devolve a posição mostrada (ou null quando não há animação). */
+/** Animates the pawn square by square; returns the shown position (or null when not animating). */
 function useHop(view: TableView, scale: number, onDone: () => void): number | null {
   const turn = view.turn;
   const animating = view.phase === 'moving' && !!turn?.move && !turn.settled;
@@ -89,7 +89,7 @@ export function TableScreen(props: TableScreenProps) {
   const withDie = view.settings.scoring === 'die';
   const dieRef = useRef<HTMLDivElement>(null);
 
-  // --- Movimento: o peão salta e o dado volta ao tabuleiro; os dois terminam antes de DIE_RETURNED.
+  // --- Movement: the pawn hops and the die returns to the board; both finish before DIE_RETURNED.
   const pending = useRef({ hop: false, die: false });
   const turnKey = turn ? `${view.round}-${turn.teamIndex}-${turn.move?.from ?? ''}` : '';
   useEffect(() => {
@@ -118,8 +118,8 @@ export function TableScreen(props: TableScreenProps) {
     position: positions[i],
   }));
 
-  // --- Sons da mesa: acerto, buzina.
-  const markedCount = turn?.marked.filter(Boolean).length ?? 0;
+  // --- Table sounds: hit, horn.
+  const markedCount = turn ? countMarked(turn) : 0;
   const prevMarked = useRef(markedCount);
   useEffect(() => {
     if (phase === 'describing' || phase === 'paused') {
@@ -132,7 +132,7 @@ export function TableScreen(props: TableScreenProps) {
     if (phase === 'timeUp') play('horn');
   }, [phase]);
 
-  // --- Tempo esgotado → validação (automático, ou Espaço).
+  // --- Time's up → validation (automatic, or Space).
   useEffect(() => {
     if (phase !== 'timeUp') return;
     const id = setTimeout(() => dispatch({ type: 'BEGIN_VALIDATION' }), TIME_UP_MS * scale);
@@ -150,11 +150,15 @@ export function TableScreen(props: TableScreenProps) {
   const onRolled = useCallback((value: number) => dispatch({ type: 'ROLL_DIE', value }), [dispatch]);
   const onRollDone = useCallback(() => dispatch({ type: 'APPLY_MOVE' }), [dispatch]);
 
+  // The describer passes the turn on their screen; the table only does it in one-screen
+  // mode, or as a fallback when the describer screen is not connected.
+  const passOnTable = mode === 'single' || !link.describerOnline;
+
   const next = () => {
     unlockAudio();
     if (phase === 'timeUp') dispatch({ type: 'BEGIN_VALIDATION' });
     else if (phase === 'validating') dispatch({ type: 'CONFIRM_VALIDATION' });
-    else if (phase === 'moving' && turn?.settled) dispatch({ type: 'NEXT_TEAM' });
+    else if (phase === 'moving' && turn?.settled && passOnTable) dispatch({ type: 'NEXT_TEAM' });
     else if (phase === 'paused' && (link.describerOnline || mode === 'single')) dispatch({ type: 'RESUME', now: now() });
   };
 
@@ -233,7 +237,7 @@ export function TableScreen(props: TableScreenProps) {
           )}
           {(phase === 'describing' || phase === 'paused' || phase === 'timeUp') && turn && team && (
             <>
-              <section className={`panel ${styles.turnPanel}`} style={{ ...sideVars(turn.side), '--pawn': `var(--pawn-${team.color})` } as CSSProperties}>
+              <section className={`panel ${styles.turnPanel}`} style={{ ...sideVars(turn.up), '--pawn': `var(--pawn-${team.color})` } as CSSProperties}>
                 <div className={styles.turnHead}>
                   <Pawn color={team.color} label={teamInitial(team.name)} size={52} />
                   <div>
@@ -266,24 +270,25 @@ export function TableScreen(props: TableScreenProps) {
                       <strong className={styles.bigCount} data-testid="live-count">
                         {markedCount}
                       </strong>
-                      <span>{t.ofFiveGuessed}</span>
+                      <span>{t.ofTenGuessed}</span>
                     </div>
                   </div>
                 )}
-                <ProgressSlots marked={turn.marked} side={turn.side} />
+                <ProgressSlots marked={turn.marked} up={turn.up} />
                 <p className={styles.muted}>
                   {view.settings.validation === 'none' ? t.hiddenNoteNoValidation : t.hiddenNote}
                 </p>
               </section>
               <Projection marked={markedCount} scoring={view.settings.scoring} />
-              <LiveFeed hits={turn.hits} side={turn.side} />
+              <LiveFeed hits={turn.hits} />
             </>
           )}
           {phase === 'moving' && turn?.move && (
             <EndTurnPanel
               view={view}
-              onNext={() => dispatch({ type: 'NEXT_TEAM' })}
+              onNext={passOnTable ? () => dispatch({ type: 'NEXT_TEAM' }) : null}
               onUndo={() => dispatch({ type: 'UNDO_TURN' })}
+              passHint={t.passOnDevice[mode]}
             />
           )}
         </aside>
@@ -293,7 +298,7 @@ export function TableScreen(props: TableScreenProps) {
         <div className={styles.timeUp} role="alert">
           <div className={styles.timeUpBox}>
             <span className={styles.timeUpTitle}>
-              {turn.endReason === 'allFive' ? t.allFive : turn.endReason === 'early' ? t.endedEarly : t.timeUp}
+              {turn.endReason === 'allWords' ? t.allWords : turn.endReason === 'early' ? t.endedEarly : t.timeUp}
             </span>
             <button type="button" className="btn btn-primary btn-lg" onClick={() => dispatch({ type: 'BEGIN_VALIDATION' })}>
               {t.continue}
@@ -306,7 +311,7 @@ export function TableScreen(props: TableScreenProps) {
         <ValidationScreen
           view={view}
           pawns={pawns}
-          onSet={(index, annulled) => dispatch({ type: 'SET_VALIDATION', index, annulled })}
+          onSet={(side, index, annulled) => dispatch({ type: 'SET_VALIDATION', side, index, annulled })}
           onConfirm={() => {
             unlockAudio();
             dispatch({ type: 'CONFIRM_VALIDATION' });

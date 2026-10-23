@@ -81,7 +81,7 @@
   min-width: 0;
 }
 
-/* O tabuleiro encolhe para caber na altura do ecrã (sem scroll num portátil 1366×768). */
+/* The board shrinks to fit the screen height (no scrolling on a 1366×768 laptop). */
 .boardBox {
   width: min(100%, calc((100dvh - 250px) * 1.4072));
   margin: 0 auto;

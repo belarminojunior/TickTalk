@@ -185,7 +185,20 @@
   .roundButton { width: 48px; height: 48px; }
   .below { flex-direction: column; align-items: stretch; }
   .below :global(.btn) { width: 100%; }
+  .turnButtons { flex-direction: column-reverse; }
   .actions { justify-content: stretch; }
   .count { font-size: 24px; }
   .pausedCover { min-height: 340px; }
+}
+
+.turnButtons {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.turnButtons :global(.btn-outline:disabled) {
+  opacity: 0.4;
 }

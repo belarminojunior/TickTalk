@@ -2,7 +2,7 @@
  {
   "id": "pt-0001",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Oceano Índico",
     "Iglu",
@@ -12,7 +12,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Páscoa",
     "Natal",
@@ -25,7 +25,7 @@
  {
   "id": "pt-0002",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Arroz",
     "Esquilo",
@@ -35,7 +35,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "África do Sul",
     "Timor-Leste",
@@ -48,7 +48,7 @@
  {
   "id": "pt-0003",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Trompete",
     "Super-herói",
@@ -58,7 +58,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Pombo",
     "Chocolate",
@@ -71,7 +71,7 @@
  {
   "id": "pt-0004",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Casaco",
     "Rebuçado",
@@ -81,7 +81,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Campeonato do Mundo",
     "Harpa",
@@ -94,7 +94,7 @@
  {
   "id": "pt-0005",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Zebra",
     "Armário",
@@ -104,7 +104,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Farol",
     "Grand Canyon",
@@ -117,7 +117,7 @@
  {
   "id": "pt-0006",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Queijo",
     "Micro-ondas",
@@ -127,7 +127,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Manica",
     "Mandioca",
@@ -140,7 +140,7 @@
  {
   "id": "pt-0007",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Guitarra",
     "Desporto radical",
@@ -150,7 +150,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Pilha",
     "Cachorro-quente",
@@ -163,7 +163,7 @@
  {
   "id": "pt-0008",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Jamaica",
     "Correios",
@@ -173,7 +173,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Dragão",
     "Martelo",
@@ -186,7 +186,7 @@
  {
   "id": "pt-0009",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Cinema",
     "São Paulo",
@@ -196,7 +196,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Jogo de cartas",
     "Filme de terror",
@@ -209,7 +209,7 @@
  {
   "id": "pt-0010",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Jacques Cousteau",
     "Merlin",
@@ -219,7 +219,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Coqueiro",
     "Fortaleza de Maputo",
@@ -232,7 +232,7 @@
  {
   "id": "pt-0011",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Matata",
     "Mercado do Peixe",
@@ -242,7 +242,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Cuba",
     "Vulcão",
@@ -255,7 +255,7 @@
  {
   "id": "pt-0012",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Stand-up comedy",
     "Maratona",
@@ -265,7 +265,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Nacala",
     "Recife de coral",
@@ -278,7 +278,7 @@
  {
   "id": "pt-0013",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Rainha de Sabá",
     "Homero",
@@ -288,7 +288,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Barra",
     "Tufo",
@@ -301,7 +301,7 @@
  {
   "id": "pt-0014",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Las Vegas",
     "Torre de Pisa",
@@ -311,7 +311,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Vasco da Gama",
     "Bugs Bunny",
@@ -324,7 +324,7 @@
  {
   "id": "pt-0015",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Batuque",
     "Catembe",
@@ -334,7 +334,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Onda",
     "Colher",
@@ -347,7 +347,7 @@
  {
   "id": "pt-0016",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Escola",
     "Cascata",
@@ -357,7 +357,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Pulseira",
     "Lanterna",
@@ -370,7 +370,7 @@
  {
   "id": "pt-0017",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Torre de Belém",
     "Rio de Janeiro",
@@ -380,7 +380,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Divertida-Mente",
     "Ópera",
@@ -393,7 +393,7 @@
  {
   "id": "pt-0018",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Charadas",
     "Jurassic Park",
@@ -403,7 +403,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Beira",
     "Peixe seco",
@@ -416,7 +416,7 @@
  {
   "id": "pt-0019",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Lareira",
     "Polvo",
@@ -426,7 +426,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Ténis",
     "Musical",
@@ -439,7 +439,7 @@
  {
   "id": "pt-0020",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Sala de estar",
     "Nova Iorque",
@@ -449,7 +449,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Salto em altura",
     "Trampolim",
@@ -462,7 +462,7 @@
  {
   "id": "pt-0021",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Gaveta",
     "Almofada",
@@ -472,7 +472,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Tenda",
     "Polo Sul",
@@ -485,7 +485,7 @@
  {
   "id": "pt-0022",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Rio Zambeze",
     "Caril de amendoim",
@@ -495,7 +495,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Caneta",
     "Hipopótamo",
@@ -508,7 +508,7 @@
  {
   "id": "pt-0023",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Ponta do Ouro",
     "Piri-piri",
@@ -518,7 +518,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Galápagos",
     "Quénia",
@@ -531,7 +531,7 @@
  {
   "id": "pt-0024",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Iuri Gagarin",
     "Garfield",
@@ -541,7 +541,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Escorrega",
     "Consola",
@@ -554,7 +554,7 @@
  {
   "id": "pt-0025",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Flor",
     "Pato",
@@ -564,7 +564,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Sintra",
     "Mercado",
@@ -577,7 +577,7 @@
  {
   "id": "pt-0026",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Casamento",
     "Escondidas",
@@ -587,7 +587,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Escada",
     "Gelado",
@@ -600,7 +600,7 @@
  {
   "id": "pt-0027",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Microfone",
     "Ballet",
@@ -610,7 +610,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Berlim",
     "Amesterdão",
@@ -623,7 +623,7 @@
  {
   "id": "pt-0028",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Hollywood",
     "Alpes",
@@ -633,7 +633,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Bolo",
     "Banana",
@@ -646,7 +646,7 @@
  {
   "id": "pt-0029",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Xima",
     "Chamuças",
@@ -656,7 +656,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "México",
     "Estátua da Liberdade",
@@ -669,7 +669,7 @@
  {
   "id": "pt-0030",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Vilankulo",
     "Monte Binga",
@@ -679,7 +679,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Capitão Gancho",
     "Drácula",
@@ -692,7 +692,7 @@
  {
   "id": "pt-0031",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Marilyn Monroe",
     "Dom Quixote",
@@ -702,7 +702,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Sudoku",
     "Origami",
@@ -715,7 +715,7 @@
  {
   "id": "pt-0032",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Karaté",
     "Claquete",
@@ -725,7 +725,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Museu de História Natural",
     "Tihove",
@@ -738,7 +738,7 @@
  {
   "id": "pt-0033",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Marco Polo",
     "Tom e Jerry",
@@ -748,7 +748,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Piscina",
     "Casa de banho",
@@ -761,7 +761,7 @@
  {
   "id": "pt-0034",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Joaninha",
     "Ananás",
@@ -771,7 +771,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Biblioteca",
     "Tailândia",
@@ -784,7 +784,7 @@
  {
   "id": "pt-0035",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Dhow",
     "Majika",
@@ -794,7 +794,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Nigéria",
     "Estádio",
@@ -807,7 +807,7 @@
  {
   "id": "pt-0036",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Titanic",
     "Adivinha",
@@ -817,7 +817,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Zeus",
     "Luciano Pavarotti",
@@ -830,7 +830,7 @@
  {
   "id": "pt-0037",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Carrossel",
     "Mamma Mia",
@@ -840,7 +840,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Dia da Independência",
     "Cajueiro",
@@ -853,7 +853,7 @@
  {
   "id": "pt-0038",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Feijão",
     "Escova de dentes",
@@ -863,7 +863,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Pequena Sereia",
     "Gato das Botas",
@@ -876,7 +876,7 @@
  {
   "id": "pt-0039",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Pião",
     "Coruja",
@@ -886,7 +886,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Machamba",
     "Quelimane",
@@ -899,7 +899,7 @@
  {
   "id": "pt-0040",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Montanha-russa",
     "Música pop",
@@ -909,7 +909,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Michael Jackson",
     "Luís de Camões",
@@ -922,7 +922,7 @@
  {
   "id": "pt-0041",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Voleibol",
     "Orquestra",
@@ -932,7 +932,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Yoda",
     "Bambi",
@@ -945,7 +945,7 @@
  {
   "id": "pt-0042",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Xadrez",
     "Ano Novo",
@@ -955,7 +955,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Savana",
     "Mesquita",
@@ -968,7 +968,7 @@
  {
   "id": "pt-0043",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Batman",
     "Malangatana",
@@ -978,7 +978,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Rio Save",
     "Camarão grelhado",
@@ -991,7 +991,7 @@
  {
   "id": "pt-0044",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Stevie Wonder",
     "Van Gogh",
@@ -1001,7 +1001,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Floresta",
     "Deserto do Sara",
@@ -1014,7 +1014,7 @@
  {
   "id": "pt-0045",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Galo",
     "Vela",
@@ -1024,7 +1024,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Astérix",
     "Shakespeare",
@@ -1037,7 +1037,7 @@
  {
   "id": "pt-0046",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Palmeira",
     "Cadeado",
@@ -1047,7 +1047,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Esquadra da polícia",
     "Portugal",
@@ -1060,7 +1060,7 @@
  {
   "id": "pt-0047",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Oceano Atlântico",
     "Quartel de bombeiros",
@@ -1070,7 +1070,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Confúcio",
     "Gandalf",
@@ -1083,7 +1083,7 @@
  {
   "id": "pt-0048",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Avatar",
     "Taça dos Campeões",
@@ -1093,7 +1093,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Pepino",
     "Uvas",
@@ -1106,7 +1106,7 @@
  {
   "id": "pt-0049",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Roda gigante",
     "Mergulho",
@@ -1116,7 +1116,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Zâmbia",
     "Escada rolante",
@@ -1129,7 +1129,7 @@
  {
   "id": "pt-0050",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Ilha do Ibo",
     "Mangal",
@@ -1139,7 +1139,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Leopardo",
     "Foguetão",
@@ -1152,7 +1152,7 @@
  {
   "id": "pt-0051",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Fórmula 1",
     "Campismo",
@@ -1162,7 +1162,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Maradona",
     "Pelé",
@@ -1175,7 +1175,7 @@
  {
   "id": "pt-0052",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Deserto",
     "Aeroporto",
@@ -1185,7 +1185,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Bússola",
     "Flamingo",
@@ -1198,7 +1198,7 @@
  {
   "id": "pt-0053",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Medalha",
     "Açúcar",
@@ -1208,7 +1208,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Pocahontas",
     "Miguel de Cervantes",
@@ -1221,7 +1221,7 @@
  {
   "id": "pt-0054",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Cenoura",
     "Pasta de dentes",
@@ -1231,7 +1231,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Valsa",
     "Cabra-cega",
@@ -1244,7 +1244,7 @@
  {
   "id": "pt-0055",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Críquete",
     "Karaoke",
@@ -1254,7 +1254,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Roma",
     "Canadá",
@@ -1267,7 +1267,7 @@
  {
   "id": "pt-0056",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Pirâmides",
     "Ginásio",
@@ -1277,7 +1277,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Ioiô",
     "Pão",
@@ -1290,7 +1290,7 @@
  {
   "id": "pt-0057",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Açores",
     "Barcelona",
@@ -1300,7 +1300,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Computador",
     "Furacão",
@@ -1313,7 +1313,7 @@
  {
   "id": "pt-0058",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Praia do Tofo",
     "Bilene",
@@ -1323,7 +1323,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Napoleão",
     "Charles Darwin",
@@ -1336,7 +1336,7 @@
  {
   "id": "pt-0059",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Cabana",
     "Machu Picchu",
@@ -1346,7 +1346,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Natação",
     "Caça ao tesouro",
@@ -1359,7 +1359,7 @@
  {
   "id": "pt-0060",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Alemanha",
     "Ilha",
@@ -1369,7 +1369,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Lichinga",
     "Namaacha",
@@ -1382,7 +1382,7 @@
  {
   "id": "pt-0061",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Areia",
     "Boneca",
@@ -1392,7 +1392,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Thomas Edison",
     "Lewis Hamilton",
@@ -1405,7 +1405,7 @@
  {
   "id": "pt-0062",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "O Feiticeiro de Oz",
     "Concurso de talentos",
@@ -1415,7 +1415,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Golfinho",
     "Canguru",
@@ -1428,7 +1428,7 @@
  {
   "id": "pt-0063",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Acordeão",
     "Aniversário",
@@ -1438,7 +1438,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Eça de Queirós",
     "Bob Marley",
@@ -1451,7 +1451,7 @@
  {
   "id": "pt-0064",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Alho",
     "Mel",
@@ -1461,7 +1461,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Mar Mediterrâneo",
     "Selva",
@@ -1474,7 +1474,7 @@
  {
   "id": "pt-0065",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Indiana Jones",
     "Romeu e Julieta",
@@ -1484,7 +1484,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Nuvem",
     "Concha",
@@ -1497,7 +1497,7 @@
  {
   "id": "pt-0066",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Música clássica",
     "Golfe",
@@ -1507,7 +1507,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Coliseu",
     "Chile",
@@ -1520,7 +1520,7 @@
  {
   "id": "pt-0067",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Supermercado",
     "Pequim",
@@ -1530,7 +1530,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Serena Williams",
     "Mowgli",
@@ -1543,7 +1543,7 @@
  {
   "id": "pt-0068",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "São Tomé e Príncipe",
     "Cristo Redentor",
@@ -1553,7 +1553,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Vassoura",
     "Abacate",
@@ -1566,7 +1566,7 @@
  {
   "id": "pt-0069",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Galileu",
     "Obélix",
@@ -1576,7 +1576,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Ioga",
     "Os Incríveis",
@@ -1589,7 +1589,7 @@
  {
   "id": "pt-0070",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Prego",
     "Ambulância",
@@ -1599,7 +1599,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Tarzan",
     "Infante D. Henrique",
@@ -1612,7 +1612,7 @@
  {
   "id": "pt-0071",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Sapatos",
     "Mochila",
@@ -1622,7 +1622,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Espanha",
     "Nova Zelândia",
@@ -1635,7 +1635,7 @@
  {
   "id": "pt-0072",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Cometa",
     "Chaminé",
@@ -1645,7 +1645,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Moscovo",
     "Dakar",
@@ -1658,7 +1658,7 @@
  {
   "id": "pt-0073",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Lagosta",
     "Xitende",
@@ -1668,7 +1668,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Flauta",
     "Mágico",
@@ -1681,7 +1681,7 @@
  {
   "id": "pt-0074",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Ed Sheeran",
     "Mafalda",
@@ -1691,7 +1691,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Raia-manta",
     "Jardim Tunduru",
@@ -1704,7 +1704,7 @@
  {
   "id": "pt-0075",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Turquia",
     "Inglaterra",
@@ -1714,7 +1714,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Cristiano Ronaldo",
     "Pikachu",
@@ -1727,7 +1727,7 @@
  {
   "id": "pt-0076",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Unicórnio",
     "Melancia",
@@ -1737,7 +1737,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Júlio César",
     "Paulina Chiziane",
@@ -1750,7 +1750,7 @@
  {
   "id": "pt-0077",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Marginal de Maputo",
     "Nampula",
@@ -1760,7 +1760,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Skate",
     "Kuduro",
@@ -1773,7 +1773,7 @@
  {
   "id": "pt-0078",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Pica-Pau",
     "Mahatma Gandhi",
@@ -1783,7 +1783,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Castanha de caju",
     "Tete",
@@ -1796,7 +1796,7 @@
  {
   "id": "pt-0079",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Ilha de Santa Carolina",
     "Pilão",
@@ -1806,7 +1806,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Semáforo",
     "Holanda",
@@ -1819,7 +1819,7 @@
  {
   "id": "pt-0080",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Parque de diversões",
     "Sagrada Família",
@@ -1829,7 +1829,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Secador de cabelo",
     "Morango",
@@ -1842,7 +1842,7 @@
  {
   "id": "pt-0081",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Mercado Central",
     "Bandeira de Moçambique",
@@ -1852,7 +1852,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Sala de aula",
     "Japão",
@@ -1865,7 +1865,7 @@
  {
   "id": "pt-0082",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Aquiles",
     "Zinedine Zidane",
@@ -1875,7 +1875,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Hong Kong",
     "Guiné-Bissau",
@@ -1888,7 +1888,7 @@
  {
   "id": "pt-0083",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Apito",
     "Arco-íris",
@@ -1898,7 +1898,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Cozinha",
     "Marrocos",
@@ -1911,7 +1911,7 @@
  {
   "id": "pt-0084",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Envelope",
     "Mota",
@@ -1921,7 +1921,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Escalada",
     "Podcast",
@@ -1934,7 +1934,7 @@
  {
   "id": "pt-0085",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Luanda",
     "Moinho",
@@ -1944,7 +1944,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Chita",
     "Girafa",
@@ -1957,7 +1957,7 @@
  {
   "id": "pt-0086",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Pastel de nata",
     "Gelo",
@@ -1967,7 +1967,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Pote de barro",
     "Machimbombo",
@@ -1980,7 +1980,7 @@
  {
   "id": "pt-0087",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Milho",
     "Sopa",
@@ -1990,7 +1990,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Abraham Lincoln",
     "Rainha Isabel II",
@@ -2003,7 +2003,7 @@
  {
   "id": "pt-0088",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Surf",
     "Paraquedismo",
@@ -2013,7 +2013,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Faca",
     "Régua",
@@ -2026,7 +2026,7 @@
  {
   "id": "pt-0089",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Balde",
     "Ovelha",
@@ -2036,7 +2036,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Piquenique",
     "Canoagem",
@@ -2049,7 +2049,7 @@
  {
   "id": "pt-0090",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Tutankamon",
     "Pablo Picasso",
@@ -2059,7 +2059,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Gato",
     "Despertador",
@@ -2072,7 +2072,7 @@
  {
   "id": "pt-0091",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Havai",
     "Portugal",
@@ -2082,7 +2082,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Panqueca",
     "Autocarro",
@@ -2095,7 +2095,7 @@
  {
   "id": "pt-0092",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Lavandaria",
     "Coliseu",
@@ -2105,7 +2105,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Freddie Mercury",
     "Snoopy",
@@ -2118,7 +2118,7 @@
  {
   "id": "pt-0093",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Ilha da Inhaca",
     "Mucapata",
@@ -2128,7 +2128,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Maçã",
     "Frigorífico",
@@ -2141,7 +2141,7 @@
  {
   "id": "pt-0094",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Arquipélago de Bazaruto",
     "Mafalala",
@@ -2151,7 +2151,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Jogos Olímpicos",
     "Patinagem",
@@ -2164,7 +2164,7 @@
  {
   "id": "pt-0095",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Palhota",
     "Inhambane",
@@ -2174,7 +2174,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Palácio",
     "Lua",
@@ -2187,7 +2187,7 @@
  {
   "id": "pt-0096",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Pitágoras",
     "Ronaldinho",
@@ -2197,7 +2197,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Lagos",
     "Varanda",
@@ -2210,7 +2210,7 @@
  {
   "id": "pt-0097",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Aeroporto",
     "Stonehenge",
@@ -2220,7 +2220,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Telhado",
     "Hambúrguer",
@@ -2233,7 +2233,7 @@
  {
   "id": "pt-0098",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "José Saramago",
     "Rapunzel",
@@ -2243,7 +2243,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Hip-hop dance",
     "Natal",
@@ -2256,7 +2256,7 @@
  {
   "id": "pt-0099",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Papagaio de papel",
     "Borboleta",
@@ -2266,7 +2266,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Frida Kahlo",
     "Elvis Presley",
@@ -2279,7 +2279,7 @@
  {
   "id": "pt-0100",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Rotunda",
     "Egito",
@@ -2289,7 +2289,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Cobra",
     "Laranja",
@@ -2302,7 +2302,7 @@
  {
   "id": "pt-0101",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Raposa",
     "Leão",
@@ -2312,7 +2312,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Cidade do Cabo",
     "França",
@@ -2325,7 +2325,7 @@
  {
   "id": "pt-0102",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Ratatui",
     "DJ",
@@ -2335,7 +2335,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Anne Frank",
     "Adele",
@@ -2348,7 +2348,7 @@
  {
   "id": "pt-0103",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Teatro de fantoches",
     "Trailer",
@@ -2358,7 +2358,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Pinóquio",
     "Irmãos Grimm",
@@ -2371,7 +2371,7 @@
  {
   "id": "pt-0104",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Robin dos Bosques",
     "Kung Fu Panda",
@@ -2381,7 +2381,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Guiné-Bissau",
     "Planetário",
@@ -2394,7 +2394,7 @@
  {
   "id": "pt-0105",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Gana",
     "Maurícias",
@@ -2404,7 +2404,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Bolacha",
     "Manteiga",
@@ -2417,7 +2417,7 @@
  {
   "id": "pt-0106",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Auscultadores",
     "Salsa",
@@ -2427,7 +2427,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Xipamanine",
     "Feijão nhemba",
@@ -2440,7 +2440,7 @@
  {
   "id": "pt-0107",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Rio Rovuma",
     "Matapa",
@@ -2450,7 +2450,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Rafael Nadal",
     "Cleópatra",
@@ -2463,7 +2463,7 @@
  {
   "id": "pt-0108",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Valsa",
     "Escorrega",
@@ -2473,7 +2473,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Elsa",
     "Maria Mutola",
@@ -2486,7 +2486,7 @@
  {
   "id": "pt-0109",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Futebol",
     "Carnaval",
@@ -2496,7 +2496,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "África do Sul",
     "Argentina",
@@ -2509,7 +2509,7 @@
  {
   "id": "pt-0110",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Dominó",
     "Comédia",
@@ -2519,7 +2519,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Gato",
     "Pião",
@@ -2532,7 +2532,7 @@
  {
   "id": "pt-0111",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Damas",
     "Charadas",
@@ -2542,7 +2542,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Cinderela",
     "Cesária Évora",
@@ -2555,7 +2555,7 @@
  {
   "id": "pt-0112",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Série",
     "Banda",
@@ -2565,7 +2565,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Escada",
     "Couve",
@@ -2578,7 +2578,7 @@
  {
   "id": "pt-0113",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Suíça",
     "Coreia do Sul",
@@ -2588,7 +2588,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Anel",
     "Secador de cabelo",
@@ -2601,7 +2601,7 @@
  {
   "id": "pt-0114",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Hello Kitty",
     "Simone Biles",
@@ -2611,7 +2611,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Sala de estar",
     "Etiópia",
@@ -2624,7 +2624,7 @@
  {
   "id": "pt-0115",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Rato Mickey",
     "Isaac Newton",
@@ -2634,7 +2634,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Stand-up comedy",
     "Ano Novo",
@@ -2647,7 +2647,7 @@
  {
   "id": "pt-0116",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Estádio da Machava",
     "Tubarão-baleia",
@@ -2657,7 +2657,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Joanesburgo",
     "Cabana",
@@ -2670,7 +2670,7 @@
  {
   "id": "pt-0117",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Hollywood",
     "Passadeira",
@@ -2680,7 +2680,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Régua",
     "Macaco",
@@ -2693,7 +2693,7 @@
  {
   "id": "pt-0118",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Toalha",
     "Gorila",
@@ -2703,7 +2703,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Saxofone",
     "Piquenique",
@@ -2716,7 +2716,7 @@
  {
   "id": "pt-0119",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Prato",
     "Formiga",
@@ -2726,7 +2726,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Madre Teresa",
     "Woody",
@@ -2739,7 +2739,7 @@
  {
   "id": "pt-0120",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Pepino",
     "Carteira",
@@ -2749,7 +2749,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Tihove",
     "Metical",
@@ -2762,7 +2762,7 @@
  {
   "id": "pt-0121",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Tigre",
     "Telhado",
@@ -2772,7 +2772,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Thomas Edison",
     "Harry Potter",
@@ -2785,7 +2785,7 @@
  {
   "id": "pt-0122",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Grand Canyon",
     "Quartel de bombeiros",
@@ -2795,7 +2795,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Toy Story",
     "Samba",
@@ -2808,7 +2808,7 @@
  {
   "id": "pt-0123",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Rapunzel",
     "Mário Coluna",
@@ -2818,7 +2818,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Singapura",
     "Canadá",
@@ -2831,7 +2831,7 @@
  {
   "id": "pt-0124",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Foguetão",
     "Borboleta",
@@ -2841,7 +2841,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Pica-Pau",
     "Rosa Parks",
@@ -2854,7 +2854,7 @@
  {
   "id": "pt-0125",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Mochila",
     "Microscópio",
@@ -2864,7 +2864,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Confúcio",
     "Branca de Neve",
@@ -2877,7 +2877,7 @@
  {
   "id": "pt-0126",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Morcego",
     "Lanterna",
@@ -2887,7 +2887,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Eusébio",
     "Barack Obama",
@@ -2900,7 +2900,7 @@
  {
   "id": "pt-0127",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Xadrez",
     "Avatar",
@@ -2910,7 +2910,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Avião",
     "Chá",
@@ -2923,7 +2923,7 @@
  {
   "id": "pt-0128",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Apito",
     "Cogumelo",
@@ -2933,7 +2933,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Popeye",
     "Merlin",
@@ -2946,7 +2946,7 @@
  {
   "id": "pt-0129",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Hiena",
     "Camelo",
@@ -2956,7 +2956,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Pelé",
     "Zorro",
@@ -2969,7 +2969,7 @@
  {
   "id": "pt-0130",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Chimoio",
     "Capulana",
@@ -2979,7 +2979,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Garrafa",
     "Lâmpada",
@@ -2992,7 +2992,7 @@
  {
   "id": "pt-0131",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Colher",
     "Lareira",
@@ -3002,7 +3002,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Steven Spielberg",
     "Gato das Botas",
@@ -3015,7 +3015,7 @@
  {
   "id": "pt-0132",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Matraquilhos",
     "Hip-hop",
@@ -3025,7 +3025,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Drácula",
     "Sonic",
@@ -3038,7 +3038,7 @@
  {
   "id": "pt-0133",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Gelatina",
     "Rosa",
@@ -3048,7 +3048,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Malabarista",
     "Super-herói",
@@ -3061,7 +3061,7 @@
  {
   "id": "pt-0134",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Raposa",
     "Boneca",
@@ -3071,7 +3071,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Vivaldi",
     "Gulliver",
@@ -3084,7 +3084,7 @@
  {
   "id": "pt-0135",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Parafuso",
     "Gaveta",
@@ -3094,7 +3094,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Nikola Tesla",
     "Beyoncé",
@@ -3107,7 +3107,7 @@
  {
   "id": "pt-0136",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Igreja",
     "Jardim zoológico",
@@ -3117,7 +3117,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Samora Machel",
     "Rei Salomão",
@@ -3130,7 +3130,7 @@
  {
   "id": "pt-0137",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Morango",
     "Tubarão",
@@ -3140,7 +3140,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Cataratas Vitória",
     "Estátua da Liberdade",
@@ -3153,7 +3153,7 @@
  {
   "id": "pt-0138",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Candeeiro",
     "Ananás",
@@ -3163,7 +3163,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Scooby-Doo",
     "Florence Nightingale",
@@ -3176,7 +3176,7 @@
  {
   "id": "pt-0139",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Galileu",
     "Charles Dickens",
@@ -3186,7 +3186,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Jornal",
     "Sofá",
@@ -3199,7 +3199,7 @@
  {
   "id": "pt-0140",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Usain Bolt",
     "Homem de Ferro",
@@ -3209,7 +3209,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Arco-íris",
     "Burro",
@@ -3222,7 +3222,7 @@
  {
   "id": "pt-0141",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Joaninha",
     "Papagaio de papel",
@@ -3232,7 +3232,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Esteira",
     "Tufo",
@@ -3245,7 +3245,7 @@
  {
   "id": "pt-0142",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Praça da Independência",
     "Frango à zambeziana",
@@ -3255,7 +3255,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Vulcão",
     "Sala de aula",
@@ -3268,7 +3268,7 @@
  {
   "id": "pt-0143",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Holanda",
     "Parque de estacionamento",
@@ -3278,7 +3278,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Pantera Cor-de-Rosa",
     "Astérix",
@@ -3291,7 +3291,7 @@
  {
   "id": "pt-0144",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Makwaela",
     "Sofala",
@@ -3301,7 +3301,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Jogo da velha",
     "Orquestra",
@@ -3314,7 +3314,7 @@
  {
   "id": "pt-0145",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Óculos",
     "Abelha",
@@ -3324,7 +3324,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Chapa",
     "Embondeiro",
@@ -3337,7 +3337,7 @@
  {
   "id": "pt-0146",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Costa do Sol",
     "Mapiko",
@@ -3347,7 +3347,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Roger Federer",
     "Cristóvão Colombo",
@@ -3360,7 +3360,7 @@
  {
   "id": "pt-0147",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Trompete",
     "Passadeira vermelha",
@@ -3370,7 +3370,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Casa de Ferro",
     "Moçambola",
@@ -3383,7 +3383,7 @@
  {
   "id": "pt-0148",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Música pop",
     "Fotografia",
@@ -3393,7 +3393,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Agatha Christie",
     "Shrek",
@@ -3406,7 +3406,7 @@
  {
   "id": "pt-0149",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Super-Homem",
     "Vasco da Gama",
@@ -3416,7 +3416,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Piscina",
     "Estados Unidos",
@@ -3429,7 +3429,7 @@
  {
   "id": "pt-0150",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Veado",
     "Cadeira",
@@ -3439,7 +3439,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Campeonato do Mundo",
     "Jardinagem",
@@ -3452,7 +3452,7 @@
  {
   "id": "pt-0151",
   "yellow": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Consola",
     "Esqui",
@@ -3462,7 +3462,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Buda",
     "Nelson Mandela",
@@ -3475,7 +3475,7 @@
  {
   "id": "pt-0152",
   "yellow": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Cristiano Ronaldo",
     "Amália Rodrigues",
@@ -3485,7 +3485,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Cachecol",
     "Mapa",
@@ -3498,7 +3498,7 @@
  {
   "id": "pt-0153",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Restaurante",
     "Cabo Verde",
@@ -3508,7 +3508,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Garfield",
     "Walt Disney",
@@ -3521,7 +3521,7 @@
  {
   "id": "pt-0154",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "China",
     "Itália",
@@ -3531,7 +3531,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Moeda",
     "Porco",
@@ -3544,7 +3544,7 @@
  {
   "id": "pt-0155",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Museu de História Natural",
     "Castanha de caju",
@@ -3554,7 +3554,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Câmara de filmar",
     "Kizomba",
@@ -3567,7 +3567,7 @@
  {
   "id": "pt-0156",
   "yellow": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Gorongosa",
     "Cahora Bassa",
@@ -3577,7 +3577,7 @@
    ]
   },
   "blue": {
-   "pack": "pessoas",
+   "pack": "people",
    "words": [
     "Obélix",
     "Simba",
@@ -3590,7 +3590,7 @@
  {
   "id": "pt-0157",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Circo",
     "Chile",
@@ -3600,7 +3600,7 @@
    ]
   },
   "blue": {
-   "pack": "mocambique",
+   "pack": "mozambique",
    "words": [
     "Bilene",
     "Dia da Independência",
@@ -3613,7 +3613,7 @@
  {
   "id": "pt-0158",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Chinelos",
     "Castelo de areia",
@@ -3623,7 +3623,7 @@
    ]
   },
   "blue": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Cinema",
     "Nigéria",
@@ -3636,7 +3636,7 @@
  {
   "id": "pt-0159",
   "yellow": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Pombo",
     "Almofada",
@@ -3646,7 +3646,7 @@
    ]
   },
   "blue": {
-   "pack": "entretenimento",
+   "pack": "entertainment",
    "words": [
     "Marioneta",
     "Hóquei",
@@ -3659,7 +3659,7 @@
  {
   "id": "pt-0160",
   "yellow": {
-   "pack": "lugares",
+   "pack": "places",
    "words": [
     "Madrid",
     "Amazónia",
@@ -3669,7 +3669,7 @@
    ]
   },
   "blue": {
-   "pack": "coisas",
+   "pack": "things",
    "words": [
     "Iogurte",
     "Esquilo",

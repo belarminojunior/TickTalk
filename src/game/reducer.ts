@@ -6,12 +6,14 @@ import type {
   GameState,
   PauseReason,
   Settings,
+  Side,
+  SideFlags,
   Team,
   TeamSetup,
   TimerState,
   Turn,
 } from './types';
-import { BOARD_SQUARES, WORDS_PER_CARD } from './types';
+import { BOARD_SQUARES, WORDS_PER_CARD, WORDS_PER_TURN } from './types';
 
 export type GameAction =
   | { type: 'SETUP'; settings: Settings; teams: TeamSetup[]; cards: Card[]; seed: number }
@@ -19,11 +21,12 @@ export type GameAction =
   | { type: 'READY' }
   | { type: 'START_TURN'; now: number }
   | { type: 'TOGGLE_WORD'; index: number; now: number }
+  | { type: 'UNDO_HIT'; now: number }
   | { type: 'TICK'; now: number }
   | { type: 'TIME_UP'; now: number }
   | { type: 'END_EARLY'; now: number }
   | { type: 'BEGIN_VALIDATION' }
-  | { type: 'SET_VALIDATION'; index: number; annulled: boolean }
+  | { type: 'SET_VALIDATION'; side: Side; index: number; annulled: boolean }
   | { type: 'CONFIRM_VALIDATION' }
   | { type: 'ROLL_DIE'; value: number }
   | { type: 'APPLY_MOVE' }
@@ -44,7 +47,7 @@ export const DEFAULT_SETTINGS: Settings = {
   scoring: 'die',
   language: 'pt',
   uiLanguage: 'pt',
-  packs: ['pessoas', 'lugares', 'coisas', 'entretenimento', 'mocambique'],
+  packs: ['people', 'places', 'things', 'entertainment', 'mozambique'],
 };
 
 export function createInitialState(settings: Settings = DEFAULT_SETTINGS): GameState {
@@ -62,8 +65,19 @@ export function createInitialState(settings: Settings = DEFAULT_SETTINGS): GameS
   };
 }
 
-function emptyFlags(): boolean[] {
-  return Array.from({ length: WORDS_PER_CARD }, () => false);
+export function emptyFlags(): SideFlags {
+  const none = () => Array.from({ length: WORDS_PER_CARD }, () => false);
+  return { blue: none(), yellow: none() };
+}
+
+export function otherSide(side: Side): Side {
+  return side === 'blue' ? 'yellow' : 'blue';
+}
+
+function setFlag(flags: SideFlags, side: Side, index: number, value: boolean): SideFlags {
+  const row = [...flags[side]];
+  row[index] = value;
+  return { ...flags, [side]: row };
 }
 
 function newTimer(settings: Settings): TimerState {
@@ -81,6 +95,7 @@ function handoffTurn(state: GameState, teamIndex: number): Turn {
     teamIndex,
     describer: describerOf(team),
     side: sideFor(team),
+    up: sideFor(team),
     ready: false,
     card: null,
     marked: emptyFlags(),
@@ -95,7 +110,7 @@ function handoffTurn(state: GameState, teamIndex: number): Turn {
   };
 }
 
-/** Desconta o tempo passado desde o último acerto de contas. */
+/** Deducts the time elapsed since the last settlement. */
 function settleTimer(timer: TimerState, now: number): TimerState {
   if (!timer.running || timer.lastTickAt === null) return timer;
   const elapsed = Math.max(0, now - timer.lastTickAt);
@@ -114,12 +129,16 @@ function endTurn(state: GameState, turn: Turn, reason: Turn['endReason']): GameS
   };
 }
 
+const SIDES: Side[] = ['blue', 'yellow'];
+
+/** Valid words over both sides: marked and not cancelled. */
 export function validCount(turn: Pick<Turn, 'marked' | 'annulled'>): number {
-  return turn.marked.filter((m, i) => m && !turn.annulled[i]).length;
+  return SIDES.reduce((n, side) => n + turn.marked[side].filter((m, i) => m && !turn.annulled[side][i]).length, 0);
 }
 
+/** Words marked as guessed, over both sides. */
 export function markedCount(turn: Pick<Turn, 'marked'>): number {
-  return turn.marked.filter(Boolean).length;
+  return SIDES.reduce((n, side) => n + turn.marked[side].filter(Boolean).length, 0);
 }
 
 function applyMove(state: GameState, turn: Turn): GameState {
@@ -139,7 +158,7 @@ function applyMove(state: GameState, turn: Turn): GameState {
   };
 }
 
-/** Passo depois da validação: rolar o dado (com dado) ou avançar logo (sem dado). */
+/** Step after validation: roll the die (die mode) or move straight away (no-die mode). */
 function afterValidation(state: GameState, turn: Turn): GameState {
   const snapshot: GameState = { ...state, undo: null };
   if (state.settings.scoring === 'die') {
@@ -220,18 +239,39 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     }
 
     case 'TOGGLE_WORD': {
+      // Acts on the side that is face up. Marking a word turns the card over to the other
+      // side; unmarking (a correction) leaves the card where it is.
       if (state.phase !== 'describing' || !turn) return state;
       if (action.index < 0 || action.index >= WORDS_PER_CARD) return state;
       const timer = settleTimer(turn.timer, action.now);
       if (timer.remainingMs <= 0) return endTurn(state, { ...turn, timer }, 'time');
-      const marked = [...turn.marked];
-      marked[action.index] = !marked[action.index];
-      const hits = marked[action.index]
-        ? [...turn.hits, { index: action.index, atMs: timer.durationMs - timer.remainingMs }]
-        : turn.hits.filter((h) => h.index !== action.index);
-      const next: Turn = { ...turn, timer, marked, hits };
-      if (marked.every(Boolean)) return endTurn(state, next, 'allFive');
+      const side = turn.up;
+      if (turn.marked[side][action.index]) {
+        const marked = setFlag(turn.marked, side, action.index, false);
+        const hits = turn.hits.filter((h) => !(h.side === side && h.index === action.index));
+        return { ...state, turn: { ...turn, timer, marked, hits } };
+      }
+      const marked = setFlag(turn.marked, side, action.index, true);
+      const hits = [...turn.hits, { side, index: action.index, atMs: timer.durationMs - timer.remainingMs }];
+      const next: Turn = { ...turn, timer, marked, hits, up: otherSide(side) };
+      if (markedCount(next) >= WORDS_PER_TURN) return endTurn(state, next, 'allWords');
       return { ...state, turn: next };
+    }
+
+    case 'UNDO_HIT': {
+      // Takes back the last correct word and turns the card back to the side it was on.
+      if (state.phase !== 'describing' || !turn || turn.hits.length === 0) return state;
+      const last = turn.hits[turn.hits.length - 1];
+      return {
+        ...state,
+        turn: {
+          ...turn,
+          timer: settleTimer(turn.timer, action.now),
+          marked: setFlag(turn.marked, last.side, last.index, false),
+          hits: turn.hits.slice(0, -1),
+          up: last.side,
+        },
+      };
     }
 
     case 'TICK': {
@@ -278,10 +318,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 
     case 'SET_VALIDATION': {
       if (state.phase !== 'validating' || !turn) return state;
-      if (!turn.marked[action.index]) return state; // não se anula o que não foi acertado
-      const annulled = [...turn.annulled];
-      annulled[action.index] = action.annulled;
-      return { ...state, turn: { ...turn, annulled } };
+      if (!turn.marked[action.side]?.[action.index]) return state; // only guessed words can be cancelled
+      return { ...state, turn: { ...turn, annulled: setFlag(turn.annulled, action.side, action.index, action.annulled) } };
     }
 
     case 'CONFIRM_VALIDATION': {
@@ -312,7 +350,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     }
 
     case 'NEXT_TEAM': {
-      if (state.phase !== 'moving' || !turn) return state;
+      // Only once the pawn has landed (and the die is back on the board).
+      if (state.phase !== 'moving' || !turn || !turn.settled) return state;
       const teams = state.teams.map((t, i) =>
         i === turn.teamIndex ? { ...t, describerIndex: t.describerIndex + 1, lastSide: turn.side } : t,
       );
@@ -330,7 +369,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
   }
 }
 
-/** Um jogo retomado nunca volta com o tempo a correr. */
+/** A resumed game never comes back with the timer running. */
 export function normalizeLoaded(state: GameState): GameState {
   if (state.phase === 'describing' && state.turn) {
     return {
@@ -345,7 +384,7 @@ export function normalizeLoaded(state: GameState): GameState {
   return state;
 }
 
-/** Tempo restante num dado instante, sem alterar o estado. */
+/** Remaining time at a given instant, without changing the state. */
 export function remainingAt(timer: TimerState, now: number): number {
   if (!timer.running || timer.lastTickAt === null) return timer.remainingMs;
   return Math.max(0, timer.remainingMs - Math.max(0, now - timer.lastTickAt));

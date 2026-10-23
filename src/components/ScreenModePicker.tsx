@@ -6,7 +6,7 @@ import styles from './ScreenModePicker.module.css';
 const MODES: ScreenMode[] = ['phone', 'windows', 'single'];
 const ICONS = { phone: DevicesIcon, windows: WindowsIcon, single: MonitorIcon };
 
-/** Três cartões grandes: PC + telemóvel / Duas janelas / Um só ecrã. */
+/** Three large cards: PC + phone / Two windows / One screen. */
 export function ScreenModePicker({ value, onChange }: { value: ScreenMode; onChange: (m: ScreenMode) => void }) {
   const t = useT();
   return (
