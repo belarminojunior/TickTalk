@@ -1,5 +1,5 @@
 import type { DescriberView } from '../game/selectors';
-import type { Language } from '../game/types';
+import type { Language, Side } from '../game/types';
 
 /** Host ⇄ describer protocol version. Messages with another version are ignored. */
 export const PROTOCOL_VERSION = 1;
@@ -12,12 +12,20 @@ export type DescriberCommand =
   | { type: 'PAUSE' }
   | { type: 'RESUME' }
   | { type: 'END_EARLY' }
-  | { type: 'NEXT_TEAM' };
+  | { type: 'NEXT_TEAM' }
+  // One phone per team: the checking team validates on its own phone.
+  | { type: 'SET_VALIDATION'; side: Side; index: number; annulled: boolean }
+  | { type: 'CONFIRM_VALIDATION' };
+
+/** Commands that only the checking team may send (never the team whose turn it is). */
+export const VALIDATION_COMMANDS: readonly DescriberCommand['type'][] = ['SET_VALIDATION', 'CONFIRM_VALIDATION'];
 
 /** Describer → host. */
 export type ClientMessage =
-  | { v: 1; kind: 'hello' }
-  | { v: 1; kind: 'ping' }
+  // `team`: the team this phone plays for (one phone per team mode); ignored otherwise.
+  | { v: 1; kind: 'hello'; team?: string | null }
+  | { v: 1; kind: 'ping'; team?: string | null }
+  | { v: 1; kind: 'join'; team: string | null }
   | { v: 1; kind: 'bye' }
   | { v: 1; kind: 'command'; command: DescriberCommand };
 
@@ -46,7 +54,15 @@ function parseCommand(raw: unknown): DescriberCommand | null {
     case 'END_EARLY':
     case 'UNDO_HIT':
     case 'NEXT_TEAM':
+    case 'CONFIRM_VALIDATION':
       return { type: raw.type };
+    case 'SET_VALIDATION': {
+      const { side, index, annulled } = raw;
+      if (side !== 'blue' && side !== 'yellow') return null;
+      if (typeof index !== 'number' || !Number.isInteger(index) || index < 0 || index > 4) return null;
+      if (typeof annulled !== 'boolean') return null;
+      return { type: 'SET_VALIDATION', side, index, annulled };
+    }
     case 'TOGGLE_WORD': {
       const i = raw.index;
       if (typeof i !== 'number' || !Number.isInteger(i) || i < 0 || i > 4) return null;
@@ -57,13 +73,26 @@ function parseCommand(raw: unknown): DescriberCommand | null {
   }
 }
 
+/** A team id ("t1"…), null (no team), or undefined when missing or invalid. */
+function parseTeamId(raw: unknown): string | null | undefined {
+  if (raw === null) return null;
+  return typeof raw === 'string' && /^[A-Za-z0-9_-]{1,16}$/.test(raw) ? raw : undefined;
+}
+
 export function parseClientMessage(raw: unknown): ClientMessage | null {
   if (!isObject(raw) || raw.v !== PROTOCOL_VERSION) return null;
   switch (raw.kind) {
     case 'hello':
-    case 'ping':
+    case 'ping': {
+      const team = parseTeamId(raw.team);
+      return team === undefined ? { v: 1, kind: raw.kind } : { v: 1, kind: raw.kind, team };
+    }
+    case 'join': {
+      const team = parseTeamId(raw.team);
+      return team === undefined ? null : { v: 1, kind: 'join', team };
+    }
     case 'bye':
-      return { v: 1, kind: raw.kind };
+      return { v: 1, kind: 'bye' };
     case 'command': {
       const command = parseCommand(raw.command);
       return command ? { v: 1, kind: 'command', command } : null;
@@ -100,8 +129,9 @@ export function parseServerNotice(raw: unknown): ServerNotice | null {
 }
 
 export const msg = {
-  hello: (): ClientMessage => ({ v: 1, kind: 'hello' }),
-  ping: (): ClientMessage => ({ v: 1, kind: 'ping' }),
+  hello: (team?: string | null): ClientMessage => (team === undefined ? { v: 1, kind: 'hello' } : { v: 1, kind: 'hello', team }),
+  ping: (team?: string | null): ClientMessage => (team === undefined ? { v: 1, kind: 'ping' } : { v: 1, kind: 'ping', team }),
+  join: (team: string | null): ClientMessage => ({ v: 1, kind: 'join', team }),
   bye: (): ClientMessage => ({ v: 1, kind: 'bye' }),
   command: (command: DescriberCommand): ClientMessage => ({ v: 1, kind: 'command', command }),
   state: (view: DescriberView): HostMessage => ({ v: 1, kind: 'state', view }),

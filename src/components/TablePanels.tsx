@@ -4,7 +4,7 @@ import { projection } from '../game/selectors';
 import type { Hit, ScoringMode, Side, SideFlags, Team } from '../game/types';
 import { FINISH } from '../game/types';
 import { useT } from '../i18n';
-import { CheckIcon } from './Icons';
+import { CheckIcon, TeamPhonesIcon } from './Icons';
 import { MiniCard, TwoSidedCard } from './Card';
 import { Pawn, teamInitial } from './Pawn';
 import styles from './TablePanels.module.css';
@@ -94,7 +94,18 @@ export function Projection({ marked, scoring }: { marked: number; scoring: Scori
 }
 
 /** Team cards under the board. */
-export function TeamCards({ teams, activeIndex, positions }: { teams: Team[]; activeIndex: number | null; positions?: number[] }) {
+export function TeamCards({
+  teams,
+  activeIndex,
+  positions,
+  phones,
+}: {
+  teams: Team[];
+  activeIndex: number | null;
+  positions?: number[];
+  /** One phone per team: ids of the teams whose phone is connected. */
+  phones?: string[];
+}) {
   const t = useT();
   return (
     <ul className={styles.teamCards}>
@@ -116,6 +127,12 @@ export function TeamCards({ teams, activeIndex, positions }: { teams: Team[]; ac
                 <b>{position}</b>/{FINISH}
               </span>
             </div>
+            {phones && (
+              <div className={`${styles.teamPhone} ${phones.includes(team.id) ? styles.teamPhoneOn : ''}`}>
+                <TeamPhonesIcon size={15} />
+                {phones.includes(team.id) ? t.teamPhoneOn : t.teamPhoneOff}
+              </div>
+            )}
             <div className={styles.teamLine}>
               <span className={`${styles.swatch} ${styles[side]}`} aria-hidden="true" />
               <span>

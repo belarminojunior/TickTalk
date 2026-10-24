@@ -4,6 +4,7 @@ import { Board } from '../components/Board';
 import { CardFace, HiddenWords, TwoSidedCard } from '../components/Card';
 import { PauseIcon, PlayIcon, UndoIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
+import { ExitButton } from '../components/ExitButton';
 import { TimerRing } from '../components/TimerRing';
 import { WordButton } from '../components/WordButton';
 import type { DescriberView } from '../game/selectors';
@@ -14,6 +15,7 @@ import type { DescriberCommand } from '../net/protocol';
 import type { DescriberStatus } from '../hooks/useTransport';
 import { useT } from '../i18n';
 import { useTickSounds } from './sounds';
+import { PhoneValidation, SpectatorScreen, TeamPicker } from './TeamPhoneScreens';
 import styles from './DescriberScreen.module.css';
 
 export interface DescriberScreenProps {
@@ -27,25 +29,45 @@ export interface DescriberScreenProps {
   handoffExtra?: ReactNode;
   /** When another tab took the connection: use this one again. */
   onTakeOver?: () => void;
+  /** Leave the game (one-screen mode, where this screen covers the whole PC). */
+  onExit?: () => void;
+  /** One phone per team: choose this phone's team (null = none). */
+  onJoinTeam?: (team: string | null) => void;
 }
 
 const LOCKED_PHASES = ['timeUp', 'validating', 'rolling', 'moving'];
 
 /** The describer screen: the big card in the centre, the blurred board behind. */
-export function DescriberScreen({ view, anchor, status, mode, now, onCommand, handoffExtra, onTakeOver }: DescriberScreenProps) {
+export function DescriberScreen({
+  view,
+  anchor,
+  status,
+  mode,
+  now,
+  onCommand,
+  handoffExtra,
+  onTakeOver,
+  onExit,
+  onJoinTeam,
+}: DescriberScreenProps) {
   const t = useT();
   const remaining = useCountdown(view?.timer.remainingMs ?? 0, !!view?.timer.running, anchor, now);
   const phase = view?.phase ?? 'setup';
   const describing = phase === 'describing';
   const markedTotal = view ? view.marked.blue.filter(Boolean).length + view.marked.yellow.filter(Boolean).length : 0;
 
-  useTickSounds(remaining, describing);
+  // One phone per team: this phone may be the playing team's, the checking team's, or another.
+  const teamMode = view?.mode === 'teamPhones' && phase !== 'setup';
+  const role = view?.you?.role ?? 'describer';
+  const isDescriber = !teamMode || (!!view?.you.teamId && role === 'describer');
+
+  useTickSounds(remaining, describing && isDescriber);
 
   // Horn when time runs out (once per turn).
   const prevPhase = useRef(phase);
   useEffect(() => {
     if (prevPhase.current !== phase) {
-      if (phase === 'timeUp') play('horn');
+      if (phase === 'timeUp' && isDescriber) play('horn');
       if (phase === 'describing' && prevPhase.current === 'handoff') play('start');
       prevPhase.current = phase;
     }
@@ -93,7 +115,7 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
     Enter: () => {
       if (phase === 'describing' || phase === 'paused') onCommand({ type: 'END_EARLY' });
     },
-  });
+  }, isDescriber);
 
   const statusMessage = (() => {
     if (status === 'replaced') return { title: t.replacedDescriberTitle, body: t.replacedDescriberHelp, takeOver: true };
@@ -191,6 +213,12 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
               </button>
             )}
           </div>
+        ) : teamMode && view && !view.you.teamId ? (
+          <TeamPicker view={view} onJoin={(team) => onJoinTeam?.(team)} />
+        ) : teamMode && view && role === 'validator' ? (
+          <PhoneValidation view={view} onCommand={onCommand} />
+        ) : teamMode && view && role === 'spectator' ? (
+          <SpectatorScreen view={view} remaining={remaining} onChangeTeam={() => onJoinTeam?.(null)} />
         ) : (
           view &&
           team && (
@@ -219,6 +247,7 @@ export function DescriberScreen({ view, anchor, status, mode, now, onCommand, ha
                 >
                   {phase === 'paused' ? <PlayIcon size={22} /> : <PauseIcon size={22} />}
                 </button>
+                {onExit && <ExitButton onExit={onExit} round />}
               </header>
 
               {phase === 'won' ? (

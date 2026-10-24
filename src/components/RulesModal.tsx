@@ -2,7 +2,7 @@ import { useT } from '../i18n';
 import { Modal } from './Controls';
 import styles from './RulesModal.module.css';
 
-export function RulesModal({ onClose, onBackToSetup }: { onClose: () => void; onBackToSetup?: () => void }) {
+export function RulesModal({ onClose }: { onClose: () => void }) {
   const t = useT();
   return (
     <Modal title={t.rulesTitle} onClose={onClose}>
@@ -19,14 +19,6 @@ export function RulesModal({ onClose, onBackToSetup }: { onClose: () => void; on
           <ShortcutTable title={t.shortcutsTable} rows={t.shortcutList.table} />
         </div>
       </section>
-      {onBackToSetup && (
-        <section className={styles.footer}>
-          <p>{t.backToSetupHelp}</p>
-          <button type="button" className="btn btn-outline" onClick={onBackToSetup}>
-            {t.backToSetup}
-          </button>
-        </section>
-      )}
     </Modal>
   );
 }

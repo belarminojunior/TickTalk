@@ -39,13 +39,23 @@ Depois, no PC:
 
 O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, aparece **Continuar jogo guardado** na configuração.
 
-### Os três modos de ecrã
+### Os quatro modos de ecrã
 
 | Modo | Mesa | Quem explica |
 |---|---|---|
 | **PC + telemóvel** (recomendado) | PC/TV em `/` | Telemóvel em `/explicar`, passa de mão em mão a cada vez |
+| **Um telemóvel por equipa** | PC/TV em `/` | Cada equipa tem o seu telemóvel em `/explicar`: quem explica usa o da sua equipa e a equipa adversária valida no dela |
 | **Duas janelas no PC** | Janela principal | Segunda janela (botão “Abrir janela de quem explica”), por exemplo num segundo monitor |
 | **Um só ecrã** | Aparece antes e depois da vez | Ocupa o ecrã durante a vez |
+
+### Um telemóvel por equipa
+
+- Todas as equipas abrem o **mesmo endereço** (ou leem o mesmo QR code). Quando o jogo começa, cada telemóvel escolhe a sua equipa ("Qual é a tua equipa?") e fica a lembrar-se dela. Cada equipa só pode ter um telemóvel.
+- **Na vez da tua equipa**, o telemóvel funciona como no modo normal: carta, palavras, "Passar a vez".
+- **Quando a tua equipa valida** a vez de outra, o telemóvel mostra os dois lados da carta com **Válida | Anular** e o botão para confirmar. A mesa mostra o mesmo cartão, só para ver, e acompanha cada toque.
+- **Nas outras alturas**, o telemóvel mostra de quem é a vez, o contador e o tempo, mas nunca as palavras.
+- Se o telemóvel da equipa que valida não estiver ligado, valida-se na mesa, como antes. Se o telemóvel da equipa que joga cair, o tempo pára.
+- Nos cartões das equipas, na mesa, aparece "telemóvel ligado" ou "sem telemóvel".
 
 ## Ligar o telemóvel
 

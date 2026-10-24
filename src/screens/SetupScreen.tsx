@@ -96,8 +96,13 @@ export function SetupScreen(props: SetupScreenProps) {
           {t.howToPlay}
         </h2>
         <ScreenModePicker value={settings.screenMode} onChange={(m) => set('screenMode', m)} />
-        {settings.screenMode === 'phone' && (
-          <QrConnect url={props.phoneUrl} connected={link.connected} server={link.serverStatus} />
+        {(settings.screenMode === 'phone' || settings.screenMode === 'teamPhones') && (
+          <QrConnect
+            url={props.phoneUrl}
+            connected={link.connected}
+            server={link.serverStatus}
+            teamPhones={settings.screenMode === 'teamPhones'}
+          />
         )}
         {settings.screenMode === 'windows' && (
           <div className={styles.windowBox}>
@@ -255,7 +260,7 @@ export function SetupScreen(props: SetupScreenProps) {
             </p>
           ))}
           {noDescriber && (
-            <p className={styles.warning}>{settings.screenMode === 'phone' ? t.noPhoneWarning : t.noWindowWarning}</p>
+            <p className={styles.warning}>{settings.screenMode === 'windows' ? t.noWindowWarning : t.noPhoneWarning}</p>
           )}
         </div>
         <div className={styles.footerButtons}>

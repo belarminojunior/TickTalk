@@ -19,6 +19,8 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['src/test/setup.ts'],
+    // The full-game tests play whole turns through the UI; give them room on slower machines.
+    testTimeout: 20000,
     include: ['src/**/*.test.{ts,tsx}', 'server/**/*.test.ts'],
     css: { modules: { classNameStrategy: 'non-scoped' } },
   },

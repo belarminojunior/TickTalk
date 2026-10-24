@@ -147,6 +147,14 @@ export const DevicesIcon = (p: IconProps) => (
   </Svg>
 );
 
+export const TeamPhonesIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="3" y="4" width="7.5" height="15" rx="1.6" />
+    <rect x="13.5" y="4" width="7.5" height="15" rx="1.6" />
+    <path d="M6 16.5h1.5M16.5 16.5H18" />
+  </Svg>
+);
+
 export const WindowsIcon = (p: IconProps) => (
   <Svg {...p}>
     <rect x="2.5" y="5" width="8.5" height="7" rx="1.2" />
@@ -172,6 +180,13 @@ export const UndoIcon = (p: IconProps) => (
 export const ExternalIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+  </Svg>
+);
+
+export const ExitIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4" />
+    <path d="M10 16l-4-4 4-4M6 12h10" />
   </Svg>
 );
 

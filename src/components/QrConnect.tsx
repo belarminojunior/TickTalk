@@ -6,7 +6,20 @@ import styles from './QrConnect.module.css';
 export type ServerStatus = 'connecting' | 'online' | 'offline';
 
 /** QR code generated locally + address + phone connection status. */
-export function QrConnect({ url, connected, server, compact }: { url: string | null; connected: number; server: ServerStatus; compact?: boolean }) {
+export function QrConnect({
+  url,
+  connected,
+  server,
+  compact,
+  teamPhones = false,
+}: {
+  url: string | null;
+  connected: number;
+  server: ServerStatus;
+  compact?: boolean;
+  /** One phone per team: every team opens the same address. */
+  teamPhones?: boolean;
+}) {
   const t = useT();
   const [dataUrl, setDataUrl] = useState<string | null>(null);
 
@@ -30,14 +43,14 @@ export function QrConnect({ url, connected, server, compact }: { url: string | n
         {dataUrl && url ? <img src={dataUrl} alt={t.qrAlt(url)} /> : <span className={styles.placeholder} aria-hidden="true" />}
       </div>
       <div className={styles.text}>
-        <h3 className={styles.title}>{t.connectPhone}</h3>
+        <h3 className={styles.title}>{teamPhones ? t.connectTeamPhones : t.connectPhone}</h3>
         {server === 'offline' ? (
           <p className={styles.warn}>{t.serverMissing}</p>
         ) : (
           <p className={styles.help}>
-            {t.connectPhoneHelpBefore}
+            {teamPhones ? t.connectTeamPhonesHelpBefore : t.connectPhoneHelpBefore}
             <strong className={styles.url}>{url ?? '…'}</strong>
-            {t.connectPhoneHelpAfter}
+            {teamPhones ? t.connectTeamPhonesHelpAfter : t.connectPhoneHelpAfter}
           </p>
         )}
         {server !== 'offline' && (

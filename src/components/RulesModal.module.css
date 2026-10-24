@@ -65,13 +65,3 @@ kbd {
   .shortcuts { grid-template-columns: 1fr; }
 }
 
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px;
-  padding-top: 18px;
-  border-top: 1px solid var(--panel-line);
-  color: var(--muted);
-}

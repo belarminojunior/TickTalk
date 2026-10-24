@@ -59,7 +59,7 @@ export function HostApp() {
 
   const link = useHostLink(mode, state, dispatch, config.now);
   const local = useDescriberClient(link.localClient, config.now);
-  const phoneUrl = usePhoneUrl(mode === 'phone');
+  const phoneUrl = usePhoneUrl(mode === 'phone' || mode === 'teamPhones');
 
   // The host clock: time only runs here.
   useInterval(() => dispatch({ type: 'TICK', now: config.now() }), 200, state.phase === 'describing');
@@ -154,6 +154,7 @@ export function HostApp() {
         now={config.now}
         onCommand={sendLocal}
         handoffExtra={<SkipDescriberButton onClick={() => dispatch({ type: 'HANDOFF', skipDescriber: true })} />}
+        onExit={newSetup}
       />
     );
   } else {

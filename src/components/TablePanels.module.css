@@ -221,6 +221,18 @@
   font-size: 24px;
 }
 
+.teamPhone {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.teamPhoneOn {
+  color: #7fdc9b;
+}
+
 .teamLine {
   display: flex;
   align-items: center;

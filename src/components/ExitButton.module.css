@@ -1,0 +1,32 @@
+.round {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1.5px solid var(--outline);
+  background: var(--board);
+  color: var(--chalk);
+  display: grid;
+  place-items: center;
+}
+
+.round:hover {
+  border-color: var(--chalk);
+}
+
+.body {
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@media (max-width: 599px) {
+  .round { width: 48px; height: 48px; }
+  .actions :global(.btn) { flex: 1; }
+}

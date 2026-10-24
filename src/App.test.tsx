@@ -175,4 +175,26 @@ describe('full game (one screen)', () => {
     expect(faceUp()).toBe('yellow');
     expect(rng).not.toHaveBeenCalled();
   });
+
+  it('can leave the game mid-turn (after confirming) and pick it up again', async () => {
+    const { user } = setup('die');
+    await user.click(screen.getByRole('button', { name: 'Começar o jogo' }));
+    await readyAndStart(user);
+
+    // "Continuar a jogar" just closes the question.
+    await user.click(screen.getByRole('button', { name: 'Sair' }));
+    expect(screen.getByRole('dialog', { name: 'Sair do jogo?' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Continuar a jogar' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Terminar a vez' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Sair' }));
+    await user.click(screen.getByRole('button', { name: 'Sair do jogo' }));
+    expect(await screen.findByRole('button', { name: 'Começar o jogo' })).toBeInTheDocument();
+
+    // The game was saved; it comes back paused, in the middle of the same turn.
+    await user.click(screen.getByRole('button', { name: 'Continuar jogo guardado' }));
+    expect((await screen.findAllByRole('button', { name: /Retomar/ })).length).toBeGreaterThan(0);
+    expect(screen.getByText('Os Leões · Partida · lado azul')).toBeInTheDocument();
+  });
 });

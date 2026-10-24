@@ -23,6 +23,8 @@ export function useKeyboard(map: KeyMap, enabled = true): void {
     const onKey = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
       if (isTyping(event.target)) return;
+      // A dialog is open (exit confirmation, rules, …): its own buttons take the keys.
+      if (document.querySelector('[aria-modal="true"]')) return;
       const handler = ref.current[keyName(event)];
       if (!handler) return;
       // Space and Enter on a focused button already activate it; do not double up.

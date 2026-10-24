@@ -37,9 +37,15 @@ const pt = {
 
   // Setup
   howToPlay: 'Como vão jogar?',
-  modeTitle: { phone: 'PC + telemóvel de quem explica', windows: 'Duas janelas no PC', single: 'Um só ecrã' } as Record<ScreenMode, string>,
+  modeTitle: {
+    phone: 'PC + telemóvel de quem explica',
+    teamPhones: 'Um telemóvel por equipa',
+    windows: 'Duas janelas no PC',
+    single: 'Um só ecrã',
+  } as Record<ScreenMode, string>,
   modeDesc: {
     phone: 'O PC mostra a mesa a todos. Quem explica abre a carta no telemóvel, na mesma rede Wi-Fi.',
+    teamPhones: 'Cada equipa usa o seu telemóvel: quem explica vê a carta e, no fim, a equipa adversária valida no telemóvel dela.',
     windows: 'Com um segundo monitor ou TV: a mesa numa janela, a carta noutra virada para quem explica.',
     single: 'Quem explica fica com o PC durante a vez. A mesa aparece no fim, para validar.',
   } as Record<ScreenMode, string>,
@@ -104,10 +110,16 @@ const pt = {
   roundEndLine: (round: number, team: string): string => `Ronda ${round} · fim da vez ${ofTeamPt(team)}`,
   live: {
     phone: 'Ao vivo · a tela de quem explica está ligada',
+    teamPhones: 'Ao vivo · o telemóvel da equipa está ligado',
     windows: 'Ao vivo · a janela de quem explica está ligada',
     single: 'Ao vivo',
   } as Record<ScreenMode, string>,
-  describerOffline: { phone: 'Telemóvel desligado', windows: 'Janela de quem explica fechada', single: '' } as Record<ScreenMode, string>,
+  describerOffline: {
+    phone: 'Telemóvel desligado',
+    teamPhones: 'Telemóvel da equipa desligado',
+    windows: 'Janela de quem explica fechada',
+    single: '',
+  } as Record<ScreenMode, string>,
   rules: 'Regras',
   soundOn: 'Som ligado',
   soundOff: 'Som desligado',
@@ -140,20 +152,34 @@ const pt = {
   noHitsYet: 'Ainda sem acertos.',
   slotLabel: (side: Side, n: number, hit: boolean): string =>
     `Lado ${side === 'blue' ? 'azul' : 'amarelo'}, palavra ${n}: ${hit ? 'acertada' : 'por acertar'}`,
-  passDevice: { phone: 'Passa o telemóvel', windows: 'Vira a janela', single: 'Passa o ecrã' } as Record<ScreenMode, string>,
+  passDevice: {
+    phone: 'Passa o telemóvel',
+    teamPhones: 'Passa o telemóvel da equipa',
+    windows: 'Vira a janela',
+    single: 'Passa o ecrã',
+  } as Record<ScreenMode, string>,
   passTo: (mode: ScreenMode, name: string, team: string): string =>
-    mode === 'windows'
-      ? `Vira a janela para ${toPersonPt(name)} (${team})`
-      : `${mode === 'phone' ? 'Passa o telemóvel' : 'Passa o ecrã'} a ${name} (${team})`,
+    mode === 'teamPhones'
+      ? `${name} explica, com o telemóvel ${ofTeamPt(team)}`
+      : mode === 'windows'
+        ? `Vira a janela para ${toPersonPt(name)} (${team})`
+        : `${mode === 'phone' ? 'Passa o telemóvel' : 'Passa o ecrã'} a ${name} (${team})`,
   handoffHelp: (mode: ScreenMode): string =>
     mode === 'phone'
       ? 'Quando estiver tudo pronto, carrega em Começar no telemóvel.'
-      : mode === 'windows'
+      : mode === 'teamPhones'
+        ? 'Quando estiver tudo pronto, carrega em Começar no telemóvel da equipa.'
+        : mode === 'windows'
         ? 'Quando estiver tudo pronto, carrega em Começar na janela de quem explica.'
         : 'Quando estiver tudo pronto, carrega em Começar.',
   readyStatus: (name: string): string => `${name} está pronto/a. O tempo começa já a seguir.`,
   skipDescriber: 'Trocar quem explica',
-  waitingDescriber: { phone: 'À espera do telemóvel…', windows: 'À espera da janela de quem explica…', single: '' } as Record<ScreenMode, string>,
+  waitingDescriber: {
+    phone: 'À espera do telemóvel…',
+    teamPhones: 'À espera do telemóvel da equipa…',
+    windows: 'À espera da janela de quem explica…',
+    single: '',
+  } as Record<ScreenMode, string>,
   paused: 'Pausa',
   pausedHelp: 'O tempo parou.',
   disconnectedHelp: 'O tempo parou. Abre outra vez a página no telemóvel para continuar.',
@@ -221,6 +247,7 @@ const pt = {
   nextUp: (player: string, team: string): string => `A seguir: ${player} (${team})`,
   passOnDevice: {
     phone: 'Quem explica passa a vez no telemóvel.',
+    teamPhones: 'Quem explica passa a vez no telemóvel da equipa.',
     windows: 'Quem explica passa a vez na janela de quem explica.',
     single: '',
   } as Record<ScreenMode, string>,
@@ -235,8 +262,11 @@ const pt = {
 
   // Rules
   rulesTitle: 'Regras do Tick Talk',
-  backToSetup: 'Voltar à configuração',
-  backToSetupHelp: 'O jogo fica guardado: podes continuá-lo depois em “Continuar jogo guardado”.',
+  exit: 'Sair',
+  exitTitle: 'Sair do jogo?',
+  exitBody: 'O jogo fica guardado. Podes continuá-lo depois em “Continuar jogo guardado”.',
+  exitConfirm: 'Sair do jogo',
+  keepPlaying: 'Continuar a jogar',
   close: 'Fechar',
   rulesSections: [
     {
@@ -290,7 +320,28 @@ const pt = {
   endTurn: 'Terminar a vez',
   handoffTitle: (mode: ScreenMode, name: string): string =>
     mode === 'windows' ? `Vira o ecrã para ${toPersonPt(name)}` : `${mode === 'phone' ? 'Passa o telemóvel' : 'Passa o ecrã'} a ${name}`,
-  handoffDevice: { phone: 'Passa o telemóvel', windows: 'Vira o ecrã', single: 'Passa o ecrã' } as Record<ScreenMode, string>,
+  handoffDevice: { phone: 'Passa o telemóvel', teamPhones: 'Passa o telemóvel', windows: 'Vira o ecrã', single: 'Passa o ecrã' } as Record<ScreenMode, string>,
+
+  // One phone per team
+  connectTeamPhones: 'Liga os telemóveis das equipas',
+  connectTeamPhonesHelpBefore: 'Cada equipa lê o código ou abre ',
+  connectTeamPhonesHelpAfter: '. Quando o jogo começar, cada telemóvel escolhe a sua equipa.',
+  pickTeamTitle: 'Qual é a tua equipa?',
+  pickTeamHelp: 'Este telemóvel fica com a equipa que escolheres. Cada equipa usa um telemóvel.',
+  teamTaken: 'já tem telemóvel',
+  refusedTeam: (name: string): string => `${name} já tem um telemóvel. Escolhe outra equipa.`,
+  yourTeam: (name: string): string => `A tua equipa: ${name}`,
+  changeTeam: 'Trocar de equipa',
+  turnOf: (team: string): string => `Vez ${ofTeamPt(team)}`,
+  spectatorHelp: 'As palavras só aparecem no telemóvel de quem explica.',
+  checkingNow: (validator: string): string => `${validator} ${isPluralPt(validator) ? 'estão' : 'está'} a validar.`,
+  phoneValidateTitle: (team: string): string => `Validem a vez ${ofTeamPt(team)}`,
+  validatingOnPhone: (validator: string): string => `A validar no telemóvel ${ofTeamPt(validator)}…`,
+  teamPhoneOn: 'telemóvel ligado',
+  teamPhoneOff: 'sem telemóvel',
+  waitingNextTurn: 'À espera da próxima vez.',
+  aboutToExplain: (name: string): string => `${name} vai explicar`,
+  startsSoon: 'O tempo começa quando carregarem em Começar.',
   imReady: 'Estou pronto/a',
   start: 'Começar',
   readyHint: 'Esconde o ecrã dos outros. O tempo começa quando carregares em Começar.',
@@ -329,9 +380,10 @@ const en: Strings = {
   interfaceLanguage: 'Interface language',
 
   howToPlay: 'How will you play?',
-  modeTitle: { phone: 'PC + describer’s phone', windows: 'Two windows on the PC', single: 'One screen' },
+  modeTitle: { phone: 'PC + describer’s phone', teamPhones: 'One phone per team', windows: 'Two windows on the PC', single: 'One screen' },
   modeDesc: {
     phone: 'The PC shows the table to everyone. The describer opens the card on a phone, on the same Wi-Fi.',
+    teamPhones: 'Each team uses its own phone: the describer sees the card and, at the end, the other team checks it on theirs.',
     windows: 'With a second monitor or TV: the table in one window, the card in another facing the describer.',
     single: 'The describer holds the PC during the turn. The table comes back at the end, to check.',
   },
@@ -394,10 +446,11 @@ const en: Strings = {
   roundEndLine: (round, team) => `Round ${round} · end of ${possessiveEn(team)} turn`,
   live: {
     phone: 'Live · the describer’s screen is connected',
+    teamPhones: 'Live · the team’s phone is connected',
     windows: 'Live · the describer’s window is connected',
     single: 'Live',
   },
-  describerOffline: { phone: 'Phone disconnected', windows: 'Describer window closed', single: '' },
+  describerOffline: { phone: 'Phone disconnected', teamPhones: 'Team phone disconnected', windows: 'Describer window closed', single: '' },
   rules: 'Rules',
   soundOn: 'Sound on',
   soundOff: 'Sound off',
@@ -429,20 +482,29 @@ const en: Strings = {
   atSeconds: (s) => `at ${s} s`,
   noHitsYet: 'No hits yet.',
   slotLabel: (side, n, hit) => `${side === 'blue' ? 'Blue' : 'Yellow'} side, word ${n}: ${hit ? 'guessed' : 'not yet'}`,
-  passDevice: { phone: 'Pass the phone', windows: 'Turn the window', single: 'Pass the screen' },
+  passDevice: { phone: 'Pass the phone', teamPhones: 'Pass the team phone', windows: 'Turn the window', single: 'Pass the screen' },
   passTo: (mode, name, team) =>
-    mode === 'windows'
-      ? `Turn the window towards ${name} (${team})`
-      : `${mode === 'phone' ? 'Pass the phone' : 'Pass the screen'} to ${name} (${team})`,
+    mode === 'teamPhones'
+      ? `${name} describes, on ${possessiveEn(team)} phone`
+      : mode === 'windows'
+        ? `Turn the window towards ${name} (${team})`
+        : `${mode === 'phone' ? 'Pass the phone' : 'Pass the screen'} to ${name} (${team})`,
   handoffHelp: (mode) =>
     mode === 'phone'
       ? 'When everyone is ready, press Start on the phone.'
-      : mode === 'windows'
+      : mode === 'teamPhones'
+        ? 'When everyone is ready, press Start on the team phone.'
+        : mode === 'windows'
         ? 'When everyone is ready, press Start in the describer window.'
         : 'When everyone is ready, press Start.',
   readyStatus: (name) => `${name} is ready. The timer starts next.`,
   skipDescriber: 'Change describer',
-  waitingDescriber: { phone: 'Waiting for the phone…', windows: 'Waiting for the describer window…', single: '' },
+  waitingDescriber: {
+    phone: 'Waiting for the phone…',
+    teamPhones: 'Waiting for the team phone…',
+    windows: 'Waiting for the describer window…',
+    single: '',
+  },
   paused: 'Paused',
   pausedHelp: 'The timer is stopped.',
   disconnectedHelp: 'The timer is stopped. Open the page on the phone again to continue.',
@@ -505,6 +567,7 @@ const en: Strings = {
   nextUp: (player, team) => `Up next: ${player} (${team})`,
   passOnDevice: {
     phone: 'The describer passes the turn on the phone.',
+    teamPhones: 'The describer passes the turn on the team phone.',
     windows: 'The describer passes the turn in the describer window.',
     single: '',
   },
@@ -517,8 +580,11 @@ const en: Strings = {
   newSetup: 'New setup',
 
   rulesTitle: 'Tick Talk rules',
-  backToSetup: 'Back to setup',
-  backToSetupHelp: 'The game is saved: you can pick it up later with “Continue saved game”.',
+  exit: 'Exit',
+  exitTitle: 'Leave the game?',
+  exitBody: 'The game is saved. You can pick it up later with “Continue saved game”.',
+  exitConfirm: 'Leave game',
+  keepPlaying: 'Keep playing',
   close: 'Close',
   rulesSections: [
     {
@@ -570,7 +636,27 @@ const en: Strings = {
   endTurn: 'End turn',
   handoffTitle: (mode, name) =>
     mode === 'windows' ? `Turn the screen towards ${name}` : `${mode === 'phone' ? 'Pass the phone' : 'Pass the screen'} to ${name}`,
-  handoffDevice: { phone: 'Pass the phone', windows: 'Turn the screen', single: 'Pass the screen' },
+  handoffDevice: { phone: 'Pass the phone', teamPhones: 'Pass the phone', windows: 'Turn the screen', single: 'Pass the screen' },
+
+  connectTeamPhones: 'Connect the team phones',
+  connectTeamPhonesHelpBefore: 'Each team scans the code or opens ',
+  connectTeamPhonesHelpAfter: '. Once the game starts, each phone picks its team.',
+  pickTeamTitle: 'Which team are you?',
+  pickTeamHelp: 'This phone stays with the team you choose. Each team uses one phone.',
+  teamTaken: 'already has a phone',
+  refusedTeam: (name) => `${name} already has a phone. Pick another team.`,
+  yourTeam: (name) => `Your team: ${name}`,
+  changeTeam: 'Change team',
+  turnOf: (team) => `${possessiveEn(team)} turn`,
+  spectatorHelp: 'The words only show on the describer’s phone.',
+  checkingNow: (validator) => `${validator} are checking.`,
+  phoneValidateTitle: (team) => `Check ${possessiveEn(team)} turn`,
+  validatingOnPhone: (validator) => `Being checked on ${possessiveEn(validator)} phone…`,
+  teamPhoneOn: 'phone connected',
+  teamPhoneOff: 'no phone',
+  waitingNextTurn: 'Waiting for the next turn.',
+  aboutToExplain: (name) => `${name} is about to describe`,
+  startsSoon: 'The timer starts when they press Start.',
   imReady: 'I’m ready',
   start: 'Start',
   readyHint: 'Hide the screen from the others. The timer starts when you press Start.',

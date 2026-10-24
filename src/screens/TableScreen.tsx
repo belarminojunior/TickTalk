@@ -5,13 +5,14 @@ import { Logo, StatusPill } from '../components/Controls';
 import { MuteIcon, PlayIcon, SoundIcon, SwapIcon, ExternalIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
 import { QrConnect } from '../components/QrConnect';
+import { ExitButton } from '../components/ExitButton';
 import { RulesModal } from '../components/RulesModal';
 import { LiveFeed, ProgressSlots, Projection, TeamCards, sideVars } from '../components/TablePanels';
 import { TimerRing } from '../components/TimerRing';
 import { WinScreen } from '../components/WinScreen';
 import { markedCount as countMarked, type GameAction } from '../game/reducer';
 import type { Rng } from '../game/random';
-import { provisionalPosition, type TableView } from '../game/selectors';
+import { provisionalPosition, validatorTeam, type TableView } from '../game/selectors';
 import type { ScreenMode } from '../game/types';
 import { useKeyboard } from '../hooks/useKeyboard';
 import { useReducedMotion } from '../hooks/useReducedMotion';
@@ -161,11 +162,15 @@ export function TableScreen(props: TableScreenProps) {
   // The describer passes the turn on their screen; the table only does it in one-screen
   // mode, or as a fallback when the describer screen is not connected.
   const passOnTable = mode === 'single' || !link.describerOnline;
+  // One phone per team: the checking team validates on its own phone (the table follows
+  // along read-only). If that phone isn't connected, the table validates as before.
+  const checkedOnPhone =
+    mode === 'teamPhones' && view.teams.length > 1 && link.teamsWithPhone.includes(validatorTeam(view).id);
 
   const next = () => {
     unlockAudio();
     if (phase === 'timeUp') dispatch({ type: 'BEGIN_VALIDATION' });
-    else if (phase === 'validating') dispatch({ type: 'CONFIRM_VALIDATION' });
+    else if (phase === 'validating' && !checkedOnPhone) dispatch({ type: 'CONFIRM_VALIDATION' });
     else if (phase === 'moving' && turn?.settled && passOnTable) dispatch({ type: 'NEXT_TEAM' });
     else if (phase === 'paused' && (link.describerOnline || mode === 'single')) dispatch({ type: 'RESUME', now: now() });
   };
@@ -203,24 +208,20 @@ export function TableScreen(props: TableScreenProps) {
             ))}
         </div>
         <div className={styles.headerRight}>
-          {phase === 'moving' ? (
-            <span className={styles.modePill}>{withDie ? t.modeDie : t.modeNoDie}</span>
-          ) : (
-            <>
-              <button type="button" className="btn btn-outline" onClick={() => setRulesOpen(true)}>
-                {t.rules}
-              </button>
-              <button
-                type="button"
-                className={styles.iconButton}
-                onClick={props.onToggleMute}
-                aria-label={props.muted ? t.soundOff : t.soundOn}
-                aria-pressed={!props.muted}
-              >
-                {props.muted ? <MuteIcon size={22} /> : <SoundIcon size={22} />}
-              </button>
-            </>
-          )}
+          {phase === 'moving' && <span className={styles.modePill}>{withDie ? t.modeDie : t.modeNoDie}</span>}
+          <button type="button" className="btn btn-outline" onClick={() => setRulesOpen(true)}>
+            {t.rules}
+          </button>
+          <button
+            type="button"
+            className={styles.iconButton}
+            onClick={props.onToggleMute}
+            aria-label={props.muted ? t.soundOff : t.soundOn}
+            aria-pressed={!props.muted}
+          >
+            {props.muted ? <MuteIcon size={22} /> : <SoundIcon size={22} />}
+          </button>
+          <ExitButton onExit={props.onNewSetup} />
         </div>
       </header>
 
@@ -236,7 +237,12 @@ export function TableScreen(props: TableScreenProps) {
               movingId={livePosition !== null && team ? team.id : null}
             />
           </div>
-          <TeamCards teams={view.teams} activeIndex={turn?.teamIndex ?? null} positions={positions} />
+          <TeamCards
+            teams={view.teams}
+            activeIndex={turn?.teamIndex ?? null}
+            positions={positions}
+            phones={mode === 'teamPhones' ? link.teamsWithPhone : undefined}
+          />
         </div>
 
         <aside className={styles.right}>
@@ -320,6 +326,7 @@ export function TableScreen(props: TableScreenProps) {
         <ValidationScreen
           view={view}
           pawns={pawns}
+          checkedOnPhone={checkedOnPhone}
           onSet={(side, index, annulled) => dispatch({ type: 'SET_VALIDATION', side, index, annulled })}
           onConfirm={() => {
             unlockAudio();
@@ -347,7 +354,7 @@ export function TableScreen(props: TableScreenProps) {
         <WinScreen teams={view.teams} winnerId={view.winnerId} onPlayAgain={props.onPlayAgain} onNewSetup={props.onNewSetup} />
       )}
 
-      {rulesOpen && <RulesModal onClose={() => setRulesOpen(false)} onBackToSetup={props.onNewSetup} />}
+      {rulesOpen && <RulesModal onClose={() => setRulesOpen(false)} />}
     </div>
   );
 }
@@ -369,8 +376,8 @@ function HandoffPanel({ view, dispatch, link, mode, phoneUrl, onOpenDescriberWin
 
       {link.describerOnline || mode === 'single' ? (
         turn.ready && <StatusPill tone="ok">{t.readyStatus(turn.describer)}</StatusPill>
-      ) : mode === 'phone' ? (
-        <QrConnect url={phoneUrl} connected={link.connected} server={link.serverStatus} compact />
+      ) : mode === 'phone' || mode === 'teamPhones' ? (
+        <QrConnect url={phoneUrl} connected={link.connected} server={link.serverStatus} compact teamPhones={mode === 'teamPhones'} />
       ) : (
         <div className={styles.waitBox}>
           <StatusPill tone="off">{t.waitingDescriber[mode]}</StatusPill>

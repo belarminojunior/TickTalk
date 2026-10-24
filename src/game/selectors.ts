@@ -11,6 +11,7 @@ import type {
   PauseReason,
   Phase,
   ScoringMode,
+  ScreenMode,
   Settings,
   Side,
   SideFlags,
@@ -109,9 +110,30 @@ function cardWords(card: NonNullable<GameState['turn']>['card'] & object): Recor
   return { blue: [...card.blue.words], yellow: [...card.yellow.words] };
 }
 
+/** What a phone is for, right now (one phone per team mode; otherwise always "describer"). */
+export type PhoneRole = 'describer' | 'validator' | 'spectator';
+
 export interface DescriberView {
   phase: Phase;
   language: Language;
+  mode: ScreenMode;
+  scoring: ScoringMode;
+  /** This phone: its team (one phone per team) and its role right now. */
+  you: { teamId: string | null; role: PhoneRole; refusedTeam: string | null };
+  /** Name of the team that checks this turn (the next team). */
+  checking: string | null;
+  /** Teams to pick from (one phone per team), and whether each already has a phone. */
+  teamsList: { id: string; name: string; color: Team['color']; taken: boolean }[];
+  /** The checking team's phone, while validating: both sides with marks and cancellations. */
+  validation: {
+    team: string;
+    describer: string;
+    side: Side;
+    cardNumber: number;
+    words: Record<Side, string[]>;
+    marked: SideFlags;
+    annulled: SideFlags;
+  } | null;
   team: { name: string; color: Team['color']; position: number } | null;
   /** Every team's pawn (for the blurred board in the background). */
   pawns: { id: string; name: string; color: Team['color']; position: number }[];
@@ -165,7 +187,77 @@ export function describerView(state: GameState, now: number): DescriberView {
     pauseReason: turn?.pauseReason ?? null,
     winner,
     endOfTurn: endOfTurnFor(state),
+    mode: state.settings.screenMode,
+    scoring: state.settings.scoring,
+    you: { teamId: null, role: 'describer', refusedTeam: null },
+    checking: state.teams.length > 1 ? validatorTeam(state).name : null,
+    teamsList: [],
+    validation: null,
   };
+}
+
+/**
+ * The view for one phone in "one phone per team" mode. The playing team's phone gets the
+ * describer view (with the words); the checking team's phone gets the card to validate,
+ * only while validating; every other phone gets the turn without any words.
+ * In the other modes this is simply the describer view.
+ */
+export function phoneView(
+  state: GameState,
+  now: number,
+  phone: { teamId: string | null; refusedTeam: string | null; takenTeams: readonly string[] },
+): DescriberView {
+  const base = describerView(state, now);
+  if (state.settings.screenMode !== 'teamPhones') return base;
+
+  const { turn } = state;
+  const playing = turn ? state.teams[turn.teamIndex] : null;
+  const checking = state.teams.length > 1 ? validatorTeam(state) : null;
+  const role: PhoneRole =
+    phone.teamId && playing && phone.teamId === playing.id
+      ? 'describer'
+      : phone.teamId && checking && phone.teamId === checking.id && state.phase === 'validating'
+        ? 'validator'
+        : 'spectator';
+
+  const view: DescriberView = {
+    ...base,
+    you: { teamId: phone.teamId, role, refusedTeam: phone.refusedTeam },
+    teamsList: state.teams.map((t) => ({
+      id: t.id,
+      name: t.name,
+      color: t.color,
+      taken: t.id !== phone.teamId && phone.takenTeams.includes(t.id),
+    })),
+  };
+  if (role !== 'describer') {
+    view.words = null;
+    view.cardNumber = null;
+  }
+  if (role === 'validator' && turn?.card) {
+    view.validation = {
+      team: playing!.name,
+      describer: turn.describer,
+      side: turn.side,
+      cardNumber: cardNumber(turn.card),
+      words: cardWords(turn.card),
+      marked: copyFlags(turn.marked),
+      annulled: copyFlags(turn.annulled),
+    };
+  }
+  return view;
+}
+
+/**
+ * Who may send which command in "one phone per team" mode: the playing team runs its turn;
+ * only the checking team validates, and only while validating.
+ */
+export function mayCommand(state: GameState, team: string, command: { type: string }): boolean {
+  if (!state.turn || state.teams.length < 2) return false;
+  if (command.type === 'SET_VALIDATION' || command.type === 'CONFIRM_VALIDATION') {
+    return state.phase === 'validating' && validatorTeam(state).id === team;
+  }
+  return state.teams[state.turn.teamIndex].id === team;
 }
 
 function endOfTurnFor(state: GameState): DescriberView['endOfTurn'] {
