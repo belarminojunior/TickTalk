@@ -1,5 +1,5 @@
 import { createInitialState, gameReducer, type GameAction } from './reducer';
-import { describerView, tableView, teamSequence, projection, nextDescriber } from './selectors';
+import { describerView, tableView, teamSequence, projection, nextDescriber, provisionalPosition } from './selectors';
 import type { GameState, Settings, Side, TeamSetup } from './types';
 import { TEST_CARDS, TWO_TEAMS, settings, teamsOf } from '../test/fixtures';
 import { clearSavedGame, loadGame, saveGame, SAVE_KEY } from './storage';
@@ -185,6 +185,31 @@ describe('views and privacy', () => {
     s = gameReducer(s, { type: 'START_TURN', now: 0 });
     expect(describerView(s, 0).words).toEqual(bothSides(s));
     expect(describerView(s, 10_000).timer.remainingMs).toBe(20_000);
+  });
+
+  it('the pawn advances one square per correct word, then lands after the die', () => {
+    let s = run(start(), { type: 'READY' });
+    expect(provisionalPosition(tableView(s))).toBeNull();
+    s = gameReducer(s, { type: 'START_TURN', now: 0 });
+    expect(provisionalPosition(tableView(s))).toBe(0);
+    s = run(s, { type: 'TOGGLE_WORD', index: 0, now: 1 }, { type: 'TOGGLE_WORD', index: 0, now: 2 }, { type: 'TOGGLE_WORD', index: 1, now: 3 });
+    expect(provisionalPosition(tableView(s))).toBe(3);
+    s = run(s, { type: 'UNDO_HIT', now: 4 });
+    expect(provisionalPosition(tableView(s))).toBe(2);
+    s = run(s, { type: 'TOGGLE_WORD', index: 1, now: 5 }, { type: 'END_EARLY', now: 6 }, { type: 'BEGIN_VALIDATION' });
+    expect(provisionalPosition(tableView(s))).toBe(3);
+    // Cancelling a word takes it off straight away.
+    s = gameReducer(s, { type: 'SET_VALIDATION', side: 'yellow', index: 0, annulled: true });
+    expect(provisionalPosition(tableView(s))).toBe(2);
+    s = run(s, { type: 'CONFIRM_VALIDATION' }, { type: 'ROLL_DIE', value: 1 });
+    expect(provisionalPosition(tableView(s))).toBe(2);
+    // Moving: the hop starts from start + valid (2) and lands on start + valid − die (1).
+    s = gameReducer(s, { type: 'APPLY_MOVE' });
+    expect(provisionalPosition(tableView(s))).toBe(2);
+    expect(s.teams[0].position).toBe(1);
+    // The provisional square never goes past the finish.
+    const near = { ...tableView(s), phase: 'describing' as const, teams: s.teams.map((t) => ({ ...t, position: 35 })) };
+    expect(provisionalPosition(near)).toBe(36);
   });
 
   it('projection: die 0/1/2 and no die', () => {

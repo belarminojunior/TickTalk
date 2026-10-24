@@ -123,6 +123,12 @@ const pt = {
   faceUp: (side: Side): string => `Agora: lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
   hiddenNote: 'As palavras ficam escondidas até o tempo acabar. Depois, a equipa adversária valida.',
   hiddenNoteNoValidation: 'As palavras ficam escondidas até o tempo acabar.',
+  pawnLiveNote: (die: boolean, validation: boolean): string =>
+    `O peão avança uma casa a cada acerto.${
+      die || validation
+        ? ` No fim ${validation && die ? 'descontam-se as palavras anuladas e o dado' : validation ? 'descontam-se as palavras anuladas' : 'desconta-se o dado'}.`
+        : ''
+    }`,
   ifTimeEndedNow: 'Se o tempo acabasse agora',
   dieN: (n: number): string => `dado ${n}`,
   plusSquares: (n: number): string => (n === 1 ? '+1 casa' : `+${n} casas`),
@@ -407,6 +413,12 @@ const en: Strings = {
   faceUp: (side) => `Now: ${side} side`,
   hiddenNote: 'The words stay hidden until time runs out. Then the other team checks them.',
   hiddenNoteNoValidation: 'The words stay hidden until time runs out.',
+  pawnLiveNote: (die, validation) =>
+    `The pawn moves one square per correct word.${
+      die || validation
+        ? ` At the end, ${validation && die ? 'cancelled words and the die are taken off' : validation ? 'cancelled words are taken off' : 'the die is taken off'}.`
+        : ''
+    }`,
   ifTimeEndedNow: 'If time ran out now',
   dieN: (n) => `die ${n}`,
   plusSquares: (n) => (n === 1 ? '+1 square' : `+${n} squares`),

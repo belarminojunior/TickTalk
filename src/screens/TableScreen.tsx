@@ -11,7 +11,7 @@ import { TimerRing } from '../components/TimerRing';
 import { WinScreen } from '../components/WinScreen';
 import { markedCount as countMarked, type GameAction } from '../game/reducer';
 import type { Rng } from '../game/random';
-import type { TableView } from '../game/selectors';
+import { provisionalPosition, type TableView } from '../game/selectors';
 import type { ScreenMode } from '../game/types';
 import { useKeyboard } from '../hooks/useKeyboard';
 import { useReducedMotion } from '../hooks/useReducedMotion';
@@ -42,7 +42,11 @@ export interface TableScreenProps {
   onPlayAgain: () => void;
 }
 
-/** Animates the pawn square by square; returns the shown position (or null when not animating). */
+/**
+ * Animates the pawn square by square, from where it stood during the turn (start + valid
+ * words) to its final square — usually backwards by the die. Returns the shown position,
+ * or null when not animating.
+ */
 function useHop(view: TableView, scale: number, onDone: () => void): number | null {
   const turn = view.turn;
   const animating = view.phase === 'moving' && !!turn?.move && !turn.settled;
@@ -50,7 +54,7 @@ function useHop(view: TableView, scale: number, onDone: () => void): number | nu
   const doneRef = useRef(onDone);
   doneRef.current = onDone;
   const reduced = useReducedMotion();
-  const from = turn?.move?.from ?? 0;
+  const from = provisionalPosition(view) ?? turn?.move?.from ?? 0;
   const to = turn?.move?.to ?? 0;
 
   useEffect(() => {
@@ -62,12 +66,13 @@ function useHop(view: TableView, scale: number, onDone: () => void): number | nu
     let pos = from;
     setShown(pos);
     let id: ReturnType<typeof setTimeout>;
+    const dir = Math.sign(to - from);
     const step = () => {
-      if (pos >= to) {
+      if (pos === to) {
         doneRef.current();
         return;
       }
-      pos += 1;
+      pos += dir;
       setShown(pos);
       play('hop');
       id = setTimeout(step, stepMs);
@@ -107,8 +112,11 @@ export function TableScreen(props: TableScreenProps) {
     settleIfDone();
   }, [settleIfDone]);
 
+  // During the turn the active pawn moves one square per correct word (provisional);
+  // at the end it hops to its real square.
+  const livePosition = shownPosition ?? (phase === 'moving' ? null : provisionalPosition(view));
   const positions = view.teams.map((tm, i) =>
-    shownPosition !== null && turn && i === turn.teamIndex ? shownPosition : tm.position,
+    livePosition !== null && turn && i === turn.teamIndex ? livePosition : tm.position,
   );
   const pawns: BoardPawn[] = view.teams.map((tm, i) => ({
     id: tm.id,
@@ -225,7 +233,7 @@ export function TableScreen(props: TableScreenProps) {
               die={view.lastDie}
               showDie={withDie && !(phase === 'moving' && !turn?.settled) && phase !== 'rolling'}
               highlight={phase === 'moving' && turn?.move ? turn.move.to : null}
-              movingId={shownPosition !== null && team ? team.id : null}
+              movingId={livePosition !== null && team ? team.id : null}
             />
           </div>
           <TeamCards teams={view.teams} activeIndex={turn?.teamIndex ?? null} positions={positions} />
@@ -276,7 +284,8 @@ export function TableScreen(props: TableScreenProps) {
                 )}
                 <ProgressSlots marked={turn.marked} up={turn.up} />
                 <p className={styles.muted}>
-                  {view.settings.validation === 'none' ? t.hiddenNoteNoValidation : t.hiddenNote}
+                  {view.settings.validation === 'none' ? t.hiddenNoteNoValidation : t.hiddenNote}{' '}
+                  {t.pawnLiveNote(withDie, view.settings.validation !== 'none')}
                 </p>
               </section>
               <Projection marked={markedCount} scoring={view.settings.scoring} />

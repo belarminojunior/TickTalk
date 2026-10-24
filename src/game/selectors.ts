@@ -1,4 +1,4 @@
-import { squareColor } from './board';
+import { clampSquare, squareColor } from './board';
 import { cardNumber } from './deck';
 import { DIE_FACES, advanceFor } from './dice';
 import { emptyFlags, markedCount, validCount } from './reducer';
@@ -218,6 +218,33 @@ export function turnSummary(turn: Pick<TableTurnView, 'marked' | 'annulled'>) {
   const marked = markedCount(turn);
   const valid = validCount(turn);
   return { marked, annulled: marked - valid, valid };
+}
+
+/**
+ * Where the active team's pawn is shown during the turn: it advances one square per
+ * correct word, live. This is provisional — the real move is applied after validation
+ * and the die. Returns null outside the turn.
+ *  - describing/paused/timeUp: start + marked words
+ *  - validating/rolling: start + valid words (cancelled ones already taken off)
+ *  - moving: start + valid words, where the final hop (back by the die) begins
+ */
+export function provisionalPosition(view: Pick<TableView, 'phase' | 'teams' | 'turn'>): number | null {
+  const { turn } = view;
+  if (!turn) return null;
+  const start = view.phase === 'moving' ? turn.move?.from : view.teams[turn.teamIndex].position;
+  if (start === undefined) return null;
+  switch (view.phase) {
+    case 'describing':
+    case 'paused':
+    case 'timeUp':
+      return clampSquare(start + markedCount(turn));
+    case 'validating':
+    case 'rolling':
+    case 'moving':
+      return clampSquare(start + validCount(turn));
+    default:
+      return null;
+  }
 }
 
 export function colorChanged(move: Move): boolean {

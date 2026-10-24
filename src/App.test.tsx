@@ -101,7 +101,10 @@ describe('full game (one screen)', () => {
     // The other team cancels one word.
     const groups = screen.getAllByRole('group', { name: /^Validar/ });
     expect(groups).toHaveLength(3);
+    // The pawn moved one square per correct word: 3 squares, until a word is cancelled.
+    expect(within(teamCard('Os Leões')).getByText('3')).toBeInTheDocument();
     await user.click(within(groups[1]).getByRole('button', { name: 'Anular' }));
+    expect(within(teamCard('Os Leões')).getByText('2')).toBeInTheDocument();
     expect(screen.getByText('palavras válidas').parentElement?.querySelector('strong')).toHaveTextContent('2');
 
     // Die = 1 → 2 − 1 = 1 square.

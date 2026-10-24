@@ -77,7 +77,7 @@ Se o PC tiver várias redes (VPN, máquinas virtuais), o terminal mostra todos o
 
 - **Tabuleiro:** 36 casas, alternadas azul e amarela (ímpar = azul, par = amarela). A Partida conta como azul.
 - **Cartas:** cada carta tem dois lados, azul e amarelo, com 5 palavras cada. A vez começa no lado da **cor da casa onde está o peão** da equipa.
-- **A vez:** quem explica toca na palavra quando a equipa acerta, e **a carta vira para o outro lado**. Há 10 palavras por vez (5 azuis + 5 amarelas). Um toque por engano desfaz-se com **Desfazer último acerto** (ou Backspace). A mesa vê o contador e as 10 ranhuras a encher, e qual lado está virado para cima, mas não as palavras.
+- **A vez:** quem explica toca na palavra quando a equipa acerta, e **a carta vira para o outro lado**. Há 10 palavras por vez (5 azuis + 5 amarelas). Um toque por engano desfaz-se com **Desfazer último acerto** (ou Backspace). A mesa vê o contador e as 10 ranhuras a encher, e qual lado está virado para cima, mas não as palavras. **O peão avança uma casa no tabuleiro a cada acerto, em tempo real**; é provisório: no fim recua as palavras anuladas e o valor do dado.
 - **Não vale:** dizer a palavra ou parte dela, soletrar ou dizer a letra inicial, usar “rima com” / “soa como”, traduzir diretamente para outra língua, apontar para um objeto com o nome.
 - **Validação:** a equipa seguinte vê os dois lados da carta, com as palavras marcadas, e pode anular as que quebraram as regras (ou escolhe-se “Sem validação”).
 - **Com dado (0, 0, 1, 1, 2, 2):** avança-se `válidas − dado` casas (nunca para trás).
