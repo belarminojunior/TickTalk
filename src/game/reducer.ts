@@ -13,7 +13,7 @@ import type {
   TimerState,
   Turn,
 } from './types';
-import { BOARD_SQUARES, WORDS_PER_CARD, WORDS_PER_TURN } from './types';
+import { FINISH, WORDS_PER_CARD, WORDS_PER_TURN } from './types';
 
 export type GameAction =
   | { type: 'SETUP'; settings: Settings; teams: TeamSetup[]; cards: Card[]; seed: number }
@@ -148,7 +148,8 @@ function applyMove(state: GameState, turn: Turn): GameState {
   const from = team.position;
   const to = clampSquare(from + steps);
   const teams = state.teams.map((t, i) => (i === turn.teamIndex ? { ...t, position: to } : t));
-  const reached = from + steps >= BOARD_SQUARES;
+  // The game only ends when the pawn enters the Chegada, after square 36.
+  const reached = from + steps >= FINISH;
   return {
     ...state,
     phase: 'moving',

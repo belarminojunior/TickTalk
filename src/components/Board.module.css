@@ -123,9 +123,11 @@
   padding-top: 5.6cqw;
 }
 
+/* Chegada follows square 36 (blue), so it is yellow: colours alternate along the whole track. */
 .finish {
   grid-row: 5 / span 2;
   grid-column: 8 / span 2;
+  background: var(--yellow);
 }
 
 .tileLabel {

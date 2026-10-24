@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { play } from '../audio/sfx';
 import { rankings } from '../game/selectors';
 import type { Team } from '../game/types';
+import { FINISH } from '../game/types';
 import { useT } from '../i18n';
 import { Confetti } from './Confetti';
 import { Pawn, teamInitial } from './Pawn';
@@ -40,7 +41,7 @@ export function WinScreen({
                 <Pawn color={team.color} label={teamInitial(team.name)} size={32} />
                 <span className={styles.name}>{team.name}</span>
                 <span className={styles.pos}>
-                  <b>{team.position}</b>/36
+                  <b>{team.position}</b>/{FINISH}
                 </span>
               </li>
             ))}

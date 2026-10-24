@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import { squareColor } from '../game/board';
 import { projection } from '../game/selectors';
 import type { Hit, ScoringMode, Side, SideFlags, Team } from '../game/types';
+import { FINISH } from '../game/types';
 import { useT } from '../i18n';
 import { CheckIcon } from './Icons';
 import { MiniCard, TwoSidedCard } from './Card';
@@ -112,7 +113,7 @@ export function TeamCards({ teams, activeIndex, positions }: { teams: Team[]; ac
               <Pawn color={team.color} label={teamInitial(team.name)} size={30} />
               <strong className={styles.teamName}>{team.name}</strong>
               <span className={styles.teamScore}>
-                <b>{position}</b>/36
+                <b>{position}</b>/{FINISH}
               </span>
             </div>
             <div className={styles.teamLine}>

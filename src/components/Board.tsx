@@ -1,6 +1,7 @@
 import { forwardRef, type CSSProperties } from 'react';
 import { BOARD_PATH } from '../game/board';
 import type { PawnColor } from '../game/types';
+import { FINISH } from '../game/types';
 import { useT } from '../i18n';
 import { ArrowRightIcon, FlagIcon } from './Icons';
 import { Pawn } from './Pawn';
@@ -13,7 +14,7 @@ export interface BoardPawn {
   name: string;
   color: PawnColor;
   label: string;
-  /** 0 = start, 1..36. */
+  /** 0 = Partida, 1..36 = squares, 37 = Chegada. */
   position: number;
 }
 
@@ -44,7 +45,7 @@ export const Board = forwardRef<HTMLDivElement, BoardProps>(function Board(
   dieRef,
 ) {
   const t = useT();
-  const at = (square: number) => pawns.filter((p) => Math.min(36, p.position) === square);
+  const at = (square: number) => pawns.filter((p) => Math.min(FINISH, Math.max(0, p.position)) === square);
 
   const renderPawns = (list: BoardPawn[], startTile = false) =>
     list.length > 0 && (
@@ -83,9 +84,10 @@ export const Board = forwardRef<HTMLDivElement, BoardProps>(function Board(
           <ArrowRightIcon className={styles.tileIcon} size="100%" strokeWidth={2.4} />
           {renderPawns(at(0), true)}
         </div>
-        <div className={`${styles.tile} ${styles.finish}`}>
+        <div className={`${styles.tile} ${styles.finish} ${highlight === FINISH ? styles.highlight : ''}`}>
           <FlagIcon className={styles.tileIcon} size="100%" strokeWidth={2.4} />
           <span className={styles.tileLabel}>{t.finishSquare}</span>
+          {renderPawns(at(FINISH), true)}
         </div>
 
         <div className={`${styles.title} ${styles.titleLeft}`} aria-hidden="true">

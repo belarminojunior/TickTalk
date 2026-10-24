@@ -1,4 +1,5 @@
 import type { Language, PackId, ScreenMode, Side } from '../game/types';
+import { FINISH } from '../game/types';
 
 /** Joins names: "Pedro e Lúcia", "Ana, Pedro e Lúcia". */
 function joinNames(names: string[], and: string): string {
@@ -203,7 +204,7 @@ const pt = {
   validLabel: (n: number): string => (n === 1 ? 'válida' : 'válidas'),
   dieLabel: 'dado',
   squaresLabel: (n: number): string => (n === 1 ? 'casa' : 'casas'),
-  squareN: (n: number): string => (n <= 0 ? 'Partida' : n >= 36 ? 'Chegada' : `Casa ${n}`),
+  squareN: (n: number): string => (n <= 0 ? 'Partida' : n >= FINISH ? 'Chegada' : `Casa ${n}`),
   noDieHeader: 'Sem dado · cada palavra válida = 1 casa',
   cardFlips: (side: Side): string => `A carta vira para o ${side === 'blue' ? 'azul' : 'amarelo'}`,
   cardFlipsHelp: (team: string, side: Side): string =>
@@ -240,7 +241,7 @@ const pt = {
   rulesSections: [
     {
       title: 'O objetivo',
-      body: 'Chegar primeiro à Chegada (casa 36). As equipas jogam por ordem e, dentro de cada equipa, quem explica muda a cada vez.',
+      body: 'Entrar primeiro na Chegada, depois da casa 36. As casas alternam azul e amarela do princípio ao fim: Partida azul, casa 1 amarela, casa 2 azul… As equipas jogam por ordem e, dentro de cada equipa, quem explica muda a cada vez.',
     },
     {
       title: 'A vez',
@@ -489,7 +490,7 @@ const en: Strings = {
   validLabel: () => 'valid',
   dieLabel: 'die',
   squaresLabel: (n) => (n === 1 ? 'square' : 'squares'),
-  squareN: (n) => (n <= 0 ? 'Start' : n >= 36 ? 'Finish' : `Square ${n}`),
+  squareN: (n) => (n <= 0 ? 'Start' : n >= FINISH ? 'Finish' : `Square ${n}`),
   noDieHeader: 'No die · each valid word = 1 square',
   cardFlips: (side) => `The card flips to ${side}`,
   cardFlipsHelp: (team, side) => `${team} are now on a ${side} square. Next turn they read the ${side} side.`,
@@ -522,7 +523,7 @@ const en: Strings = {
   rulesSections: [
     {
       title: 'The goal',
-      body: 'Be the first to reach the Finish (square 36). Teams play in order and, within each team, the describer changes every turn.',
+      body: 'Be the first to enter the Finish, after square 36. Squares alternate blue and yellow all the way: Start blue, square 1 yellow, square 2 blue… Teams play in order and, within each team, the describer changes every turn.',
     },
     {
       title: 'A turn',

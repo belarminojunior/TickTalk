@@ -1,5 +1,5 @@
 import type { Side, Team } from './types';
-import { BOARD_SQUARES } from './types';
+import { FINISH } from './types';
 
 export interface GridCell {
   row: number;
@@ -18,10 +18,12 @@ export const BOARD_PATH: readonly GridCell[] = [
 export const BOARD_COLS = 10;
 export const BOARD_ROWS = 7;
 
-/** Square 0 = start (blue). Odd = blue, even = yellow. */
+/**
+ * Colours alternate along the whole track, Partida to Chegada:
+ * Partida (0) blue, 1 yellow, 2 blue, … 36 blue, Chegada (37) yellow.
+ */
 export function squareColor(square: number): Side {
-  if (square <= 0) return 'blue';
-  return square % 2 === 1 ? 'blue' : 'yellow';
+  return Math.max(0, square) % 2 === 0 ? 'blue' : 'yellow';
 }
 
 /** Card side the team reads: the colour of the square its pawn is on. */
@@ -29,8 +31,9 @@ export function sideFor(team: Pick<Team, 'position'>): Side {
   return squareColor(team.position);
 }
 
+/** 0 (Partida) … 37 (Chegada). */
 export function clampSquare(square: number): number {
-  return Math.max(0, Math.min(BOARD_SQUARES, square));
+  return Math.max(0, Math.min(FINISH, square));
 }
 
 export type SquareIcon = 'star' | 'globe' | 'music' | 'ball' | 'film' | 'book';

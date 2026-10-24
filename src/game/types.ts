@@ -43,7 +43,7 @@ export interface TeamSetup {
 
 export interface Team extends TeamSetup {
   id: string;
-  /** 0 = start, 1..36 = squares. */
+  /** 0 = start (Partida), 1..36 = squares, 37 = finish (Chegada). */
   position: number;
   /** Index of the next player to describe. */
   describerIndex: number;
@@ -139,3 +139,5 @@ export const WORDS_PER_CARD = 5;
 /** Both sides of the card: 10 words to describe per turn. */
 export const WORDS_PER_TURN = WORDS_PER_CARD * 2;
 export const BOARD_SQUARES = 36;
+/** The Chegada tile comes after square 36: a team wins when its pawn enters it. */
+export const FINISH = BOARD_SQUARES + 1;

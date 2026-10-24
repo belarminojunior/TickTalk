@@ -74,7 +74,7 @@ async function playTurnEndingEarly(user: ReturnType<typeof userEvent.setup>, val
 }
 
 describe('full game (one screen)', () => {
-  it('with die: 3 marked − 1 cancelled − die 1 = square 1, and the card stays blue', async () => {
+  it('with die: 3 marked − 1 cancelled − die 1 = square 1 (yellow), and the card flips to yellow', async () => {
     const { user, rng, setClock } = setup('die');
     await user.click(screen.getByRole('button', { name: 'Começar o jogo' }));
 
@@ -113,7 +113,8 @@ describe('full game (one screen)', () => {
     expect(rng).toHaveBeenCalledTimes(1);
     expect(screen.getByText('O dado voltou')).toBeInTheDocument();
     expect(within(teamCard('Os Leões')).getByText('1')).toBeInTheDocument();
-    expect(screen.getByText('A carta continua azul')).toBeInTheDocument();
+    // Partida is blue, square 1 is yellow: colours alternate along the whole track.
+    expect(screen.getByText('A carta vira para o amarelo')).toBeInTheDocument();
     expect(screen.getByTestId('board-die')).toHaveTextContent('1');
 
     // The Gazelles' turn (no words), checked by the Lions.
@@ -122,14 +123,14 @@ describe('full game (one screen)', () => {
     await playTurnEndingEarly(user, /Os Leões validam a vez das Gazelas/, 'Confirmar e lançar o dado');
     await user.click(screen.getByRole('button', { name: 'Passar a vez · Pedro (Os Leões)' }));
 
-    // Back to the Lions on square 1 (blue): the card stays on the blue side.
-    expect(await screen.findByText('Os Leões · casa 1 · lado azul')).toBeInTheDocument();
+    // Back to the Lions on square 1 (yellow): the turn starts on the yellow side.
+    expect(await screen.findByText('Os Leões · casa 1 · lado amarelo')).toBeInTheDocument();
     await readyAndStart(user);
-    expect(cardSide()).toBe('blue');
-    expect(screen.getByText(/^Lado azul · carta \d+$/)).toBeInTheDocument();
+    expect(cardSide()).toBe('yellow');
+    expect(screen.getByText(/^Lado amarelo · carta \d+$/)).toBeInTheDocument();
   });
 
-  it('no die: 2 valid → square 2 (yellow), no die shown, and the card flips to yellow', async () => {
+  it('no die: 2 valid → square 2 (blue), no die shown, and the card stays blue', async () => {
     const { user, rng, setClock } = setup('noDie');
     await user.click(screen.getByRole('button', { name: 'Começar o jogo' }));
 
@@ -149,10 +150,10 @@ describe('full game (one screen)', () => {
     expect(screen.queryByText('O dado voltou')).not.toBeInTheDocument();
     expect(screen.queryByTestId('board-die')?.parentElement).toHaveStyle({ visibility: 'hidden' });
     expect(within(teamCard('Os Leões')).getByText('2')).toBeInTheDocument();
-    expect(screen.getByText('A carta vira para o amarelo')).toBeInTheDocument();
-    // Once the pawn has landed, the table's two-sided card has turned over to yellow.
-    const tableCard = screen.getByText('A carta vira para o amarelo').closest('section')!.querySelector('[data-up]');
-    expect(tableCard).toHaveAttribute('data-up', 'yellow');
+    // Partida (blue) → square 2 (blue): the card stays blue.
+    expect(screen.getByText('A carta continua azul')).toBeInTheDocument();
+    const tableCard = screen.getByText('A carta continua azul').closest('section')!.querySelector('[data-up]');
+    expect(tableCard).toHaveAttribute('data-up', 'blue');
 
     // Team order: the Lions just played, the Gazelles are next.
     const sequence = screen.getByRole('heading', { name: 'Sequência das equipas' }).parentElement!;
@@ -164,14 +165,14 @@ describe('full game (one screen)', () => {
     await playTurnEndingEarly(user, /Os Leões validam a vez das Gazelas/, 'Confirmar e avançar');
     await user.click(screen.getByRole('button', { name: 'Passar a vez · Pedro (Os Leões)' }));
 
-    expect(await screen.findByText('Os Leões · casa 2 · lado amarelo')).toBeInTheDocument();
-    expect(screen.getByText('A carta virou para o lado amarelo')).toBeInTheDocument();
-    // The turn starts on the yellow side, and a correct word turns it over to blue.
-    expect(faceUp()).toBe('yellow');
-    await readyAndStart(user);
-    expect(cardSide()).toBe('yellow');
-    await markWord(user, 0);
+    expect(await screen.findByText('Os Leões · casa 2 · lado azul')).toBeInTheDocument();
+    expect(screen.queryByText(/A carta virou/)).not.toBeInTheDocument();
+    // The turn starts on the blue side, and a correct word turns it over to yellow.
     expect(faceUp()).toBe('blue');
+    await readyAndStart(user);
+    expect(cardSide()).toBe('blue');
+    await markWord(user, 0);
+    expect(faceUp()).toBe('yellow');
     expect(rng).not.toHaveBeenCalled();
   });
 });

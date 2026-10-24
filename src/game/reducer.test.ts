@@ -207,9 +207,9 @@ describe('views and privacy', () => {
     s = gameReducer(s, { type: 'APPLY_MOVE' });
     expect(provisionalPosition(tableView(s))).toBe(2);
     expect(s.teams[0].position).toBe(1);
-    // The provisional square never goes past the finish.
+    // The provisional square never goes past the Chegada (37).
     const near = { ...tableView(s), phase: 'describing' as const, teams: s.teams.map((t) => ({ ...t, position: 35 })) };
-    expect(provisionalPosition(near)).toBe(36);
+    expect(provisionalPosition(near)).toBe(37);
   });
 
   it('projection: die 0/1/2 and no die', () => {
@@ -281,36 +281,42 @@ describe('die and movement', () => {
   });
 
   it('the card side follows the square colour and flips when the colour changes', () => {
-    // Lions: 2 valid − 1 = square 1 (blue) → stays blue
+    // Lions start on the Partida (blue): 2 valid − 1 = square 1 (yellow) → the next turn starts yellow
     let s = playTurn(start(), { marks: [0, 1, 2], annul: [['blue', 0]], die: 1 });
     expect(s.teams[0].position).toBe(1);
     s = gameReducer(s, { type: 'NEXT_TEAM' });
     s = gameReducer(playTurn(s, {}), { type: 'NEXT_TEAM' }); // Gazelas
-    expect(s.turn?.side).toBe('blue');
+    expect(s.turn?.side).toBe('yellow');
+    expect(describerView(s, 0).flipped).toBe(true);
     s = run(s, { type: 'READY' }, { type: 'START_TURN', now: 0 });
-    expect(s.turn?.card?.blue.words).toEqual(words(s));
-    expect(describerView(s, 0).flipped).toBe(false);
+    expect(words(s)).toEqual(s.turn?.card?.yellow.words);
 
-    // Now +1 square → square 2 (yellow) → the next card comes from the yellow side
+    // Now +1 square → square 2 (blue) → the next turn starts blue again
     s = run(s, { type: 'TOGGLE_WORD', index: 0, now: 1 }, { type: 'END_EARLY', now: 2 }, { type: 'BEGIN_VALIDATION' });
     s = run(s, { type: 'CONFIRM_VALIDATION' }, { type: 'ROLL_DIE', value: 0 }, { type: 'APPLY_MOVE' }, { type: 'DIE_RETURNED' });
     expect(s.teams[0].position).toBe(2);
     s = gameReducer(s, { type: 'NEXT_TEAM' });
     s = gameReducer(playTurn(s, {}), { type: 'NEXT_TEAM' });
-    expect(s.turn?.side).toBe('yellow');
+    expect(s.turn?.side).toBe('blue');
     expect(describerView(s, 0).flipped).toBe(true);
     s = run(s, { type: 'READY' }, { type: 'START_TURN', now: 0 });
-    expect(words(s)).toEqual(s.turn?.card?.yellow.words);
+    expect(s.turn?.card?.blue.words).toEqual(words(s));
   });
 
-  it('reaching or passing square 36 wins', () => {
-    let s = start({ scoring: 'noDie' });
-    s = { ...s, teams: s.teams.map((t, i) => (i === 0 ? { ...t, position: 34 } : t)) };
-    s = { ...s, turn: { ...s.turn!, side: 'yellow' } };
-    s = playTurn(s, { marks: [0, 1, 2] });
-    expect(s.phase).toBe('won');
-    expect(s.winnerId).toBe('t1');
-    expect(s.teams[0].position).toBe(36);
+  it('square 36 does not win; entering the Chegada does', () => {
+    const at = (position: number) => {
+      const s = start({ scoring: 'noDie' });
+      return { ...s, teams: s.teams.map((t, i) => (i === 0 ? { ...t, position } : t)) };
+    };
+    const landed36 = playTurn(at(33), { marks: [0, 1, 2] });
+    expect(landed36.teams[0].position).toBe(36);
+    expect(landed36.phase).toBe('moving');
+    expect(landed36.winnerId).toBeNull();
+
+    const won = playTurn(at(34), { marks: [0, 1, 2, 3] });
+    expect(won.phase).toBe('won');
+    expect(won.winnerId).toBe('t1');
+    expect(won.teams[0].position).toBe(37); // on the Chegada tile, never further
   });
 });
 

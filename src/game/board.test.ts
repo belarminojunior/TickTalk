@@ -1,10 +1,13 @@
 import { BOARD_PATH, BOARD_COLS, BOARD_ROWS, iconFor, sideFor, squareColor } from './board';
+import { FINISH } from './types';
 
 describe('squareColor', () => {
-  it('1 is blue, 2 is yellow, and they alternate', () => {
-    expect(squareColor(1)).toBe('blue');
-    expect(squareColor(2)).toBe('yellow');
-    for (let n = 1; n <= 36; n++) expect(squareColor(n)).toBe(n % 2 ? 'blue' : 'yellow');
+  it('alternates along the whole track: Partida blue, 1 yellow, 2 blue … 36 blue, Chegada yellow', () => {
+    expect(squareColor(1)).toBe('yellow');
+    expect(squareColor(2)).toBe('blue');
+    expect(squareColor(36)).toBe('blue');
+    expect(squareColor(FINISH)).toBe('yellow');
+    for (let n = 1; n <= FINISH; n++) expect(squareColor(n)).not.toBe(squareColor(n - 1));
   });
   it('the start (0) counts as blue', () => {
     expect(squareColor(0)).toBe('blue');
