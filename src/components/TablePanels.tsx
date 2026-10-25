@@ -1,7 +1,6 @@
 import type { CSSProperties } from 'react';
 import { squareColor } from '../game/board';
-import { projection } from '../game/selectors';
-import type { Hit, ScoringMode, Side, SideFlags, Team } from '../game/types';
+import type { Hit, Side, SideFlags, Team } from '../game/types';
 import { FINISH } from '../game/types';
 import { useT } from '../i18n';
 import { CheckIcon, TeamPhonesIcon } from './Icons';
@@ -67,28 +66,16 @@ export function LiveFeed({ hits }: { hits: Hit[] }) {
   );
 }
 
-/** "If time ran out now": die 0/1/2 → +X squares (or, with no die, +X squares). */
-export function Projection({ marked, scoring }: { marked: number; scoring: ScoringMode }) {
+/** "If time ran out now": +X squares (one per guessed word). */
+export function Projection({ marked }: { marked: number }) {
   const t = useT();
-  const rows = projection(marked, scoring);
   return (
     <section className={`panel ${styles.projectionPanel}`}>
       <h3 className="eyebrow">{t.ifTimeEndedNow}</h3>
-      {scoring === 'noDie' ? (
-        <div className={`${styles.projBox} ${styles.projWide}`}>
-          <strong>{t.plusSquares(rows[0].advance)}</strong>
-          <span>{t.onePerWord}</span>
-        </div>
-      ) : (
-        <div className={styles.projGrid}>
-          {rows.map((r) => (
-            <div key={r.die} className={styles.projBox}>
-              <span>{t.dieN(r.die ?? 0)}</span>
-              <strong>{t.plusSquares(r.advance)}</strong>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className={`${styles.projBox} ${styles.projWide}`}>
+        <strong>{t.plusSquares(marked)}</strong>
+        <span>{t.onePerWord}</span>
+      </div>
     </section>
   );
 }

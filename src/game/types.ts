@@ -11,19 +11,23 @@ export type Language = 'pt' | 'en';
 export type ScreenMode = 'phone' | 'teamPhones';
 export const SCREEN_MODES: ScreenMode[] = ['phone', 'teamPhones'];
 export type TurnSeconds = 30 | 45 | 60;
+/** Validation only exists with one phone per team: the next team checks on its own phone. */
 export type ValidationMode = 'nextTeam' | 'none';
-export type ScoringMode = 'die' | 'noDie';
 
 export interface Settings {
   screenMode: ScreenMode;
   turnSeconds: TurnSeconds;
+  /** Derived from the mode when the game starts (see validationFor). */
   validation: ValidationMode;
-  scoring: ScoringMode;
   /** Card language. */
   language: Language;
   /** Interface language. */
   uiLanguage: Language;
-  packs: PackId[];
+}
+
+/** One phone per team → the next team validates; one shared phone → no validation. */
+export function validationFor(mode: ScreenMode): ValidationMode {
+  return mode === 'teamPhones' ? 'nextTeam' : 'none';
 }
 
 export interface CardSide {
@@ -60,7 +64,6 @@ export type Phase =
   | 'paused'
   | 'timeUp'
   | 'validating'
-  | 'rolling'
   | 'moving'
   | 'won';
 
@@ -108,9 +111,8 @@ export interface Turn {
   timer: TimerState;
   pauseReason: PauseReason | null;
   endReason: EndReason | null;
-  die: number | null;
   move: Move | null;
-  /** The pawn has finished moving and the die is back on the board. */
+  /** The pawn has finished moving. */
   settled: boolean;
 }
 
@@ -130,8 +132,6 @@ export interface GameState {
   round: number;
   turn: Turn | null;
   deck: Deck;
-  /** Last die value (stays visible on the board). */
-  lastDie: number | null;
   winnerId: string | null;
   /** One level of undo: the state before validation was confirmed. */
   undo: GameState | null;

@@ -1,35 +1,50 @@
+/*
+ * The setup page fits one laptop screen (1366×768): the page is exactly the viewport
+ * height and only the team list scrolls if there are many teams.
+ */
 .screen {
   width: min(1460px, 100%);
   margin: 0 auto;
-  padding: 48px 28px 56px;
+  min-height: 100dvh;
+  padding: 22px 28px;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 18px;
 }
 
 .hero {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
 }
 
+.heroText {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
 .title {
-  font-size: 64px;
+  font-size: 46px;
   line-height: 1;
 }
 
 .tagline {
   color: var(--muted);
-  font-size: 21px;
-  margin-top: 12px;
+  font-size: 18px;
 }
 
 .heroRight {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 18px;
+}
+
+.heroRight > span > span {
+  width: 36px;
+  height: 36px;
 }
 
 .uiLang {
@@ -56,60 +71,62 @@
   color: var(--ink);
 }
 
+.body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 20px;
+}
+
 .panelTitle {
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 30px;
-  margin-bottom: 4px;
+  font-size: 24px;
 }
 
 .modePanel {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 16px;
+  padding: 22px 24px;
+  min-height: 0;
+  overflow-y: auto;
 }
 
-.muted {
-  color: var(--muted);
-}
-
-
-
-
-
-
-
-
-.columns {
+.side {
+  min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1.85fr) minmax(340px, 1fr);
-  gap: 36px;
-  align-items: start;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 16px;
 }
 
-.teamsPanel,
-.rulesPanel {
+.teamsPanel {
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 12px;
+  padding: 20px 24px;
 }
 
 .teamList {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 2px 4px 2px 0;
+  min-height: 0;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .teamRow {
   display: grid;
   grid-template-columns: auto minmax(0, 0.9fr) minmax(0, 1.3fr) auto;
   align-items: end;
-  gap: 16px;
-  padding: 18px 18px 18px 16px;
-  border-radius: 18px;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 16px;
   background: var(--panel-2);
 }
 
@@ -120,43 +137,42 @@
 .rowErrorText {
   grid-column: 2 / -1;
   color: var(--danger-text);
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .pawnButton {
-  width: 52px;
-  height: 58px;
+  width: 48px;
+  height: 50px;
   border: 0;
   background: transparent;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  margin-bottom: 2px;
 }
 
 .fieldName,
 .fieldPlayers {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
 .fieldName label,
 .fieldPlayers label {
   color: var(--muted);
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .teamRow input {
   width: 100%;
-  min-height: 58px;
-  padding: 0 16px;
+  min-height: 50px;
+  padding: 0 14px;
   border-radius: 12px;
   border: 1.5px solid var(--outline);
   background: var(--table);
   color: var(--chalk);
-  font-size: 19px;
+  font-size: 18px;
 }
 
 .teamRow input::placeholder {
@@ -174,8 +190,8 @@
 }
 
 .removeButton {
-  width: 56px;
-  height: 58px;
+  width: 50px;
+  height: 50px;
   border-radius: 12px;
   border: 1.5px solid var(--outline);
   background: transparent;
@@ -194,17 +210,18 @@
 
 .addButton {
   align-self: flex-start;
+  flex: none;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  min-height: 56px;
-  padding: 0 26px;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
   border-radius: 999px;
   border: 1.5px dashed var(--outline);
   background: transparent;
   color: var(--chalk);
   font-weight: 500;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .addButton:hover:not(:disabled) {
@@ -215,39 +232,29 @@
   opacity: 0.4;
 }
 
-.help {
-  color: var(--muted);
-  font-size: 15px;
-  margin-top: 10px;
+.rulesPanel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding: 18px 24px;
 }
 
-.packs {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.packs legend {
-  color: var(--muted);
-  font-size: 16px;
-  padding: 0 0 10px 2px;
+.rulesPanel :global([role='radio']) {
+  min-height: 48px;
 }
 
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 18px;
+  gap: 16px;
 }
 
 .messages {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+  font-size: 15px;
 }
 
 .error {
@@ -260,24 +267,49 @@
 
 .footerButtons {
   margin-left: auto;
+  flex: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 14px;
 }
 
-@media (max-width: 1080px) {
-  .columns { grid-template-columns: 1fr; }
+.footerButtons :global(.btn) {
+  white-space: nowrap;
+}
+
+/* Laptop: the page is exactly one screen tall; nothing below the fold. */
+@media (min-width: 1100px) {
+  .screen {
+    height: 100dvh;
+  }
+}
+
+/* Short laptop screens: tighten spacing a little more. */
+@media (min-width: 1100px) and (max-height: 820px) {
+  .screen { padding: 16px 24px; gap: 14px; }
+  .title { font-size: 40px; }
+  .modePanel { gap: 12px; padding: 18px 20px; }
+  .teamsPanel { padding: 16px 20px; gap: 10px; }
+  .rulesPanel { padding: 14px 20px; }
+}
+
+/* Narrower screens (tablets, phones): one column, the page scrolls normally. */
+@media (max-width: 1099px) {
+  .body { grid-template-columns: 1fr; }
+  .side { grid-template-rows: auto; }
+  .modePanel, .teamList { overflow: visible; }
 }
 
 @media (max-width: 720px) {
-  .screen { padding: 24px 16px 40px; gap: 24px; }
-  .title { font-size: 46px; }
+  .screen { padding: 18px 16px 32px; }
+  .title { font-size: 38px; }
   .hero { flex-direction: column; align-items: flex-start; }
-  .heroRight { align-items: flex-start; flex-direction: row-reverse; }
+  .rulesPanel { grid-template-columns: 1fr; }
   .teamRow { grid-template-columns: auto minmax(0, 1fr) auto; }
   .fieldPlayers { grid-column: 1 / -1; }
   .removeButton { grid-row: 1; grid-column: 3; }
   .rowErrorText { grid-column: 1 / -1; }
+  .footer { flex-direction: column; align-items: stretch; }
   .footerButtons { width: 100%; }
   .footerButtons :global(.btn) { flex: 1; }
 }

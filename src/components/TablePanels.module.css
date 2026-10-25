@@ -132,12 +132,6 @@
   padding: 22px 26px;
 }
 
-.projGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 14px;
-}
 
 .projBox {
   background: var(--panel-2);

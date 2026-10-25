@@ -1,5 +1,4 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import type { Rng } from './game/random';
 import type { Transport } from './net/transport';
 import { randomSeed } from './game/random';
 
@@ -7,8 +6,6 @@ import { randomSeed } from './game/random';
 export interface AppConfig {
   /** Host clock (ms). */
   now: () => number;
-  /** Random generator used only for the die. */
-  rng: Rng;
   /** Deck seed. */
   seed: () => number;
   /** Animation duration multiplier (0 = instant). */
@@ -19,7 +16,6 @@ export interface AppConfig {
 
 export const defaultConfig: AppConfig = {
   now: () => performance.now(),
-  rng: Math.random,
   seed: randomSeed,
   animationScale: 1,
 };

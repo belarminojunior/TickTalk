@@ -1,6 +1,5 @@
 import { CARDS } from './cards';
 import { PACK_IDS } from '../game/types';
-import { filterCards } from '../game/deck';
 
 describe.each(['pt', 'en'] as const)('cards (%s)', (lang) => {
   const cards = CARDS[lang];
@@ -32,10 +31,9 @@ describe.each(['pt', 'en'] as const)('cards (%s)', (lang) => {
     }
   });
 
-  it('every pack has cards and the Mozambique pack works with the others', () => {
+  it('every pack has cards', () => {
     for (const pack of PACK_IDS) {
       expect(cards.some((c) => c.yellow.pack === pack || c.blue.pack === pack)).toBe(true);
     }
-    expect(filterCards(cards, ['mozambique', 'places', 'things']).length).toBeGreaterThan(0);
   });
 });

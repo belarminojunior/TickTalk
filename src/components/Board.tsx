@@ -1,4 +1,3 @@
-import { forwardRef, type CSSProperties } from 'react';
 import { BOARD_PATH } from '../game/board';
 import type { PawnColor } from '../game/types';
 import { FINISH } from '../game/types';
@@ -6,7 +5,6 @@ import { useT } from '../i18n';
 import { ArrowRightIcon, FlagIcon } from './Icons';
 import { Pawn } from './Pawn';
 import { Square } from './Square';
-import { BoardDie } from './BoardDie';
 import styles from './Board.module.css';
 
 export interface BoardPawn {
@@ -20,9 +18,6 @@ export interface BoardPawn {
 
 export interface BoardProps {
   pawns: BoardPawn[];
-  /** Last die value (or null). */
-  die?: number | null;
-  showDie?: boolean;
   /** Destination square to highlight. */
   highlight?: number | null;
   /** Pawn that is hopping (animates each change of square). */
@@ -40,10 +35,7 @@ function pawnSize(count: number): string {
 }
 
 /** The board: a 10 × 7 grid with the track as two "U" shapes joined by a bridge. */
-export const Board = forwardRef<HTMLDivElement, BoardProps>(function Board(
-  { pawns, die = null, showDie = true, highlight = null, movingId = null, blurred = false, className },
-  dieRef,
-) {
+export function Board({ pawns, highlight = null, movingId = null, blurred = false, className }: BoardProps) {
   const t = useT();
   const at = (square: number) => pawns.filter((p) => Math.min(FINISH, Math.max(0, p.position)) === square);
 
@@ -96,11 +88,7 @@ export const Board = forwardRef<HTMLDivElement, BoardProps>(function Board(
         <div className={`${styles.title} ${styles.titleRight}`} aria-hidden="true">
           <span>TICK TALK</span>
         </div>
-
-        <div className={styles.dieSpot} style={{ visibility: showDie && die !== null ? 'visible' : 'hidden' } as CSSProperties}>
-          <BoardDie ref={dieRef} value={die ?? 0} />
-        </div>
       </div>
     </div>
   );
-});
+}

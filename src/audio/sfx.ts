@@ -2,7 +2,7 @@
  * Sound effects synthesised with the Web Audio API (no audio files).
  * Everything fails silently if the browser has no audio.
  */
-export type Sfx = 'tick' | 'tock' | 'hit' | 'unhit' | 'horn' | 'dice' | 'hop' | 'win' | 'start';
+export type Sfx = 'tick' | 'tock' | 'hit' | 'unhit' | 'horn' | 'hop' | 'win' | 'start';
 
 type Ctx = AudioContext;
 
@@ -99,9 +99,6 @@ const SOUNDS: Record<Sfx, (c: Ctx) => void> = {
     tone(c, { freq: 196, dur: 0.9, type: 'sawtooth', gain: 0.12 });
     tone(c, { freq: 247, dur: 0.9, type: 'square', gain: 0.06 });
     tone(c, { freq: 98, dur: 0.9, type: 'sawtooth', gain: 0.08 });
-  },
-  dice: (c) => {
-    for (let i = 0; i < 9; i++) noise(c, { start: i * 0.11 + Math.random() * 0.04, dur: 0.05, gain: 0.35, freq: 1200 + Math.random() * 1600 });
   },
   hop: (c) => tone(c, { freq: 660, to: 990, dur: 0.08, type: 'sine', gain: 0.1 }),
   start: (c) => {

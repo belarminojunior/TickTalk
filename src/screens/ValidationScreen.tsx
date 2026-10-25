@@ -1,6 +1,6 @@
 import { Board, type BoardPawn } from '../components/Board';
 import { CardFace } from '../components/Card';
-import { ArrowRightIcon, DiceIcon } from '../components/Icons';
+import { ArrowRightIcon } from '../components/Icons';
 import { sideVars } from '../components/TablePanels';
 import { RulesList, ValidationRow } from '../components/ValidationRow';
 import { otherSide } from '../game/reducer';
@@ -26,14 +26,13 @@ export function ValidationScreen({
   const team = view.teams[turn.teamIndex];
   const validator = validatorTeam(view);
   const { marked, annulled, valid } = turnSummary(turn);
-  const withDie = view.settings.scoring === 'die';
   // The side the turn started on comes first.
   const sides: Side[] = [turn.side, otherSide(turn.side)];
 
   return (
     <div className={styles.screen}>
       <div className={styles.background} aria-hidden="true">
-        <Board blurred pawns={pawns} die={view.lastDie} showDie={withDie} />
+        <Board blurred pawns={pawns} />
         <div className={styles.scrim} />
       </div>
 
@@ -41,7 +40,7 @@ export function ValidationScreen({
         <header className={styles.head}>
           <span className={styles.pill}>{t.timeUpPill}</span>
           <h1 className={styles.title}>{t.validatesTitle(validator.name, team.name)}</h1>
-          <p className={styles.subtitle}>{t.validateSubtitle(turn.describer, withDie)}</p>
+          <p className={styles.subtitle}>{t.validateSubtitle(turn.describer)}</p>
         </header>
 
         <div className={styles.grid}>
@@ -78,8 +77,8 @@ export function ValidationScreen({
             </section>
             <RulesList />
             <button type="button" className="btn btn-primary btn-lg btn-block" onClick={onConfirm} autoFocus>
-              {withDie ? <DiceIcon size={24} /> : <ArrowRightIcon size={24} />}
-              {withDie ? t.confirmRoll : t.confirmAdvance}
+              <ArrowRightIcon size={24} />
+              {t.confirmAdvance}
             </button>
             <p className={styles.note}>{t.finalNote}</p>
           </aside>

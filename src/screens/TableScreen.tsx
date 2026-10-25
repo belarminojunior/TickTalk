@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type Dispatch } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type Dispatch } from 'react';
 import { play, unlockAudio } from '../audio/sfx';
 import { Board, type BoardPawn } from '../components/Board';
 import { Logo, StatusPill } from '../components/Controls';
@@ -11,7 +11,6 @@ import { LiveFeed, ProgressSlots, Projection, TeamCards, sideVars } from '../com
 import { TimerRing } from '../components/TimerRing';
 import { WinScreen } from '../components/WinScreen';
 import { markedCount as countMarked, type GameAction } from '../game/reducer';
-import type { Rng } from '../game/random';
 import { provisionalPosition, validatorTeam, type TableView } from '../game/selectors';
 import type { ScreenMode } from '../game/types';
 import { useKeyboard } from '../hooks/useKeyboard';
@@ -19,7 +18,7 @@ import { useReducedMotion } from '../hooks/useReducedMotion';
 import { useCountdown } from '../hooks/useTimer';
 import type { HostLink } from '../hooks/useTransport';
 import { useT } from '../i18n';
-import { EndTurnPanel, FlyingDie, RollOverlay } from './RollScreen';
+import { EndTurnPanel } from './EndTurnPanel';
 import { useTickSounds } from './sounds';
 import { ValidationScreen } from './ValidationScreen';
 import styles from './TableScreen.module.css';
@@ -34,7 +33,6 @@ export interface TableScreenProps {
   mode: ScreenMode;
   phoneUrl: string | null;
   now: () => number;
-  rng: Rng;
   animationScale: number;
   muted: boolean;
   onToggleMute: () => void;
@@ -85,32 +83,16 @@ function useHop(view: TableView, scale: number, onDone: () => void): number | nu
 }
 
 export function TableScreen(props: TableScreenProps) {
-  const { view, dispatch, link, mode, now, rng, animationScale: scale } = props;
+  const { view, dispatch, link, mode, now, animationScale: scale } = props;
   const t = useT();
   const [rulesOpen, setRulesOpen] = useState(false);
   const turn = view.turn;
   const team = turn ? view.teams[turn.teamIndex] : null;
   const phase = view.phase;
-  const withDie = view.settings.scoring === 'die';
-  const dieRef = useRef<HTMLDivElement>(null);
+  const validation = view.settings.validation !== 'none';
 
-  // --- Movement: the pawn hops and the die returns to the board; both finish before DIE_RETURNED.
-  const pending = useRef({ hop: false, die: false });
-  const turnKey = turn ? `${view.round}-${turn.teamIndex}-${turn.move?.from ?? ''}` : '';
-  useEffect(() => {
-    pending.current = { hop: false, die: !withDie };
-  }, [turnKey, phase, withDie]);
-  const settleIfDone = useCallback(() => {
-    if (pending.current.hop && pending.current.die) dispatch({ type: 'DIE_RETURNED' });
-  }, [dispatch]);
-  const shownPosition = useHop(view, scale, () => {
-    pending.current.hop = true;
-    settleIfDone();
-  });
-  const onDieBack = useCallback(() => {
-    pending.current.die = true;
-    settleIfDone();
-  }, [settleIfDone]);
+  // --- Movement: the pawn hops square by square, then the turn is settled.
+  const shownPosition = useHop(view, scale, () => dispatch({ type: 'MOVE_DONE' }));
 
   // During the turn the active pawn moves one square per correct word (provisional);
   // at the end it hops to its real square.
@@ -155,11 +137,8 @@ export function TableScreen(props: TableScreenProps) {
   );
   useTickSounds(remaining, phase === 'describing');
 
-  const onRolled = useCallback((value: number) => dispatch({ type: 'ROLL_DIE', value }), [dispatch]);
-  const onRollDone = useCallback(() => dispatch({ type: 'APPLY_MOVE' }), [dispatch]);
-
-  // The describer passes the turn on their screen; the table only does it in one-screen
-  // mode, or as a fallback when the describer screen is not connected.
+  // The describer passes the turn on the phone; the table only does it as a fallback,
+  // when that phone is not connected.
   const passOnTable = !link.describerOnline;
   // One phone per team: the checking team validates on its own phone, and the table only
   // says so. If that phone isn't connected, the table validates as before.
@@ -177,7 +156,7 @@ export function TableScreen(props: TableScreenProps) {
   useKeyboard(
     {
       Space: next,
-      z: () => view.canUndo && dispatch({ type: 'UNDO_TURN' }),
+      z: () => validation && view.canUndo && dispatch({ type: 'UNDO_TURN' }),
       '?': () => setRulesOpen(true),
       Escape: () => setRulesOpen(false),
     },
@@ -207,7 +186,6 @@ export function TableScreen(props: TableScreenProps) {
             ))}
         </div>
         <div className={styles.headerRight}>
-          {phase === 'moving' && <span className={styles.modePill}>{withDie ? t.modeDie : t.modeNoDie}</span>}
           <button type="button" className="btn btn-outline" onClick={() => setRulesOpen(true)}>
             {t.rules}
           </button>
@@ -228,10 +206,7 @@ export function TableScreen(props: TableScreenProps) {
         <div className={styles.left}>
           <div className={styles.boardBox}>
             <Board
-              ref={dieRef}
               pawns={pawns}
-              die={view.lastDie}
-              showDie={withDie && !(phase === 'moving' && !turn?.settled) && phase !== 'rolling'}
               highlight={phase === 'moving' && turn?.move ? turn.move.to : null}
               movingId={livePosition !== null && team ? team.id : null}
             />
@@ -289,11 +264,10 @@ export function TableScreen(props: TableScreenProps) {
                 )}
                 <ProgressSlots marked={turn.marked} up={turn.up} />
                 <p className={styles.muted}>
-                  {view.settings.validation === 'none' ? t.hiddenNoteNoValidation : t.hiddenNote}{' '}
-                  {t.pawnLiveNote(withDie, view.settings.validation !== 'none')}
+                  {validation ? t.hiddenNote : t.hiddenNoteNoValidation} {t.pawnLiveNote(validation)}
                 </p>
               </section>
-              <Projection marked={markedCount} scoring={view.settings.scoring} />
+              <Projection marked={markedCount} />
               <LiveFeed hits={turn.hits} />
             </>
           )}
@@ -316,7 +290,7 @@ export function TableScreen(props: TableScreenProps) {
             <EndTurnPanel
               view={view}
               onNext={passOnTable ? () => dispatch({ type: 'NEXT_TEAM' }) : null}
-              onUndo={() => dispatch({ type: 'UNDO_TURN' })}
+              onUndo={validation ? () => dispatch({ type: 'UNDO_TURN' }) : null}
               passHint={t.passOnDevice[mode]}
             />
           )}
@@ -346,21 +320,6 @@ export function TableScreen(props: TableScreenProps) {
             dispatch({ type: 'CONFIRM_VALIDATION' });
           }}
         />
-      )}
-
-      {phase === 'rolling' && turn && (
-        <RollOverlay
-          die={turn.die}
-          turnKey={`${view.round}-${turn.teamIndex}-${turn.describer}`}
-          rng={rng}
-          scale={scale}
-          onRolled={onRolled}
-          onDone={onRollDone}
-        />
-      )}
-
-      {phase === 'moving' && withDie && turn && !turn.settled && turn.die !== null && (
-        <FlyingDie value={turn.die} targetRef={dieRef} scale={scale} onDone={onDieBack} />
       )}
 
       {phase === 'won' && (

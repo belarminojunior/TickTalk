@@ -45,20 +45,6 @@ export function Segmented<T extends string | number>({
   );
 }
 
-/** Large checkbox with a yellow tick. */
-export function Checkbox({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
-  return (
-    <label className={styles.checkbox}>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-      <span className={styles.box} aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M5 12.5l4.5 4.5L19 7.5" />
-        </svg>
-      </span>
-      <span>{label}</span>
-    </label>
-  );
-}
 
 /** Modal dialog with a focus trap; Esc closes it. */
 export function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {

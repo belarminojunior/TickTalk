@@ -1,5 +1,5 @@
 import { createInitialState, gameReducer, type GameAction } from './reducer';
-import { describerView, tableView, teamSequence, projection, nextDescriber, provisionalPosition } from './selectors';
+import { describerView, tableView, teamSequence, nextDescriber, provisionalPosition } from './selectors';
 import type { GameState, Settings, Side, TeamSetup } from './types';
 import { TEST_CARDS, TWO_TEAMS, settings, teamsOf } from '../test/fixtures';
 import { clearSavedGame, loadGame, loadSetup, saveGame, SAVE_KEY, SAVE_SCHEMA, SETUP_KEY } from './storage';
@@ -9,10 +9,11 @@ function run(state: GameState, ...actions: GameAction[]): GameState {
   return actions.reduce(gameReducer, state);
 }
 
+/** Most tests play with one phone per team: the only mode where the next team checks the words. */
 function start(overrides: Partial<Settings> = {}, teams: TeamSetup[] = TWO_TEAMS): GameState {
   return gameReducer(createInitialState(), {
     type: 'SETUP',
-    settings: settings(overrides),
+    settings: settings({ screenMode: 'teamPhones', ...overrides }),
     teams,
     cards: TEST_CARDS,
     seed: 123,
@@ -23,7 +24,6 @@ interface TurnPlan {
   /** Word indices to mark, in order. Each mark turns the card over, so they alternate sides. */
   marks?: number[];
   annul?: [Side, number][];
-  die?: number;
 }
 
 /** Plays a whole turn to the end (moving phase, settled). */
@@ -34,8 +34,7 @@ function playTurn(state: GameState, plan: TurnPlan = {}): GameState {
   s = gameReducer(s, { type: 'BEGIN_VALIDATION' });
   for (const [side, index] of plan.annul ?? []) s = gameReducer(s, { type: 'SET_VALIDATION', side, index, annulled: true });
   if (s.phase === 'validating') s = gameReducer(s, { type: 'CONFIRM_VALIDATION' });
-  if (s.phase === 'rolling') s = run(s, { type: 'ROLL_DIE', value: plan.die ?? 0 }, { type: 'APPLY_MOVE' });
-  return gameReducer(s, { type: 'DIE_RETURNED' });
+  return gameReducer(s, { type: 'MOVE_DONE' });
 }
 
 /** Words on the side the turn started on. */
@@ -56,16 +55,15 @@ describe('setup', () => {
     expect(s.turn?.side).toBe('blue');
   });
 
-  it('validates teams, players and packs', () => {
+  it('validates teams and players', () => {
     const ok = [
       { name: 'A', color: 'red' as const, players: 'Ana, Rui' },
       { name: 'B', color: 'green' as const, players: 'Tó, Zé' },
     ];
-    expect(validateSetup(ok, ['things'], 10)).toEqual([]);
-    expect(validateSetup(ok.slice(0, 1), ['things'], 10)).toContainEqual({ kind: 'tooFewTeams' });
-    expect(validateSetup([ok[0], { ...ok[1], players: 'Só' }], ['things'], 10)).toContainEqual({ kind: 'teamPlayers', team: 1 });
-    expect(validateSetup([{ ...ok[0], name: ' ' }, ok[1]], ['things'], 10)).toContainEqual({ kind: 'teamName', team: 0 });
-    expect(validateSetup(ok, [], 10)).toContainEqual({ kind: 'noPacks' });
+    expect(validateSetup(ok)).toEqual([]);
+    expect(validateSetup(ok.slice(0, 1))).toContainEqual({ kind: 'tooFewTeams' });
+    expect(validateSetup([ok[0], { ...ok[1], players: 'Só' }])).toContainEqual({ kind: 'teamPlayers', team: 1 });
+    expect(validateSetup([{ ...ok[0], name: ' ' }, ok[1]])).toContainEqual({ kind: 'teamName', team: 0 });
   });
 });
 
@@ -187,7 +185,7 @@ describe('views and privacy', () => {
     expect(describerView(s, 10_000).timer.remainingMs).toBe(20_000);
   });
 
-  it('the pawn advances one square per correct word, then lands after the die', () => {
+  it('the pawn advances one square per correct word and lands on start + valid', () => {
     let s = run(start(), { type: 'READY' });
     expect(provisionalPosition(tableView(s))).toBeNull();
     s = gameReducer(s, { type: 'START_TURN', now: 0 });
@@ -201,25 +199,13 @@ describe('views and privacy', () => {
     // Cancelling a word takes it off straight away.
     s = gameReducer(s, { type: 'SET_VALIDATION', side: 'yellow', index: 0, annulled: true });
     expect(provisionalPosition(tableView(s))).toBe(2);
-    s = run(s, { type: 'CONFIRM_VALIDATION' }, { type: 'ROLL_DIE', value: 1 });
+    s = gameReducer(s, { type: 'CONFIRM_VALIDATION' });
+    expect(s.phase).toBe('moving');
     expect(provisionalPosition(tableView(s))).toBe(2);
-    // Moving: the hop starts from start + valid (2) and lands on start + valid − die (1).
-    s = gameReducer(s, { type: 'APPLY_MOVE' });
-    expect(provisionalPosition(tableView(s))).toBe(2);
-    expect(s.teams[0].position).toBe(1);
+    expect(s.teams[0].position).toBe(2);
     // The provisional square never goes past the Chegada (37).
     const near = { ...tableView(s), phase: 'describing' as const, teams: s.teams.map((t) => ({ ...t, position: 35 })) };
     expect(provisionalPosition(near)).toBe(37);
-  });
-
-  it('projection: die 0/1/2 and no die', () => {
-    expect(projection(3, 'die')).toEqual([
-      { die: 0, advance: 3 },
-      { die: 1, advance: 2 },
-      { die: 2, advance: 1 },
-    ]);
-    expect(projection(1, 'die')[2].advance).toBe(0);
-    expect(projection(3, 'noDie')).toEqual([{ die: null, advance: 3 }]);
   });
 });
 
@@ -237,7 +223,7 @@ describe('validation', () => {
     const t = tableView(s).turn!;
     expect(t.annulled.yellow).toEqual([false, false, true, false, false]);
     expect(t.annulled.blue).toEqual([false, false, false, false, false]);
-    s = run(s, { type: 'CONFIRM_VALIDATION' }, { type: 'ROLL_DIE', value: 0 }, { type: 'APPLY_MOVE' });
+    s = gameReducer(s, { type: 'CONFIRM_VALIDATION' });
     expect(s.turn?.move).toEqual({ from: 0, to: 2, steps: 2 });
   });
 
@@ -247,42 +233,31 @@ describe('validation', () => {
     expect(gameReducer(s, { type: 'SET_VALIDATION', side: 'yellow', index: 0, annulled: true })).toBe(s);
   });
 
-  it('"No checking" skips the phase', () => {
-    let s = start({ validation: 'none' });
-    s = run(s, { type: 'READY' }, { type: 'START_TURN', now: 0 }, { type: 'TOGGLE_WORD', index: 0, now: 1 });
+  it('only one phone per team has checking; with a single phone time up goes straight to moving', () => {
+    expect(start({ validation: 'none' }).settings.validation).toBe('nextTeam');
+    let s = start({ screenMode: 'phone', validation: 'nextTeam' });
+    expect(s.settings.validation).toBe('none');
+    s = run(s, { type: 'READY' }, { type: 'START_TURN', now: 0 });
+    for (const i of [0, 1, 2]) s = gameReducer(s, { type: 'TOGGLE_WORD', index: i, now: 1 });
     s = run(s, { type: 'END_EARLY', now: 2 }, { type: 'BEGIN_VALIDATION' });
-    expect(s.phase).toBe('rolling');
+    expect(s.phase).toBe('moving');
+    expect(s.turn?.move).toEqual({ from: 0, to: 3, steps: 3 });
+    expect(gameReducer(s, { type: 'SET_VALIDATION', side: 'blue', index: 0, annulled: true })).toBe(s);
   });
 });
 
-describe('die and movement', () => {
-  it('with die: advance = max(0, valid − die)', () => {
-    const s = playTurn(start(), { marks: [0, 1, 2], annul: [['yellow', 1]], die: 1 });
-    expect(s.teams[0].position).toBe(1);
-    expect(s.lastDie).toBe(1);
-    const t = playTurn(start(), { marks: [0], die: 2 });
-    expect(t.teams[0].position).toBe(0); // never behind the start
-  });
-
-  it('no die: advance = valid and there is never a rolling phase', () => {
-    let s = start({ scoring: 'noDie' });
-    const phases: string[] = [];
-    s = run(s, { type: 'READY' }, { type: 'START_TURN', now: 0 });
-    for (const i of [0, 1, 2]) s = gameReducer(s, { type: 'TOGGLE_WORD', index: i, now: 10 });
-    s = run(s, { type: 'END_EARLY', now: 20 }, { type: 'BEGIN_VALIDATION' }, { type: 'SET_VALIDATION', side: 'blue', index: 0, annulled: true });
-    s = gameReducer(s, { type: 'CONFIRM_VALIDATION' });
-    phases.push(s.phase);
-    expect(phases).not.toContain('rolling');
-    expect(s.phase).toBe('moving');
+describe('movement', () => {
+  it('advance = valid words (one square each)', () => {
+    const s = playTurn(start(), { marks: [0, 1, 2], annul: [['yellow', 1]] });
+    expect(s.teams[0].position).toBe(2);
     expect(s.turn?.move).toEqual({ from: 0, to: 2, steps: 2 });
-    // ROLL_DIE is ignored without the die
-    expect(gameReducer(s, { type: 'ROLL_DIE', value: 2 })).toBe(s);
-    expect(s.lastDie).toBeNull();
+    const t = playTurn(start());
+    expect(t.teams[0].position).toBe(0);
   });
 
   it('the card side follows the square colour and flips when the colour changes', () => {
-    // Lions start on the Partida (blue): 2 valid − 1 = square 1 (yellow) → the next turn starts yellow
-    let s = playTurn(start(), { marks: [0, 1, 2], annul: [['blue', 0]], die: 1 });
+    // Lions start on the Partida (blue): 2 marked − 1 cancelled = square 1 (yellow) → the next turn starts yellow
+    let s = playTurn(start(), { marks: [0, 1], annul: [['blue', 0]] });
     expect(s.teams[0].position).toBe(1);
     s = gameReducer(s, { type: 'NEXT_TEAM' });
     s = gameReducer(playTurn(s, {}), { type: 'NEXT_TEAM' }); // Gazelas
@@ -293,7 +268,7 @@ describe('die and movement', () => {
 
     // Now +1 square → square 2 (blue) → the next turn starts blue again
     s = run(s, { type: 'TOGGLE_WORD', index: 0, now: 1 }, { type: 'END_EARLY', now: 2 }, { type: 'BEGIN_VALIDATION' });
-    s = run(s, { type: 'CONFIRM_VALIDATION' }, { type: 'ROLL_DIE', value: 0 }, { type: 'APPLY_MOVE' }, { type: 'DIE_RETURNED' });
+    s = run(s, { type: 'CONFIRM_VALIDATION' }, { type: 'MOVE_DONE' });
     expect(s.teams[0].position).toBe(2);
     s = gameReducer(s, { type: 'NEXT_TEAM' });
     s = gameReducer(playTurn(s, {}), { type: 'NEXT_TEAM' });
@@ -305,7 +280,7 @@ describe('die and movement', () => {
 
   it('square 36 does not win; entering the Chegada does', () => {
     const at = (position: number) => {
-      const s = start({ scoring: 'noDie' });
+      const s = start();
       return { ...s, teams: s.teams.map((t, i) => (i === 0 ? { ...t, position } : t)) };
     };
     const landed36 = playTurn(at(33), { marks: [0, 1, 2] });
@@ -340,9 +315,9 @@ describe('team and describer order', () => {
     expect(s.round).toBe(2);
   });
 
-  it.each([2, 6])('the team sequence rotates with %i teams (with and without die)', (n) => {
-    for (const scoring of ['die', 'noDie'] as const) {
-      let s = start({ scoring }, teamsOf(n));
+  it.each([2, 6])('the team sequence rotates with %i teams (one phone or one per team)', (n) => {
+    for (const screenMode of ['phone', 'teamPhones'] as const) {
+      let s = start({ screenMode }, teamsOf(n));
       for (let turn = 0; turn < n + 1; turn++) {
         s = playTurn(s);
         const seq = teamSequence(s);
@@ -359,10 +334,10 @@ describe('team and describer order', () => {
 
   it('the turn can only be passed once the pawn has landed', () => {
     let s = run(start(), { type: 'READY' }, { type: 'START_TURN', now: 0 }, { type: 'END_EARLY', now: 1 });
-    s = run(s, { type: 'BEGIN_VALIDATION' }, { type: 'CONFIRM_VALIDATION' }, { type: 'ROLL_DIE', value: 0 }, { type: 'APPLY_MOVE' });
+    s = run(s, { type: 'BEGIN_VALIDATION' }, { type: 'CONFIRM_VALIDATION' });
     expect(s.phase).toBe('moving');
     expect(gameReducer(s, { type: 'NEXT_TEAM' })).toBe(s);
-    s = gameReducer(s, { type: 'DIE_RETURNED' });
+    s = gameReducer(s, { type: 'MOVE_DONE' });
     expect(gameReducer(s, { type: 'NEXT_TEAM' }).phase).toBe('handoff');
   });
 
@@ -370,9 +345,8 @@ describe('team and describer order', () => {
     let s = run(start(), { type: 'READY' }, { type: 'START_TURN', now: 0 }, { type: 'TOGGLE_WORD', index: 0, now: 1 });
     expect(describerView(s, 0).endOfTurn).toBeNull();
     s = run(s, { type: 'END_EARLY', now: 2 }, { type: 'BEGIN_VALIDATION' }, { type: 'CONFIRM_VALIDATION' });
-    s = run(s, { type: 'ROLL_DIE', value: 0 }, { type: 'APPLY_MOVE' });
     expect(describerView(s, 0).endOfTurn).toEqual({ steps: 1, to: 1, settled: false, nextPlayer: 'Tomás', nextTeam: 'As Gazelas' });
-    s = gameReducer(s, { type: 'DIE_RETURNED' });
+    s = gameReducer(s, { type: 'MOVE_DONE' });
     expect(describerView(s, 0).endOfTurn?.settled).toBe(true);
   });
 
@@ -388,7 +362,7 @@ describe('undo', () => {
     s = run(s, { type: 'TOGGLE_WORD', index: 0, now: 1 }, { type: 'TOGGLE_WORD', index: 1, now: 2 });
     s = run(s, { type: 'END_EARLY', now: 3 }, { type: 'BEGIN_VALIDATION' }, { type: 'SET_VALIDATION', side: 'yellow', index: 1, annulled: true });
     const before = s;
-    s = run(s, { type: 'CONFIRM_VALIDATION' }, { type: 'ROLL_DIE', value: 0 }, { type: 'APPLY_MOVE' }, { type: 'DIE_RETURNED' });
+    s = run(s, { type: 'CONFIRM_VALIDATION' }, { type: 'MOVE_DONE' });
     expect(s.teams[0].position).toBe(1);
     s = gameReducer(s, { type: 'UNDO_TURN' });
     expect(s).toEqual({ ...before, undo: null });
@@ -425,10 +399,13 @@ describe('save and resume', () => {
   });
 
   it('migrates a schema-1 save (Portuguese pack ids) instead of dropping it', () => {
-    const old = JSON.parse(JSON.stringify(start({ packs: ['things', 'places'] })).replace(/"things"/g, '"coisas"').replace(/"places"/g, '"lugares"'));
+    const s = start();
+    const withPacks = { ...s, settings: { ...s.settings, packs: ['things', 'places'], scoring: 'die' } };
+    const old = JSON.parse(JSON.stringify(withPacks).replace(/"things"/g, '"coisas"').replace(/"places"/g, '"lugares"'));
     window.localStorage.setItem(SAVE_KEY, JSON.stringify({ schema: 1, savedAt: 1, state: old }));
     const loaded = loadGame();
-    expect(loaded?.state.settings.packs).toEqual(['things', 'places']);
+    expect(loaded?.state.settings).not.toHaveProperty('packs');
+    expect(loaded?.state.settings).not.toHaveProperty('scoring');
     expect(loaded?.state.deck.cards[0].yellow.pack).toBe('things');
     expect(loaded?.state.deck.cards[0].blue.pack).toBe('places');
   });
@@ -445,12 +422,35 @@ describe('save and resume', () => {
     expect(turn.hits).toEqual([{ side: 'blue', index: 0, atMs: 5 }]);
   });
 
-  it('setups saved before the Football and Anime packs existed get them ticked', () => {
+  it('setups saved with packs, the die or a checking choice drop them', () => {
     window.localStorage.setItem(
       SETUP_KEY,
-      JSON.stringify({ schema: 3, settings: { ...settings(), packs: ['people', 'things'] }, teams: [] }),
+      JSON.stringify({ schema: 3, settings: { ...settings(), packs: ['people'], scoring: 'die', validation: 'nextTeam' }, teams: [] }),
     );
-    expect(loadSetup()?.settings.packs).toEqual(['people', 'things', 'football', 'anime']);
+    const loaded = loadSetup()!.settings;
+    expect(loaded).not.toHaveProperty('packs');
+    expect(loaded).not.toHaveProperty('scoring');
+    expect(loaded.validation).toBe('none');
+  });
+
+  it('a game saved while rolling the die resumes with the pawn moving', () => {
+    let s = run(start(), { type: 'READY' }, { type: 'START_TURN', now: 0 });
+    s = run(s, { type: 'TOGGLE_WORD', index: 0, now: 1 }, { type: 'TOGGLE_WORD', index: 0, now: 2 }, { type: 'END_EARLY', now: 3 });
+    const rolling = { ...s, phase: 'rolling', lastDie: null, settings: { ...s.settings, scoring: 'die' } };
+    window.localStorage.setItem(SAVE_KEY, JSON.stringify({ schema: 3, savedAt: 1, state: rolling }));
+    const resumed = gameReducer(createInitialState(), { type: 'LOAD', state: loadGame()!.state });
+    expect(resumed.phase).toBe('moving');
+    expect(resumed.teams[0].position).toBe(2);
+  });
+
+  it('a one-phone game saved while checking skips the checking on resume', () => {
+    let s = run(start({ screenMode: 'phone' }), { type: 'READY' }, { type: 'START_TURN', now: 0 });
+    s = run(s, { type: 'TOGGLE_WORD', index: 0, now: 1 }, { type: 'END_EARLY', now: 2 });
+    const old = { ...s, phase: 'validating', settings: { ...s.settings, validation: 'nextTeam' } };
+    window.localStorage.setItem(SAVE_KEY, JSON.stringify({ schema: 3, savedAt: 1, state: old }));
+    const resumed = gameReducer(createInitialState(), { type: 'LOAD', state: loadGame()!.state });
+    expect(resumed.phase).toBe('moving');
+    expect(resumed.teams[0].position).toBe(1);
   });
 
   it('setups and games saved with the removed modes open as "PC + phone"', () => {

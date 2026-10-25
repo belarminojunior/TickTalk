@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { loadMuted, setMuted } from './audio/sfx';
 import { ReplacedNotice } from './components/ReplacedNotice';
 import { useConfig } from './config';
 import { CARDS } from './data/cards';
-import { filterCards } from './game/deck';
 import { DEFAULT_SETTINGS, createInitialState, gameReducer } from './game/reducer';
 import { tableView } from './game/selectors';
 import { toTeamSetup, type TeamDraft } from './game/setup';
@@ -32,7 +31,6 @@ function saveKey(state: GameState): string {
     turn?.ready,
     turn?.marked,
     turn?.annulled,
-    turn?.die,
     turn?.settled,
     turn?.describer,
   ]);
@@ -73,7 +71,6 @@ export function HostApp() {
     document.documentElement.lang = uiLanguage;
   }, [uiLanguage]);
 
-  const cardCount = useMemo(() => filterCards(CARDS[draft.language], draft.packs).length, [draft.language, draft.packs]);
 
   const start = () => {
     saveSetup({ settings: draft, teams: teamDrafts });
@@ -81,7 +78,8 @@ export function HostApp() {
       type: 'SETUP',
       settings: draft,
       teams: teamDrafts.map(toTeamSetup),
-      cards: filterCards(CARDS[draft.language], draft.packs),
+      // Every game uses the whole deck (all packs).
+      cards: CARDS[draft.language],
       seed: config.seed(),
     });
   };
@@ -119,7 +117,6 @@ export function HostApp() {
           onTeams={setTeamDrafts}
           link={link}
           phoneUrl={phoneUrl}
-          cardCount={cardCount}
           hasSaved={!!saved}
           onContinue={continueSaved}
           onStart={start}
@@ -132,7 +129,6 @@ export function HostApp() {
           mode={mode}
           phoneUrl={phoneUrl}
           now={config.now}
-          rng={config.rng}
           animationScale={config.animationScale}
           muted={muted}
           onToggleMute={toggleMute}

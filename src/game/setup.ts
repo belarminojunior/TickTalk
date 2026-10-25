@@ -1,4 +1,4 @@
-import type { PackId, PawnColor, TeamSetup } from './types';
+import type { PawnColor, TeamSetup } from './types';
 import { PAWN_COLORS } from './types';
 
 export const MIN_TEAMS = 2;
@@ -27,11 +27,9 @@ export type SetupError =
   | { kind: 'tooFewTeams' }
   | { kind: 'teamName'; team: number }
   | { kind: 'teamPlayers'; team: number }
-  | { kind: 'duplicatePlayers'; team: number }
-  | { kind: 'noPacks' }
-  | { kind: 'noCards' };
+  | { kind: 'duplicatePlayers'; team: number };
 
-export function validateSetup(teams: TeamDraft[], packs: PackId[], cardCount: number): SetupError[] {
+export function validateSetup(teams: TeamDraft[]): SetupError[] {
   const errors: SetupError[] = [];
   if (teams.length < MIN_TEAMS) errors.push({ kind: 'tooFewTeams' });
   teams.forEach((t, team) => {
@@ -42,8 +40,6 @@ export function validateSetup(teams: TeamDraft[], packs: PackId[], cardCount: nu
       errors.push({ kind: 'duplicatePlayers', team });
     }
   });
-  if (packs.length === 0) errors.push({ kind: 'noPacks' });
-  else if (cardCount === 0) errors.push({ kind: 'noCards' });
   return errors;
 }
 

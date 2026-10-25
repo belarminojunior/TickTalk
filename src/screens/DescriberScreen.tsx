@@ -30,7 +30,7 @@ export interface DescriberScreenProps {
   onJoinTeam?: (team: string | null) => void;
 }
 
-const LOCKED_PHASES = ['timeUp', 'validating', 'rolling', 'moving'];
+const LOCKED_PHASES = ['timeUp', 'validating', 'moving'];
 
 /** The describer screen: the big card in the centre, the blurred board behind. */
 export function DescriberScreen({
@@ -189,7 +189,6 @@ export function DescriberScreen({
       <div className={styles.background} aria-hidden="true">
         <Board
           blurred
-          showDie={false}
           pawns={(view?.pawns ?? []).map((p) => ({ ...p, label: teamInitial(p.name) }))}
         />
         <div className={styles.scrim} />

@@ -1,11 +1,5 @@
-import type { Card, Deck, PackId } from './types';
+import type { Card, Deck } from './types';
 import { nextRandom } from './random';
-
-/** A card goes into the deck only if the packs of both sides are selected. */
-export function filterCards(cards: readonly Card[], packs: readonly PackId[]): Card[] {
-  const selected = new Set(packs);
-  return cards.filter((c) => selected.has(c.yellow.pack) && selected.has(c.blue.pack));
-}
 
 /** Seeded Fisher–Yates. Returns the shuffled order and the next seed. */
 export function shuffledOrder(length: number, seed: number): { order: number[]; seed: number } {

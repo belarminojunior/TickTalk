@@ -1,6 +1,5 @@
 import { clampSquare, squareColor } from './board';
 import { cardNumber } from './deck';
-import { DIE_FACES, advanceFor } from './dice';
 import { emptyFlags, markedCount, validCount } from './reducer';
 import type {
   EndReason,
@@ -10,7 +9,6 @@ import type {
   Move,
   PauseReason,
   Phase,
-  ScoringMode,
   ScreenMode,
   Settings,
   Side,
@@ -20,7 +18,7 @@ import type {
 } from './types';
 
 /** Phases in which the words may appear on the table. */
-const REVEALED_PHASES: readonly Phase[] = ['validating', 'rolling', 'moving', 'won'];
+const REVEALED_PHASES: readonly Phase[] = ['validating', 'moving', 'won'];
 
 export function isRevealed(phase: Phase): boolean {
   return REVEALED_PHASES.includes(phase);
@@ -41,7 +39,6 @@ export interface TableTurnView {
   timer: TimerState;
   pauseReason: PauseReason | null;
   endReason: EndReason | null;
-  die: number | null;
   move: Move | null;
   settled: boolean;
   /** Both sides' words, only once time is up (validation onwards). */
@@ -55,7 +52,6 @@ export interface TableView {
   teams: Team[];
   currentTeam: number;
   round: number;
-  lastDie: number | null;
   winnerId: string | null;
   canUndo: boolean;
   turn: TableTurnView | null;
@@ -75,7 +71,6 @@ export function tableView(state: GameState): TableView {
     teams: state.teams,
     currentTeam: state.currentTeam,
     round: state.round,
-    lastDie: state.lastDie,
     winnerId: state.winnerId,
     canUndo: state.undo !== null,
     turn: turn
@@ -92,7 +87,6 @@ export function tableView(state: GameState): TableView {
           timer: { ...turn.timer },
           pauseReason: turn.pauseReason,
           endReason: turn.endReason,
-          die: turn.die,
           move: turn.move,
           settled: turn.settled,
           words: revealed && turn.card ? cardWords(turn.card) : null,
@@ -117,7 +111,6 @@ export interface DescriberView {
   phase: Phase;
   language: Language;
   mode: ScreenMode;
-  scoring: ScoringMode;
   /** This phone: its team (one phone per team) and its role right now. */
   you: { teamId: string | null; role: PhoneRole; refusedTeam: string | null };
   /** Name of the team that checks this turn (the next team). */
@@ -188,7 +181,6 @@ export function describerView(state: GameState, now: number): DescriberView {
     winner,
     endOfTurn: endOfTurnFor(state),
     mode: state.settings.screenMode,
-    scoring: state.settings.scoring,
     you: { teamId: null, role: 'describer', refusedTeam: null },
     checking: state.teams.length > 1 ? validatorTeam(state).name : null,
     teamsList: [],
@@ -299,13 +291,6 @@ export function nextDescriber(state: Pick<GameState, 'teams' | 'currentTeam'>): 
   return { team, player: team.players[team.describerIndex % team.players.length] };
 }
 
-/** "If time ran out now": advance for each die face (or with no die). */
-export function projection(marked: number, scoring: ScoringMode): { die: number | null; advance: number }[] {
-  if (scoring === 'noDie') return [{ die: null, advance: advanceFor(marked, null) }];
-  const faces = [...new Set(DIE_FACES)];
-  return faces.map((die) => ({ die, advance: advanceFor(marked, die) }));
-}
-
 export function turnSummary(turn: Pick<TableTurnView, 'marked' | 'annulled'>) {
   const marked = markedCount(turn);
   const valid = validCount(turn);
@@ -314,11 +299,11 @@ export function turnSummary(turn: Pick<TableTurnView, 'marked' | 'annulled'>) {
 
 /**
  * Where the active team's pawn is shown during the turn: it advances one square per
- * correct word, live. This is provisional — the real move is applied after validation
- * and the die. Returns null outside the turn.
+ * correct word, live. With validation this is provisional (cancelled words come off).
+ * Returns null outside the turn.
  *  - describing/paused/timeUp: start + marked words
- *  - validating/rolling: start + valid words (cancelled ones already taken off)
- *  - moving: start + valid words, where the final hop (back by the die) begins
+ *  - validating: start + valid words (cancelled ones already taken off)
+ *  - moving: start + valid words, which is where the final hop begins
  */
 export function provisionalPosition(view: Pick<TableView, 'phase' | 'teams' | 'turn'>): number | null {
   const { turn } = view;
@@ -331,7 +316,6 @@ export function provisionalPosition(view: Pick<TableView, 'phase' | 'teams' | 't
     case 'timeUp':
       return clampSquare(start + markedCount(turn));
     case 'validating':
-    case 'rolling':
     case 'moving':
       return clampSquare(start + validCount(turn));
     default:

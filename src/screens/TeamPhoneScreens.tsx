@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import { CardFace } from '../components/Card';
-import { ArrowRightIcon, DiceIcon, SwapIcon } from '../components/Icons';
+import { ArrowRightIcon, SwapIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
 import { sideVars } from '../components/TablePanels';
 import { TimerRing } from '../components/TimerRing';
@@ -102,8 +102,6 @@ export function SpectatorScreen({
     body = <p className={styles.big}>{t.timeUp}</p>;
   } else if (view.phase === 'validating') {
     body = <p className={styles.big}>{view.checking ? t.checkingNow(view.checking) : t.timeUp}</p>;
-  } else if (view.phase === 'rolling') {
-    body = <p className={styles.big}>{t.rolling}</p>;
   } else if (view.phase === 'moving' && view.endOfTurn) {
     body = (
       <>
@@ -158,7 +156,6 @@ export function PhoneValidation({
   const marked = markedCount(v);
   const valid = validCount(v);
   const annulled = marked - valid;
-  const withDie = view.scoring === 'die';
   const sides: Side[] = [v.side, otherSide(v.side)];
 
   return (
@@ -166,7 +163,7 @@ export function PhoneValidation({
       <header className={styles.validationHead}>
         <span className={styles.pill}>{t.timeUpPill}</span>
         <h1 className={styles.title}>{t.phoneValidateTitle(v.team)}</h1>
-        <p className={styles.muted}>{t.validateSubtitle(v.describer, withDie)}</p>
+        <p className={styles.muted}>{t.validateSubtitle(v.describer)}</p>
       </header>
 
       {sides.map((side) => (
@@ -198,8 +195,8 @@ export function PhoneValidation({
       </section>
 
       <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => onCommand({ type: 'CONFIRM_VALIDATION' })}>
-        {withDie ? <DiceIcon size={22} /> : <ArrowRightIcon size={22} />}
-        {withDie ? t.confirmRoll : t.confirmAdvance}
+        <ArrowRightIcon size={22} />
+        {t.confirmAdvance}
       </button>
       <p className={styles.note}>{t.finalNote}</p>
       <RulesList />

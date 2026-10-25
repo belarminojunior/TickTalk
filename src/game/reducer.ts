@@ -1,6 +1,5 @@
 import { clampSquare, sideFor } from './board';
 import { createDeck, drawCard } from './deck';
-import { advanceFor } from './dice';
 import type {
   Card,
   GameState,
@@ -13,7 +12,7 @@ import type {
   TimerState,
   Turn,
 } from './types';
-import { FINISH, WORDS_PER_CARD, WORDS_PER_TURN } from './types';
+import { FINISH, WORDS_PER_CARD, WORDS_PER_TURN, validationFor } from './types';
 
 export type GameAction =
   | { type: 'SETUP'; settings: Settings; teams: TeamSetup[]; cards: Card[]; seed: number }
@@ -28,9 +27,7 @@ export type GameAction =
   | { type: 'BEGIN_VALIDATION' }
   | { type: 'SET_VALIDATION'; side: Side; index: number; annulled: boolean }
   | { type: 'CONFIRM_VALIDATION' }
-  | { type: 'ROLL_DIE'; value: number }
-  | { type: 'APPLY_MOVE' }
-  | { type: 'DIE_RETURNED' }
+  | { type: 'MOVE_DONE' }
   | { type: 'UNDO_TURN' }
   | { type: 'NEXT_TEAM' }
   | { type: 'PAUSE'; now: number; reason?: PauseReason }
@@ -43,11 +40,9 @@ export type GameAction =
 export const DEFAULT_SETTINGS: Settings = {
   screenMode: 'phone',
   turnSeconds: 30,
-  validation: 'nextTeam',
-  scoring: 'die',
+  validation: 'none',
   language: 'pt',
   uiLanguage: 'pt',
-  packs: ['people', 'places', 'things', 'entertainment', 'football', 'anime', 'mozambique'],
 };
 
 export function createInitialState(settings: Settings = DEFAULT_SETTINGS): GameState {
@@ -59,7 +54,6 @@ export function createInitialState(settings: Settings = DEFAULT_SETTINGS): GameS
     round: 1,
     turn: null,
     deck: { cards: [], order: [], next: 0, seed: 1 },
-    lastDie: null,
     winnerId: null,
     undo: null,
   };
@@ -104,7 +98,6 @@ function handoffTurn(state: GameState, teamIndex: number): Turn {
     timer: newTimer(state.settings),
     pauseReason: null,
     endReason: null,
-    die: null,
     move: null,
     settled: false,
   };
@@ -141,10 +134,10 @@ export function markedCount(turn: Pick<Turn, 'marked'>): number {
   return SIDES.reduce((n, side) => n + turn.marked[side].filter(Boolean).length, 0);
 }
 
+/** One square per valid word. */
 function applyMove(state: GameState, turn: Turn): GameState {
   const team = state.teams[turn.teamIndex];
-  const die = state.settings.scoring === 'die' ? turn.die : null;
-  const steps = advanceFor(validCount(turn), die);
+  const steps = validCount(turn);
   const from = team.position;
   const to = clampSquare(from + steps);
   const teams = state.teams.map((t, i) => (i === turn.teamIndex ? { ...t, position: to } : t));
@@ -159,13 +152,10 @@ function applyMove(state: GameState, turn: Turn): GameState {
   };
 }
 
-/** Step after validation: roll the die (die mode) or move straight away (no-die mode). */
+/** After validation (or straight after the turn, without validation) the pawn moves. */
 function afterValidation(state: GameState, turn: Turn): GameState {
   const snapshot: GameState = { ...state, undo: null };
-  if (state.settings.scoring === 'die') {
-    return { ...state, phase: 'rolling', turn: { ...turn, die: null }, undo: snapshot };
-  }
-  return { ...applyMove(state, { ...turn, die: null }), undo: snapshot };
+  return { ...applyMove(state, turn), undo: snapshot };
 }
 
 function pause(state: GameState, turn: Turn, now: number, reason: PauseReason): GameState {
@@ -188,8 +178,10 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         describerIndex: 0,
         lastSide: null,
       }));
+      // Validation follows the mode: only with one phone per team.
+      const settings: Settings = { ...action.settings, validation: validationFor(action.settings.screenMode) };
       const base: GameState = {
-        ...createInitialState(action.settings),
+        ...createInitialState(settings),
         teams,
         deck: createDeck(action.cards, action.seed),
       };
@@ -328,30 +320,19 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       return afterValidation(state, turn);
     }
 
-    case 'ROLL_DIE': {
-      if (state.phase !== 'rolling' || !turn || state.settings.scoring !== 'die') return state;
-      if (turn.die !== null) return state;
-      return { ...state, lastDie: action.value, turn: { ...turn, die: action.value } };
-    }
-
-    case 'APPLY_MOVE': {
-      if (state.phase !== 'rolling' || !turn || turn.die === null) return state;
-      return applyMove(state, turn);
-    }
-
-    case 'DIE_RETURNED': {
+    case 'MOVE_DONE': {
       if (state.phase !== 'moving' || !turn) return state;
       const settled = { ...state, turn: { ...turn, settled: true } };
       return state.winnerId ? { ...settled, phase: 'won' } : settled;
     }
 
     case 'UNDO_TURN': {
-      if (!state.undo || !['rolling', 'moving', 'won'].includes(state.phase)) return state;
+      if (!state.undo || !['moving', 'won'].includes(state.phase)) return state;
       return { ...state.undo, undo: null };
     }
 
     case 'NEXT_TEAM': {
-      // Only once the pawn has landed (and the die is back on the board).
+      // Only once the pawn has landed.
       if (state.phase !== 'moving' || !turn || !turn.settled) return state;
       const teams = state.teams.map((t, i) =>
         i === turn.teamIndex ? { ...t, describerIndex: t.describerIndex + 1, lastSide: turn.side } : t,
@@ -371,7 +352,13 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 }
 
 /** A resumed game never comes back with the timer running. */
-export function normalizeLoaded(state: GameState): GameState {
+export function normalizeLoaded(loaded: GameState): GameState {
+  // Games saved before the die and the validation setting were removed.
+  let state: GameState = { ...loaded, settings: { ...loaded.settings, validation: validationFor(loaded.settings.screenMode) } };
+  if ((state.phase as string) === 'rolling' && state.turn) state = applyMove(state, state.turn);
+  if (state.phase === 'validating' && state.settings.validation === 'none' && state.turn) {
+    state = afterValidation(state, state.turn);
+  }
   if (state.phase === 'describing' && state.turn) {
     return {
       ...state,

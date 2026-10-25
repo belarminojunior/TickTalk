@@ -1,4 +1,4 @@
-import type { Language, PackId, ScreenMode, Side } from '../game/types';
+import type { Language, ScreenMode, Side } from '../game/types';
 import { FINISH } from '../game/types';
 
 /** Joins names: "Pedro e Lúcia", "Ana, Pedro e Lúcia". */
@@ -65,26 +65,7 @@ const pt = {
   changeColor: (name: string): string => `Mudar a cor do peão de ${name || 'equipa'}`,
   houseRules: 'Regras da casa',
   timePerTurn: 'Tempo por vez',
-  whoValidates: 'Quem valida no fim da vez',
-  nextTeam: 'Próxima equipa',
-  noValidation: 'Sem validação',
-  dieSetting: 'Dado',
-  withDie: 'Com dado (0–2)',
-  withoutDie: 'Sem dado',
-  dieHelp: 'No fim da vez lança-se o dado (0, 0, 1, 1, 2, 2) e desconta-se das palavras válidas.',
-  noDieHelp: 'Sem dado: avança-se uma casa por cada palavra válida e a vez passa à equipa seguinte, pela ordem.',
   cardLanguage: 'Língua das cartas',
-  packs: 'Pacotes de palavras',
-  packName: {
-    people: 'Pessoas',
-    places: 'Lugares',
-    things: 'Coisas',
-    entertainment: 'Entretenimento',
-    football: 'Futebol',
-    anime: 'Anime',
-    mozambique: 'Moçambique',
-  } as Record<PackId, string>,
-  cardsInDeck: (n: number): string => (n === 1 ? '1 carta no baralho' : `${n} cartas no baralho`),
   continueSaved: 'Continuar jogo guardado',
   startGame: 'Começar o jogo',
   errors: {
@@ -92,8 +73,6 @@ const pt = {
     teamName: 'Dá um nome a esta equipa.',
     teamPlayers: 'Cada equipa precisa de pelo menos 2 jogadores, separados por vírgulas.',
     duplicatePlayers: 'Há nomes repetidos nesta equipa.',
-    noPacks: 'Escolhe pelo menos um pacote de palavras.',
-    noCards: 'Não há cartas com estes pacotes. Junta mais um pacote.',
   },
   noPhoneWarning: 'Ainda não há nenhum telemóvel ligado. Podes começar na mesma e ligá-lo depois.',
   noWindowWarning: 'A janela de quem explica ainda não está aberta. Podes começar e abri-la depois.',
@@ -125,14 +104,9 @@ const pt = {
   faceUp: (side: Side): string => `Agora: lado ${side === 'blue' ? 'azul' : 'amarelo'}`,
   hiddenNote: 'As palavras ficam escondidas até o tempo acabar. Depois, a equipa adversária valida.',
   hiddenNoteNoValidation: 'As palavras ficam escondidas até o tempo acabar.',
-  pawnLiveNote: (die: boolean, validation: boolean): string =>
-    `O peão avança uma casa a cada acerto.${
-      die || validation
-        ? ` No fim ${validation && die ? 'descontam-se as palavras anuladas e o dado' : validation ? 'descontam-se as palavras anuladas' : 'desconta-se o dado'}.`
-        : ''
-    }`,
+  pawnLiveNote: (validation: boolean): string =>
+    `O peão avança uma casa a cada acerto.${validation ? ' No fim descontam-se as palavras anuladas.' : ''}`,
   ifTimeEndedNow: 'Se o tempo acabasse agora',
-  dieN: (n: number): string => `dado ${n}`,
   plusSquares: (n: number): string => (n === 1 ? '+1 casa' : `+${n} casas`),
   onePerWord: '1 casa por palavra válida',
   liveHits: 'Acertos ao vivo',
@@ -173,8 +147,8 @@ const pt = {
   validatesTitle: (validator: string, team: string): string =>
     `${validator} ${isPluralPt(validator) ? 'validam' : 'valida'} a vez ${ofTeamPt(team)}`,
   checkTitle: (team: string): string => `Confirmem a vez ${ofTeamPt(team)}`,
-  validateSubtitle: (describer: string, die: boolean): string =>
-    `Vejam as palavras que ${toPersonPt(describer)} marcou como acertadas. Se alguma regra foi quebrada, anulem essa palavra. ${die ? 'Depois lança-se o dado.' : 'Depois o peão avança.'}`,
+  validateSubtitle: (describer: string): string =>
+    `Vejam as palavras que ${toPersonPt(describer)} marcou como acertadas. Se alguma regra foi quebrada, anulem essa palavra. Depois o peão avança.`,
   valid: 'Válida',
   annul: 'Anular',
   annulled: 'Anulada',
@@ -193,22 +167,14 @@ const pt = {
     'traduziu diretamente para outra língua',
     'apontou para um objeto com o nome',
   ],
-  confirmRoll: 'Confirmar e lançar o dado',
   confirmAdvance: 'Confirmar e avançar',
   finalNote: 'Só a equipa adversária pode anular. A decisão é final.',
 
   // Die and end of turn
-  rolling: 'A lançar o dado…',
-  dieRolled: (n: number): string => `Saiu ${n}`,
-  modeDie: 'Modo com dado',
-  modeNoDie: 'Modo sem dado',
-  dieReturned: 'O dado voltou',
-  dieFaces: 'Faces do dado: 0 · 0 · 1 · 1 · 2 · 2',
   validLabel: (n: number): string => (n === 1 ? 'válida' : 'válidas'),
-  dieLabel: 'dado',
   squaresLabel: (n: number): string => (n === 1 ? 'casa' : 'casas'),
   squareN: (n: number): string => (n <= 0 ? 'Partida' : n >= FINISH ? 'Chegada' : `Casa ${n}`),
-  noDieHeader: 'Sem dado · cada palavra válida = 1 casa',
+  onePerWordHeader: 'Cada palavra válida = 1 casa',
   cardFlips: (side: Side): string => `A carta vira para o ${side === 'blue' ? 'azul' : 'amarelo'}`,
   cardFlipsHelp: (team: string, side: Side): string =>
     `${team} ${isPluralPt(team) ? 'estão' : 'está'} agora numa casa ${side === 'blue' ? 'azul' : 'amarela'}. Na próxima vez ${isPluralPt(team) ? 'leem' : 'lê'} o lado ${side === 'blue' ? 'azul' : 'amarelo'}.`,
@@ -257,12 +223,12 @@ const pt = {
       body: 'Dizer a palavra ou parte dela, soletrar ou dizer a letra inicial, usar “rima com” ou “soa como”, traduzir para outra língua, ou apontar para um objeto com o nome.',
     },
     {
-      title: 'Validação',
-      body: 'No fim, a equipa seguinte vê as palavras marcadas e pode anular as que quebraram as regras. A decisão é final.',
+      title: 'Avanço',
+      body: 'O peão avança uma casa por cada palavra acertada e a vez passa à equipa seguinte, pela ordem.',
     },
     {
-      title: 'Dado e avanço',
-      body: 'Com dado: lança-se o dado (0, 0, 1, 1, 2, 2) e avança-se o número de palavras válidas menos o dado (nunca para trás). Sem dado: avança-se uma casa por cada palavra válida.',
+      title: 'Validação (um telemóvel por equipa)',
+      body: 'Quando cada equipa tem o seu telemóvel, no fim da vez a equipa seguinte vê as palavras marcadas no telemóvel dela e pode anular as que quebraram as regras. A decisão é final. Com um só telemóvel não há validação.',
     },
   ],
   shortcuts: 'Atalhos de teclado',
@@ -379,26 +345,7 @@ const en: Strings = {
   changeColor: (name) => `Change ${name || 'team'} pawn colour`,
   houseRules: 'House rules',
   timePerTurn: 'Time per turn',
-  whoValidates: 'Who checks at the end of the turn',
-  nextTeam: 'Next team',
-  noValidation: 'No checking',
-  dieSetting: 'Die',
-  withDie: 'With die (0–2)',
-  withoutDie: 'No die',
-  dieHelp: 'At the end of the turn the die is rolled (0, 0, 1, 1, 2, 2) and taken off the valid words.',
-  noDieHelp: 'No die: move one square per valid word, and play passes to the next team, in order.',
   cardLanguage: 'Card language',
-  packs: 'Word packs',
-  packName: {
-    people: 'People',
-    places: 'Places',
-    things: 'Things',
-    entertainment: 'Entertainment',
-    football: 'Football',
-    anime: 'Anime',
-    mozambique: 'Mozambique',
-  },
-  cardsInDeck: (n) => (n === 1 ? '1 card in the deck' : `${n} cards in the deck`),
   continueSaved: 'Continue saved game',
   startGame: 'Start the game',
   errors: {
@@ -406,8 +353,6 @@ const en: Strings = {
     teamName: 'Give this team a name.',
     teamPlayers: 'Each team needs at least 2 players, separated by commas.',
     duplicatePlayers: 'There are repeated names in this team.',
-    noPacks: 'Choose at least one word pack.',
-    noCards: 'No cards match these packs. Add another pack.',
   },
   noPhoneWarning: 'No phone is connected yet. You can start anyway and connect it later.',
   noWindowWarning: 'The describer window isn’t open yet. You can start and open it later.',
@@ -435,14 +380,8 @@ const en: Strings = {
   faceUp: (side) => `Now: ${side} side`,
   hiddenNote: 'The words stay hidden until time runs out. Then the other team checks them.',
   hiddenNoteNoValidation: 'The words stay hidden until time runs out.',
-  pawnLiveNote: (die, validation) =>
-    `The pawn moves one square per correct word.${
-      die || validation
-        ? ` At the end, ${validation && die ? 'cancelled words and the die are taken off' : validation ? 'cancelled words are taken off' : 'the die is taken off'}.`
-        : ''
-    }`,
+  pawnLiveNote: (validation) => `The pawn moves one square per correct word.${validation ? ' At the end, cancelled words are taken off.' : ''}`,
   ifTimeEndedNow: 'If time ran out now',
-  dieN: (n) => `die ${n}`,
   plusSquares: (n) => (n === 1 ? '+1 square' : `+${n} squares`),
   onePerWord: '1 square per valid word',
   liveHits: 'Live hits',
@@ -475,8 +414,8 @@ const en: Strings = {
   timeUpPill: 'Time’s up',
   validatesTitle: (validator, team) => `${validator} check ${possessiveEn(team)} turn`,
   checkTitle: (team) => `Confirm ${possessiveEn(team)} turn`,
-  validateSubtitle: (describer, die) =>
-    `Look at the words ${describer} marked as guessed. If a rule was broken, cancel that word. ${die ? 'Then roll the die.' : 'Then the pawn moves.'}`,
+  validateSubtitle: (describer) =>
+    `Look at the words ${describer} marked as guessed. If a rule was broken, cancel that word. Then the pawn moves.`,
   valid: 'Valid',
   annul: 'Cancel',
   annulled: 'Cancelled',
@@ -495,21 +434,12 @@ const en: Strings = {
     'translated it directly into another language',
     'pointed at an object with the name',
   ],
-  confirmRoll: 'Confirm and roll the die',
   confirmAdvance: 'Confirm and move',
   finalNote: 'Only the other team can cancel. The decision is final.',
-
-  rolling: 'Rolling the die…',
-  dieRolled: (n) => `Rolled ${n}`,
-  modeDie: 'Die mode',
-  modeNoDie: 'No-die mode',
-  dieReturned: 'The die is back',
-  dieFaces: 'Die faces: 0 · 0 · 1 · 1 · 2 · 2',
   validLabel: () => 'valid',
-  dieLabel: 'die',
   squaresLabel: (n) => (n === 1 ? 'square' : 'squares'),
   squareN: (n) => (n <= 0 ? 'Start' : n >= FINISH ? 'Finish' : `Square ${n}`),
-  noDieHeader: 'No die · each valid word = 1 square',
+  onePerWordHeader: 'Each valid word = 1 square',
   cardFlips: (side) => `The card flips to ${side}`,
   cardFlipsHelp: (team, side) => `${team} are now on a ${side} square. Next turn they read the ${side} side.`,
   cardStays: (side) => `The card stays ${side}`,
@@ -554,12 +484,12 @@ const en: Strings = {
       body: 'Saying the word or part of it, spelling it or saying the first letter, using “rhymes with” or “sounds like”, translating it, or pointing at an object with the name.',
     },
     {
-      title: 'Checking',
-      body: 'At the end, the next team sees the marked words and may cancel any that broke the rules. Their decision is final.',
+      title: 'Moving',
+      body: 'The pawn moves one square per guessed word, and play passes to the next team, in order.',
     },
     {
-      title: 'Die and moving',
-      body: 'With die: roll the die (0, 0, 1, 1, 2, 2) and move the number of valid words minus the die (never backwards). No die: move one square per valid word.',
+      title: 'Checking (one phone per team)',
+      body: 'When each team has its own phone, at the end of the turn the next team sees the marked words on its phone and may cancel any that broke the rules. Their decision is final. With a single phone there is no checking.',
     },
   ],
   shortcuts: 'Keyboard shortcuts',

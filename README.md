@@ -2,7 +2,7 @@
 
 **Explica cinco palavras antes que o tempo acabe.**
 
-Um jogo de tabuleiro para o browser, para jogar em equipas à volta de um PC. Quem explica vê uma carta com 5 palavras e tenta que a sua equipa as adivinhe em 30 segundos. No fim, a equipa adversária valida as palavras, lança-se o dado (0–2) e o peão avança no tabuleiro. Ganha quem chegar primeiro à Chegada.
+Um jogo de tabuleiro para o browser, para jogar em equipas à volta de um PC. Quem explica vê uma carta com 5 palavras e tenta que a sua equipa as adivinhe em 30 segundos. O peão avança uma casa por cada palavra acertada (com um telemóvel por equipa, a equipa adversária pode anular as que quebraram as regras). Ganha quem chegar primeiro à Chegada.
 
 A novidade são as **telas separadas**: quem explica vê a carta (no telemóvel, numa segunda janela ou no próprio PC) e os outros veem a mesa, com os acertos a aparecer ao vivo, sem revelar as palavras.
 
@@ -34,7 +34,7 @@ Depois, no PC:
 
 1. Escolhe **como vão jogar** (ver abaixo).
 2. Escreve as **equipas** (2 a 6) e os jogadores de cada uma, **pela ordem em que explicam**, separados por vírgulas. Toca no peão para mudar a cor.
-3. Escolhe as **regras da casa**: tempo por vez, quem valida, com ou sem dado, língua das cartas e pacotes de palavras.
+3. Escolhe as **regras da casa**: tempo por vez e língua das cartas. Joga-se sempre com o baralho todo.
 4. Carrega em **Começar o jogo**.
 
 O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, aparece **Continuar jogo guardado** na configuração.
@@ -52,7 +52,7 @@ O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, apar
 - **Na vez da tua equipa**, o telemóvel funciona como no modo normal: carta, palavras, "Passar a vez".
 - **Quando a tua equipa valida** a vez de outra, o telemóvel mostra os dois lados da carta com **Válida | Anular** e o botão para confirmar. A validação aparece só no telemóvel dessa equipa; a mesa mostra apenas "A validar no telemóvel das Gazelas…".
 - **Nas outras alturas**, o telemóvel mostra de quem é a vez, o contador e o tempo, mas nunca as palavras.
-- Se o telemóvel da equipa que valida não estiver ligado, valida-se na mesa, como antes. Se o telemóvel da equipa que joga cair, o tempo pára.
+- Se o telemóvel da equipa que valida não estiver ligado, valida-se na mesa. Se o telemóvel da equipa que joga cair, o tempo pára.
 - Nos cartões das equipas, na mesa, aparece "telemóvel ligado" ou "sem telemóvel".
 
 ## Ligar o telemóvel
@@ -85,13 +85,12 @@ Se o PC tiver várias redes (VPN, máquinas virtuais), o terminal mostra todos o
 
 - **Tabuleiro:** Partida, 36 casas e Chegada, com as cores sempre alternadas do princípio ao fim: Partida azul, casa 1 amarela, casa 2 azul, … casa 36 azul, Chegada amarela.
 - **Cartas:** cada carta tem dois lados, azul e amarelo, com 5 palavras cada. A vez começa no lado da **cor da casa onde está o peão** da equipa.
-- **A vez:** quem explica toca na palavra quando a equipa acerta, e **a carta vira para o outro lado**. Há 10 palavras por vez (5 azuis + 5 amarelas). Um toque por engano desfaz-se com **Desfazer último acerto** (ou Backspace). A mesa vê o contador e as 10 ranhuras a encher, e qual lado está virado para cima, mas não as palavras. **O peão avança uma casa no tabuleiro a cada acerto, em tempo real**; é provisório: no fim recua as palavras anuladas e o valor do dado.
+- **A vez:** quem explica toca na palavra quando a equipa acerta, e **a carta vira para o outro lado**. Há 10 palavras por vez (5 azuis + 5 amarelas). Um toque por engano desfaz-se com **Desfazer último acerto** (ou Backspace). A mesa vê o contador e as 10 ranhuras a encher, e qual lado está virado para cima, mas não as palavras. **O peão avança uma casa no tabuleiro a cada acerto, em tempo real**; com validação, no fim recua as palavras anuladas.
 - **Não vale:** dizer a palavra ou parte dela, soletrar ou dizer a letra inicial, usar “rima com” / “soa como”, traduzir diretamente para outra língua, apontar para um objeto com o nome.
-- **Validação:** a equipa seguinte vê os dois lados da carta, com as palavras marcadas, e pode anular as que quebraram as regras (ou escolhe-se “Sem validação”).
-- **Com dado (0, 0, 1, 1, 2, 2):** avança-se `válidas − dado` casas (nunca para trás).
-- **Sem dado:** avança-se uma casa por cada palavra válida.
+- **Avanço:** uma casa por cada palavra válida.
+- **Validação (só com um telemóvel por equipa):** a equipa seguinte vê, no telemóvel dela, os dois lados da carta com as palavras marcadas e pode anular as que quebraram as regras. Com um só telemóvel não há validação: todas as palavras marcadas contam.
 - **Passar a vez:** no fim da vez, quem explica carrega em **Passar a vez** no telemóvel e entrega-o a quem joga a seguir. A mesa só mostra este botão se o telemóvel estiver desligado.
-- **Desfazer esta vez** (na mesa) volta à validação (um nível).
+- **Desfazer esta vez** (na mesa, só com validação) volta à validação (um nível).
 - **Vitória:** a primeira equipa cujo peão entra na Chegada (depois da casa 36). Parar na casa 36 ainda não ganha.
 
 ### Atalhos de teclado
@@ -124,11 +123,11 @@ server/            servidor Node: serve dist/, /api/info, relay WebSocket em /ws
 scripts/           gerador das cartas (listas de palavras PT e EN)
 src/
   game/            regras puras: reducer, seletores (vistas da mesa e de quem explica), tabuleiro,
-                   baralho, dado, gravação
+                   baralho, gravação
   net/             protocolo versionado, DescriberHub (um explicador de cada vez), TeamHub (um telemóvel por equipa) e o transporte:
                    WebSocketTransport (e LocalTransport, em memória, para os testes)
-  components/      Tabuleiro, peões, dados, cartas, painéis…
-  screens/         Configuração, Mesa, Quem explica, Validação, Dado/fim da vez
+  components/      Tabuleiro, peões, cartas, painéis…
+  screens/         Configuração, Mesa, Quem explica, Validação, fim da vez
   hooks/, audio/, i18n/, data/
 ```
 
@@ -136,7 +135,7 @@ O **anfitrião (a mesa) é a fonte da verdade**: o estado vive só aí, num redu
 
 ### Cartas
 
-`src/data/cards.pt.json` e `src/data/cards.en.json` têm 240 cartas cada (cerca de 1500 palavras por língua), geradas por `scripts/generate-cards.mjs` a partir de listas de palavras originais, em sete pacotes: Pessoas (famosos e personagens), Lugares (países, cidades e monumentos do mundo), Coisas, Entretenimento, Futebol (jogadores, clubes e estádios), Anime e Moçambique. Uma carta entra no baralho só se os pacotes dos dois lados estiverem selecionados. As cartas não se repetem até o baralho acabar.
+`src/data/cards.pt.json` e `src/data/cards.en.json` têm 240 cartas cada (cerca de 1500 palavras por língua), geradas por `scripts/generate-cards.mjs` a partir de listas de palavras originais, em sete pacotes: Pessoas (famosos e personagens), Lugares (países, cidades e monumentos do mundo), Coisas, Entretenimento, Futebol (jogadores, clubes e estádios), Anime e Moçambique. Cada jogo usa as 240 cartas da língua escolhida. As cartas não se repetem até o baralho acabar.
 
 ## Limitações conhecidas
 

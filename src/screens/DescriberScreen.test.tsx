@@ -14,11 +14,8 @@ function endOfTurnState(settled: boolean): GameState {
     { type: 'TOGGLE_WORD', index: 0, now: 1 },
     { type: 'END_EARLY', now: 2 },
     { type: 'BEGIN_VALIDATION' },
-    { type: 'CONFIRM_VALIDATION' },
-    { type: 'ROLL_DIE', value: 0 },
-    { type: 'APPLY_MOVE' },
   ];
-  if (settled) actions.push({ type: 'DIE_RETURNED' });
+  if (settled) actions.push({ type: 'MOVE_DONE' });
   return actions.reduce(gameReducer, createInitialState());
 }
 

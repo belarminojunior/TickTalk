@@ -54,7 +54,7 @@ describe('phone screens (one phone per team)', () => {
     expect(groups).toHaveLength(2);
     await userEvent.click(within(groups[0]).getByRole('button', { name: 'Anular' }));
     expect(onCommand).toHaveBeenCalledWith({ type: 'SET_VALIDATION', side: 'blue', index: 0, annulled: true });
-    await userEvent.click(screen.getByRole('button', { name: 'Confirmar e lançar o dado' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Confirmar e avançar' }));
     expect(onCommand).toHaveBeenCalledWith({ type: 'CONFIRM_VALIDATION' });
   });
 });

@@ -171,12 +171,6 @@
   grid-column: 8 / span 2;
 }
 
-.dieSpot {
-  grid-row: 6 / span 2;
-  grid-column: 5 / span 2;
-  display: grid;
-  place-items: center;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .hop { animation: none; }
