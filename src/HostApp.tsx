@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { loadMuted, setMuted } from './audio/sfx';
-import { SwapIcon } from './components/Icons';
 import { ReplacedNotice } from './components/ReplacedNotice';
 import { useConfig } from './config';
 import { CARDS } from './data/cards';
@@ -11,11 +10,9 @@ import { toTeamSetup, type TeamDraft } from './game/setup';
 import { clearSavedGame, loadGame, loadSetup, saveGame, saveSetup } from './game/storage';
 import type { GameState, Settings } from './game/types';
 import { useInterval } from './hooks/useTimer';
-import { useDescriberClient, useHostLink, commandToAction } from './hooks/useTransport';
+import { useHostLink } from './hooks/useTransport';
 import { usePhoneUrl } from './hooks/usePhoneUrl';
-import { I18nProvider, useT } from './i18n';
-import type { DescriberCommand } from './net/protocol';
-import { DescriberScreen } from './screens/DescriberScreen';
+import { I18nProvider } from './i18n';
 import { SetupScreen } from './screens/SetupScreen';
 import { TableScreen } from './screens/TableScreen';
 
@@ -41,9 +38,7 @@ function saveKey(state: GameState): string {
   ]);
 }
 
-const SINGLE_SCREEN_DESCRIBER_PHASES = ['handoff', 'describing', 'paused'];
-
-/** The table (host): setup, game state and the link to the describer screen. */
+/** The table (host): setup, game state and the link to the phones. */
 export function HostApp() {
   const config = useConfig();
   const [initialSetup] = useState(loadSetup);
@@ -57,9 +52,8 @@ export function HostApp() {
   const mode = inSetup ? draft.screenMode : state.settings.screenMode;
   const uiLanguage = inSetup ? draft.uiLanguage : state.settings.uiLanguage ?? 'pt';
 
-  const link = useHostLink(mode, state, dispatch, config.now);
-  const local = useDescriberClient(link.localClient, config.now);
-  const phoneUrl = usePhoneUrl(mode === 'phone' || mode === 'teamPhones');
+  const link = useHostLink(mode, state, dispatch, config.now, config.createHostTransport);
+  const phoneUrl = usePhoneUrl(true);
 
   // The host clock: time only runs here.
   useInterval(() => dispatch({ type: 'TICK', now: config.now() }), 200, state.phase === 'describing');
@@ -110,86 +104,43 @@ export function HostApp() {
     dispatch({ type: 'RESET' });
   };
 
-  const openDescriberWindow = useCallback(() => {
-    window.open('/explicar?via=window', 'ticktalk-explicar', 'popup=yes,width=760,height=1000');
-  }, []);
-
   const toggleMute = () => {
     setMuted(!muted);
     setMutedState(!muted);
   };
 
-  const sendLocal = useCallback(
-    (command: DescriberCommand) => {
-      if (link.localClient) local.send(command);
-      else dispatch(commandToAction(command, config.now()));
-    },
-    [link.localClient, local, config],
-  );
-
-  let content: JSX.Element;
-  if (inSetup) {
-    content = (
-      <SetupScreen
-        settings={draft}
-        onSettings={setDraft}
-        teams={teamDrafts}
-        onTeams={setTeamDrafts}
-        link={link}
-        phoneUrl={phoneUrl}
-        cardCount={cardCount}
-        hasSaved={!!saved}
-        onContinue={continueSaved}
-        onStart={start}
-        onOpenDescriberWindow={openDescriberWindow}
-      />
-    );
-  } else if (mode === 'single' && SINGLE_SCREEN_DESCRIBER_PHASES.includes(state.phase)) {
-    content = (
-      <DescriberScreen
-        view={local.view}
-        anchor={local.anchor}
-        status={local.view ? 'ready' : 'connecting'}
-        mode="single"
-        now={config.now}
-        onCommand={sendLocal}
-        handoffExtra={<SkipDescriberButton onClick={() => dispatch({ type: 'HANDOFF', skipDescriber: true })} />}
-        onExit={newSetup}
-      />
-    );
-  } else {
-    content = (
-      <TableScreen
-        view={tableView(state)}
-        dispatch={dispatch}
-        link={link}
-        mode={mode}
-        phoneUrl={phoneUrl}
-        now={config.now}
-        rng={config.rng}
-        animationScale={config.animationScale}
-        muted={muted}
-        onToggleMute={toggleMute}
-        onOpenDescriberWindow={openDescriberWindow}
-        onNewSetup={newSetup}
-        onPlayAgain={() => dispatch({ type: 'REMATCH', seed: config.seed() })}
-      />
-    );
-  }
-
   return (
     <I18nProvider language={uiLanguage}>
-      {content}
+      {inSetup ? (
+        <SetupScreen
+          settings={draft}
+          onSettings={setDraft}
+          teams={teamDrafts}
+          onTeams={setTeamDrafts}
+          link={link}
+          phoneUrl={phoneUrl}
+          cardCount={cardCount}
+          hasSaved={!!saved}
+          onContinue={continueSaved}
+          onStart={start}
+        />
+      ) : (
+        <TableScreen
+          view={tableView(state)}
+          dispatch={dispatch}
+          link={link}
+          mode={mode}
+          phoneUrl={phoneUrl}
+          now={config.now}
+          rng={config.rng}
+          animationScale={config.animationScale}
+          muted={muted}
+          onToggleMute={toggleMute}
+          onNewSetup={newSetup}
+          onPlayAgain={() => dispatch({ type: 'REMATCH', seed: config.seed() })}
+        />
+      )}
       {link.replaced && <ReplacedNotice role="host" onTakeOver={link.takeOver} />}
     </I18nProvider>
-  );
-}
-
-function SkipDescriberButton({ onClick }: { onClick: () => void }) {
-  const t = useT();
-  return (
-    <button type="button" className="btn btn-outline btn-lg" onClick={onClick}>
-      <SwapIcon size={18} /> {t.skipDescriber}
-    </button>
   );
 }

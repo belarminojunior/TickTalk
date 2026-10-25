@@ -40,14 +40,10 @@ const pt = {
   modeTitle: {
     phone: 'PC + telemóvel de quem explica',
     teamPhones: 'Um telemóvel por equipa',
-    windows: 'Duas janelas no PC',
-    single: 'Um só ecrã',
   } as Record<ScreenMode, string>,
   modeDesc: {
     phone: 'O PC mostra a mesa a todos. Quem explica abre a carta no telemóvel, na mesma rede Wi-Fi.',
     teamPhones: 'Cada equipa usa o seu telemóvel: quem explica vê a carta e, no fim, a equipa adversária valida no telemóvel dela.',
-    windows: 'Com um segundo monitor ou TV: a mesa numa janela, a carta noutra virada para quem explica.',
-    single: 'Quem explica fica com o PC durante a vez. A mesa aparece no fim, para validar.',
   } as Record<ScreenMode, string>,
   recommended: 'Recomendado',
   connectPhone: 'Liga o telemóvel',
@@ -59,11 +55,6 @@ const pt = {
   serverConnecting: 'A procurar o servidor local…',
   serverMissing: 'Servidor local não encontrado. Arranca o jogo com “npm run play” para usar o telemóvel.',
   sameWifi: 'O telemóvel tem de estar na mesma rede Wi-Fi que este PC.',
-  openWindowTitle: 'Abre a janela de quem explica',
-  openWindowHelp: 'Arrasta a nova janela para o segundo monitor ou TV, virada para quem explica.',
-  openWindow: 'Abrir janela de quem explica',
-  windowsConnected: (n: number): string => (n === 0 ? 'Janela ainda não aberta' : 'Janela de quem explica ligada'),
-  singleNote: 'Na vez de cada um, o ecrã mostra só a carta. Os outros não espreitam!',
   teams: 'Equipas',
   teamName: 'Nome da equipa',
   players: 'Jogadores, pela ordem em que explicam',
@@ -89,6 +80,8 @@ const pt = {
     places: 'Lugares',
     things: 'Coisas',
     entertainment: 'Entretenimento',
+    football: 'Futebol',
+    anime: 'Anime',
     mozambique: 'Moçambique',
   } as Record<PackId, string>,
   cardsInDeck: (n: number): string => (n === 1 ? '1 carta no baralho' : `${n} cartas no baralho`),
@@ -111,14 +104,10 @@ const pt = {
   live: {
     phone: 'Ao vivo · a tela de quem explica está ligada',
     teamPhones: 'Ao vivo · o telemóvel da equipa está ligado',
-    windows: 'Ao vivo · a janela de quem explica está ligada',
-    single: 'Ao vivo',
   } as Record<ScreenMode, string>,
   describerOffline: {
     phone: 'Telemóvel desligado',
     teamPhones: 'Telemóvel da equipa desligado',
-    windows: 'Janela de quem explica fechada',
-    single: '',
   } as Record<ScreenMode, string>,
   rules: 'Regras',
   soundOn: 'Som ligado',
@@ -155,30 +144,18 @@ const pt = {
   passDevice: {
     phone: 'Passa o telemóvel',
     teamPhones: 'Passa o telemóvel da equipa',
-    windows: 'Vira a janela',
-    single: 'Passa o ecrã',
   } as Record<ScreenMode, string>,
   passTo: (mode: ScreenMode, name: string, team: string): string =>
-    mode === 'teamPhones'
-      ? `${name} explica, com o telemóvel ${ofTeamPt(team)}`
-      : mode === 'windows'
-        ? `Vira a janela para ${toPersonPt(name)} (${team})`
-        : `${mode === 'phone' ? 'Passa o telemóvel' : 'Passa o ecrã'} a ${name} (${team})`,
+    mode === 'teamPhones' ? `${name} explica, com o telemóvel ${ofTeamPt(team)}` : `Passa o telemóvel a ${name} (${team})`,
   handoffHelp: (mode: ScreenMode): string =>
-    mode === 'phone'
-      ? 'Quando estiver tudo pronto, carrega em Começar no telemóvel.'
-      : mode === 'teamPhones'
-        ? 'Quando estiver tudo pronto, carrega em Começar no telemóvel da equipa.'
-        : mode === 'windows'
-        ? 'Quando estiver tudo pronto, carrega em Começar na janela de quem explica.'
-        : 'Quando estiver tudo pronto, carrega em Começar.',
+    mode === 'teamPhones'
+      ? 'Quando estiver tudo pronto, carrega em Começar no telemóvel da equipa.'
+      : 'Quando estiver tudo pronto, carrega em Começar no telemóvel.',
   readyStatus: (name: string): string => `${name} está pronto/a. O tempo começa já a seguir.`,
   skipDescriber: 'Trocar quem explica',
   waitingDescriber: {
     phone: 'À espera do telemóvel…',
     teamPhones: 'À espera do telemóvel da equipa…',
-    windows: 'À espera da janela de quem explica…',
-    single: '',
   } as Record<ScreenMode, string>,
   paused: 'Pausa',
   pausedHelp: 'O tempo parou.',
@@ -248,8 +225,6 @@ const pt = {
   passOnDevice: {
     phone: 'Quem explica passa a vez no telemóvel.',
     teamPhones: 'Quem explica passa a vez no telemóvel da equipa.',
-    windows: 'Quem explica passa a vez na janela de quem explica.',
-    single: '',
   } as Record<ScreenMode, string>,
   noMove: 'O peão fica onde está.',
 
@@ -318,9 +293,8 @@ const pt = {
   undoHit: 'Desfazer último acerto',
   describerHelp2: 'Não digas a palavra, partes dela, nem “rima com”.',
   endTurn: 'Terminar a vez',
-  handoffTitle: (mode: ScreenMode, name: string): string =>
-    mode === 'windows' ? `Vira o ecrã para ${toPersonPt(name)}` : `${mode === 'phone' ? 'Passa o telemóvel' : 'Passa o ecrã'} a ${name}`,
-  handoffDevice: { phone: 'Passa o telemóvel', teamPhones: 'Passa o telemóvel', windows: 'Vira o ecrã', single: 'Passa o ecrã' } as Record<ScreenMode, string>,
+  handoffTitle: (_mode: ScreenMode, name: string): string => `Passa o telemóvel a ${toPersonPt(name)}`,
+  handoffDevice: { phone: 'Passa o telemóvel', teamPhones: 'Passa o telemóvel' } as Record<ScreenMode, string>,
 
   // One phone per team
   connectTeamPhones: 'Liga os telemóveis das equipas',
@@ -337,6 +311,7 @@ const pt = {
   checkingNow: (validator: string): string => `${validator} ${isPluralPt(validator) ? 'estão' : 'está'} a validar.`,
   phoneValidateTitle: (team: string): string => `Validem a vez ${ofTeamPt(team)}`,
   validatingOnPhone: (validator: string): string => `A validar no telemóvel ${ofTeamPt(validator)}…`,
+  validatingOnPhoneHelp: 'A equipa adversária vê as palavras e valida no telemóvel dela. O jogo continua quando confirmarem.',
   teamPhoneOn: 'telemóvel ligado',
   teamPhoneOff: 'sem telemóvel',
   waitingNextTurn: 'À espera da próxima vez.',
@@ -380,12 +355,10 @@ const en: Strings = {
   interfaceLanguage: 'Interface language',
 
   howToPlay: 'How will you play?',
-  modeTitle: { phone: 'PC + describer’s phone', teamPhones: 'One phone per team', windows: 'Two windows on the PC', single: 'One screen' },
+  modeTitle: { phone: 'PC + describer’s phone', teamPhones: 'One phone per team' },
   modeDesc: {
     phone: 'The PC shows the table to everyone. The describer opens the card on a phone, on the same Wi-Fi.',
     teamPhones: 'Each team uses its own phone: the describer sees the card and, at the end, the other team checks it on theirs.',
-    windows: 'With a second monitor or TV: the table in one window, the card in another facing the describer.',
-    single: 'The describer holds the PC during the turn. The table comes back at the end, to check.',
   },
   recommended: 'Recommended',
   connectPhone: 'Connect the phone',
@@ -396,11 +369,6 @@ const en: Strings = {
   serverConnecting: 'Looking for the local server…',
   serverMissing: 'Local server not found. Start the game with “npm run play” to use a phone.',
   sameWifi: 'The phone must be on the same Wi-Fi network as this PC.',
-  openWindowTitle: 'Open the describer’s window',
-  openWindowHelp: 'Drag the new window to the second monitor or TV, facing the describer.',
-  openWindow: 'Open describer window',
-  windowsConnected: (n) => (n === 0 ? 'Window not open yet' : 'Describer window connected'),
-  singleNote: 'On each turn, the screen only shows the card. No peeking!',
   teams: 'Teams',
   teamName: 'Team name',
   players: 'Players, in the order they describe',
@@ -426,6 +394,8 @@ const en: Strings = {
     places: 'Places',
     things: 'Things',
     entertainment: 'Entertainment',
+    football: 'Football',
+    anime: 'Anime',
     mozambique: 'Mozambique',
   },
   cardsInDeck: (n) => (n === 1 ? '1 card in the deck' : `${n} cards in the deck`),
@@ -447,10 +417,8 @@ const en: Strings = {
   live: {
     phone: 'Live · the describer’s screen is connected',
     teamPhones: 'Live · the team’s phone is connected',
-    windows: 'Live · the describer’s window is connected',
-    single: 'Live',
   },
-  describerOffline: { phone: 'Phone disconnected', teamPhones: 'Team phone disconnected', windows: 'Describer window closed', single: '' },
+  describerOffline: { phone: 'Phone disconnected', teamPhones: 'Team phone disconnected' },
   rules: 'Rules',
   soundOn: 'Sound on',
   soundOff: 'Sound off',
@@ -482,28 +450,16 @@ const en: Strings = {
   atSeconds: (s) => `at ${s} s`,
   noHitsYet: 'No hits yet.',
   slotLabel: (side, n, hit) => `${side === 'blue' ? 'Blue' : 'Yellow'} side, word ${n}: ${hit ? 'guessed' : 'not yet'}`,
-  passDevice: { phone: 'Pass the phone', teamPhones: 'Pass the team phone', windows: 'Turn the window', single: 'Pass the screen' },
+  passDevice: { phone: 'Pass the phone', teamPhones: 'Pass the team phone' },
   passTo: (mode, name, team) =>
-    mode === 'teamPhones'
-      ? `${name} describes, on ${possessiveEn(team)} phone`
-      : mode === 'windows'
-        ? `Turn the window towards ${name} (${team})`
-        : `${mode === 'phone' ? 'Pass the phone' : 'Pass the screen'} to ${name} (${team})`,
+    mode === 'teamPhones' ? `${name} describes, on ${possessiveEn(team)} phone` : `Pass the phone to ${name} (${team})`,
   handoffHelp: (mode) =>
-    mode === 'phone'
-      ? 'When everyone is ready, press Start on the phone.'
-      : mode === 'teamPhones'
-        ? 'When everyone is ready, press Start on the team phone.'
-        : mode === 'windows'
-        ? 'When everyone is ready, press Start in the describer window.'
-        : 'When everyone is ready, press Start.',
+    mode === 'teamPhones' ? 'When everyone is ready, press Start on the team phone.' : 'When everyone is ready, press Start on the phone.',
   readyStatus: (name) => `${name} is ready. The timer starts next.`,
   skipDescriber: 'Change describer',
   waitingDescriber: {
     phone: 'Waiting for the phone…',
     teamPhones: 'Waiting for the team phone…',
-    windows: 'Waiting for the describer window…',
-    single: '',
   },
   paused: 'Paused',
   pausedHelp: 'The timer is stopped.',
@@ -568,8 +524,6 @@ const en: Strings = {
   passOnDevice: {
     phone: 'The describer passes the turn on the phone.',
     teamPhones: 'The describer passes the turn on the team phone.',
-    windows: 'The describer passes the turn in the describer window.',
-    single: '',
   },
   noMove: 'The pawn stays put.',
 
@@ -634,9 +588,8 @@ const en: Strings = {
   undoHit: 'Undo last hit',
   describerHelp2: 'Don’t say the word, parts of it, or “rhymes with”.',
   endTurn: 'End turn',
-  handoffTitle: (mode, name) =>
-    mode === 'windows' ? `Turn the screen towards ${name}` : `${mode === 'phone' ? 'Pass the phone' : 'Pass the screen'} to ${name}`,
-  handoffDevice: { phone: 'Pass the phone', teamPhones: 'Pass the phone', windows: 'Turn the screen', single: 'Pass the screen' },
+  handoffTitle: (_mode, name) => `Pass the phone to ${name}`,
+  handoffDevice: { phone: 'Pass the phone', teamPhones: 'Pass the phone' },
 
   connectTeamPhones: 'Connect the team phones',
   connectTeamPhonesHelpBefore: 'Each team scans the code or opens ',
@@ -652,6 +605,7 @@ const en: Strings = {
   checkingNow: (validator) => `${validator} are checking.`,
   phoneValidateTitle: (team) => `Check ${possessiveEn(team)} turn`,
   validatingOnPhone: (validator) => `Being checked on ${possessiveEn(validator)} phone…`,
+  validatingOnPhoneHelp: 'The other team sees the words and checks them on their phone. The game carries on once they confirm.',
   teamPhoneOn: 'phone connected',
   teamPhoneOff: 'no phone',
   waitingNextTurn: 'Waiting for the next turn.',

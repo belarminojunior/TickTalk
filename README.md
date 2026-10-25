@@ -39,20 +39,18 @@ Depois, no PC:
 
 O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, aparece **Continuar jogo guardado** na configuração.
 
-### Os quatro modos de ecrã
+### Os dois modos de jogo
 
 | Modo | Mesa | Quem explica |
 |---|---|---|
 | **PC + telemóvel** (recomendado) | PC/TV em `/` | Telemóvel em `/explicar`, passa de mão em mão a cada vez |
 | **Um telemóvel por equipa** | PC/TV em `/` | Cada equipa tem o seu telemóvel em `/explicar`: quem explica usa o da sua equipa e a equipa adversária valida no dela |
-| **Duas janelas no PC** | Janela principal | Segunda janela (botão “Abrir janela de quem explica”), por exemplo num segundo monitor |
-| **Um só ecrã** | Aparece antes e depois da vez | Ocupa o ecrã durante a vez |
 
 ### Um telemóvel por equipa
 
 - Todas as equipas abrem o **mesmo endereço** (ou leem o mesmo QR code). Quando o jogo começa, cada telemóvel escolhe a sua equipa ("Qual é a tua equipa?") e fica a lembrar-se dela. Cada equipa só pode ter um telemóvel.
 - **Na vez da tua equipa**, o telemóvel funciona como no modo normal: carta, palavras, "Passar a vez".
-- **Quando a tua equipa valida** a vez de outra, o telemóvel mostra os dois lados da carta com **Válida | Anular** e o botão para confirmar. A mesa mostra o mesmo cartão, só para ver, e acompanha cada toque.
+- **Quando a tua equipa valida** a vez de outra, o telemóvel mostra os dois lados da carta com **Válida | Anular** e o botão para confirmar. A validação aparece só no telemóvel dessa equipa; a mesa mostra apenas "A validar no telemóvel das Gazelas…".
 - **Nas outras alturas**, o telemóvel mostra de quem é a vez, o contador e o tempo, mas nunca as palavras.
 - Se o telemóvel da equipa que valida não estiver ligado, valida-se na mesa, como antes. Se o telemóvel da equipa que joga cair, o tempo pára.
 - Nos cartões das equipas, na mesa, aparece "telemóvel ligado" ou "sem telemóvel".
@@ -92,7 +90,7 @@ Se o PC tiver várias redes (VPN, máquinas virtuais), o terminal mostra todos o
 - **Validação:** a equipa seguinte vê os dois lados da carta, com as palavras marcadas, e pode anular as que quebraram as regras (ou escolhe-se “Sem validação”).
 - **Com dado (0, 0, 1, 1, 2, 2):** avança-se `válidas − dado` casas (nunca para trás).
 - **Sem dado:** avança-se uma casa por cada palavra válida.
-- **Passar a vez:** no fim da vez, quem explica carrega em **Passar a vez** no telemóvel (ou na janela de quem explica) e entrega-o a quem joga a seguir. A mesa só mostra este botão no modo "Um só ecrã", ou se a tela de quem explica estiver desligada.
+- **Passar a vez:** no fim da vez, quem explica carrega em **Passar a vez** no telemóvel e entrega-o a quem joga a seguir. A mesa só mostra este botão se o telemóvel estiver desligado.
 - **Desfazer esta vez** (na mesa) volta à validação (um nível).
 - **Vitória:** a primeira equipa cujo peão entra na Chegada (depois da casa 36). Parar na casa 36 ainda não ganha.
 
@@ -127,8 +125,8 @@ scripts/           gerador das cartas (listas de palavras PT e EN)
 src/
   game/            regras puras: reducer, seletores (vistas da mesa e de quem explica), tabuleiro,
                    baralho, dado, gravação
-  net/             protocolo versionado, DescriberHub (um explicador de cada vez) e os 3 transportes:
-                   LocalTransport, BroadcastChannelTransport, WebSocketTransport
+  net/             protocolo versionado, DescriberHub (um explicador de cada vez), TeamHub (um telemóvel por equipa) e o transporte:
+                   WebSocketTransport (e LocalTransport, em memória, para os testes)
   components/      Tabuleiro, peões, dados, cartas, painéis…
   screens/         Configuração, Mesa, Quem explica, Validação, Dado/fim da vez
   hooks/, audio/, i18n/, data/
@@ -138,12 +136,11 @@ O **anfitrião (a mesa) é a fonte da verdade**: o estado vive só aí, num redu
 
 ### Cartas
 
-`src/data/cards.pt.json` e `src/data/cards.en.json` têm 160 cartas cada, geradas por `scripts/generate-cards.mjs` a partir de listas de palavras originais (pacotes Pessoas, Lugares, Coisas, Entretenimento e Moçambique). Uma carta entra no baralho só se os pacotes dos dois lados estiverem selecionados. As cartas não se repetem até o baralho acabar.
+`src/data/cards.pt.json` e `src/data/cards.en.json` têm 240 cartas cada (cerca de 1500 palavras por língua), geradas por `scripts/generate-cards.mjs` a partir de listas de palavras originais, em sete pacotes: Pessoas (famosos e personagens), Lugares (países, cidades e monumentos do mundo), Coisas, Entretenimento, Futebol (jogadores, clubes e estádios), Anime e Moçambique. Uma carta entra no baralho só se os pacotes dos dois lados estiverem selecionados. As cartas não se repetem até o baralho acabar.
 
 ## Limitações conhecidas
 
 - O servidor guarda só uma mesa de cada vez (uma partida por servidor).
 - O modo telemóvel precisa do servidor (`npm run play` ou `npm run dev`); `vite preview` sozinho não chega.
 - Sem HTTPS, alguns browsers de telemóvel não dão Wake Lock; nesse caso, aumenta o tempo de bloqueio do ecrã do telemóvel.
-- O modo "Duas janelas" usa `BroadcastChannel`: as duas janelas têm de estar no mesmo browser do mesmo PC.
 - As palavras repetem-se entre cartas diferentes (cada palavra aparece em média 1–2 vezes no baralho).

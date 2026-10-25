@@ -5,8 +5,8 @@ import { filterCards } from '../game/deck';
 describe.each(['pt', 'en'] as const)('cards (%s)', (lang) => {
   const cards = CARDS[lang];
 
-  it('has at least 150 cards', () => {
-    expect(cards.length).toBeGreaterThanOrEqual(150);
+  it('has 240 cards', () => {
+    expect(cards.length).toBe(240);
   });
 
   it('ids are unique', () => {

@@ -3,12 +3,13 @@ export type Side = 'yellow' | 'blue';
 export type PawnColor = 'red' | 'green' | 'purple' | 'orange' | 'white' | 'pink';
 export const PAWN_COLORS: PawnColor[] = ['red', 'green', 'purple', 'orange', 'white', 'pink'];
 
-export type PackId = 'people' | 'places' | 'things' | 'entertainment' | 'mozambique';
-export const PACK_IDS: PackId[] = ['people', 'places', 'things', 'entertainment', 'mozambique'];
+export type PackId = 'people' | 'places' | 'things' | 'entertainment' | 'football' | 'anime' | 'mozambique';
+export const PACK_IDS: PackId[] = ['people', 'places', 'things', 'entertainment', 'football', 'anime', 'mozambique'];
 
 export type Language = 'pt' | 'en';
-/** phone: one shared phone for the describer · teamPhones: one phone per team · windows · single. */
-export type ScreenMode = 'phone' | 'teamPhones' | 'windows' | 'single';
+/** phone: one shared phone, passed to each describer · teamPhones: one phone per team. */
+export type ScreenMode = 'phone' | 'teamPhones';
+export const SCREEN_MODES: ScreenMode[] = ['phone', 'teamPhones'];
 export type TurnSeconds = 30 | 45 | 60;
 export type ValidationMode = 'nextTeam' | 'none';
 export type ScoringMode = 'die' | 'noDie';

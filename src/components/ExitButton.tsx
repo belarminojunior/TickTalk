@@ -5,19 +5,14 @@ import { ExitIcon } from './Icons';
 import styles from './ExitButton.module.css';
 
 /** "Sair" during the game: asks first, then leaves to the setup screen (the game stays saved). */
-export function ExitButton({ onExit, round = false }: { onExit: () => void; round?: boolean }) {
+export function ExitButton({ onExit }: { onExit: () => void }) {
   const t = useT();
   const [confirming, setConfirming] = useState(false);
   return (
     <>
-      <button
-        type="button"
-        className={round ? styles.round : 'btn btn-outline'}
-        onClick={() => setConfirming(true)}
-        aria-label={round ? t.exit : undefined}
-      >
-        <ExitIcon size={round ? 22 : 18} />
-        {!round && t.exit}
+      <button type="button" className="btn btn-outline" onClick={() => setConfirming(true)}>
+        <ExitIcon size={18} />
+        {t.exit}
       </button>
       {confirming && (
         <Modal title={t.exitTitle} onClose={() => setConfirming(false)}>

@@ -1,7 +1,7 @@
 import { useId, useState, type CSSProperties, type FormEvent } from 'react';
 import { unlockAudio } from '../audio/sfx';
 import { Checkbox, MiniSquares, Segmented } from '../components/Controls';
-import { ExternalIcon, PlusIcon, XIcon } from '../components/Icons';
+import { PlusIcon, XIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
 import { QrConnect } from '../components/QrConnect';
 import { ScreenModePicker } from '../components/ScreenModePicker';
@@ -23,7 +23,6 @@ export interface SetupScreenProps {
   hasSaved: boolean;
   onContinue: () => void;
   onStart: () => void;
-  onOpenDescriberWindow: () => void;
 }
 
 export function SetupScreen(props: SetupScreenProps) {
@@ -63,7 +62,7 @@ export function SetupScreen(props: SetupScreenProps) {
 
   const errorText = (e: SetupError) => t.errors[e.kind];
   const generalErrors = currentErrors.filter((e) => !('team' in e));
-  const noDescriber = settings.screenMode !== 'single' && link.connected === 0;
+  const noDescriber = link.connected === 0;
 
   return (
     <form className={styles.screen} onSubmit={submit} noValidate>
@@ -96,30 +95,12 @@ export function SetupScreen(props: SetupScreenProps) {
           {t.howToPlay}
         </h2>
         <ScreenModePicker value={settings.screenMode} onChange={(m) => set('screenMode', m)} />
-        {(settings.screenMode === 'phone' || settings.screenMode === 'teamPhones') && (
-          <QrConnect
-            url={props.phoneUrl}
-            connected={link.connected}
-            server={link.serverStatus}
-            teamPhones={settings.screenMode === 'teamPhones'}
-          />
-        )}
-        {settings.screenMode === 'windows' && (
-          <div className={styles.windowBox}>
-            <div>
-              <h3 className={styles.boxTitle}>{t.openWindowTitle}</h3>
-              <p className={styles.muted}>{t.openWindowHelp}</p>
-              <p className={styles.status} data-tone={link.connected > 0 ? 'ok' : 'off'} role="status">
-                <span className={styles.dot} aria-hidden="true" />
-                {t.windowsConnected(link.connected)}
-              </p>
-            </div>
-            <button type="button" className="btn btn-outline" onClick={props.onOpenDescriberWindow}>
-              <ExternalIcon size={18} /> {t.openWindow}
-            </button>
-          </div>
-        )}
-        {settings.screenMode === 'single' && <p className={styles.singleNote}>{t.singleNote}</p>}
+        <QrConnect
+          url={props.phoneUrl}
+          connected={link.connected}
+          server={link.serverStatus}
+          teamPhones={settings.screenMode === 'teamPhones'}
+        />
       </section>
 
       <div className={styles.columns}>
@@ -260,7 +241,7 @@ export function SetupScreen(props: SetupScreenProps) {
             </p>
           ))}
           {noDescriber && (
-            <p className={styles.warning}>{settings.screenMode === 'windows' ? t.noWindowWarning : t.noPhoneWarning}</p>
+            <p className={styles.warning}>{t.noPhoneWarning}</p>
           )}
         </div>
         <div className={styles.footerButtons}>

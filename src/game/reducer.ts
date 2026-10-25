@@ -47,7 +47,7 @@ export const DEFAULT_SETTINGS: Settings = {
   scoring: 'die',
   language: 'pt',
   uiLanguage: 'pt',
-  packs: ['people', 'places', 'things', 'entertainment', 'mozambique'],
+  packs: ['people', 'places', 'things', 'entertainment', 'football', 'anime', 'mozambique'],
 };
 
 export function createInitialState(settings: Settings = DEFAULT_SETTINGS): GameState {

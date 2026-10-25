@@ -27,5 +27,5 @@ export function teamsOf(n: number): TeamSetup[] {
 }
 
 export function settings(overrides: Partial<Settings> = {}): Settings {
-  return { ...DEFAULT_SETTINGS, screenMode: 'single', ...overrides };
+  return { ...DEFAULT_SETTINGS, screenMode: 'phone', ...overrides };
 }

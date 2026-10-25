@@ -1,10 +1,10 @@
 import type { Card, GameState, PackId, PawnColor, Settings, Side, Turn } from './types';
-import { WORDS_PER_CARD } from './types';
+import { SCREEN_MODES, WORDS_PER_CARD } from './types';
 
 export const SAVE_KEY = 'ticktalk.save';
 export const SETUP_KEY = 'ticktalk.setup';
 /** Bump this when the shape of GameState changes; older saves are ignored. */
-export const SAVE_SCHEMA = 3;
+export const SAVE_SCHEMA = 4;
 
 export interface SavedGame {
   schema: number;
@@ -64,6 +64,8 @@ function looksLikeState(value: unknown): value is GameState {
   );
 }
 
+const NEW_IN_SCHEMA_4: PackId[] = ['football', 'anime'];
+
 // Old saves are migrated, not dropped:
 //  - schema 1 used Portuguese pack ids;
 //  - schemas 1–2 had one side of marks per turn (the card did not turn over on each hit).
@@ -80,7 +82,13 @@ function migratePack(pack: PackId): PackId {
 }
 
 function migrateSettings(settings: Settings): Settings {
-  return Array.isArray(settings.packs) ? { ...settings, packs: settings.packs.map(migratePack) } : settings;
+  const packs = Array.isArray(settings.packs) ? settings.packs.map(migratePack) : settings.packs;
+  return { ...settings, packs, screenMode: normalizeMode(settings.screenMode) };
+}
+
+/** "Duas janelas" and "Um só ecrã" were removed: games saved with them open as "PC + telemóvel". */
+function normalizeMode(mode: string | undefined): Settings['screenMode'] {
+  return SCREEN_MODES.includes(mode as Settings['screenMode']) ? (mode as Settings['screenMode']) : 'phone';
 }
 
 function migrateCard(card: Card): Card {
@@ -114,6 +122,10 @@ function migrateTurn(turn: Turn | OldTurn | null): Turn | null {
   };
 }
 
+function withMode(state: GameState): GameState {
+  return { ...state, settings: { ...state.settings, screenMode: normalizeMode(state.settings.screenMode) } };
+}
+
 function migrateState(state: GameState): GameState {
   return {
     ...state,
@@ -130,8 +142,9 @@ export function loadGame(): SavedGame | null {
   if (data.schema === 1 || data.schema === 2) {
     return { schema: SAVE_SCHEMA, savedAt: data.savedAt ?? 0, state: migrateState(data.state) };
   }
-  if (data.schema !== SAVE_SCHEMA) return null;
-  return data as SavedGame;
+  // Schema 3 → 4 only added packs; a game in progress keeps its own deck.
+  if (data.schema !== SAVE_SCHEMA && data.schema !== 3) return null;
+  return { ...(data as SavedGame), schema: SAVE_SCHEMA, state: withMode(data.state) };
 }
 
 export function clearSavedGame(): void {
@@ -149,9 +162,9 @@ export function saveSetup(setup: Omit<SavedSetup, 'schema'>): void {
 export function loadSetup(): SavedSetup | null {
   const data = readJson(SETUP_KEY) as Partial<SavedSetup> | null;
   if (!data || !data.settings || !Array.isArray(data.teams)) return null;
-  if (data.schema === 1 || data.schema === 2) {
-    return { ...(data as SavedSetup), schema: SAVE_SCHEMA, settings: migrateSettings(data.settings) };
-  }
-  if (data.schema !== SAVE_SCHEMA) return null;
-  return data as SavedSetup;
+  if (typeof data.schema !== 'number' || data.schema > SAVE_SCHEMA) return null;
+  let settings = migrateSettings(data.settings);
+  // Setups saved before schema 4 didn't know the Football and Anime packs: tick them.
+  if (data.schema < 4) settings = { ...settings, packs: [...new Set([...settings.packs, ...NEW_IN_SCHEMA_4])] };
+  return { ...(data as SavedSetup), schema: SAVE_SCHEMA, settings };
 }

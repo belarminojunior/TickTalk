@@ -73,53 +73,12 @@
   color: var(--muted);
 }
 
-.windowBox {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 18px;
-  background: var(--panel-2);
-  border-radius: 18px;
-  padding: 22px 24px;
-}
 
-.boxTitle {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 20px;
-  margin-bottom: 4px;
-}
 
-.status {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-  color: var(--muted);
-}
 
-.status[data-tone='ok'] {
-  color: #7fdc9b;
-}
 
-.dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #6b6b6b;
-}
 
-.status[data-tone='ok'] .dot {
-  background: var(--ok);
-}
 
-.singleNote {
-  background: var(--panel-2);
-  border-radius: 18px;
-  padding: 18px 22px;
-  color: var(--muted);
-}
 
 .columns {
   display: grid;

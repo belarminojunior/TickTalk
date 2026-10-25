@@ -15,14 +15,11 @@ export function ValidationScreen({
   pawns,
   onSet,
   onConfirm,
-  checkedOnPhone = false,
 }: {
   view: TableView;
   pawns: BoardPawn[];
   onSet: (side: Side, index: number, annulled: boolean) => void;
   onConfirm: () => void;
-  /** One phone per team: the checking team validates on its phone; the table only follows. */
-  checkedOnPhone?: boolean;
 }) {
   const t = useT();
   const turn = view.turn!;
@@ -60,7 +57,6 @@ export function ValidationScreen({
                       marked={turn.marked[side][i]}
                       annulled={turn.annulled[side][i]}
                       onChange={(index, annulled) => onSet(side, index, annulled)}
-                      readOnly={checkedOnPhone}
                       compact
                     />
                   ))}
@@ -81,16 +77,10 @@ export function ValidationScreen({
               </div>
             </section>
             <RulesList />
-            {checkedOnPhone ? (
-              <p className={styles.onPhone} role="status">
-                {t.validatingOnPhone(validator.name)}
-              </p>
-            ) : (
-              <button type="button" className="btn btn-primary btn-lg btn-block" onClick={onConfirm} autoFocus>
-                {withDie ? <DiceIcon size={24} /> : <ArrowRightIcon size={24} />}
-                {withDie ? t.confirmRoll : t.confirmAdvance}
-              </button>
-            )}
+            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={onConfirm} autoFocus>
+              {withDie ? <DiceIcon size={24} /> : <ArrowRightIcon size={24} />}
+              {withDie ? t.confirmRoll : t.confirmAdvance}
+            </button>
             <p className={styles.note}>{t.finalNote}</p>
           </aside>
         </div>

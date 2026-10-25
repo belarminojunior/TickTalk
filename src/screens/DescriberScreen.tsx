@@ -4,7 +4,6 @@ import { Board } from '../components/Board';
 import { CardFace, HiddenWords, TwoSidedCard } from '../components/Card';
 import { PauseIcon, PlayIcon, UndoIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
-import { ExitButton } from '../components/ExitButton';
 import { TimerRing } from '../components/TimerRing';
 import { WordButton } from '../components/WordButton';
 import type { DescriberView } from '../game/selectors';
@@ -25,12 +24,8 @@ export interface DescriberScreenProps {
   mode: ScreenMode;
   now: () => number;
   onCommand: (command: DescriberCommand) => void;
-  /** Extra handoff actions (in "one screen" mode, e.g. change describer). */
-  handoffExtra?: ReactNode;
   /** When another tab took the connection: use this one again. */
   onTakeOver?: () => void;
-  /** Leave the game (one-screen mode, where this screen covers the whole PC). */
-  onExit?: () => void;
   /** One phone per team: choose this phone's team (null = none). */
   onJoinTeam?: (team: string | null) => void;
 }
@@ -45,9 +40,7 @@ export function DescriberScreen({
   mode,
   now,
   onCommand,
-  handoffExtra,
   onTakeOver,
-  onExit,
   onJoinTeam,
 }: DescriberScreenProps) {
   const t = useT();
@@ -247,7 +240,6 @@ export function DescriberScreen({
                 >
                   {phase === 'paused' ? <PlayIcon size={22} /> : <PauseIcon size={22} />}
                 </button>
-                {onExit && <ExitButton onExit={onExit} round />}
               </header>
 
               {phase === 'won' ? (
@@ -284,7 +276,6 @@ export function DescriberScreen({
                     <p>{view.flipped ? t.flippedNotice(side) : t.readyHint}</p>
                   </div>
                   <div className={styles.actions}>
-                    {handoffExtra}
                     {view.ready ? (
                       <button type="button" className="btn btn-primary btn-lg" onClick={readyOrStart} autoFocus>
                         {t.start}

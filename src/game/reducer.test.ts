@@ -2,7 +2,7 @@ import { createInitialState, gameReducer, type GameAction } from './reducer';
 import { describerView, tableView, teamSequence, projection, nextDescriber, provisionalPosition } from './selectors';
 import type { GameState, Settings, Side, TeamSetup } from './types';
 import { TEST_CARDS, TWO_TEAMS, settings, teamsOf } from '../test/fixtures';
-import { clearSavedGame, loadGame, saveGame, SAVE_KEY } from './storage';
+import { clearSavedGame, loadGame, loadSetup, saveGame, SAVE_KEY, SAVE_SCHEMA, SETUP_KEY } from './storage';
 import { validateSetup } from './setup';
 
 function run(state: GameState, ...actions: GameAction[]): GameState {
@@ -443,6 +443,28 @@ describe('save and resume', () => {
     expect(turn.marked).toEqual({ blue: [true, false, true, false, false], yellow: [false, false, false, false, false] });
     expect(turn.annulled.blue[2]).toBe(true);
     expect(turn.hits).toEqual([{ side: 'blue', index: 0, atMs: 5 }]);
+  });
+
+  it('setups saved before the Football and Anime packs existed get them ticked', () => {
+    window.localStorage.setItem(
+      SETUP_KEY,
+      JSON.stringify({ schema: 3, settings: { ...settings(), packs: ['people', 'things'] }, teams: [] }),
+    );
+    expect(loadSetup()?.settings.packs).toEqual(['people', 'things', 'football', 'anime']);
+  });
+
+  it('setups and games saved with the removed modes open as "PC + phone"', () => {
+    window.localStorage.setItem(
+      SETUP_KEY,
+      JSON.stringify({ schema: SAVE_SCHEMA, settings: { ...settings(), screenMode: 'single' }, teams: [] }),
+    );
+    expect(loadSetup()?.settings.screenMode).toBe('phone');
+    const s = start();
+    window.localStorage.setItem(
+      SAVE_KEY,
+      JSON.stringify({ schema: SAVE_SCHEMA, savedAt: 1, state: { ...s, settings: { ...s.settings, screenMode: 'windows' } } }),
+    );
+    expect(loadGame()?.state.settings.screenMode).toBe('phone');
   });
 
   it('REMATCH restarts with the same teams', () => {

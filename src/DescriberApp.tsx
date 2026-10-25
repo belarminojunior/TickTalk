@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useConfig } from './config';
-import type { Language, ScreenMode } from './game/types';
+import type { Language } from './game/types';
 import { useDescriberClient } from './hooks/useTransport';
 import { useWakeLock } from './hooks/useWakeLock';
 import { I18nProvider } from './i18n';
-import { BroadcastChannelTransport } from './net/broadcast';
 import { stableClientId, type Transport } from './net/transport';
 import { WebSocketTransport } from './net/websocket';
 import { DescriberScreen } from './screens/DescriberScreen';
@@ -13,23 +12,16 @@ function guessLanguage(): Language {
   return typeof navigator !== 'undefined' && /^en/i.test(navigator.language) ? 'en' : 'pt';
 }
 
-/** /explicar: the describer screen, on a phone (WebSocket) or in a second window (BroadcastChannel). */
+/** /explicar: the phone screen (describer, or a team's phone), connected to the table over WebSocket. */
 export function DescriberApp() {
   const config = useConfig();
-  const [mode] = useState<ScreenMode>(() =>
-    new URLSearchParams(window.location.search).get('via') === 'window' ? 'windows' : 'phone',
-  );
   const [transport, setTransport] = useState<Transport | null>(null);
 
   useEffect(() => {
-    const id = stableClientId();
-    const t: Transport =
-      mode === 'windows' && BroadcastChannelTransport.isSupported()
-        ? new BroadcastChannelTransport(id)
-        : new WebSocketTransport('describer', id);
+    const t = new WebSocketTransport('describer', stableClientId());
     setTransport(t);
     return () => t.close();
-  }, [mode]);
+  }, []);
 
   // When the phone comes back from the lock screen, reconnect straight away.
   useEffect(() => {
@@ -44,7 +36,7 @@ export function DescriberApp() {
   }, [transport]);
 
   const client = useDescriberClient(transport, config.now);
-  useWakeLock(mode === 'phone' && client.view !== null && client.view.phase !== 'setup');
+  useWakeLock(client.view !== null && client.view.phase !== 'setup');
 
   useEffect(() => {
     document.title = 'Tick Talk · explicar';
@@ -57,7 +49,7 @@ export function DescriberApp() {
         view={client.view}
         anchor={client.anchor}
         status={client.status}
-        mode={mode}
+        mode={client.view?.mode ?? 'phone'}
         now={config.now}
         onCommand={client.send}
         onTakeOver={client.takeOver}

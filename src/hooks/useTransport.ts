@@ -2,9 +2,7 @@ import { useCallback, useEffect, useRef, useState, type Dispatch } from 'react';
 import type { GameAction } from '../game/reducer';
 import { describerView, mayCommand, phoneView, type DescriberView } from '../game/selectors';
 import type { GameState, Language, ScreenMode } from '../game/types';
-import { BroadcastChannelTransport } from '../net/broadcast';
 import { DescriberHub, type HubEvent } from '../net/hub';
-import { LocalBus, LocalTransport } from '../net/local';
 import { VALIDATION_COMMANDS, msg, parseHostMessage, parseServerNotice, type DescriberCommand } from '../net/protocol';
 import { TeamHub, type TeamHubEvent } from '../net/teamHub';
 import { HOST_ID, SERVER_ID, type LinkStatus, type Transport } from '../net/transport';
@@ -12,16 +10,12 @@ import { WebSocketTransport } from '../net/websocket';
 
 export type ServerStatus = 'connecting' | 'online' | 'offline';
 
-export const LOCAL_DESCRIBER_ID = 'local-describer';
-
 export interface HostLink {
   /** Connected describer screens (phones or windows). */
   connected: number;
   /** An active describer is connected. */
   describerOnline: boolean;
   serverStatus: ServerStatus;
-  /** In "one screen" mode: the describer end, in the same window. */
-  localClient: Transport | null;
   /** Another window opened the table and took over the server connection. */
   replaced: boolean;
   /** Takes the connection back (the other window becomes "replaced"). */
@@ -34,13 +28,8 @@ function takeOverTransport(transport: Transport | null | undefined): void {
   if (transport instanceof WebSocketTransport) transport.takeOver();
 }
 
-function createHostTransports(mode: ScreenMode): { host: Transport; local: Transport | null } {
-  if (mode === 'phone' || mode === 'teamPhones') return { host: new WebSocketTransport('host', HOST_ID), local: null };
-  if (mode === 'windows' && BroadcastChannelTransport.isSupported()) {
-    return { host: new BroadcastChannelTransport(HOST_ID), local: null };
-  }
-  const bus = new LocalBus();
-  return { host: new LocalTransport(bus, HOST_ID), local: new LocalTransport(bus, LOCAL_DESCRIBER_ID) };
+function createHostTransport(factory?: () => Transport): Transport {
+  return factory ? factory() : new WebSocketTransport('host', HOST_ID);
 }
 
 /** Turns a describer command into a reducer action. */
@@ -78,8 +67,11 @@ export function useHostLink(
   state: GameState,
   dispatch: Dispatch<GameAction>,
   now: () => number,
+  transportFactory?: () => Transport,
 ): HostLink {
-  const [link, setLink] = useState<{ host: Transport; local: Transport | null } | null>(null);
+  const [link, setLink] = useState<{ host: Transport } | null>(null);
+  const factoryRef = useRef(transportFactory);
+  factoryRef.current = transportFactory;
   const [connected, setConnected] = useState(0);
   const [describerOnline, setDescriberOnline] = useState(false);
   const [transportStatus, setTransportStatus] = useState<LinkStatus>('connecting');
@@ -93,12 +85,11 @@ export function useHostLink(
   nowRef.current = now;
 
   useEffect(() => {
-    const transports = createHostTransports(mode);
+    const host = createHostTransport(factoryRef.current);
     setConnected(0);
     setDescriberOnline(false);
     setTeamsWithPhone([]);
-    setLink(transports);
-    const { host } = transports;
+    setLink({ host });
 
     if (mode === 'teamPhones') {
       // One phone per team: every phone gets its own view; commands are checked per team.
@@ -193,7 +184,6 @@ export function useHostLink(
       offMessage();
       offStatus();
       host.close();
-      transports.local?.close();
       hubRef.current = null;
     };
   }, [mode, dispatch]);
@@ -234,7 +224,6 @@ export function useHostLink(
     describerOnline: mode === 'teamPhones' ? !!playingTeam && teamsWithPhone.includes(playingTeam) : describerOnline,
     teamsWithPhone,
     serverStatus,
-    localClient: link?.local ?? null,
     replaced: transportStatus === 'replaced',
     takeOver,
   };

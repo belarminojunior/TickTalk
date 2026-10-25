@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties, type Disp
 import { play, unlockAudio } from '../audio/sfx';
 import { Board, type BoardPawn } from '../components/Board';
 import { Logo, StatusPill } from '../components/Controls';
-import { MuteIcon, PlayIcon, SoundIcon, SwapIcon, ExternalIcon } from '../components/Icons';
+import { MuteIcon, PlayIcon, SoundIcon, SwapIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
 import { QrConnect } from '../components/QrConnect';
 import { ExitButton } from '../components/ExitButton';
@@ -38,7 +38,6 @@ export interface TableScreenProps {
   animationScale: number;
   muted: boolean;
   onToggleMute: () => void;
-  onOpenDescriberWindow: () => void;
   onNewSetup: () => void;
   onPlayAgain: () => void;
 }
@@ -161,9 +160,9 @@ export function TableScreen(props: TableScreenProps) {
 
   // The describer passes the turn on their screen; the table only does it in one-screen
   // mode, or as a fallback when the describer screen is not connected.
-  const passOnTable = mode === 'single' || !link.describerOnline;
-  // One phone per team: the checking team validates on its own phone (the table follows
-  // along read-only). If that phone isn't connected, the table validates as before.
+  const passOnTable = !link.describerOnline;
+  // One phone per team: the checking team validates on its own phone, and the table only
+  // says so. If that phone isn't connected, the table validates as before.
   const checkedOnPhone =
     mode === 'teamPhones' && view.teams.length > 1 && link.teamsWithPhone.includes(validatorTeam(view).id);
 
@@ -172,7 +171,7 @@ export function TableScreen(props: TableScreenProps) {
     if (phase === 'timeUp') dispatch({ type: 'BEGIN_VALIDATION' });
     else if (phase === 'validating' && !checkedOnPhone) dispatch({ type: 'CONFIRM_VALIDATION' });
     else if (phase === 'moving' && turn?.settled && passOnTable) dispatch({ type: 'NEXT_TEAM' });
-    else if (phase === 'paused' && (link.describerOnline || mode === 'single')) dispatch({ type: 'RESUME', now: now() });
+    else if (phase === 'paused' && link.describerOnline) dispatch({ type: 'RESUME', now: now() });
   };
 
   useKeyboard(
@@ -200,7 +199,7 @@ export function TableScreen(props: TableScreenProps) {
           </div>
         </div>
         <div className={styles.headerCenter}>
-          {live && mode !== 'single' &&
+          {live &&
             (link.describerOnline ? (
               <StatusPill tone="live">{t.live[mode]}</StatusPill>
             ) : (
@@ -264,7 +263,7 @@ export function TableScreen(props: TableScreenProps) {
                   <div className={styles.pausedBox} role="status">
                     <strong>{turn.pauseReason === 'disconnected' ? t.describerOffline[mode] || t.paused : t.paused}</strong>
                     <span>{turn.pauseReason === 'disconnected' ? t.disconnectedHelp : t.pausedHelp}</span>
-                    {(link.describerOnline || mode === 'single') && (
+                    {link.describerOnline && (
                       <button type="button" className="btn btn-primary" onClick={() => dispatch({ type: 'RESUME', now: now() })}>
                         <PlayIcon size={18} /> {t.resume}
                       </button>
@@ -298,6 +297,21 @@ export function TableScreen(props: TableScreenProps) {
               <LiveFeed hits={turn.hits} />
             </>
           )}
+          {phase === 'validating' && checkedOnPhone && turn && team && (
+            <section className={`panel ${styles.turnPanel}`} style={{ '--pawn': `var(--pawn-${team.color})` } as CSSProperties}>
+              <span className={styles.timeUpPill}>{t.timeUpPill}</span>
+              <div className={styles.turnHead}>
+                <Pawn color={validatorTeam(view).color} label={teamInitial(validatorTeam(view).name)} size={52} />
+                <div>
+                  <p className={styles.teamEyebrow}>{t.validatesTitle(validatorTeam(view).name, team.name)}</p>
+                  <h2 className={styles.turnTitle} role="status">
+                    {t.validatingOnPhone(validatorTeam(view).name)}
+                  </h2>
+                </div>
+              </div>
+              <p className={styles.muted}>{t.validatingOnPhoneHelp}</p>
+            </section>
+          )}
           {phase === 'moving' && turn?.move && (
             <EndTurnPanel
               view={view}
@@ -322,11 +336,10 @@ export function TableScreen(props: TableScreenProps) {
         </div>
       )}
 
-      {phase === 'validating' && (
+      {phase === 'validating' && !checkedOnPhone && (
         <ValidationScreen
           view={view}
           pawns={pawns}
-          checkedOnPhone={checkedOnPhone}
           onSet={(side, index, annulled) => dispatch({ type: 'SET_VALIDATION', side, index, annulled })}
           onConfirm={() => {
             unlockAudio();
@@ -359,7 +372,7 @@ export function TableScreen(props: TableScreenProps) {
   );
 }
 
-function HandoffPanel({ view, dispatch, link, mode, phoneUrl, onOpenDescriberWindow }: TableScreenProps) {
+function HandoffPanel({ view, dispatch, link, mode, phoneUrl }: TableScreenProps) {
   const t = useT();
   const turn = view.turn!;
   const team = view.teams[turn.teamIndex];
@@ -374,17 +387,10 @@ function HandoffPanel({ view, dispatch, link, mode, phoneUrl, onOpenDescriberWin
         </div>
       </div>
 
-      {link.describerOnline || mode === 'single' ? (
+      {link.describerOnline ? (
         turn.ready && <StatusPill tone="ok">{t.readyStatus(turn.describer)}</StatusPill>
-      ) : mode === 'phone' || mode === 'teamPhones' ? (
-        <QrConnect url={phoneUrl} connected={link.connected} server={link.serverStatus} compact teamPhones={mode === 'teamPhones'} />
       ) : (
-        <div className={styles.waitBox}>
-          <StatusPill tone="off">{t.waitingDescriber[mode]}</StatusPill>
-          <button type="button" className="btn btn-outline" onClick={onOpenDescriberWindow}>
-            <ExternalIcon size={18} /> {t.openWindow}
-          </button>
-        </div>
+        <QrConnect url={phoneUrl} connected={link.connected} server={link.serverStatus} compact teamPhones={mode === 'teamPhones'} />
       )}
 
       <button type="button" className="btn btn-outline" onClick={() => dispatch({ type: 'HANDOFF', skipDescriber: true })}>

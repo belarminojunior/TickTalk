@@ -155,6 +155,18 @@
   font-size: 20px;
 }
 
+.timeUpPill {
+  align-self: flex-start;
+  background: var(--yellow);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 18px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .pausedBox {
   display: flex;
   flex-direction: column;
@@ -175,12 +187,6 @@
   color: var(--muted);
 }
 
-.waitBox {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-}
 
 .timeUp {
   position: fixed;

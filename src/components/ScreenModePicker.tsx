@@ -1,12 +1,12 @@
 import type { ScreenMode } from '../game/types';
 import { useT } from '../i18n';
-import { DevicesIcon, MonitorIcon, TeamPhonesIcon, WindowsIcon } from './Icons';
+import { DevicesIcon, TeamPhonesIcon } from './Icons';
 import styles from './ScreenModePicker.module.css';
 
-const MODES: ScreenMode[] = ['phone', 'teamPhones', 'windows', 'single'];
-const ICONS = { phone: DevicesIcon, teamPhones: TeamPhonesIcon, windows: WindowsIcon, single: MonitorIcon };
+const MODES: ScreenMode[] = ['phone', 'teamPhones'];
+const ICONS = { phone: DevicesIcon, teamPhones: TeamPhonesIcon };
 
-/** Large cards: PC + phone / One phone per team / Two windows / One screen. */
+/** Two large cards: PC + the describer's phone / One phone per team. */
 export function ScreenModePicker({ value, onChange }: { value: ScreenMode; onChange: (m: ScreenMode) => void }) {
   const t = useT();
   return (

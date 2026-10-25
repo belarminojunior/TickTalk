@@ -2,161 +2,161 @@
  {
   "id": "pt-0001",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Oceano Índico",
-    "Iglu",
-    "Jardim zoológico",
-    "Jerusalém",
-    "Buenos Aires"
+    "Pedra",
+    "Gaivota",
+    "Salmão",
+    "Arco-íris",
+    "Óculos"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Páscoa",
-    "Natal",
-    "Realizador",
-    "Fotografia",
-    "Kizomba"
+    "Sótão",
+    "Praia",
+    "Paris",
+    "Cairo",
+    "México"
    ]
   }
  },
  {
   "id": "pt-0002",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Arroz",
-    "Esquilo",
-    "Esparguete",
-    "Compota",
-    "Sumo"
+    "Atenas",
+    "Oceano Índico",
+    "Helsínquia",
+    "Lisboa",
+    "Sydney"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "África do Sul",
-    "Timor-Leste",
-    "Cataratas Vitória",
-    "Grécia",
-    "Stonehenge"
+    "João Félix",
+    "Santos FC",
+    "Rui Costa",
+    "Zinedine Zidane",
+    "Newcastle"
    ]
   }
  },
  {
   "id": "pt-0003",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Trompete",
-    "Super-herói",
-    "Basebol",
-    "Rap",
-    "Jardinagem"
+    "Parque de estacionamento",
+    "Machu Picchu",
+    "Barcelona",
+    "Milão",
+    "Seychelles"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Pombo",
-    "Chocolate",
-    "Caranguejo",
-    "Folha",
-    "Elefante"
+    "Stewart Sukuma",
+    "Piu-Piu",
+    "Confúcio",
+    "Noé",
+    "Noémia de Sousa"
    ]
   }
  },
  {
   "id": "pt-0004",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Casaco",
-    "Rebuçado",
-    "Cogumelo",
-    "Abelha",
-    "Cato"
+    "Nápoles",
+    "Buenos Aires",
+    "Jamaica",
+    "Amazónia",
+    "Montanha"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Campeonato do Mundo",
-    "Harpa",
-    "Matraquilhos",
-    "Saltar à corda",
-    "Truque de magia"
+    "Homem de Ferro",
+    "Mowgli",
+    "Yoda",
+    "Carl Sagan",
+    "Alexander Fleming"
    ]
   }
  },
  {
   "id": "pt-0005",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Zebra",
-    "Armário",
-    "Batatas fritas",
-    "Rato",
-    "Gelatina"
+    "Acra",
+    "Irlanda",
+    "Lavandaria",
+    "Vulcão",
+    "Alpes"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "Farol",
-    "Grand Canyon",
-    "Lavandaria",
-    "Museu",
-    "Joanesburgo"
+    "FC Porto",
+    "Zlatan Ibrahimović",
+    "Francesco Totti",
+    "Lionel Messi",
+    "Pedri"
    ]
   }
  },
  {
   "id": "pt-0006",
   "yellow": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Queijo",
-    "Micro-ondas",
-    "Balão",
-    "Tartaruga",
-    "Cão"
+    "Funaná",
+    "Tango",
+    "Dança contemporânea",
+    "Escondidas",
+    "O Senhor dos Anéis"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Manica",
-    "Mandioca",
-    "Corredor da Beira",
-    "Costa do Sol",
-    "Feijão nhemba"
+    "Berlim",
+    "Recreio",
+    "Fábrica",
+    "Cabeleireiro",
+    "Coimbra"
    ]
   }
  },
  {
   "id": "pt-0007",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Guitarra",
-    "Desporto radical",
-    "Auscultadores",
-    "Comédia",
-    "Banda desenhada"
+    "Jardim zoológico",
+    "Cataratas Vitória",
+    "Grande Barreira de Coral",
+    "Miami",
+    "Casa de banho"
    ]
   },
   "blue": {
    "pack": "things",
    "words": [
-    "Pilha",
-    "Cachorro-quente",
-    "Livro",
-    "Borracha",
-    "Cachecol"
+    "Chávena",
+    "Sino",
+    "Cobra",
+    "Waffle",
+    "Dinossauro"
    ]
   }
  },
@@ -165,21 +165,21 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Jamaica",
-    "Correios",
-    "Oficina",
-    "Quarto",
-    "Circo"
+    "Mercado",
+    "Farmácia",
+    "Arco do Triunfo",
+    "Veneza",
+    "Salvador da Bahia"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Dragão",
-    "Martelo",
-    "Cobertor",
-    "Manteiga",
-    "Telescópio"
+    "Matola",
+    "Machimbombo",
+    "Estádio da Machava",
+    "Namaacha",
+    "Esteira"
    ]
   }
  },
@@ -188,113 +188,113 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Cinema",
-    "São Paulo",
     "Itália",
-    "Madeira",
-    "Sótão"
+    "Alhambra",
+    "Egito",
+    "Estocolmo",
+    "Kigali"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "mozambique",
    "words": [
-    "Jogo de cartas",
-    "Filme de terror",
-    "Tango",
-    "Desenhos animados",
-    "Malabarista"
+    "Txopela",
+    "Monte Namúli",
+    "Tete",
+    "Mapiko",
+    "Rio Rovuma"
    ]
   }
  },
  {
   "id": "pt-0010",
   "yellow": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Jacques Cousteau",
-    "Merlin",
-    "Nemo",
-    "Mr. Bean",
-    "Joana d'Arc"
+    "Xai-Xai",
+    "Xigubo",
+    "Chapa",
+    "Angoche",
+    "Frango à zambeziana"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Coqueiro",
-    "Fortaleza de Maputo",
-    "Mambas",
-    "Esteira",
-    "Monte Namúli"
+    "Rio Amazonas",
+    "Mumbai",
+    "Índia",
+    "Suécia",
+    "Burj Khalifa"
    ]
   }
  },
  {
   "id": "pt-0011",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Matata",
-    "Mercado do Peixe",
-    "Pemba",
-    "Marrabenta",
-    "Parque do Limpopo"
+    "Máquina de lavar",
+    "Autocarro",
+    "Trotinete",
+    "Barco",
+    "Tesoura"
    ]
   },
   "blue": {
    "pack": "places",
    "words": [
-    "Cuba",
-    "Vulcão",
-    "Rio Nilo",
-    "Madagáscar",
-    "Lisboa"
+    "Grand Canyon",
+    "Túnel",
+    "Estátua da Liberdade",
+    "Deserto",
+    "Varanda"
    ]
   }
  },
  {
   "id": "pt-0012",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Stand-up comedy",
-    "Maratona",
-    "Telejornal",
-    "Ciclismo",
-    "Futebol"
+    "Acrópole",
+    "Padaria",
+    "Angkor Wat",
+    "Toronto",
+    "Ópera de Sydney"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "people",
    "words": [
-    "Nacala",
-    "Recife de coral",
-    "Hino nacional",
-    "Frango à zambeziana",
-    "Sofala"
+    "Elsa",
+    "Lewis Hamilton",
+    "Dilon Djindji",
+    "Agatha Christie",
+    "Irmãos Wright"
    ]
   }
  },
  {
   "id": "pt-0013",
   "yellow": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Rainha de Sabá",
-    "Homero",
-    "Bob Esponja",
-    "Hello Kitty",
-    "Beethoven"
+    "Onda",
+    "Balde",
+    "Framboesa",
+    "Pasta de dentes",
+    "Alce"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Barra",
-    "Tufo",
-    "Gorongosa",
-    "Rádio Moçambique",
-    "Chapa"
+    "Coreia do Sul",
+    "Estação de comboios",
+    "Durban",
+    "Lusaka",
+    "Rio Nilo"
    ]
   }
  },
@@ -303,44 +303,44 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Las Vegas",
-    "Torre de Pisa",
-    "Restaurante",
-    "Suécia",
-    "Quinta"
+    "Rio Congo",
+    "Bruxelas",
+    "Hospital",
+    "Nova Zelândia",
+    "Galápagos"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "football",
    "words": [
-    "Vasco da Gama",
-    "Bugs Bunny",
-    "Amália Rodrigues",
-    "Pai Natal",
-    "Buzz Lightyear"
+    "TP Mazembe",
+    "Carles Puyol",
+    "Fora de jogo",
+    "Jude Bellingham",
+    "Sporting CP"
    ]
   }
  },
  {
   "id": "pt-0015",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Batuque",
-    "Catembe",
-    "Estádio da Machava",
-    "Estádio do Zimpeto",
-    "Ponte Maputo-Katembe"
+    "Jerusalém",
+    "Elevador",
+    "Castelo",
+    "Grande Muralha da China",
+    "Rotunda"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Onda",
-    "Colher",
-    "Sanduíche",
-    "Ventoinha",
-    "Lâmpada"
+    "Anne Frank",
+    "Ed Sheeran",
+    "Júlio César",
+    "Louis Armstrong",
+    "Sonic"
    ]
   }
  },
@@ -349,21 +349,21 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Escola",
-    "Cascata",
-    "Varanda",
-    "Planetário",
-    "Tanzânia"
+    "Montanha da Mesa",
+    "Pretória",
+    "Monte Fuji",
+    "Escócia",
+    "Marte"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Pulseira",
-    "Lanterna",
-    "Coroa",
-    "Lobo",
-    "Pá"
+    "Cleópatra",
+    "Simone Biles",
+    "Nefertiti",
+    "Van Gogh",
+    "Moisés"
    ]
   }
  },
@@ -372,67 +372,67 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Torre de Belém",
-    "Rio de Janeiro",
-    "Atenas",
-    "Noruega",
-    "Cabeleireiro"
+    "Gruta",
+    "Escada rolante",
+    "Farol",
+    "Florença",
+    "Amesterdão"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Divertida-Mente",
-    "Ópera",
-    "Trailer",
-    "Óscar",
-    "Reggae"
+    "Livro",
+    "Lobo",
+    "Bacalhau",
+    "Batata",
+    "Crocodilo"
    ]
   }
  },
  {
   "id": "pt-0018",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Charadas",
-    "Jurassic Park",
-    "Dominó",
-    "Rock",
-    "Basquetebol"
+    "Branca de Neve",
+    "Jacques Cousteau",
+    "Aladino",
+    "Alice no País das Maravilhas",
+    "Rainha Vitória"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Beira",
-    "Peixe seco",
-    "Feira Popular",
-    "Baía de Maputo",
-    "Polana"
+    "Panda",
+    "Cogumelo",
+    "Leão",
+    "Ovelha",
+    "Milho"
    ]
   }
  },
  {
   "id": "pt-0019",
   "yellow": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Lareira",
-    "Polvo",
-    "Ovo",
-    "Galinha",
-    "Sofá"
+    "Liga Desportiva de Maputo",
+    "Mercado Central",
+    "Catembe",
+    "Recife de coral",
+    "Maçala"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Ténis",
-    "Musical",
-    "Telenovela",
-    "Saxofone",
-    "Mímica"
+    "Arquimedes",
+    "Buda",
+    "Simón Bolívar",
+    "Peppa Pig",
+    "Pai Natal"
    ]
   }
  },
@@ -441,21 +441,21 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Sala de estar",
-    "Nova Iorque",
-    "Hospital",
-    "Elevador",
-    "Amazónia"
+    "Quénia",
+    "Cidade do México",
+    "Brasília",
+    "Passadeira",
+    "Ginásio"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Salto em altura",
-    "Trampolim",
-    "Procurar o Nemo",
-    "Desenho",
-    "Bateria"
+    "Pato",
+    "Eclipse",
+    "Aspirador",
+    "Neve",
+    "Chapéu"
    ]
   }
  },
@@ -464,228 +464,228 @@
   "yellow": {
    "pack": "things",
    "words": [
-    "Gaveta",
-    "Almofada",
-    "Tomada",
-    "Café",
-    "Chapéu"
+    "Faca",
+    "Alho",
+    "Pilha",
+    "Girassol",
+    "Couve"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "entertainment",
    "words": [
-    "Tenda",
-    "Polo Sul",
-    "Paris",
-    "Estados Unidos",
-    "Irlanda"
+    "Up",
+    "Origami",
+    "Escultura",
+    "Gru, o Maldisposto",
+    "Música clássica"
    ]
   }
  },
  {
   "id": "pt-0022",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "entertainment",
    "words": [
-    "Rio Zambeze",
-    "Caril de amendoim",
-    "Rissóis de camarão",
-    "Cahora Bassa",
-    "Makwaela"
+    "Culinária",
+    "Roblox",
+    "Tambor",
+    "Youtuber",
+    "Os Simpsons"
    ]
   },
   "blue": {
    "pack": "things",
    "words": [
-    "Caneta",
-    "Hipopótamo",
-    "Tigre",
-    "Leite",
-    "Televisão"
+    "Puzzle",
+    "Prato",
+    "Pen USB",
+    "Pá",
+    "Burro"
    ]
   }
  },
  {
   "id": "pt-0023",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Ponta do Ouro",
-    "Piri-piri",
-    "Coco",
-    "Cabo Delgado",
-    "Palhota"
+    "Casa Branca",
+    "Campo de futebol",
+    "Madagáscar",
+    "Pirâmides",
+    "Cabo da Roca"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Galápagos",
-    "Quénia",
-    "Ilha da Páscoa",
-    "Sydney",
-    "Angola"
+    "Pão",
+    "Palmeira",
+    "Carregador",
+    "Sal",
+    "Toupeira"
    ]
   }
  },
  {
   "id": "pt-0024",
   "yellow": {
-   "pack": "people",
+   "pack": "football",
    "words": [
-    "Iuri Gagarin",
-    "Garfield",
-    "Moisés",
-    "Scooby-Doo",
-    "Ali Babá"
+    "Árbitro",
+    "Kaizer Chiefs",
+    "Kevin De Bruyne",
+    "Erling Haaland",
+    "Pepe"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Escorrega",
-    "Consola",
-    "Palavras cruzadas",
-    "Tricô",
-    "Breakdance"
+    "Sabonete",
+    "Rosa",
+    "Parafuso",
+    "Caranguejo",
+    "Frigorífico"
    ]
   }
  },
  {
   "id": "pt-0025",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Flor",
-    "Pato",
-    "Frigideira",
-    "Candeeiro",
-    "Coala"
+    "Seul",
+    "Mesquita",
+    "Antártida",
+    "Piscina",
+    "Centro comercial"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "Sintra",
-    "Mercado",
-    "Lua",
-    "Antártida",
-    "Cairo"
+    "Cesária Évora",
+    "Pato Donald",
+    "Zeus",
+    "Amália Rodrigues",
+    "Burna Boy"
    ]
   }
  },
  {
   "id": "pt-0026",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "football",
    "words": [
-    "Casamento",
-    "Escondidas",
-    "Bowling",
-    "Salsa",
-    "Episódio"
+    "São Paulo FC",
+    "Old Trafford",
+    "Toni Kroos",
+    "Boca Juniors",
+    "Manchester United"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Escada",
-    "Gelado",
-    "Janela",
-    "Anel",
-    "Copo"
+    "Cascata",
+    "Madrid",
+    "China",
+    "Rússia",
+    "São Paulo"
    ]
   }
  },
  {
   "id": "pt-0027",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Microfone",
-    "Ballet",
-    "Pedra, papel, tesoura",
-    "Culinária",
-    "Fogo de artifício"
+    "Açores",
+    "Roma",
+    "Vaticano",
+    "Lago",
+    "Marraquexe"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "anime",
    "words": [
-    "Berlim",
-    "Amesterdão",
-    "Brasil",
-    "Havana",
-    "Grande Muralha da China"
+    "Titã Colossal",
+    "Piccolo",
+    "Sakura Haruno",
+    "My Hero Academia",
+    "Inuyasha"
    ]
   }
  },
  {
   "id": "pt-0028",
   "yellow": {
-   "pack": "places",
+   "pack": "entertainment",
    "words": [
-    "Hollywood",
-    "Alpes",
-    "Fábrica",
-    "Marte",
-    "Bombas de gasolina"
+    "Zootrópolis",
+    "Basquetebol",
+    "Râguebi",
+    "Tetris",
+    "Flauta"
    ]
   },
   "blue": {
    "pack": "things",
    "words": [
-    "Bolo",
-    "Banana",
-    "Sal",
-    "Croissant",
-    "Avião"
+    "Lápis",
+    "Apito",
+    "Ananás",
+    "Unicórnio",
+    "Tomada"
    ]
   }
  },
  {
   "id": "pt-0029",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Xima",
-    "Chamuças",
-    "Angoche",
-    "Embondeiro",
-    "Timbila"
+    "Girafa",
+    "Chimpanzé",
+    "Bolacha",
+    "Avião",
+    "Bússola"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "México",
-    "Estátua da Liberdade",
-    "Talho",
-    "Havai",
-    "Ópera de Sydney"
+    "Al-Nassr",
+    "George Weah",
+    "Jürgen Klopp",
+    "Michel Platini",
+    "Rafael Leão"
    ]
   }
  },
  {
   "id": "pt-0030",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "entertainment",
    "words": [
-    "Vilankulo",
-    "Monte Binga",
-    "Casa de Ferro",
-    "Tubarão-baleia",
-    "Maçala"
+    "Ópera",
+    "Saltar à corda",
+    "Ballet",
+    "Comando",
+    "Ator"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Capitão Gancho",
-    "Drácula",
-    "Piu-Piu",
-    "Simbad, o Marinheiro",
-    "Homem-Aranha"
+    "Árvore",
+    "Flor",
+    "Caracol",
+    "Panqueca",
+    "Cavalo"
    ]
   }
  },
@@ -694,159 +694,159 @@
   "yellow": {
    "pack": "people",
    "words": [
-    "Marilyn Monroe",
-    "Dom Quixote",
-    "Charles Dickens",
-    "Coelho da Páscoa",
-    "Lobo Mau"
+    "Wizkid",
+    "Cristóvão Colombo",
+    "Luís de Camões",
+    "Frida Kahlo",
+    "Elton John"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Sudoku",
-    "Origami",
-    "Acrobata",
-    "Apanhada",
-    "Râguebi"
+    "Istambul",
+    "Torre de Belém",
+    "Estados Unidos",
+    "Marselha",
+    "Caraíbas"
    ]
   }
  },
  {
   "id": "pt-0032",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Karaté",
-    "Claquete",
-    "Fado",
-    "Esqui",
-    "Boxe"
+    "Tartaruga",
+    "Escorpião",
+    "Cachecol",
+    "Veado",
+    "Luvas"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Museu de História Natural",
-    "Tihove",
-    "Sumo de maçala",
-    "Lulas grelhadas",
-    "Pandza"
+    "Banguecoque",
+    "Canadá",
+    "Sintra",
+    "Dakar",
+    "Windhoek"
    ]
   }
  },
  {
   "id": "pt-0033",
   "yellow": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Marco Polo",
-    "Tom e Jerry",
-    "Taylor Swift",
-    "Peter Pan",
-    "Pato Donald"
+    "Gospel",
+    "Pedra, papel, tesoura",
+    "Karaté",
+    "Ukulele",
+    "Microfone"
    ]
   },
   "blue": {
    "pack": "places",
    "words": [
-    "Piscina",
-    "Casa de banho",
-    "Índia",
-    "Polo Norte",
-    "Recreio"
+    "Serengeti",
+    "Bogotá",
+    "Times Square",
+    "Harare",
+    "Oficina"
    ]
   }
  },
  {
   "id": "pt-0034",
   "yellow": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Joaninha",
-    "Ananás",
-    "Lápis",
-    "Moeda",
-    "Porco"
+    "Michael Phelps",
+    "Muhammad Ali",
+    "Lizha James",
+    "Meryl Streep",
+    "Infante D. Henrique"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "entertainment",
    "words": [
-    "Biblioteca",
-    "Tailândia",
-    "Mónaco",
-    "Garagem",
-    "Gana"
+    "Saxofone",
+    "Golfe",
+    "Ténis",
+    "Palhaço",
+    "Escorrega"
    ]
   }
  },
  {
   "id": "pt-0035",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "football",
    "words": [
-    "Dhow",
-    "Majika",
-    "Caril de caranguejo",
-    "Mafalala",
-    "Rio Rovuma"
+    "Penálti",
+    "Ronaldo Nazário",
+    "Galatasaray",
+    "Roberto Carlos",
+    "Gareth Bale"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "entertainment",
    "words": [
-    "Nigéria",
-    "Estádio",
-    "Algarve",
-    "Gruta",
-    "Argentina"
+    "Reggae",
+    "Óscar",
+    "Jurassic Park",
+    "Mamma Mia",
+    "Flash mob"
    ]
   }
  },
  {
   "id": "pt-0036",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Titanic",
-    "Adivinha",
-    "Patins",
-    "Realidade virtual",
-    "Pesca"
+    "Desmond Tutu",
+    "Madre Teresa",
+    "Mulan",
+    "Mr. Bean",
+    "Galileu"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Zeus",
-    "Luciano Pavarotti",
-    "Homer Simpson",
-    "Gulliver",
-    "Pantera Cor-de-Rosa"
+    "Cesto de palha",
+    "Estádio do Zimpeto",
+    "Museu de História Natural",
+    "Dugongo",
+    "Macaneta"
    ]
   }
  },
  {
   "id": "pt-0037",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Carrossel",
-    "Mamma Mia",
-    "Jogo da velha",
-    "Festival de música",
-    "Ator"
+    "Relógio",
+    "Javali",
+    "Camião",
+    "Coelho",
+    "Lasanha"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "people",
    "words": [
-    "Dia da Independência",
-    "Cajueiro",
-    "Ilha de Benguerra",
-    "Maputo",
-    "Cesto de palha"
+    "Thomas Edison",
+    "Merlin",
+    "Scooby-Doo",
+    "Adele",
+    "Kung Fu Panda"
    ]
   }
  },
@@ -855,44 +855,44 @@
   "yellow": {
    "pack": "things",
    "words": [
-    "Feijão",
-    "Escova de dentes",
-    "Sabonete",
+    "Satélite",
+    "Coala",
     "Porta",
-    "Hiena"
+    "Feijão",
+    "Cereja"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Pequena Sereia",
-    "Gato das Botas",
-    "Chopin",
-    "Agatha Christie",
-    "Bill Gates"
+    "Minecraft",
+    "Super-herói",
+    "O Feiticeiro de Oz",
+    "Mágico",
+    "Fortnite"
    ]
   }
  },
  {
   "id": "pt-0039",
   "yellow": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Pião",
-    "Coruja",
-    "Sino",
-    "Chuva",
-    "Couve"
+    "Judo",
+    "Natação",
+    "Damas",
+    "Malabarista",
+    "Surf"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Machamba",
-    "Quelimane",
-    "Estação Central de Maputo",
-    "Catedral de Maputo",
-    "Txopela"
+    "Arroz",
+    "Telescópio",
+    "Pipocas",
+    "Escada",
+    "Leite"
    ]
   }
  },
@@ -901,21 +901,21 @@
   "yellow": {
    "pack": "entertainment",
    "words": [
-    "Montanha-russa",
-    "Música pop",
-    "Legendas",
-    "DJ",
-    "Toy Story"
+    "Emoji",
+    "Desenho",
+    "Jogo do galo",
+    "O Rei Leão",
+    "Super Bowl"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Michael Jackson",
-    "Luís de Camões",
-    "Darth Vader",
-    "James Bond",
-    "Miguel Ângelo"
+    "Coco",
+    "Manica",
+    "Beira",
+    "Camarão grelhado",
+    "Cabo Delgado"
    ]
   }
  },
@@ -924,44 +924,44 @@
   "yellow": {
    "pack": "entertainment",
    "words": [
-    "Voleibol",
-    "Orquestra",
-    "Concerto",
-    "Mundial de futebol",
-    "Samba"
+    "Heavy metal",
+    "Banda",
+    "Andebol",
+    "Frozen",
+    "Mergulho"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "places",
    "words": [
-    "Yoda",
-    "Bambi",
-    "Charlie Brown",
-    "Woody",
-    "Sonic"
+    "Cabana",
+    "Noruega",
+    "Doha",
+    "Cristo Redentor",
+    "Mar Mediterrâneo"
    ]
   }
  },
  {
   "id": "pt-0042",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "mozambique",
    "words": [
-    "Xadrez",
-    "Ano Novo",
-    "Hip-hop",
-    "Banda",
-    "Pintura"
+    "Batuque",
+    "Mafalala",
+    "Praça da Independência",
+    "Estação Central de Maputo",
+    "Zambézia"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "Savana",
-    "Mesquita",
-    "Maldivas",
-    "Suíça",
-    "Rotunda"
+    "Mariah Carey",
+    "Mia Couto",
+    "Angélique Kidjo",
+    "Mulher-Maravilha",
+    "Ray Charles"
    ]
   }
  },
@@ -970,182 +970,182 @@
   "yellow": {
    "pack": "people",
    "words": [
-    "Batman",
-    "Malangatana",
-    "Minions",
-    "Fernão de Magalhães",
-    "Cupido"
+    "Charlie Brown",
+    "Walt Disney",
+    "Rosa Parks",
+    "Carlos Magno",
+    "Ada Lovelace"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "entertainment",
    "words": [
-    "Rio Save",
-    "Camarão grelhado",
-    "Montepuez",
-    "Tartaruga marinha",
-    "Matola"
+    "Concurso de televisão",
+    "Passadeira vermelha",
+    "Natal",
+    "Baloiço",
+    "Divertida-Mente"
    ]
   }
  },
  {
   "id": "pt-0044",
   "yellow": {
-   "pack": "people",
+   "pack": "anime",
    "words": [
-    "Stevie Wonder",
-    "Van Gogh",
-    "Madonna",
-    "Eusébio",
-    "Moana"
+    "Mewtwo",
+    "Os Cavaleiros do Zodíaco",
+    "Detetive Conan",
+    "Nobita",
+    "Rasengan"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "Floresta",
-    "Deserto do Sara",
-    "Maurícias",
-    "China",
-    "Estação espacial"
+    "Wayne Rooney",
+    "Petro de Luanda",
+    "Roberto Baggio",
+    "Deco",
+    "Vitinha"
    ]
   }
  },
  {
   "id": "pt-0045",
   "yellow": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Galo",
-    "Vela",
-    "Pinguim",
-    "Garfo",
-    "Cama"
+    "Corredor da Beira",
+    "Badjias",
+    "Peixe seco",
+    "Jardim Tunduru",
+    "Nacala"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Astérix",
-    "Shakespeare",
-    "Bela Adormecida",
-    "Zorro",
-    "Lucky Luke"
+    "Realidade virtual",
+    "Ginástica",
+    "Hip-hop",
+    "Mímica",
+    "Among Us"
    ]
   }
  },
  {
   "id": "pt-0046",
   "yellow": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Palmeira",
-    "Cadeado",
-    "Panda",
-    "Batata",
-    "Tomate"
+    "Bruno Mars",
+    "Chopin",
+    "Platão",
+    "Woody",
+    "Taylor Swift"
    ]
   },
   "blue": {
    "pack": "places",
    "words": [
-    "Esquadra da polícia",
-    "Portugal",
-    "Cidade do Cabo",
-    "Praia",
-    "Madrid"
+    "Adis Abeba",
+    "Semáforo",
+    "Guiné-Bissau",
+    "Copenhaga",
+    "Muro de Berlim"
    ]
   }
  },
  {
   "id": "pt-0047",
   "yellow": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "Oceano Atlântico",
-    "Quartel de bombeiros",
-    "Etiópia",
-    "Himalaias",
-    "Prisão"
+    "Astérix",
+    "Júlio Verne",
+    "Simba",
+    "Bob Esponja",
+    "Robin dos Bosques"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "places",
    "words": [
-    "Confúcio",
-    "Gandalf",
-    "Noé",
-    "Sherlock Holmes",
-    "Martin Luther King"
+    "São Tomé e Príncipe",
+    "Kremlin",
+    "Timor-Leste",
+    "Havana",
+    "Floresta"
    ]
   }
  },
  {
   "id": "pt-0048",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "anime",
    "words": [
-    "Avatar",
-    "Taça dos Campeões",
-    "Carrinhos de choque",
-    "Tambor",
-    "Piano"
+    "Kakashi",
+    "Hamtaro",
+    "Princesa Mononoke",
+    "Esferas do Dragão",
+    "Squirtle"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Pepino",
-    "Uvas",
-    "Mosquito",
-    "Vento",
-    "Toalha"
+    "Bill Gates",
+    "Charles Darwin",
+    "Paul McCartney",
+    "Garfield",
+    "Mr. Bow"
    ]
   }
  },
  {
   "id": "pt-0049",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Roda gigante",
-    "Mergulho",
-    "Concurso de televisão",
-    "Os Simpsons",
-    "Jazz"
+    "Coliseu",
+    "Deserto do Kalahari",
+    "Havai",
+    "Tóquio",
+    "Viena"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "mozambique",
    "words": [
-    "Zâmbia",
-    "Escada rolante",
-    "Dubai",
-    "Los Angeles",
-    "Aquário"
+    "Mercado do Peixe",
+    "Majika",
+    "Arte maconde",
+    "Ilha do Ibo",
+    "Arquipélago de Bazaruto"
    ]
   }
  },
  {
   "id": "pt-0050",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Ilha do Ibo",
-    "Mangal",
-    "Papaia",
-    "Capulana",
-    "Gaza"
+    "Búfalo",
+    "Preguiça",
+    "Morcego",
+    "Escova de dentes",
+    "Caneta"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Leopardo",
-    "Foguetão",
-    "Macaco",
-    "Pente",
-    "Puzzle"
+    "Quartel de bombeiros",
+    "Supermercado",
+    "Hong Kong",
+    "Torre de Pisa",
+    "Tailândia"
    ]
   }
  },
@@ -1154,21 +1154,21 @@
   "yellow": {
    "pack": "entertainment",
    "words": [
-    "Fórmula 1",
-    "Campismo",
-    "Xilofone",
-    "Ténis de mesa",
-    "Videojogo"
+    "Concerto",
+    "Dominó",
+    "Vela desportiva",
+    "Caça ao tesouro",
+    "Pesca"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "football",
    "words": [
-    "Maradona",
-    "Pelé",
-    "Neil Armstrong",
-    "Alfred Hitchcock",
-    "Mia Couto"
+    "AC Milan",
+    "Mexer",
+    "Steven Gerrard",
+    "Casemiro",
+    "Carlo Ancelotti"
    ]
   }
  },
@@ -1177,297 +1177,297 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Deserto",
-    "Aeroporto",
-    "Lago",
-    "Cave",
-    "Farmácia"
+    "Cozinha",
+    "Óbidos",
+    "Madeira",
+    "Las Vegas",
+    "Garagem"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "anime",
    "words": [
-    "Bússola",
-    "Flamingo",
-    "Relâmpago",
-    "Comboio",
-    "Selo"
+    "Sakura Card Captor",
+    "Totoro",
+    "Jigglypuff",
+    "Luffy",
+    "Pikachu"
    ]
   }
  },
  {
   "id": "pt-0053",
   "yellow": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Medalha",
-    "Açúcar",
-    "Salada",
-    "Tesoura",
-    "Carteira"
+    "Ajax",
+    "Robert Lewandowski",
+    "Cafu",
+    "Eusébio",
+    "Lamine Yamal"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Pocahontas",
-    "Miguel de Cervantes",
-    "Barack Obama",
-    "Mulher-Maravilha",
-    "Mário Coluna"
+    "Castor",
+    "Garfo",
+    "Termómetro",
+    "Despertador",
+    "Crepe"
    ]
   }
  },
  {
   "id": "pt-0054",
   "yellow": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Cenoura",
-    "Pasta de dentes",
-    "Papagaio",
-    "Chá",
-    "Rádio"
+    "Atlético de Madrid",
+    "Eric Cantona",
+    "Harry Kane",
+    "Tottenham",
+    "Yaya Touré"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Valsa",
-    "Cabra-cega",
-    "Palhaço",
-    "Dança contemporânea",
-    "Carnaval"
+    "Salada",
+    "Prego",
+    "Pudim",
+    "Coroa",
+    "Cebola"
    ]
   }
  },
  {
   "id": "pt-0055",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "anime",
    "words": [
-    "Críquete",
-    "Karaoke",
-    "Andebol",
-    "Desfile",
-    "Flash mob"
+    "Todoroki",
+    "Heidi",
+    "Sharingan",
+    "Astro Boy",
+    "Vegeta"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "Roma",
-    "Canadá",
-    "Caraíbas",
-    "Castelo",
-    "Marraquexe"
+    "Miguel de Cervantes",
+    "Tom Cruise",
+    "Shakespeare",
+    "Irmãos Grimm",
+    "Fela Kuti"
    ]
   }
  },
  {
   "id": "pt-0056",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Pirâmides",
-    "Ginásio",
-    "Montanha",
-    "Rússia",
-    "Indonésia"
+    "Carteira",
+    "Cometa",
+    "Ovo",
+    "Flamingo",
+    "Toalha"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Ioiô",
-    "Pão",
-    "Camisola",
-    "Coelho",
-    "Pizza"
+    "Avatar",
+    "Mundial de futebol",
+    "Coro",
+    "Ténis de mesa",
+    "Trompete"
    ]
   }
  },
  {
   "id": "pt-0057",
   "yellow": {
-   "pack": "places",
+   "pack": "entertainment",
    "words": [
-    "Açores",
-    "Barcelona",
-    "Observatório",
-    "Austrália",
-    "Luanda"
+    "Candy Crush",
+    "Voleibol",
+    "Violoncelo",
+    "Piratas das Caraíbas",
+    "Câmara de filmar"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "anime",
    "words": [
-    "Computador",
-    "Furacão",
-    "Troféu",
-    "Minhoca",
-    "Estrela"
+    "Doraemon",
+    "Sasuke",
+    "Eren Yeager",
+    "Oliver e Benji",
+    "Hunter x Hunter"
    ]
   }
  },
  {
   "id": "pt-0058",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "anime",
    "words": [
-    "Praia do Tofo",
-    "Bilene",
-    "Arquipélago de Bazaruto",
-    "Manga",
-    "Arte maconde"
+    "Shin-chan",
+    "Usopp",
+    "Pokébola",
+    "Jujutsu Kaisen",
+    "Mestre Kame"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Napoleão",
-    "Charles Darwin",
-    "Nelson Mandela",
-    "Shakira",
-    "Ulisses"
+    "Gaza",
+    "Rio Zambeze",
+    "UD Songo",
+    "Tubarão-baleia",
+    "Pote de barro"
    ]
   }
  },
  {
   "id": "pt-0059",
   "yellow": {
-   "pack": "places",
+   "pack": "mozambique",
    "words": [
-    "Cabana",
-    "Machu Picchu",
-    "Campo de futebol",
-    "Tóquio",
-    "Ponte"
+    "Lulas grelhadas",
+    "Pandza",
+    "Manga",
+    "Pemba",
+    "Casa de Ferro"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Natação",
-    "Caça ao tesouro",
-    "Ginástica",
-    "Anedota",
-    "Judo"
+    "Museu",
+    "Banco",
+    "Dublin",
+    "Alemanha",
+    "Pequim"
    ]
   }
  },
  {
   "id": "pt-0060",
   "yellow": {
-   "pack": "places",
+   "pack": "anime",
    "words": [
-    "Alemanha",
-    "Ilha",
-    "Kilimanjaro",
-    "Oceano Pacífico",
-    "Taj Mahal"
+    "Shanks",
+    "Marco",
+    "Porta Mágica",
+    "All Might",
+    "Genos"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Lichinga",
-    "Namaacha",
-    "Caminho de ferro",
-    "Moçambola",
-    "Rio Limpopo"
+    "Gelado",
+    "Golfinho",
+    "Secador de cabelo",
+    "Galo",
+    "Cobertor"
    ]
   }
  },
  {
   "id": "pt-0061",
   "yellow": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Areia",
-    "Boneca",
-    "Barco",
-    "Lagarto",
-    "Espelho"
+    "Rainha de Sabá",
+    "Florence Nightingale",
+    "Leonardo da Vinci",
+    "Hipócrates",
+    "Gandalf"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Thomas Edison",
-    "Lewis Hamilton",
-    "Júlio Verne",
-    "Hans Christian Andersen",
-    "Peppa Pig"
+    "Hamster",
+    "Microscópio",
+    "Boneca",
+    "Polvo",
+    "Ioiô"
    ]
   }
  },
  {
   "id": "pt-0062",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "anime",
    "words": [
-    "O Feiticeiro de Oz",
-    "Concurso de talentos",
-    "O Rei Leão",
-    "Damas",
-    "Marioneta"
+    "One Punch Man",
+    "Snorlax",
+    "Yu-Gi-Oh!",
+    "Gon",
+    "Fullmetal Alchemist"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Golfinho",
-    "Canguru",
-    "Garrafa",
-    "Panela",
-    "Aranha"
+    "Amílcar Cabral",
+    "Eduardo Mondlane",
+    "Popeye",
+    "Bob Marley",
+    "Pantera Cor-de-Rosa"
    ]
   }
  },
  {
   "id": "pt-0063",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Acordeão",
-    "Aniversário",
-    "Ukulele",
-    "Escultura",
-    "Violino"
+    "Mel",
+    "Almofada",
+    "Gorila",
+    "Fogo",
+    "Chocolate"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "anime",
    "words": [
-    "Eça de Queirós",
-    "Bob Marley",
-    "Eduardo Mondlane",
-    "Michael Jordan",
-    "Lionel Messi"
+    "Killua",
+    "Pokémon",
+    "Spy x Family",
+    "Anya Forger",
+    "Naruto"
    ]
   }
  },
  {
   "id": "pt-0064",
   "yellow": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Alho",
-    "Mel",
-    "Gravata",
-    "Sapo",
-    "Parafuso"
+    "Flamenco",
+    "Fogo de artifício",
+    "Desenhos animados",
+    "Toy Story",
+    "Stand-up comedy"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "Mar Mediterrâneo",
-    "Selva",
-    "Estação de comboios",
-    "Teatro",
-    "Acrópole"
+    "PSV Eindhoven",
+    "Wembley",
+    "Anfield",
+    "Romário",
+    "Antoine Griezmann"
    ]
   }
  },
@@ -1476,320 +1476,320 @@
   "yellow": {
    "pack": "people",
    "words": [
-    "Indiana Jones",
-    "Romeu e Julieta",
-    "Cristóvão Colombo",
-    "Homem de Ferro",
-    "Barbie"
+    "Bruce Lee",
+    "Roger Federer",
+    "Eminem",
+    "Nemo",
+    "Michael Jordan"
    ]
   },
   "blue": {
    "pack": "things",
    "words": [
-    "Nuvem",
-    "Concha",
-    "Morcego",
-    "Pipocas",
-    "Fogo"
+    "Helicóptero",
+    "Táxi",
+    "Rato de computador",
+    "Boneco de neve",
+    "Estrela-do-mar"
    ]
   }
  },
  {
   "id": "pt-0066",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "football",
    "words": [
-    "Música clássica",
-    "Golfe",
-    "Passadeira vermelha",
-    "Violoncelo",
-    "Câmara de filmar"
+    "Cartão amarelo",
+    "Andrés Iniesta",
+    "Rodrygo",
+    "Ferenc Puskás",
+    "Garrincha"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "entertainment",
    "words": [
-    "Coliseu",
-    "Chile",
-    "Igreja",
-    "Hotel",
-    "Parque de estacionamento"
+    "Mario Kart",
+    "Redes sociais",
+    "Escalada",
+    "Selfie",
+    "Pac-Man"
    ]
   }
  },
  {
   "id": "pt-0067",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Supermercado",
-    "Pequim",
-    "Vaticano",
-    "Cabo Verde",
-    "Monte Evereste"
+    "Coruja",
+    "Casaco",
+    "Paella",
+    "Troféu",
+    "Pião"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Serena Williams",
-    "Mowgli",
-    "Rei Salomão",
-    "Três Porquinhos",
-    "Pedro Álvares Cabral"
+    "Futebol",
+    "Concurso de talentos",
+    "Skate",
+    "Orquestra",
+    "Grammy"
    ]
   }
  },
  {
   "id": "pt-0068",
   "yellow": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "São Tomé e Príncipe",
-    "Cristo Redentor",
-    "Londres",
-    "França",
-    "Palácio"
+    "Didier Drogba",
+    "Alessandro Del Piero",
+    "Vinícius Júnior",
+    "Maradona",
+    "Bernardo Silva"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Vassoura",
-    "Abacate",
-    "Gorila",
-    "Vaca",
-    "Luvas"
+    "Batman",
+    "Darth Vader",
+    "Super-Homem",
+    "Marilyn Monroe",
+    "Barack Obama"
    ]
   }
  },
  {
   "id": "pt-0069",
   "yellow": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Galileu",
-    "Obélix",
-    "Aladino",
-    "Fernando Pessoa",
-    "Aristóteles"
+    "Berlindes",
+    "Influenciador",
+    "Salto em altura",
+    "Festival de música",
+    "Patins"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Ioga",
-    "Os Incríveis",
-    "Maracas",
-    "Frozen",
-    "Vela desportiva"
+    "Londres",
+    "Xangai",
+    "França",
+    "Nova Iorque",
+    "Savana"
    ]
   }
  },
  {
   "id": "pt-0070",
   "yellow": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Prego",
-    "Ambulância",
-    "Pavão",
-    "Bicicleta",
-    "Burro"
+    "Mambas",
+    "Metical",
+    "Pão de Inhambane",
+    "Cajueiro",
+    "Hino nacional"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "places",
    "words": [
-    "Tarzan",
-    "Infante D. Henrique",
-    "Shrek",
-    "Rato Mickey",
-    "Sininho"
+    "Casablanca",
+    "África do Sul",
+    "Mónaco",
+    "Cave",
+    "Universidade"
    ]
   }
  },
  {
   "id": "pt-0071",
   "yellow": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Sapatos",
-    "Mochila",
-    "Óculos",
-    "Bandeira",
-    "Formiga"
+    "Mussiro",
+    "Feira Popular",
+    "Barra",
+    "Xipamanine",
+    "Tihove"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Espanha",
-    "Nova Zelândia",
-    "Coreia do Sul",
-    "Islândia",
-    "Pirâmide maia"
+    "Trator",
+    "Libélula",
+    "Camelo",
+    "Bisonte",
+    "Tablet"
    ]
   }
  },
  {
   "id": "pt-0072",
   "yellow": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Cometa",
-    "Chaminé",
-    "Prato",
-    "Submarino",
-    "Chávena"
+    "FC Barcelona",
+    "Pontapé de bicicleta",
+    "Alisson",
+    "Kylian Mbappé",
+    "Inter de Milão"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Moscovo",
-    "Dakar",
-    "Centro comercial",
-    "Lagos",
-    "Cataratas do Niágara"
+    "Açúcar",
+    "Estrela",
+    "Ventoinha",
+    "Elefante",
+    "Lâmpada"
    ]
   }
  },
  {
   "id": "pt-0073",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "football",
    "words": [
-    "Lagosta",
-    "Xitende",
-    "Mussiro",
-    "Praça da Independência",
-    "Ilha de Moçambique"
+    "Andrea Pirlo",
+    "Corinthians",
+    "Sergio Ramos",
+    "Johan Cruyff",
+    "Alfredo Di Stéfano"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Flauta",
-    "Mágico",
-    "Corrida de sacos",
-    "Hip-hop dance",
-    "Documentário"
+    "Estádio",
+    "Singapura",
+    "Oceano Atlântico",
+    "Torre Eiffel",
+    "Turquia"
    ]
   }
  },
  {
   "id": "pt-0074",
   "yellow": {
-   "pack": "people",
+   "pack": "places",
    "words": [
-    "Ed Sheeran",
-    "Mafalda",
-    "Fada dos Dentes",
-    "Super-Homem",
-    "Michael Phelps"
+    "Suíça",
+    "Malawi",
+    "Planetário",
+    "Cataratas do Niágara",
+    "Japão"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Raia-manta",
-    "Jardim Tunduru",
-    "Matapa",
-    "Inhambane",
-    "Xai-Xai"
+    "Lareira",
+    "Pulseira",
+    "Mapa",
+    "Robô",
+    "Guarda-chuva"
    ]
   }
  },
  {
   "id": "pt-0075",
   "yellow": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "Turquia",
-    "Inglaterra",
-    "Nairobi",
-    "Zimbabué",
-    "Malawi"
+    "Palmeiras",
+    "Paolo Maldini",
+    "Thierry Henry",
+    "Al Ahly",
+    "La Bombonera"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Cristiano Ronaldo",
-    "Pikachu",
-    "Harry Potter",
-    "Walt Disney",
-    "Steve Jobs"
+    "Sanduíche",
+    "Chinelos",
+    "Concha",
+    "Areia",
+    "Suricata"
    ]
   }
  },
  {
   "id": "pt-0076",
   "yellow": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Unicórnio",
-    "Melancia",
-    "Baleia",
-    "Trovoada",
-    "Girassol"
+    "Zorro",
+    "Rainha Isabel II",
+    "Lucky Luke",
+    "Alfred Hitchcock",
+    "Minions"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Júlio César",
-    "Paulina Chiziane",
-    "Branca de Neve",
-    "Super Mario",
-    "Hulk"
+    "Bandeira de Moçambique",
+    "Cahora Bassa",
+    "Ponte Maputo-Katembe",
+    "Maputo",
+    "Chimoio"
    ]
   }
  },
  {
   "id": "pt-0077",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Marginal de Maputo",
-    "Nampula",
-    "Amendoim torrado",
-    "Lago Niassa",
-    "Badjias"
+    "Biblioteca",
+    "Joanesburgo",
+    "Rio de Janeiro",
+    "Chicago",
+    "Nairobi"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Skate",
-    "Kuduro",
-    "Ratatui",
-    "Selfie",
-    "Série"
+    "Batatas fritas",
+    "Armário",
+    "Limão",
+    "Camisola",
+    "Sol"
    ]
   }
  },
  {
   "id": "pt-0078",
   "yellow": {
-   "pack": "people",
+   "pack": "football",
    "words": [
-    "Pica-Pau",
-    "Mahatma Gandhi",
-    "Nikola Tesla",
-    "Steven Spielberg",
-    "Marie Curie"
+    "Pelé",
+    "Fernando Torres",
+    "Rodri",
+    "Orlando Pirates",
+    "Lev Yashin"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "people",
    "words": [
-    "Castanha de caju",
-    "Tete",
-    "Xipamanine",
-    "Zambézia",
-    "Xigubo"
+    "Michael Jackson",
+    "Cupido",
+    "Whitney Houston",
+    "Capitão América",
+    "Winston Churchill"
    ]
   }
  },
@@ -1798,67 +1798,67 @@
   "yellow": {
    "pack": "mozambique",
    "words": [
-    "Ilha de Santa Carolina",
-    "Pilão",
-    "Metical",
-    "Chimoio",
-    "Mapiko"
+    "Rio Save",
+    "Timbila",
+    "Monte Binga",
+    "Bolo de mandioca",
+    "Caril de amendoim"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Semáforo",
-    "Holanda",
-    "Padaria",
-    "Egito",
-    "Rio Amazonas"
+    "Sopa",
+    "Sapatos",
+    "Vento",
+    "Hipopótamo",
+    "Tigre"
    ]
   }
  },
  {
   "id": "pt-0080",
   "yellow": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "Parque de diversões",
-    "Sagrada Família",
-    "Torre Eiffel",
-    "Big Ben",
-    "Banco"
+    "Fany Pfumo",
+    "Eça de Queirós",
+    "Julius Nyerere",
+    "Capuchinho Vermelho",
+    "Fada dos Dentes"
    ]
   },
   "blue": {
    "pack": "things",
    "words": [
-    "Secador de cabelo",
-    "Morango",
-    "Neve",
-    "Tubarão",
-    "Bola"
+    "Anel",
+    "Nuvem",
+    "Cadeado",
+    "Pera",
+    "Café"
    ]
   }
  },
  {
   "id": "pt-0081",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "people",
    "words": [
-    "Mercado Central",
-    "Bandeira de Moçambique",
-    "Dugongo",
-    "Pão de Inhambane",
-    "Bolo de mandioca"
+    "Bach",
+    "Tom Hanks",
+    "Agostinho Neto",
+    "Sherlock Holmes",
+    "Tina Turner"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Sala de aula",
-    "Japão",
-    "Moinho",
-    "Passadeira",
-    "Istambul"
+    "Manteiga",
+    "Donut",
+    "Aranha",
+    "Impressora",
+    "Bolo"
    ]
   }
  },
@@ -1867,21 +1867,21 @@
   "yellow": {
    "pack": "people",
    "words": [
-    "Aquiles",
-    "Zinedine Zidane",
-    "Tintim",
-    "Ayrton Senna",
-    "Frankenstein"
+    "Marco Polo",
+    "Albert Einstein",
+    "Kofi Annan",
+    "Justin Bieber",
+    "Tutankamon"
    ]
   },
   "blue": {
    "pack": "places",
    "words": [
-    "Hong Kong",
-    "Guiné-Bissau",
-    "Porto de pesca",
-    "Universidade",
-    "Túnel"
+    "Quinta",
+    "Los Angeles",
+    "Inglaterra",
+    "Hotel",
+    "Sevilha"
    ]
   }
  },
@@ -1890,21 +1890,21 @@
   "yellow": {
    "pack": "things",
    "words": [
-    "Apito",
-    "Arco-íris",
-    "Trator",
-    "Caderno",
-    "Castelo de areia"
+    "Espelho",
+    "Hiena",
+    "Formiga",
+    "Cabra",
+    "Régua"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "Cozinha",
-    "Marrocos",
-    "Veneza",
-    "Singapura",
-    "Aquário"
+    "Reinildo Mandava",
+    "Gerd Müller",
+    "Benfica",
+    "Primeiro de Agosto",
+    "Oliver Kahn"
    ]
   }
  },
@@ -1913,21 +1913,21 @@
   "yellow": {
    "pack": "things",
    "words": [
-    "Envelope",
+    "Vela",
     "Mota",
-    "Mapa",
-    "Camaleão",
-    "Pedra"
+    "Panela",
+    "Morango",
+    "Telemóvel"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Escalada",
-    "Podcast",
-    "Star Wars",
-    "Blues",
-    "Bingo"
+    "Paulina Chiziane",
+    "Indiana Jones",
+    "Elvis Presley",
+    "Wangari Maathai",
+    "Hans Christian Andersen"
    ]
   }
  },
@@ -1936,297 +1936,297 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Luanda",
-    "Moinho",
-    "Nova Iorque",
-    "Londres",
-    "Marte"
+    "Bombas de gasolina",
+    "Lua",
+    "Taj Mahal",
+    "Espanha",
+    "Maurícias"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Chita",
-    "Girafa",
-    "Caracol",
-    "Cebola",
-    "Chinelos"
+    "Mucapata",
+    "Rio Limpopo",
+    "Marginal de Maputo",
+    "Baía de Maputo",
+    "Mandioca"
    ]
   }
  },
  {
   "id": "pt-0086",
   "yellow": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Pastel de nata",
-    "Gelo",
-    "Cavalo",
-    "Chave",
-    "Guarda-chuva"
+    "Martin Luther King",
+    "José Saramago",
+    "Miguel Ângelo",
+    "Beyoncé",
+    "José Craveirinha"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "football",
    "words": [
-    "Pote de barro",
-    "Machimbombo",
-    "Reserva do Niassa",
-    "Macaneta",
-    "Ngalanga"
+    "Golo de cabeça",
+    "Bruno Fernandes",
+    "Celtic",
+    "Chelsea",
+    "Aitana Bonmatí"
    ]
   }
  },
  {
   "id": "pt-0087",
   "yellow": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Milho",
-    "Sopa",
-    "Crocodilo",
-    "Limão",
-    "Avestruz"
+    "Breakdance",
+    "Karaoke",
+    "Jogo da glória",
+    "Jazz",
+    "Campismo"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Abraham Lincoln",
-    "Rainha Isabel II",
-    "Alice no País das Maravilhas",
-    "Capuchinho Vermelho",
-    "Madre Teresa"
+    "Ouriço",
+    "Colher",
+    "Comboio",
+    "Folha",
+    "Pente"
    ]
   }
  },
  {
   "id": "pt-0088",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Surf",
-    "Paraquedismo",
-    "Coro",
-    "Atletismo",
-    "Teatro de fantoches"
+    "Emma Watson",
+    "John Lennon",
+    "Gulliver",
+    "Ulisses",
+    "Brad Pitt"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Faca",
-    "Régua",
-    "Iogurte",
-    "Veado",
-    "Eclipse"
+    "Inhambane",
+    "Fortaleza de Maputo",
+    "Nampula",
+    "Sofala",
+    "Moçambola"
    ]
   }
  },
  {
   "id": "pt-0089",
   "yellow": {
-   "pack": "things",
+   "pack": "anime",
    "words": [
-    "Balde",
-    "Ovelha",
-    "Microscópio",
-    "Árvore",
-    "Camelo"
+    "Loid Forger",
+    "Bakugo",
+    "Caderno da Morte",
+    "Ponyo",
+    "Nico Robin"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Piquenique",
-    "Canoagem",
-    "Berlindes",
-    "Hóquei",
-    "Baloiço"
+    "Drake",
+    "Ramsés II",
+    "Luciano Pavarotti",
+    "Bela Adormecida",
+    "Kwame Nkrumah"
    ]
   }
  },
  {
   "id": "pt-0090",
   "yellow": {
-   "pack": "people",
+   "pack": "places",
    "words": [
-    "Tutankamon",
-    "Pablo Picasso",
-    "Florence Nightingale",
-    "Roger Federer",
-    "Simba"
+    "Tenda",
+    "Aquário",
+    "Museu do Louvre",
+    "Bali",
+    "Big Ben"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Gato",
-    "Despertador",
-    "Águia",
-    "Aspirador",
-    "Cabra"
+    "Manchester City",
+    "Mamelodi Sundowns",
+    "Nani",
+    "River Plate",
+    "Liverpool"
    ]
   }
  },
  {
   "id": "pt-0091",
   "yellow": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "Havai",
-    "Portugal",
-    "Algarve",
-    "Tóquio",
-    "Ilha"
+    "Rapunzel",
+    "Aretha Franklin",
+    "Jackie Chan",
+    "Mick Jagger",
+    "Romeu e Julieta"
    ]
   },
   "blue": {
    "pack": "things",
    "words": [
-    "Panqueca",
-    "Autocarro",
-    "Telemóvel",
-    "Jornal",
-    "Dinossauro"
+    "Medalha",
+    "Calculadora",
+    "Chuva",
+    "Caderno",
+    "Selo"
    ]
   }
  },
  {
   "id": "pt-0092",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Lavandaria",
-    "Coliseu",
-    "Sintra",
-    "Tenda",
-    "Cozinha"
+    "Canguru",
+    "Minhoca",
+    "Banana",
+    "Sapo",
+    "Peixe-palhaço"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "anime",
    "words": [
-    "Freddie Mercury",
-    "Snoopy",
-    "Estrumpfes",
-    "Rosa Parks",
-    "Whitney Houston"
+    "Kiki",
+    "Kame House",
+    "Studio Ghibli",
+    "Ranma",
+    "Edward Elric"
    ]
   }
  },
  {
   "id": "pt-0093",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "football",
    "words": [
-    "Ilha da Inhaca",
-    "Mucapata",
-    "Xitende",
-    "Estádio do Zimpeto",
-    "Manga"
+    "João Cancelo",
+    "AS Roma",
+    "Luka Modrić",
+    "Rúben Dias",
+    "Neymar"
    ]
   },
   "blue": {
    "pack": "things",
    "words": [
-    "Maçã",
-    "Frigorífico",
-    "Helicóptero",
-    "Rosa",
-    "Urso polar"
+    "Macaco",
+    "Cadeira",
+    "Dragão",
+    "Lémure",
+    "Óculos de sol"
    ]
   }
  },
  {
   "id": "pt-0094",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "entertainment",
    "words": [
-    "Arquipélago de Bazaruto",
-    "Mafalala",
-    "Praia do Tofo",
-    "Cabo Delgado",
-    "Pão de Inhambane"
+    "Musical",
+    "Apanhada",
+    "Montanha-russa",
+    "Maracas",
+    "Podcast"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Jogos Olímpicos",
-    "Patinagem",
-    "Comando",
-    "Podcast",
-    "Ukulele"
+    "Stevie Wonder",
+    "Joana d'Arc",
+    "Tarzan",
+    "Mark Zuckerberg",
+    "Neil Armstrong"
    ]
   }
  },
  {
   "id": "pt-0095",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Palhota",
-    "Inhambane",
-    "Mussiro",
-    "Ilha de Moçambique",
-    "Montepuez"
+    "Seringa",
+    "Abelha",
+    "Baleia",
+    "Chave",
+    "Gnu"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "Palácio",
-    "Lua",
-    "Ginásio",
-    "Veneza",
-    "Selva"
+    "Virgil van Dijk",
+    "Zico",
+    "José Mourinho",
+    "Sadio Mané",
+    "Juventus"
    ]
   }
  },
  {
   "id": "pt-0096",
   "yellow": {
-   "pack": "people",
+   "pack": "places",
    "words": [
-    "Pitágoras",
-    "Ronaldinho",
-    "Buda",
-    "Charlie Chaplin",
-    "Muhammad Ali"
+    "Tanzânia",
+    "Ponte 25 de Abril",
+    "Lagos",
+    "Palácio de Buckingham",
+    "Petra"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Lagos",
-    "Varanda",
-    "Timor-Leste",
-    "Alpes",
-    "Rio Amazonas"
+    "Chita",
+    "Cachorro-quente",
+    "Íman",
+    "Lhama",
+    "Mosquito"
    ]
   }
  },
  {
   "id": "pt-0097",
   "yellow": {
-   "pack": "places",
+   "pack": "mozambique",
    "words": [
-    "Aeroporto",
-    "Stonehenge",
-    "Antártida",
-    "Savana",
-    "Madeira"
+    "Catedral de Maputo",
+    "Ilha de Santa Carolina",
+    "Capulana",
+    "Caminho de ferro",
+    "Xima"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Telhado",
-    "Hambúrguer",
-    "Cadeira",
-    "Máquina de lavar",
-    "Meias"
+    "Alexia Putellas",
+    "Alex Ferguson",
+    "Paris Saint-Germain",
+    "Franz Beckenbauer",
+    "Marco van Basten"
    ]
   }
  },
@@ -2235,320 +2235,320 @@
   "yellow": {
    "pack": "people",
    "words": [
-    "José Saramago",
-    "Rapunzel",
-    "Leonardo da Vinci",
-    "Mozart",
-    "Isaac Newton"
+    "Vivaldi",
+    "Três Porquinhos",
+    "Arnold Schwarzenegger",
+    "Rei Salomão",
+    "Bambi"
    ]
   },
   "blue": {
    "pack": "entertainment",
    "words": [
-    "Hip-hop dance",
-    "Natal",
-    "Jazz",
-    "Claquete",
-    "Taça dos Campeões"
+    "Boxe",
+    "Patinagem",
+    "Bowling",
+    "Adivinha",
+    "Desfile"
    ]
   }
  },
  {
   "id": "pt-0099",
   "yellow": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Papagaio de papel",
-    "Borboleta",
-    "Colar",
-    "Rinoceronte",
-    "Íman"
+    "Aniversário",
+    "Claquete",
+    "Filme de terror",
+    "Basebol",
+    "Telejornal"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "places",
    "words": [
-    "Frida Kahlo",
-    "Elvis Presley",
-    "Louis Armstrong",
-    "Simone Biles",
-    "Bach"
+    "São Francisco",
+    "São Petersburgo",
+    "Lago Vitória",
+    "Dubai",
+    "Maldivas"
    ]
   }
  },
  {
   "id": "pt-0100",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Rotunda",
-    "Egito",
-    "Grécia",
-    "Acrópole",
-    "Buenos Aires"
+    "Vaca",
+    "Sushi",
+    "Gato",
+    "Cenoura",
+    "Cato"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Cobra",
-    "Laranja",
-    "Relógio",
-    "Boneco de neve",
-    "Sol"
+    "Indonésia",
+    "Estação espacial",
+    "Cidade do Cabo",
+    "Holanda",
+    "Ponte Golden Gate"
    ]
   }
  },
  {
   "id": "pt-0101",
   "yellow": {
-   "pack": "things",
+   "pack": "anime",
    "words": [
-    "Raposa",
-    "Leão",
-    "Bolacha",
-    "Hipopótamo",
-    "Cavalo"
+    "Yugi",
+    "Levi",
+    "Armin",
+    "Super Saiyajin",
+    "Captain Tsubasa"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Cidade do Cabo",
-    "França",
-    "Marrocos",
-    "México",
-    "Sótão"
+    "Drone",
+    "Pizza",
+    "Lupa",
+    "Candeeiro",
+    "Computador"
    ]
   }
  },
  {
   "id": "pt-0102",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Ratatui",
-    "DJ",
-    "Andebol",
-    "Telenovela",
-    "Concurso de talentos"
+    "Deserto do Sara",
+    "Stonehenge",
+    "Lilongwe",
+    "Moscovo",
+    "Parque de diversões"
    ]
   },
   "blue": {
    "pack": "people",
    "words": [
-    "Anne Frank",
-    "Adele",
-    "Beyoncé",
-    "Albert Einstein",
-    "Thor"
+    "Youssou N'Dour",
+    "Sininho",
+    "Billie Eilish",
+    "Pica-Pau",
+    "Wazimbo"
    ]
   }
  },
  {
   "id": "pt-0103",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Teatro de fantoches",
-    "Trailer",
-    "Voleibol",
-    "Desporto radical",
-    "Boxe"
+    "Pêssego",
+    "Lince",
+    "Micro-ondas",
+    "Frigideira",
+    "Tubarão"
    ]
   },
   "blue": {
    "pack": "people",
    "words": [
-    "Pinóquio",
-    "Irmãos Grimm",
-    "Usain Bolt",
-    "Rei Artur",
-    "Capitão América"
+    "Malangatana",
+    "Frank Sinatra",
+    "Hulk",
+    "Thor",
+    "Charles Dickens"
    ]
   }
  },
  {
   "id": "pt-0104",
   "yellow": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Robin dos Bosques",
-    "Kung Fu Panda",
-    "Pantera Negra",
-    "Samora Machel",
-    "Popeye"
+    "Monstros e Companhia",
+    "Kizomba",
+    "Piquenique",
+    "Semba",
+    "Esqui"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "anime",
    "words": [
-    "Guiné-Bissau",
-    "Planetário",
-    "Zimbabué",
-    "Irlanda",
-    "Campo de futebol"
+    "Ichigo",
+    "Deku",
+    "Lupin III",
+    "Mochila do Doraemon",
+    "Demon Slayer"
    ]
   }
  },
  {
   "id": "pt-0105",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Gana",
-    "Maurícias",
-    "Torre de Belém",
-    "Esquadra da polícia",
-    "Bombas de gasolina"
+    "Ornitorrinco",
+    "Janela",
+    "Borracha",
+    "Pombo",
+    "Galinha"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Bolacha",
-    "Manteiga",
-    "Vassoura",
-    "Luvas",
-    "Lobo"
+    "Dhow",
+    "Tartaruga marinha",
+    "Papaia",
+    "Castanha de caju",
+    "Machamba"
    ]
   }
  },
  {
   "id": "pt-0106",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "football",
    "words": [
-    "Auscultadores",
-    "Salsa",
-    "Atletismo",
-    "Roda gigante",
-    "Os Incríveis"
+    "Gianluigi Buffon",
+    "Thiago Silva",
+    "Estádio da Luz",
+    "David Villa",
+    "Ricardo Quaresma"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Xipamanine",
-    "Feijão nhemba",
-    "Lulas grelhadas",
-    "Jardim Tunduru",
-    "Beira"
+    "Ilha da Páscoa",
+    "Uluru",
+    "Talho",
+    "Observatório",
+    "Nigéria"
    ]
   }
  },
  {
   "id": "pt-0107",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Rio Rovuma",
-    "Matapa",
-    "Nampula",
-    "Pote de barro",
-    "Arte maconde"
+    "Restaurante",
+    "Cabo Verde",
+    "Escola",
+    "Cuba",
+    "Sala de estar"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Rafael Nadal",
-    "Cleópatra",
-    "Vivaldi",
-    "Platão",
-    "Dumbo"
+    "Roda gigante",
+    "Sudoku",
+    "Cabra-cega",
+    "Truque de magia",
+    "Samba"
    ]
   }
  },
  {
   "id": "pt-0108",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Valsa",
-    "Escorrega",
-    "Basebol",
-    "Harpa",
-    "Maratona"
+    "Argentina",
+    "Kilimanjaro",
+    "Monte Rushmore",
+    "Praga",
+    "Varsóvia"
    ]
   },
   "blue": {
    "pack": "people",
    "words": [
-    "Elsa",
-    "Maria Mutola",
-    "Mulan",
-    "Robinson Crusoé",
-    "Salvador Dalí"
+    "Pocahontas",
+    "Rato Mickey",
+    "Dumbo",
+    "Estrumpfes",
+    "Hello Kitty"
    ]
   }
  },
  {
   "id": "pt-0109",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Futebol",
-    "Carnaval",
-    "Jogo de cartas",
-    "Maracas",
-    "Filme de terror"
+    "Edimburgo",
+    "Zâmbia",
+    "Genebra",
+    "Palácio",
+    "Oslo"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "África do Sul",
-    "Argentina",
-    "Hong Kong",
-    "Angola",
-    "Farmácia"
+    "Ayrton Senna",
+    "Shaka Zulu",
+    "Snoopy",
+    "Napoleão",
+    "Capitão Gancho"
    ]
   }
  },
  {
   "id": "pt-0110",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Dominó",
-    "Comédia",
-    "Legendas",
-    "Breakdance",
-    "Violino"
+    "Ilha",
+    "Brasil",
+    "Islândia",
+    "Hollywood",
+    "Porto de pesca"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Gato",
-    "Pião",
-    "Mel",
-    "Balão",
-    "Furacão"
+    "Pablo Picasso",
+    "Alexander Graham Bell",
+    "Zendaya",
+    "Usain Bolt",
+    "Mafalda"
    ]
   }
  },
  {
   "id": "pt-0111",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Damas",
-    "Charadas",
-    "O Feiticeiro de Oz",
-    "Guitarra",
-    "Mergulho"
+    "Furacão",
+    "Zebra",
+    "Laranja",
+    "Foca",
+    "Arroz doce"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "anime",
    "words": [
-    "Cinderela",
-    "Cesária Évora",
-    "Hércules",
-    "Júlio César",
-    "Lionel Messi"
+    "Freeza",
+    "Agumon",
+    "Death Note",
+    "Bulma",
+    "Goku"
    ]
   }
  },
@@ -2557,67 +2557,67 @@
   "yellow": {
    "pack": "entertainment",
    "words": [
-    "Série",
-    "Banda",
-    "Fogo de artifício",
-    "Realidade virtual",
-    "Flash mob"
+    "Eurovisão",
+    "Carnaval",
+    "Mary Poppins",
+    "Os Incríveis",
+    "Críquete"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Escada",
-    "Couve",
-    "Cobra",
-    "Elefante",
-    "Boneco de neve"
+    "Serena Williams",
+    "Drácula",
+    "Louis Pasteur",
+    "Obélix",
+    "Super Mario"
    ]
   }
  },
  {
   "id": "pt-0113",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Suíça",
-    "Coreia do Sul",
-    "Lisboa",
-    "Himalaias",
-    "Mercado"
+    "Cama",
+    "Bicicleta",
+    "Abacate",
+    "Balão",
+    "Jornal"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Anel",
-    "Secador de cabelo",
-    "Café",
-    "Cão",
-    "Laranja"
+    "Ronaldinho",
+    "Camp Nou",
+    "Allianz Arena",
+    "Inter Miami",
+    "Bukayo Saka"
    ]
   }
  },
  {
   "id": "pt-0114",
   "yellow": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Hello Kitty",
-    "Simone Biles",
-    "Charles Darwin",
-    "Maradona",
-    "Tutankamon"
+    "Lichinga",
+    "Feijão nhemba",
+    "Polana",
+    "Raia-manta",
+    "Lago Niassa"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "Sala de estar",
-    "Etiópia",
-    "Polo Sul",
-    "Parque de diversões",
-    "Fábrica"
+    "Pep Guardiola",
+    "Thomas Müller",
+    "Bayern de Munique",
+    "David Beckham",
+    "Maracanã"
    ]
   }
  },
@@ -2626,136 +2626,136 @@
   "yellow": {
    "pack": "people",
    "words": [
-    "Rato Mickey",
-    "Isaac Newton",
-    "Mowgli",
-    "Infante D. Henrique",
-    "Jacques Cousteau"
+    "Aristóteles",
+    "Dwayne Johnson",
+    "Leonardo DiCaprio",
+    "Shakira",
+    "Maria Mutola"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Stand-up comedy",
-    "Ano Novo",
-    "Desenhos animados",
-    "Corrida de sacos",
-    "Canoagem"
+    "Televisão",
+    "Francesinha",
+    "Rebuçado",
+    "Tacos",
+    "Queijo"
    ]
   }
  },
  {
   "id": "pt-0116",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Estádio da Machava",
-    "Tubarão-baleia",
-    "Amendoim torrado",
-    "Monte Binga",
-    "Mandioca"
+    "Iogurte",
+    "Ambulância",
+    "Caldo verde",
+    "Pavão",
+    "Castelo de areia"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "entertainment",
    "words": [
-    "Joanesburgo",
-    "Cabana",
-    "Islândia",
-    "Banco",
-    "Ilha da Páscoa"
+    "K-pop",
+    "Legendas",
+    "Ciclismo",
+    "Tricô",
+    "Bateria"
    ]
   }
  },
  {
   "id": "pt-0117",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Hollywood",
-    "Passadeira",
-    "Hotel",
-    "Nova Zelândia",
-    "Jerusalém"
+    "Bandeira",
+    "Comando da televisão",
+    "Borboleta",
+    "Vassoura",
+    "Pastel de nata"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Régua",
-    "Macaco",
-    "Bolo",
-    "Pinguim",
-    "Sanduíche"
+    "Shrek",
+    "Charlie Chaplin",
+    "Madonna",
+    "Fernando Pessoa",
+    "Vasco da Gama"
    ]
   }
  },
  {
   "id": "pt-0118",
   "yellow": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Toalha",
-    "Gorila",
-    "Palmeira",
-    "Chave",
-    "Sabonete"
+    "Manuel Neuer",
+    "Santiago Bernabéu",
+    "Mário Coluna",
+    "Iker Casillas",
+    "Arjen Robben"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Saxofone",
-    "Piquenique",
-    "Origami",
-    "Críquete",
-    "Truque de magia"
+    "Denzel Washington",
+    "Neyma",
+    "Rainha Ginga",
+    "Marie Curie",
+    "Rei Artur"
    ]
   }
  },
  {
   "id": "pt-0119",
   "yellow": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Prato",
-    "Formiga",
-    "Coruja",
-    "Colar",
-    "Pulseira"
+    "Hat-trick",
+    "Arsenal",
+    "Marta",
+    "Xavi",
+    "Ruud Gullit"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Madre Teresa",
-    "Woody",
-    "Fernão de Magalhães",
-    "James Bond",
-    "Rainha de Sabá"
+    "Rato",
+    "Papagaio de papel",
+    "Telhado",
+    "Gelo",
+    "Cisne"
    ]
   }
  },
  {
   "id": "pt-0120",
   "yellow": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Pepino",
-    "Carteira",
-    "Minhoca",
-    "Pão",
-    "Abacate"
+    "Ali Babá",
+    "Lobo Mau",
+    "James Bond",
+    "Mansa Musa",
+    "Elon Musk"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "anime",
    "words": [
-    "Tihove",
-    "Metical",
-    "Gaza",
-    "Feira Popular",
-    "Namaacha"
+    "Bola de Cristal",
+    "Gohan",
+    "Krillin",
+    "Bleach",
+    "Tanjiro"
    ]
   }
  },
@@ -2764,90 +2764,90 @@
   "yellow": {
    "pack": "things",
    "words": [
-    "Tigre",
-    "Telhado",
-    "Queijo",
-    "Guarda-chuva",
-    "Batata"
+    "Croquete",
+    "Lanterna",
+    "Envelope",
+    "Leopardo",
+    "Cão"
    ]
   },
   "blue": {
    "pack": "people",
    "words": [
-    "Thomas Edison",
-    "Harry Potter",
-    "Freddie Mercury",
-    "Bambi",
-    "Darth Vader"
+    "Ariana Grande",
+    "Peter Pan",
+    "Mozart",
+    "Will Smith",
+    "Salvador Dalí"
    ]
   }
  },
  {
   "id": "pt-0122",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Grand Canyon",
-    "Quartel de bombeiros",
-    "Dubai",
-    "Turquia",
-    "Pirâmides"
+    "Gelatina",
+    "Tucano",
+    "Joaninha",
+    "Paraquedas",
+    "Gaveta"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "anime",
    "words": [
-    "Toy Story",
-    "Samba",
-    "Fado",
-    "Tango",
-    "Apanhada"
+    "Hinata",
+    "O Castelo Andante",
+    "Espada de Samurai",
+    "A Viagem de Chihiro",
+    "Ryuk"
    ]
   }
  },
  {
   "id": "pt-0123",
   "yellow": {
-   "pack": "people",
+   "pack": "anime",
    "words": [
-    "Rapunzel",
-    "Mário Coluna",
-    "Mulher-Maravilha",
-    "Marilyn Monroe",
-    "Pinóquio"
+    "Nami",
+    "Kenshin",
+    "Beyblade",
+    "Dragon Ball",
+    "O Meu Vizinho Totoro"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Singapura",
-    "Canadá",
-    "Oceano Pacífico",
-    "Biblioteca",
-    "São Tomé e Príncipe"
+    "Bola",
+    "Chá",
+    "Porco",
+    "Esparguete",
+    "Pepino"
    ]
   }
  },
  {
   "id": "pt-0124",
   "yellow": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Foguetão",
-    "Borboleta",
-    "Vela",
-    "Urso polar",
-    "Tartaruga"
+    "Matata",
+    "Praia do Tofo",
+    "Quelimane",
+    "Montepuez",
+    "Dia da Independência"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Pica-Pau",
-    "Rosa Parks",
-    "Peter Pan",
-    "Michael Phelps",
-    "Lewis Hamilton"
+    "Estetoscópio",
+    "Garrafa",
+    "Martelo",
+    "Raposa",
+    "Papagaio"
    ]
   }
  },
@@ -2856,136 +2856,136 @@
   "yellow": {
    "pack": "things",
    "words": [
-    "Mochila",
-    "Microscópio",
-    "Bicicleta",
-    "Martelo",
-    "Gelo"
+    "Sofá",
+    "Meias",
+    "Cavalo-marinho",
+    "Feijoada",
+    "Kiwi"
    ]
   },
   "blue": {
    "pack": "people",
    "words": [
-    "Confúcio",
-    "Branca de Neve",
+    "David Bowie",
     "Beethoven",
-    "Batman",
-    "Taylor Swift"
+    "Stephen Hawking",
+    "Angelina Jolie",
+    "Bugs Bunny"
    ]
   }
  },
  {
   "id": "pt-0126",
   "yellow": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Morcego",
-    "Lanterna",
-    "Prego",
-    "Helicóptero",
-    "Avestruz"
+    "Jardinagem",
+    "Páscoa",
+    "Titanic",
+    "Xilofone",
+    "Canoagem"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Eusébio",
-    "Barack Obama",
-    "Iuri Gagarin",
-    "Sherlock Holmes",
-    "Van Gogh"
+    "Vilankulo",
+    "Matapa",
+    "Coqueiro",
+    "Parque do Limpopo",
+    "Rádio Moçambique"
    ]
   }
  },
  {
   "id": "pt-0127",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "football",
    "words": [
-    "Xadrez",
-    "Avatar",
-    "Sudoku",
-    "O Rei Leão",
-    "Ópera"
+    "Flamengo",
+    "SSC Napoli",
+    "Kaká",
+    "Cristiano Ronaldo",
+    "Olympique de Marselha"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Avião",
-    "Chá",
-    "Gelado",
-    "Alho",
-    "Selo"
+    "Makwaela",
+    "Bilene",
+    "Palhota",
+    "Embondeiro",
+    "Marrabenta"
    ]
   }
  },
  {
   "id": "pt-0128",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Apito",
-    "Cogumelo",
-    "Estrela",
-    "Armário",
-    "Pizza"
+    "Prisão",
+    "Algarve",
+    "Zanzibar",
+    "Sagrada Família",
+    "Portugal"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Popeye",
-    "Merlin",
-    "Coelho da Páscoa",
-    "Super Mario",
-    "Cupido"
+    "Melancia",
+    "Pinguim",
+    "Uvas",
+    "Colar",
+    "Penso rápido"
    ]
   }
  },
  {
   "id": "pt-0129",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Hiena",
-    "Camelo",
-    "Rinoceronte",
-    "Pato",
-    "Vaca"
+    "Gana",
+    "Vancouver",
+    "Circo",
+    "Washington",
+    "Marrocos"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Pelé",
-    "Zorro",
-    "Marie Curie",
-    "Joana d'Arc",
-    "Moana"
+    "Vespa",
+    "Maçã",
+    "Gravata",
+    "Avestruz",
+    "Lagarto"
    ]
   }
  },
  {
   "id": "pt-0130",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "people",
    "words": [
-    "Chimoio",
-    "Capulana",
-    "Recife de coral",
-    "Rádio Moçambique",
-    "Lago Niassa"
+    "Chimamanda Ngozi Adichie",
+    "Isaac Newton",
+    "Abraham Lincoln",
+    "Homer Simpson",
+    "Frankenstein"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "football",
    "words": [
-    "Garrafa",
-    "Lâmpada",
-    "Cometa",
-    "Cenoura",
-    "Espelho"
+    "Sporting de Braga",
+    "Samuel Eto'o",
+    "Guarda-redes",
+    "Sevilla FC",
+    "San Siro"
    ]
   }
  },
@@ -2994,228 +2994,228 @@
   "yellow": {
    "pack": "things",
    "words": [
-    "Colher",
-    "Lareira",
-    "Cama",
-    "Janela",
-    "Croissant"
+    "Orangotango",
+    "Kebab",
+    "Submarino",
+    "Esquilo",
+    "Beija-flor"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "football",
    "words": [
-    "Steven Spielberg",
-    "Gato das Botas",
-    "Salvador Dalí",
-    "Bugs Bunny",
-    "Neil Armstrong"
+    "Ryan Giggs",
+    "Luís Figo",
+    "Rivaldo",
+    "Frank Lampard",
+    "Eden Hazard"
    ]
   }
  },
  {
   "id": "pt-0132",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "things",
    "words": [
-    "Matraquilhos",
-    "Hip-hop",
-    "Banda desenhada",
-    "Microfone",
-    "Montanha-russa"
+    "Camaleão",
+    "Urso polar",
+    "Mochila",
+    "Rádio",
+    "Rinoceronte"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "football",
    "words": [
-    "Drácula",
-    "Sonic",
-    "Martin Luther King",
-    "Tom e Jerry",
-    "Dumbo"
+    "Son Heung-min",
+    "Estádio José Alvalade",
+    "Estádio do Dragão",
+    "Bola de Ouro",
+    "Mohamed Salah"
    ]
   }
  },
  {
   "id": "pt-0133",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Gelatina",
-    "Rosa",
-    "Ovo",
-    "Frigorífico",
-    "Cadeado"
+    "Iglu",
+    "Chichén Itzá",
+    "Polo Sul",
+    "Himalaias",
+    "Monte Evereste"
    ]
   },
   "blue": {
    "pack": "entertainment",
    "words": [
-    "Malabarista",
-    "Super-herói",
-    "Campismo",
-    "Golfe",
-    "Violoncelo"
+    "Rock",
+    "Vingadores",
+    "Corrida de sacos",
+    "Pintura",
+    "Anedota"
    ]
   }
  },
  {
   "id": "pt-0134",
   "yellow": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Raposa",
-    "Boneca",
-    "Açúcar",
-    "Ioiô",
-    "Melancia"
+    "Oprah Winfrey",
+    "Keanu Reeves",
+    "Tintim",
+    "Pequena Sereia",
+    "Barbie"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Vivaldi",
-    "Gulliver",
-    "Paulina Chiziane",
-    "Louis Armstrong",
-    "Piu-Piu"
+    "Chamuças",
+    "Amendoim torrado",
+    "Costa do Sol",
+    "Sumo de maçala",
+    "Xitende"
    ]
   }
  },
  {
   "id": "pt-0135",
   "yellow": {
-   "pack": "things",
+   "pack": "anime",
    "words": [
-    "Parafuso",
-    "Gaveta",
-    "Relâmpago",
-    "Barco",
-    "Trovoada"
+    "Bulbasaur",
+    "Charmander",
+    "Seiya",
+    "Mikasa",
+    "Gojo Satoru"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "places",
    "words": [
-    "Nikola Tesla",
-    "Beyoncé",
-    "Bela Adormecida",
-    "Capitão América",
-    "Nemo"
+    "Central Park",
+    "Igreja",
+    "Chile",
+    "Quarto",
+    "Arranha-céus"
    ]
   }
  },
  {
   "id": "pt-0136",
   "yellow": {
-   "pack": "places",
+   "pack": "things",
    "words": [
-    "Igreja",
-    "Jardim zoológico",
-    "Centro comercial",
-    "Maldivas",
-    "Oficina"
+    "Águia",
+    "Hambúrguer",
+    "Tomate",
+    "Croissant",
+    "Trovoada"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Samora Machel",
-    "Rei Salomão",
-    "Eça de Queirós",
-    "Charlie Chaplin",
-    "Yoda"
+    "Violino",
+    "Episódio",
+    "Morna",
+    "Auscultadores",
+    "Videojogo"
    ]
   }
  },
  {
   "id": "pt-0137",
   "yellow": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Morango",
-    "Tubarão",
-    "Chaminé",
-    "Eclipse",
-    "Sumo"
+    "Maratona",
+    "Marioneta",
+    "Streaming",
+    "Comédia",
+    "Afrobeats"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "Cataratas Vitória",
-    "Estátua da Liberdade",
-    "Cabeleireiro",
-    "Istambul",
-    "Lago"
+    "Freddie Mercury",
+    "Johannes Gutenberg",
+    "Fernão de Magalhães",
+    "Bob Dylan",
+    "Morgan Freeman"
    ]
   }
  },
  {
   "id": "pt-0138",
   "yellow": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Candeeiro",
-    "Ananás",
-    "Pastel de nata",
-    "Concha",
-    "Bola"
+    "Ilha de Benguerra",
+    "Ferroviário de Maputo",
+    "Gorongosa",
+    "Caril de caranguejo",
+    "Black Bulls"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Scooby-Doo",
-    "Florence Nightingale",
-    "Rei Artur",
-    "Bill Gates",
-    "Tintim"
+    "Kuduro",
+    "Palavras cruzadas",
+    "Série",
+    "Campeonato do Mundo",
+    "Teatro de fantoches"
    ]
   }
  },
  {
   "id": "pt-0139",
   "yellow": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Galileu",
-    "Charles Dickens",
-    "Três Porquinhos",
-    "Luciano Pavarotti",
-    "Bob Esponja"
+    "Harpa",
+    "Charadas",
+    "Consola",
+    "Xadrez",
+    "Reggaeton"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Jornal",
-    "Sofá",
-    "Escova de dentes",
-    "Golfinho",
-    "Girassol"
+    "Iuri Gagarin",
+    "Samora Machel",
+    "Mahatma Gandhi",
+    "Patrice Lumumba",
+    "Dom Quixote"
    ]
   }
  },
  {
   "id": "pt-0140",
   "yellow": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Usain Bolt",
-    "Homem de Ferro",
-    "Sininho",
-    "Cesária Évora",
-    "Leonardo da Vinci"
+    "Tufo",
+    "Ponta do Ouro",
+    "Mangal",
+    "Ilha da Inhaca",
+    "Rissóis de camarão"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Arco-íris",
-    "Burro",
-    "Pasta de dentes",
-    "Sal",
-    "Tesoura"
+    "Moinho",
+    "Porto",
+    "Angola",
+    "Montevideu",
+    "Selva"
    ]
   }
  },
@@ -3224,67 +3224,67 @@
   "yellow": {
    "pack": "things",
    "words": [
-    "Joaninha",
-    "Papagaio de papel",
-    "Rebuçado",
-    "Árvore",
-    "Porta"
+    "Piranha",
+    "Lontra",
+    "Moeda",
+    "Copo",
+    "Compota"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "entertainment",
    "words": [
-    "Esteira",
-    "Tufo",
-    "Marginal de Maputo",
-    "Lagosta",
-    "Matola"
+    "Valsa",
+    "Fórmula 1",
+    "Jogos Olímpicos",
+    "Amapiano",
+    "Ratatui"
    ]
   }
  },
  {
   "id": "pt-0142",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "people",
    "words": [
-    "Praça da Independência",
-    "Frango à zambeziana",
-    "Rissóis de camarão",
-    "Mambas",
-    "Catedral de Maputo"
+    "Hércules",
+    "Rafael Nadal",
+    "Gato das Botas",
+    "Aquiles",
+    "Graça Machel"
    ]
   },
   "blue": {
    "pack": "places",
    "words": [
-    "Vulcão",
+    "Polo Norte",
     "Sala de aula",
-    "Farol",
-    "Teatro",
-    "Marraquexe"
+    "Aeroporto",
+    "Budapeste",
+    "Munique"
    ]
   }
  },
  {
   "id": "pt-0143",
   "yellow": {
-   "pack": "places",
+   "pack": "people",
    "words": [
-    "Holanda",
-    "Parque de estacionamento",
-    "Deserto do Sara",
-    "Universidade",
-    "Los Angeles"
+    "Homem-Aranha",
+    "Nikola Tesla",
+    "Steve Jobs",
+    "Pantera Negra",
+    "Pitágoras"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Pantera Cor-de-Rosa",
-    "Astérix",
-    "Alfred Hitchcock",
-    "Thor",
-    "Maria Mutola"
+    "Paraquedismo",
+    "DJ",
+    "Trampolim",
+    "Fado",
+    "Documentário"
    ]
   }
  },
@@ -3293,67 +3293,67 @@
   "yellow": {
    "pack": "mozambique",
    "words": [
-    "Makwaela",
-    "Sofala",
-    "Cajueiro",
-    "Baía de Maputo",
-    "Estação Central de Maputo"
+    "Piri-piri",
+    "Pilão",
+    "Reserva do Niassa",
+    "Ngalanga",
+    "Lagosta"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "people",
    "words": [
-    "Jogo da velha",
-    "Orquestra",
-    "Judo",
-    "Bateria",
-    "Pedra, papel, tesoura"
+    "Moana",
+    "Tom e Jerry",
+    "Harry Potter",
+    "Pinóquio",
+    "Homero"
    ]
   }
  },
  {
   "id": "pt-0145",
   "yellow": {
-   "pack": "things",
+   "pack": "mozambique",
    "words": [
-    "Óculos",
-    "Abelha",
-    "Trator",
-    "Ovelha",
-    "Comboio"
+    "Ilha de Moçambique",
+    "Macaneta",
+    "Caril de caranguejo",
+    "Sofala",
+    "Frango à zambeziana"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "places",
    "words": [
-    "Chapa",
-    "Embondeiro",
-    "Ilha da Inhaca",
-    "Caminho de ferro",
-    "Xai-Xai"
+    "Esquadra da polícia",
+    "Teatro",
+    "Cinema",
+    "Luanda",
+    "Palácio da Pena"
    ]
   }
  },
  {
   "id": "pt-0146",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "people",
    "words": [
-    "Costa do Sol",
-    "Mapiko",
-    "Papaia",
-    "Barra",
-    "Mercado do Peixe"
+    "Simbad, o Marinheiro",
+    "Buzz Lightyear",
+    "Miriam Makeba",
+    "Alan Turing",
+    "Nelson Mandela"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "mozambique",
    "words": [
-    "Roger Federer",
-    "Cristóvão Colombo",
-    "Tarzan",
-    "Robin dos Bosques",
-    "Charlie Brown"
+    "Ponta do Ouro",
+    "Tubarão-baleia",
+    "Lichinga",
+    "Feijão nhemba",
+    "Mercado do Peixe"
    ]
   }
  },
@@ -3362,44 +3362,44 @@
   "yellow": {
    "pack": "entertainment",
    "words": [
-    "Trompete",
-    "Passadeira vermelha",
-    "Reggae",
-    "Titanic",
-    "Ténis de mesa"
+    "Carrinhos de choque",
+    "Casamento",
+    "Procurar o Nemo",
+    "Bossa nova",
+    "Encanto"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "football",
    "words": [
-    "Casa de Ferro",
-    "Moçambola",
-    "Rio Limpopo",
-    "Pemba",
-    "Xima"
+    "Real Madrid",
+    "Karim Benzema",
+    "Geny Catamo",
+    "Cartão vermelho",
+    "Sam Kerr"
    ]
   }
  },
  {
   "id": "pt-0148",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "football",
    "words": [
-    "Música pop",
-    "Fotografia",
-    "Palhaço",
-    "Procurar o Nemo",
-    "Bowling"
+    "Jay-Jay Okocha",
+    "Vitória de Guimarães",
+    "Borussia Dortmund",
+    "SSC Napoli",
+    "Pep Guardiola"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Agatha Christie",
-    "Shrek",
-    "Pedro Álvares Cabral",
-    "Pablo Picasso",
-    "Elvis Presley"
+    "Acordeão",
+    "Meme",
+    "Desporto radical",
+    "Carrossel",
+    "Salsa"
    ]
   }
  },
@@ -3408,90 +3408,90 @@
   "yellow": {
    "pack": "people",
    "words": [
-    "Super-Homem",
-    "Vasco da Gama",
-    "Bob Marley",
-    "Mr. Bean",
-    "Ed Sheeran"
+    "Celine Dion",
+    "Cinderela",
+    "Robinson Crusoé",
+    "Steven Spielberg",
+    "Pedro Álvares Cabral"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "football",
    "words": [
-    "Piscina",
-    "Estados Unidos",
-    "Indonésia",
-    "Cave",
-    "Quinta"
+    "João Cancelo",
+    "Bola de Ouro",
+    "Gareth Bale",
+    "Cartão vermelho",
+    "Mamelodi Sundowns"
    ]
   }
  },
  {
   "id": "pt-0150",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Veado",
-    "Cadeira",
-    "Garfo",
-    "Polvo",
-    "Lagarto"
+    "Lima",
+    "Ponte",
+    "Oceano Pacífico",
+    "Delta do Okavango",
+    "Austrália"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "mozambique",
    "words": [
-    "Campeonato do Mundo",
-    "Jardinagem",
-    "Documentário",
-    "Os Simpsons",
-    "Rock"
+    "Polana",
+    "Gorongosa",
+    "Ilha de Benguerra",
+    "Catembe",
+    "Cahora Bassa"
    ]
   }
  },
  {
   "id": "pt-0151",
   "yellow": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Consola",
-    "Esqui",
-    "Ioga",
-    "Páscoa",
-    "Ballet"
+    "Cabo da Boa Esperança",
+    "Grécia",
+    "Mosteiro dos Jerónimos",
+    "Correios",
+    "Zimbabué"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "entertainment",
    "words": [
-    "Buda",
-    "Nelson Mandela",
-    "Malangatana",
-    "Homero",
-    "Rafael Nadal"
+    "Guitarra",
+    "Realizador",
+    "Star Wars",
+    "Jogo de cartas",
+    "Acrobata"
    ]
   }
  },
  {
   "id": "pt-0152",
   "yellow": {
-   "pack": "people",
+   "pack": "anime",
    "words": [
-    "Cristiano Ronaldo",
-    "Amália Rodrigues",
-    "Moisés",
-    "Zeus",
-    "Rainha Isabel II"
+    "Ataque dos Titãs",
+    "Kamehameha",
+    "Eevee",
+    "Zoro",
+    "One Piece"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Cachecol",
-    "Mapa",
-    "Tomada",
-    "Leite",
-    "Bandeira"
+    "Coelho da Páscoa",
+    "Cinderela",
+    "Maria Mutola",
+    "Bugs Bunny",
+    "Marie Curie"
    ]
   }
  },
@@ -3500,21 +3500,21 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Restaurante",
-    "Cabo Verde",
-    "Grande Muralha da China",
-    "Cataratas do Niágara",
-    "Barcelona"
+    "Etiópia",
+    "Bombas de gasolina",
+    "Chichén Itzá",
+    "Jerusalém",
+    "Salvador da Bahia"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "things",
    "words": [
-    "Garfield",
-    "Walt Disney",
-    "Cinderela",
-    "Hércules",
-    "Eduardo Mondlane"
+    "Relâmpago",
+    "Cofre",
+    "Chaminé",
+    "Foguetão",
+    "Gafanhoto"
    ]
   }
  },
@@ -3523,67 +3523,67 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "China",
-    "Itália",
+    "Veneza",
     "Rússia",
-    "Cascata",
-    "Las Vegas"
+    "Pirâmides",
+    "Uluru",
+    "Himalaias"
    ]
   },
   "blue": {
-   "pack": "things",
+   "pack": "entertainment",
    "words": [
-    "Moeda",
-    "Porco",
-    "Computador",
-    "Girafa",
-    "Uvas"
+    "Atletismo",
+    "Liga dos Campeões",
+    "Zouk",
+    "Trailer",
+    "Música pop"
    ]
   }
  },
  {
   "id": "pt-0155",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Museu de História Natural",
-    "Castanha de caju",
-    "Dhow",
-    "Ngalanga",
-    "Mercado Central"
+    "Teclado",
+    "Sumo",
+    "Leopardo",
+    "Galo",
+    "Vespa"
    ]
   },
   "blue": {
-   "pack": "entertainment",
+   "pack": "places",
    "words": [
-    "Câmara de filmar",
-    "Kizomba",
-    "Óscar",
-    "Ator",
-    "Desenho"
+    "Alhambra",
+    "Sevilha",
+    "Aquário",
+    "Irlanda",
+    "Roma"
    ]
   }
  },
  {
   "id": "pt-0156",
   "yellow": {
-   "pack": "mozambique",
+   "pack": "entertainment",
    "words": [
-    "Gorongosa",
-    "Cahora Bassa",
-    "Lichinga",
-    "Tartaruga marinha",
-    "Piri-piri"
+    "Matraquilhos",
+    "Rap",
+    "Telenovela",
+    "Ano Novo",
+    "Fotografia"
    ]
   },
   "blue": {
-   "pack": "people",
+   "pack": "football",
    "words": [
-    "Obélix",
-    "Simba",
-    "Abraham Lincoln",
-    "Cleópatra",
-    "Pocahontas"
+    "Ricardo Quaresma",
+    "Harry Kane",
+    "Aitana Bonmatí",
+    "PSV Eindhoven",
+    "Al Ahly"
    ]
   }
  },
@@ -3592,90 +3592,1930 @@
   "yellow": {
    "pack": "places",
    "words": [
-    "Circo",
-    "Chile",
-    "Garagem",
-    "Japão",
-    "Museu"
+    "Itália",
+    "Times Square",
+    "México",
+    "Amesterdão",
+    "Museu do Louvre"
    ]
   },
   "blue": {
-   "pack": "mozambique",
+   "pack": "things",
    "words": [
-    "Bilene",
-    "Dia da Independência",
-    "Timbila",
-    "Badjias",
-    "Polana"
+    "Mochila",
+    "Avestruz",
+    "Rato de computador",
+    "Salada",
+    "Gaveta"
    ]
   }
  },
  {
   "id": "pt-0158",
   "yellow": {
-   "pack": "things",
+   "pack": "people",
    "words": [
-    "Chinelos",
-    "Castelo de areia",
-    "Folha",
-    "Panqueca",
-    "Autocarro"
+    "Martin Luther King",
+    "Homer Simpson",
+    "Darth Vader",
+    "José Craveirinha",
+    "Napoleão"
    ]
   },
   "blue": {
-   "pack": "places",
+   "pack": "mozambique",
    "words": [
-    "Cinema",
-    "Nigéria",
-    "Praia",
-    "Austrália",
-    "Brasil"
+    "Praça da Independência",
+    "Castanha de caju",
+    "Estádio do Zimpeto",
+    "Monte Namúli",
+    "Black Bulls"
    ]
   }
  },
  {
   "id": "pt-0159",
   "yellow": {
-   "pack": "things",
+   "pack": "places",
    "words": [
-    "Pombo",
-    "Almofada",
-    "Micro-ondas",
-    "Cachorro-quente",
-    "Cabra"
+    "Genebra",
+    "África do Sul",
+    "Coreia do Sul",
+    "Grande Muralha da China",
+    "Talho"
    ]
   },
   "blue": {
    "pack": "entertainment",
    "words": [
-    "Marioneta",
+    "Piano",
     "Hóquei",
-    "Fórmula 1",
-    "Episódio",
-    "Karaoke"
+    "Blues",
+    "Banda desenhada",
+    "Bingo"
    ]
   }
  },
  {
   "id": "pt-0160",
   "yellow": {
+   "pack": "things",
+   "words": [
+    "Despertador",
+    "Robô",
+    "Pente",
+    "Puzzle",
+    "Cobertor"
+   ]
+  },
+  "blue": {
    "pack": "places",
    "words": [
-    "Madrid",
-    "Amazónia",
-    "Pequim",
-    "Oceano Atlântico",
-    "Roma"
+    "Tóquio",
+    "Mercado",
+    "Argentina",
+    "Suécia",
+    "Windhoek"
+   ]
+  }
+ },
+ {
+  "id": "pt-0161",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Padaria",
+    "Grand Canyon",
+    "Escócia",
+    "Cave",
+    "Correios"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Sanji",
+    "Nezuko",
+    "Ash Ketchum",
+    "Gaara",
+    "Digimon"
+   ]
+  }
+ },
+ {
+  "id": "pt-0162",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Shaka Zulu",
+    "Michael Jackson",
+    "Robinson Crusoé",
+    "Merlin",
+    "Frank Sinatra"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "Bukayo Saka",
+    "Cristiano Ronaldo",
+    "Steven Gerrard",
+    "Karim Benzema",
+    "Lamine Yamal"
+   ]
+  }
+ },
+ {
+  "id": "pt-0163",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Ioga",
+    "Episódio",
+    "Star Wars",
+    "Mágico",
+    "Up"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Galápagos",
+    "São Francisco",
+    "Atenas",
+    "Acrópole",
+    "Estados Unidos"
+   ]
+  }
+ },
+ {
+  "id": "pt-0164",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Sushi",
+    "Iogurte",
+    "Uvas",
+    "Lhama",
+    "Maçã"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Torre de Belém",
+    "Inglaterra",
+    "Singapura",
+    "Cabo da Boa Esperança",
+    "Muro de Berlim"
+   ]
+  }
+ },
+ {
+  "id": "pt-0165",
+  "yellow": {
+   "pack": "football",
+   "words": [
+    "Sadio Mané",
+    "Newcastle",
+    "Xavi",
+    "AS Roma",
+    "Erling Haaland"
    ]
   },
   "blue": {
    "pack": "things",
    "words": [
-    "Iogurte",
-    "Esquilo",
+    "Submarino",
+    "Paraquedas",
+    "Lanterna",
+    "Feijoada",
+    "Pera"
+   ]
+  }
+ },
+ {
+  "id": "pt-0166",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Escondidas",
+    "Bowling",
+    "Violoncelo",
+    "Streaming",
+    "Corrida de sacos"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Tom Hanks",
+    "Alexander Fleming",
+    "Neyma",
+    "Thomas Edison",
+    "Walt Disney"
+   ]
+  }
+ },
+ {
+  "id": "pt-0167",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Super-herói",
+    "Carrinhos de choque",
+    "Microfone",
+    "Cabra-cega",
+    "Tetris"
+   ]
+  },
+  "blue": {
+   "pack": "mozambique",
+   "words": [
+    "Ilha do Ibo",
+    "Mucapata",
+    "Mandioca",
+    "Angoche",
+    "Reserva do Niassa"
+   ]
+  }
+ },
+ {
+  "id": "pt-0168",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Cavalo-marinho",
+    "Unicórnio",
+    "Troféu",
+    "Javali",
+    "Piranha"
+   ]
+  },
+  "blue": {
+   "pack": "entertainment",
+   "words": [
+    "Música clássica",
+    "Jardinagem",
+    "Câmara de filmar",
+    "Fortnite",
+    "Desfile"
+   ]
+  }
+ },
+ {
+  "id": "pt-0169",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Chimamanda Ngozi Adichie",
+    "Rato Mickey",
+    "Homero",
+    "Hans Christian Andersen",
+    "Pequena Sereia"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Ioiô",
+    "Girafa",
+    "Pedra",
+    "Mel",
+    "Nuvem"
+   ]
+  }
+ },
+ {
+  "id": "pt-0170",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Seychelles",
+    "Madrid",
+    "Oceano Índico",
+    "Madagáscar",
+    "Índia"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Golfinho",
+    "Mota",
+    "Telemóvel",
+    "Gato",
+    "Lápis"
+   ]
+  }
+ },
+ {
+  "id": "pt-0171",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Escova de dentes",
+    "Boneco de neve",
+    "Flor",
+    "Cato",
+    "Colher"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Shenlong",
+    "Inosuke",
+    "Sailor Moon",
+    "Spike Spiegel",
+    "Chopper"
+   ]
+  }
+ },
+ {
+  "id": "pt-0172",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Mapa",
+    "Bússola",
+    "Aranha",
+    "Lasanha",
+    "Martelo"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Nuvem Voadora",
+    "Itadori Yuji",
+    "Zenitsu",
+    "Saitama",
+    "Itachi"
+   ]
+  }
+ },
+ {
+  "id": "pt-0173",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Batata",
+    "Tartaruga",
+    "Porco",
+    "Tacos",
+    "Lâmpada"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Mafalda",
+    "Eça de Queirós",
+    "Mowgli",
+    "Alan Turing",
+    "Tintim"
+   ]
+  }
+ },
+ {
+  "id": "pt-0174",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Banda desenhada",
+    "Boxe",
+    "Bingo",
+    "Trailer",
+    "Ratatui"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Harry Potter",
+    "Indiana Jones",
+    "Malangatana",
+    "Drácula",
+    "Platão"
+   ]
+  }
+ },
+ {
+  "id": "pt-0175",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Mamma Mia",
+    "Eurovisão",
+    "Amapiano",
+    "Ano Novo",
+    "Xadrez"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Folha",
+    "Coruja",
+    "Luvas",
+    "Toalha",
+    "Rinoceronte"
+   ]
+  }
+ },
+ {
+  "id": "pt-0176",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Frankenstein",
+    "James Bond",
+    "Barack Obama",
+    "Emma Watson",
+    "Shakespeare"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Morcego",
+    "Almofada",
+    "Papagaio",
+    "Gelo",
+    "Tigre"
+   ]
+  }
+ },
+ {
+  "id": "pt-0177",
+  "yellow": {
+   "pack": "mozambique",
+   "words": [
+    "Mussiro",
+    "Xipamanine",
+    "Hino nacional",
+    "Amendoim torrado",
+    "Chapa"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Cavalo",
+    "Pasta de dentes",
+    "Castor",
+    "Mosquito",
+    "Candeeiro"
+   ]
+  }
+ },
+ {
+  "id": "pt-0178",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Tom Cruise",
+    "Mariah Carey",
+    "Elon Musk",
+    "Mark Zuckerberg",
+    "Louis Armstrong"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Monte Evereste",
+    "Parque de diversões",
+    "Xangai",
+    "Barcelona",
+    "Ilha"
+   ]
+  }
+ },
+ {
+  "id": "pt-0179",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Futebol",
+    "Ukulele",
+    "Pintura",
+    "Comando",
+    "Aniversário"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Kirito",
+    "Light Yagami",
+    "Vegeta",
+    "Hamtaro",
+    "Itachi"
+   ]
+  }
+ },
+ {
+  "id": "pt-0180",
+  "yellow": {
+   "pack": "mozambique",
+   "words": [
+    "Dia da Independência",
+    "Tartaruga marinha",
+    "Dhow",
+    "Chamuças",
+    "Embondeiro"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Lusaka",
+    "São Tomé e Príncipe",
+    "Vaticano",
+    "Brasília",
+    "Maurícias"
+   ]
+  }
+ },
+ {
+  "id": "pt-0181",
+  "yellow": {
+   "pack": "football",
+   "words": [
+    "TP Mazembe",
+    "Liverpool",
+    "Petro de Luanda",
+    "Eric Cantona",
+    "Maradona"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Krillin",
+    "Shin-chan",
+    "Mestre Kame",
+    "Jujutsu Kaisen",
+    "Naruto"
+   ]
+  }
+ },
+ {
+  "id": "pt-0182",
+  "yellow": {
+   "pack": "mozambique",
+   "words": [
+    "Liga Desportiva de Maputo",
+    "Estádio da Machava",
+    "Costa do Sol",
+    "Arte maconde",
+    "Piri-piri"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Tina Turner",
+    "Anne Frank",
+    "Buda",
+    "Cupido",
+    "Wizkid"
+   ]
+  }
+ },
+ {
+  "id": "pt-0183",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Vassoura",
+    "Pen USB",
+    "Trotinete",
+    "Laranja",
+    "Vaca"
+   ]
+  },
+  "blue": {
+   "pack": "mozambique",
+   "words": [
+    "Caril de amendoim",
+    "Recife de coral",
+    "Arquipélago de Bazaruto",
+    "Mapiko",
+    "Pão de Inhambane"
+   ]
+  }
+ },
+ {
+  "id": "pt-0184",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Charlie Chaplin",
+    "Rainha Isabel II",
+    "Leonardo DiCaprio",
+    "Serena Williams",
+    "Aladino"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Pato",
     "Sol",
+    "Rádio",
+    "Prato",
+    "Dinossauro"
+   ]
+  }
+ },
+ {
+  "id": "pt-0185",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Bolo",
+    "Aspirador",
+    "Bisonte",
+    "Chinelos",
+    "Bola"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Banco",
+    "Açores",
+    "Washington",
+    "Selva",
+    "Piscina"
+   ]
+  }
+ },
+ {
+  "id": "pt-0186",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Lagos",
+    "Monte Rushmore",
+    "Moscovo",
+    "Marte",
+    "Edimburgo"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Loid Forger",
+    "Mewtwo",
+    "Itadori Yuji",
+    "Studio Ghibli",
+    "Nico Robin"
+   ]
+  }
+ },
+ {
+  "id": "pt-0187",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Charadas",
+    "Karaté",
+    "Kizomba",
+    "Mergulho",
+    "Jazz"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Oprah Winfrey",
+    "Robin dos Bosques",
+    "Thor",
+    "Samora Machel",
+    "Zorro"
+   ]
+  }
+ },
+ {
+  "id": "pt-0188",
+  "yellow": {
+   "pack": "football",
+   "words": [
+    "Son Heung-min",
+    "Rui Costa",
+    "Andrea Pirlo",
+    "Samuel Eto'o",
+    "Zinedine Zidane"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Banguecoque",
+    "Islândia",
+    "Egito",
+    "Gruta",
+    "Palácio de Buckingham"
+   ]
+  }
+ },
+ {
+  "id": "pt-0189",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Búfalo",
+    "Melancia",
+    "Águia",
+    "Carteira",
+    "Panela"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Cabeleireiro",
+    "Casa de banho",
+    "Sala de aula",
+    "Caraíbas",
+    "Amazónia"
+   ]
+  }
+ },
+ {
+  "id": "pt-0190",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Compota",
+    "Ovo",
+    "Chave",
+    "Donut",
+    "Cobra"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "José Mourinho",
+    "Sam Kerr",
+    "Alfredo Di Stéfano",
+    "Nani",
+    "Vitória de Guimarães"
+   ]
+  }
+ },
+ {
+  "id": "pt-0191",
+  "yellow": {
+   "pack": "anime",
+   "words": [
+    "Sakura Haruno",
+    "Zenitsu",
+    "Digimon",
+    "Chopper",
+    "Marco"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Nelson Mandela",
+    "Romeu e Julieta",
+    "Pinóquio",
+    "Taylor Swift",
+    "Ramsés II"
+   ]
+  }
+ },
+ {
+  "id": "pt-0192",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Capitão Gancho",
+    "Tarzan",
+    "Estrumpfes",
+    "Amália Rodrigues",
+    "Luís de Camões"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Íman",
+    "Ornitorrinco",
+    "Paella",
+    "Hamster",
+    "Pudim"
+   ]
+  }
+ },
+ {
+  "id": "pt-0193",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Estação de comboios",
+    "Cinema",
+    "Florença",
+    "Polo Sul",
+    "Milão"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "Carles Puyol",
+    "Paolo Maldini",
+    "Palmeiras",
+    "Ferenc Puskás",
+    "Atlético de Madrid"
+   ]
+  }
+ },
+ {
+  "id": "pt-0194",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Ariana Grande",
+    "Júlio Verne",
+    "Eminem",
+    "Dwayne Johnson",
+    "John Lennon"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Pequim",
+    "Cataratas Vitória",
+    "Acra",
+    "Maldivas",
+    "Lago Vitória"
+   ]
+  }
+ },
+ {
+  "id": "pt-0195",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Mr. Bean",
+    "Stephen Hawking",
+    "Pocahontas",
+    "Irmãos Grimm",
+    "Popeye"
+   ]
+  },
+  "blue": {
+   "pack": "mozambique",
+   "words": [
+    "Xitende",
+    "Marginal de Maputo",
+    "Manica",
+    "UD Songo",
+    "Ilha de Santa Carolina"
+   ]
+  }
+ },
+ {
+  "id": "pt-0196",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Castelo de areia",
+    "Eclipse",
+    "Casaco",
+    "Cão",
+    "Carregador"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Nova Iorque",
+    "Lima",
+    "Palácio",
+    "Torre de Pisa",
+    "Kremlin"
+   ]
+  }
+ },
+ {
+  "id": "pt-0197",
+  "yellow": {
+   "pack": "mozambique",
+   "words": [
+    "Ilha da Inhaca",
+    "Barra",
+    "Rio Limpopo",
+    "Beira",
+    "Tufo"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "Olympique de Marselha",
+    "Franz Beckenbauer",
+    "Bruno Fernandes",
+    "Estádio do Dragão",
+    "Alessandro Del Piero"
+   ]
+  }
+ },
+ {
+  "id": "pt-0198",
+  "yellow": {
+   "pack": "football",
+   "words": [
+    "Cafu",
+    "Primeiro de Agosto",
+    "Ronaldo Nazário",
+    "Penálti",
+    "Ryan Giggs"
+   ]
+  },
+  "blue": {
+   "pack": "entertainment",
+   "words": [
+    "Hóquei",
+    "O Rei Leão",
+    "Frozen",
+    "Trompete",
+    "Carnaval"
+   ]
+  }
+ },
+ {
+  "id": "pt-0199",
+  "yellow": {
+   "pack": "mozambique",
+   "words": [
+    "Feira Popular",
+    "Metical",
+    "Caminho de ferro",
+    "Coco",
+    "Gaza"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "Wayne Rooney",
+    "Romário",
+    "Oliver Kahn",
+    "Rodrygo",
+    "Tottenham"
+   ]
+  }
+ },
+ {
+  "id": "pt-0200",
+  "yellow": {
+   "pack": "anime",
+   "words": [
+    "Beyblade",
+    "Inosuke",
+    "Os Cavaleiros do Zodíaco",
+    "Eren Yeager",
+    "Gojo Satoru"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Adis Abeba",
+    "Cascata",
+    "Stonehenge",
+    "Bali",
+    "Universidade"
+   ]
+  }
+ },
+ {
+  "id": "pt-0201",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Documentário",
+    "Candy Crush",
+    "Youtuber",
+    "Berlindes",
+    "Concurso de talentos"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Leonardo da Vinci",
+    "Nefertiti",
+    "Jacques Cousteau",
+    "Elton John",
+    "Johannes Gutenberg"
+   ]
+  }
+ },
+ {
+  "id": "pt-0202",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Relâmpago",
+    "Prego",
+    "Croquete",
+    "Lobo",
+    "Couve"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "Zico",
+    "Geny Catamo",
+    "Vinícius Júnior",
+    "Guarda-redes",
+    "Marco van Basten"
+   ]
+  }
+ },
+ {
+  "id": "pt-0203",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Louis Pasteur",
+    "Graça Machel",
+    "Angelina Jolie",
+    "Ulisses",
+    "Charles Dickens"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Estetoscópio",
+    "Medalha",
+    "Peixe-palhaço",
+    "Elefante",
+    "Chapéu"
+   ]
+  }
+ },
+ {
+  "id": "pt-0204",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Telenovela",
+    "Filme de terror",
+    "Fotografia",
+    "Ator",
+    "Teatro de fantoches"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Beyoncé",
+    "Miguel Ângelo",
+    "Rosa Parks",
+    "Bob Esponja",
+    "Mulan"
+   ]
+  }
+ },
+ {
+  "id": "pt-0205",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Gru, o Maldisposto",
+    "Banda",
+    "Guitarra",
+    "Escorrega",
+    "Monstros e Companhia"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Beethoven",
+    "Alexander Graham Bell",
+    "Billie Eilish",
+    "Michael Phelps",
+    "Neil Armstrong"
+   ]
+  }
+ },
+ {
+  "id": "pt-0206",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Penso rápido",
+    "Régua",
+    "Urso polar",
+    "Minhoca",
+    "Cogumelo"
+   ]
+  },
+  "blue": {
+   "pack": "entertainment",
+   "words": [
+    "Telejornal",
+    "Blues",
+    "Mundial de futebol",
+    "Ténis de mesa",
+    "Damas"
+   ]
+  }
+ },
+ {
+  "id": "pt-0207",
+  "yellow": {
+   "pack": "football",
+   "words": [
+    "FC Barcelona",
+    "Zlatan Ibrahimović",
+    "Al-Nassr",
+    "Kylian Mbappé",
+    "Vitinha"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Agumon",
+    "Light Yagami",
+    "O Meu Vizinho Totoro",
+    "Bakugo",
+    "Pokémon"
+   ]
+  }
+ },
+ {
+  "id": "pt-0208",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Balde",
+    "Cama",
+    "Chocolate",
+    "Café",
+    "Escada"
+   ]
+  },
+  "blue": {
+   "pack": "mozambique",
+   "words": [
+    "Lulas grelhadas",
+    "Rio Save",
+    "Bilene",
+    "Txopela",
+    "Xigubo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0209",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Montanha-russa",
+    "Basquetebol",
+    "Tambor",
+    "Rap",
+    "Anedota"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Homem-Aranha",
+    "Homem de Ferro",
+    "Dumbo",
+    "Pato Donald",
+    "Nikola Tesla"
+   ]
+  }
+ },
+ {
+  "id": "pt-0210",
+  "yellow": {
+   "pack": "football",
+   "words": [
+    "Neymar",
+    "Benfica",
+    "Mohamed Salah",
+    "Boca Juniors",
+    "Roberto Baggio"
+   ]
+  },
+  "blue": {
+   "pack": "entertainment",
+   "words": [
+    "Videojogo",
+    "Malabarista",
+    "Reggaeton",
+    "Salto em altura",
+    "Roblox"
+   ]
+  }
+ },
+ {
+  "id": "pt-0211",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Piano",
+    "Ginástica",
+    "Escultura",
+    "Marioneta",
+    "Liga dos Campeões"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Pantera Negra",
+    "Youssou N'Dour",
+    "Miriam Makeba",
+    "Bela Adormecida",
+    "Rapunzel"
+   ]
+  }
+ },
+ {
+  "id": "pt-0212",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Las Vegas",
+    "Arranha-céus",
+    "Lavandaria",
+    "Nova Zelândia",
+    "Turquia"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Pikachu",
+    "Tanjiro",
+    "Squirtle",
+    "A Viagem de Chihiro",
+    "Totoro"
+   ]
+  }
+ },
+ {
+  "id": "pt-0213",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Mario Kart",
+    "Grammy",
+    "Reggae",
+    "Salsa",
+    "Trampolim"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Impressora",
+    "Pão",
+    "Ambulância",
+    "Manteiga",
+    "Apito"
+   ]
+  }
+ },
+ {
+  "id": "pt-0214",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Camelo",
+    "Teclado",
+    "Flamingo",
+    "Armário",
+    "Hiena"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Lizha James",
+    "Tom e Jerry",
+    "Shrek",
+    "Will Smith",
+    "Fany Pfumo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0215",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Polvo",
+    "Canguru",
+    "Framboesa",
+    "Abacate",
+    "Gelatina"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Londres",
+    "Angola",
+    "Oceano Atlântico",
+    "Serengeti",
+    "Berlim"
+   ]
+  }
+ },
+ {
+  "id": "pt-0216",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Queijo",
+    "Barco",
+    "Girassol",
+    "Faca",
+    "Ananás"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Rainha Vitória",
+    "Agostinho Neto",
+    "Bambi",
+    "Cleópatra",
+    "Super-Homem"
+   ]
+  }
+ },
+ {
+  "id": "pt-0217",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Hipopótamo",
+    "Banana",
+    "Garfo",
+    "Pião",
+    "Areia"
+   ]
+  },
+  "blue": {
+   "pack": "entertainment",
+   "words": [
+    "Fórmula 1",
+    "Patins",
+    "Vela desportiva",
+    "Tango",
+    "Ténis"
+   ]
+  }
+ },
+ {
+  "id": "pt-0218",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Breakdance",
+    "Críquete",
+    "Flauta",
+    "Os Simpsons",
+    "Skate"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Burj Khalifa",
+    "Varsóvia",
+    "Ponte Golden Gate",
+    "Casablanca",
+    "Marraquexe"
+   ]
+  }
+ },
+ {
+  "id": "pt-0219",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Steve Jobs",
+    "Agatha Christie",
+    "Keanu Reeves",
+    "Miguel de Cervantes",
+    "Hello Kitty"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Cisne",
+    "Micro-ondas",
+    "Vento",
+    "Frigideira",
+    "Pinguim"
+   ]
+  }
+ },
+ {
+  "id": "pt-0220",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Lobo Mau",
+    "Pablo Picasso",
+    "Fernão de Magalhães",
+    "Luciano Pavarotti",
+    "Desmond Tutu"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Beija-flor",
+    "Meias",
+    "Livro",
+    "Dragão",
+    "Panqueca"
+   ]
+  }
+ },
+ {
+  "id": "pt-0221",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Cometa",
+    "Furacão",
+    "Pepino",
+    "Jornal",
+    "Morango"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Bogotá",
+    "Sagrada Família",
+    "Observatório",
+    "Igreja",
+    "Havana"
+   ]
+  }
+ },
+ {
+  "id": "pt-0222",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Timor-Leste",
+    "Aeroporto",
+    "Miami",
+    "Estátua da Liberdade",
+    "Floresta"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Tubarão",
+    "Zebra",
+    "Cachorro-quente",
+    "Sumo",
+    "Sapo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0223",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Óculos de sol",
+    "Neve",
+    "Sanduíche",
+    "Bolacha",
+    "Pêssego"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Astérix",
+    "Usain Bolt",
+    "Justin Bieber",
+    "Mia Couto",
+    "Pantera Cor-de-Rosa"
+   ]
+  }
+ },
+ {
+  "id": "pt-0224",
+  "yellow": {
+   "pack": "anime",
+   "words": [
+    "Kamehameha",
+    "Deku",
+    "Kakashi",
+    "Yu-Gi-Oh!",
+    "Charmander"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "Ajax",
+    "Gerd Müller",
+    "Kevin De Bruyne",
+    "Pepe",
+    "Robert Lewandowski"
+   ]
+  }
+ },
+ {
+  "id": "pt-0225",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Dominó",
+    "Apanhada",
+    "Flash mob",
+    "Óscar",
+    "Comédia"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Antártida",
+    "Montevideu",
+    "Central Park",
+    "Havai",
+    "Portugal"
+   ]
+  }
+ },
+ {
+  "id": "pt-0226",
+  "yellow": {
+   "pack": "anime",
+   "words": [
+    "Snorlax",
+    "Gaara",
+    "Sanji",
+    "Mochila do Doraemon",
+    "Todoroki"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Lucky Luke",
+    "Noé",
+    "Mozart",
+    "Moana",
+    "Nemo"
+   ]
+  }
+ },
+ {
+  "id": "pt-0227",
+  "yellow": {
+   "pack": "football",
+   "words": [
+    "Casemiro",
+    "Wembley",
+    "Paris Saint-Germain",
+    "Maracanã",
+    "Antoine Griezmann"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Porta Mágica",
+    "Demon Slayer",
+    "Lupin III",
+    "Mikasa",
+    "Oliver e Benji"
+   ]
+  }
+ },
+ {
+  "id": "pt-0228",
+  "yellow": {
+   "pack": "football",
+   "words": [
+    "Lev Yashin",
+    "Jude Bellingham",
+    "Ronaldinho",
+    "Kaká",
+    "Ruud Gullit"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Moinho",
+    "Mesquita",
+    "Taj Mahal",
+    "Deserto do Kalahari",
+    "Parque de estacionamento"
+   ]
+  }
+ },
+ {
+  "id": "pt-0229",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Carl Sagan",
+    "Charles Darwin",
+    "Dilon Djindji",
+    "Buzz Lightyear",
+    "Ray Charles"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Semáforo",
+    "Malawi",
+    "Cairo",
+    "São Paulo",
+    "Ponte"
+   ]
+  }
+ },
+ {
+  "id": "pt-0230",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Jogo da glória",
+    "Selfie",
+    "Andebol",
+    "Tricô",
+    "K-pop"
+   ]
+  },
+  "blue": {
+   "pack": "mozambique",
+   "words": [
+    "Jardim Tunduru",
+    "Cajueiro",
+    "Tihove",
+    "Inhambane",
+    "Rio Rovuma"
+   ]
+  }
+ },
+ {
+  "id": "pt-0231",
+  "yellow": {
+   "pack": "entertainment",
+   "words": [
+    "Gospel",
+    "Patinagem",
+    "Desenhos animados",
+    "Canoagem",
+    "Legendas"
+   ]
+  },
+  "blue": {
+   "pack": "places",
+   "words": [
+    "Angkor Wat",
+    "Casa Branca",
+    "Rotunda",
+    "Cidade do Cabo",
+    "Centro comercial"
+   ]
+  }
+ },
+ {
+  "id": "pt-0232",
+  "yellow": {
+   "pack": "people",
+   "words": [
+    "Rainha Ginga",
+    "Noémia de Sousa",
+    "Elvis Presley",
+    "Kwame Nkrumah",
+    "Infante D. Henrique"
+   ]
+  },
+  "blue": {
+   "pack": "things",
+   "words": [
+    "Arroz",
+    "Sal",
+    "Croissant",
     "Sapatos",
-    "Panda"
+    "Burro"
+   ]
+  }
+ },
+ {
+  "id": "pt-0233",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Paris",
+    "Escada rolante",
+    "Luanda",
+    "Cataratas do Niágara",
+    "Varanda"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Joana d'Arc",
+    "Muhammad Ali",
+    "Whitney Houston",
+    "Scooby-Doo",
+    "Júlio César"
+   ]
+  }
+ },
+ {
+  "id": "pt-0234",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Grande Barreira de Coral",
+    "Iglu",
+    "Nigéria",
+    "Monte Fuji",
+    "Cozinha"
+   ]
+  },
+  "blue": {
+   "pack": "entertainment",
+   "words": [
+    "Série",
+    "Divertida-Mente",
+    "Redes sociais",
+    "Mímica",
+    "DJ"
+   ]
+  }
+ },
+ {
+  "id": "pt-0235",
+  "yellow": {
+   "pack": "mozambique",
+   "words": [
+    "Matola",
+    "Parque do Limpopo",
+    "Machamba",
+    "Majika",
+    "Mafalala"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "Roberto Carlos",
+    "River Plate",
+    "João Félix",
+    "Arsenal",
+    "Andrés Iniesta"
+   ]
+  }
+ },
+ {
+  "id": "pt-0236",
+  "yellow": {
+   "pack": "anime",
+   "words": [
+    "Genos",
+    "Ponyo",
+    "Espada de Samurai",
+    "Astro Boy",
+    "Bola de Cristal"
+   ]
+  },
+  "blue": {
+   "pack": "people",
+   "words": [
+    "Moisés",
+    "Frida Kahlo",
+    "Irmãos Wright",
+    "Branca de Neve",
+    "Chopin"
+   ]
+  }
+ },
+ {
+  "id": "pt-0237",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Holanda",
+    "Museu",
+    "Kilimanjaro",
+    "Porto",
+    "Marrocos"
+   ]
+  },
+  "blue": {
+   "pack": "football",
+   "words": [
+    "Reinildo Mandava",
+    "Fora de jogo",
+    "Lionel Messi",
+    "Estádio da Luz",
+    "Pelé"
+   ]
+  }
+ },
+ {
+  "id": "pt-0238",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Frigorífico",
+    "Pipocas",
+    "Lareira",
+    "Lagarto",
+    "Telescópio"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Sailor Moon",
+    "Luffy",
+    "One Punch Man",
+    "Esferas do Dragão",
+    "Seiya"
+   ]
+  }
+ },
+ {
+  "id": "pt-0239",
+  "yellow": {
+   "pack": "things",
+   "words": [
+    "Janela",
+    "Pizza",
+    "Gorila",
+    "Comboio",
+    "Comando da televisão"
+   ]
+  },
+  "blue": {
+   "pack": "anime",
+   "words": [
+    "Gohan",
+    "Ryuk",
+    "Ranma",
+    "Hinata",
+    "Pokébola"
+   ]
+  }
+ },
+ {
+  "id": "pt-0240",
+  "yellow": {
+   "pack": "places",
+   "words": [
+    "Noruega",
+    "Deserto do Sara",
+    "Budapeste",
+    "Praga",
+    "Bruxelas"
+   ]
+  },
+  "blue": {
+   "pack": "entertainment",
+   "words": [
+    "Passadeira vermelha",
+    "Podcast",
+    "Concurso de televisão",
+    "Samba",
+    "Auscultadores"
    ]
   }
  }
