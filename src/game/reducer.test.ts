@@ -3,7 +3,7 @@ import { describerView, tableView, teamSequence, nextDescriber, provisionalPosit
 import type { GameState, Settings, Side, TeamSetup } from './types';
 import { TEST_CARDS, TWO_TEAMS, settings, teamsOf } from '../test/fixtures';
 import { clearSavedGame, loadGame, loadSetup, saveGame, SAVE_KEY, SAVE_SCHEMA, SETUP_KEY } from './storage';
-import { validateSetup } from './setup';
+import { parsePlayers, randomTeams, shuffleError, validateSetup } from './setup';
 
 function run(state: GameState, ...actions: GameAction[]): GameState {
   return actions.reduce(gameReducer, state);
@@ -64,6 +64,39 @@ describe('setup', () => {
     expect(validateSetup(ok.slice(0, 1))).toContainEqual({ kind: 'tooFewTeams' });
     expect(validateSetup([ok[0], { ...ok[1], players: 'Só' }])).toContainEqual({ kind: 'teamPlayers', team: 1 });
     expect(validateSetup([{ ...ok[0], name: ' ' }, ok[1]])).toContainEqual({ kind: 'teamName', team: 0 });
+  });
+});
+
+describe('random teams', () => {
+  const names = ['Ana', 'Pedro', 'Lúcia', 'Tomás', 'Rita', 'João', 'Bia'];
+  const current = [
+    { name: 'Os Leões', color: 'red' as const, players: 'Ana, Pedro' },
+    { name: 'As Gazelas', color: 'green' as const, players: '' },
+  ];
+  let seed = 1;
+  const random = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+
+  it('deals every name once, team sizes differ by at most one, and keeps names and colours', () => {
+    const teams = randomTeams(names, 3, current, random);
+    expect(teams).toHaveLength(3);
+    const dealt = teams.map((t) => parsePlayers(t.players));
+    expect(dealt.flat().sort()).toEqual([...names].sort());
+    expect(dealt.map((p) => p.length).sort()).toEqual([2, 2, 3]);
+    expect(teams.map((t) => t.name)).toEqual(['Os Leões', 'As Gazelas', '']);
+    expect(teams[0].color).toBe('red');
+    expect(teams[1].color).toBe('green');
+    expect(['red', 'green']).not.toContain(teams[2].color);
+    expect(validateSetup(teams)).toEqual([{ kind: 'teamName', team: 2 }]); // the new team still needs a name
+  });
+
+  it('fewer teams than before drops the extra rows', () => {
+    expect(randomTeams(names.slice(0, 4), 2, [...current, { name: 'C', color: 'pink', players: '' }], random)).toHaveLength(2);
+  });
+
+  it('needs 2 people per team and no repeated names', () => {
+    expect(shuffleError(names, 3)).toBeNull();
+    expect(shuffleError(names, 4)).toEqual({ kind: 'tooFewPlayers', needed: 8 });
+    expect(shuffleError(['Ana', 'Rui', 'ana', 'Zé'], 2)).toEqual({ kind: 'repeatedName', name: 'ana' });
   });
 });
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useT } from '../i18n';
 import { XIcon } from './Icons';
 import styles from './Controls.module.css';
@@ -50,16 +50,23 @@ export function Segmented<T extends string | number>({
 export function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
   const t = useT();
   const ref = useRef<HTMLDivElement>(null);
+  // The parent usually passes a new onClose on every render; keep the latest without
+  // re-running the effect, which would pull focus out of the field being typed in.
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+  // Where focus goes back on close: whatever had it when the dialog opened (read before a
+  // field inside takes it).
+  const [previous] = useState(() => document.activeElement as HTMLElement | null);
   useEffect(() => {
-    const previous = document.activeElement as HTMLElement | null;
-    ref.current?.focus();
+    // A field inside may already have taken focus (e.g. the names box); otherwise focus the dialog.
+    if (!ref.current?.contains(document.activeElement)) ref.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
-        onClose();
+        onCloseRef.current();
       }
       if (e.key === 'Tab' && ref.current) {
-        const focusables = ref.current.querySelectorAll<HTMLElement>('button, [href], input, [tabindex]:not([tabindex="-1"])');
+        const focusables = ref.current.querySelectorAll<HTMLElement>('button:not(:disabled), [href], input, textarea, [tabindex]:not([tabindex="-1"])');
         if (focusables.length === 0) return;
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
@@ -77,7 +84,7 @@ export function Modal({ title, onClose, children }: { title: string; onClose: ()
       window.removeEventListener('keydown', onKey, true);
       previous?.focus?.();
     };
-  }, [onClose]);
+  }, [previous]);
   return (
     <div className={styles.backdrop} onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className={styles.modal} role="dialog" aria-modal="true" aria-label={title} ref={ref} tabIndex={-1}>

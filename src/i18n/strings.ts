@@ -61,6 +61,20 @@ const pt = {
   playersPlaceholder: 'Ana, Pedro, Lúcia',
   teamPlaceholder: (n: number): string => `Equipa ${n}`,
   addTeam: 'Adicionar equipa (até 6)',
+  shuffleTeams: 'Sortear equipas',
+  shuffleHelp:
+    'Escreve os nomes de todas as pessoas que vão jogar, separados por vírgulas ou um por linha. O jogo baralha-os e reparte-os pelas equipas. Os nomes e as cores das equipas ficam como estão.',
+  everyone: 'Quem vai jogar',
+  everyonePlaceholder: 'Ana, Pedro, Lúcia, Tomás, Rita, João',
+  teamCount: 'Número de equipas',
+  shuffleSummary: (people: number, min: number, max: number): string =>
+    `${people === 1 ? '1 pessoa' : `${people} pessoas`} · ${min === max ? min : `${min} a ${max}`} por equipa`,
+  shuffleErrors: {
+    tooFewPlayers: (needed: number): string => `São precisas pelo menos ${needed} pessoas (2 por equipa).`,
+    repeatedName: (name: string): string => `O nome “${name}” está repetido. Usa nomes diferentes.`,
+  },
+  shuffle: 'Sortear',
+  cancel: 'Cancelar',
   removeTeam: (name: string): string => `Remover ${name || 'equipa'}`,
   changeColor: (name: string): string => `Mudar a cor do peão de ${name || 'equipa'}`,
   houseRules: 'Regras da casa',
@@ -341,6 +355,20 @@ const en: Strings = {
   playersPlaceholder: 'Ann, Peter, Lucy',
   teamPlaceholder: (n) => `Team ${n}`,
   addTeam: 'Add team (up to 6)',
+  shuffleTeams: 'Random teams',
+  shuffleHelp:
+    'Write the names of everyone who is playing, separated by commas or one per line. The game shuffles them and splits them into the teams. Team names and colours stay as they are.',
+  everyone: 'Who is playing',
+  everyonePlaceholder: 'Ann, Peter, Lucy, Tom, Rita, John',
+  teamCount: 'Number of teams',
+  shuffleSummary: (people, min, max) =>
+    `${people === 1 ? '1 person' : `${people} people`} · ${min === max ? min : `${min} to ${max}`} per team`,
+  shuffleErrors: {
+    tooFewPlayers: (needed) => `You need at least ${needed} people (2 per team).`,
+    repeatedName: (name) => `The name “${name}” is repeated. Use different names.`,
+  },
+  shuffle: 'Shuffle',
+  cancel: 'Cancel',
   removeTeam: (name) => `Remove ${name || 'team'}`,
   changeColor: (name) => `Change ${name || 'team'} pawn colour`,
   houseRules: 'House rules',

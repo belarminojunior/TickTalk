@@ -104,6 +104,12 @@ export const PlusIcon = (p: IconProps) => (
   </Svg>
 );
 
+export const ShuffleIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M16 4h4v4M4 20L20 4M20 16v4h-4M14.5 14.5L20 20M4 4l5 5" />
+  </Svg>
+);
+
 export const PauseIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M9 5.5v13M15 5.5v13" />

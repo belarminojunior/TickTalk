@@ -1,10 +1,11 @@
 import { useId, useState, type CSSProperties, type FormEvent } from 'react';
 import { unlockAudio } from '../audio/sfx';
 import { MiniSquares, Segmented } from '../components/Controls';
-import { PlusIcon, XIcon } from '../components/Icons';
+import { PlusIcon, ShuffleIcon, XIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
 import { QrConnect } from '../components/QrConnect';
 import { ScreenModePicker } from '../components/ScreenModePicker';
+import { ShuffleTeamsModal } from '../components/ShuffleTeamsModal';
 import { MAX_TEAMS, nextFreeColor, validateSetup, type SetupError, type TeamDraft } from '../game/setup';
 import type { Settings } from '../game/types';
 import type { HostLink } from '../hooks/useTransport';
@@ -32,6 +33,7 @@ export function SetupScreen(props: SetupScreenProps) {
   const t = useT();
   const ids = useId();
   const [errors, setErrors] = useState<SetupError[] | null>(null);
+  const [shuffling, setShuffling] = useState(false);
   const set = <K extends keyof Settings>(key: K, value: Settings[K]) => onSettings({ ...settings, [key]: value });
 
   const currentErrors = errors ? validateSetup(teams) : [];
@@ -63,164 +65,179 @@ export function SetupScreen(props: SetupScreenProps) {
   const generalErrors = currentErrors.filter((e) => !('team' in e));
 
   return (
-    <form className={styles.screen} onSubmit={submit} noValidate>
-      <header className={styles.hero}>
-        <div className={styles.heroText}>
-          <h1 className={styles.title}>Tick Talk</h1>
-          <p className={styles.tagline}>{t.tagline}</p>
-        </div>
-        <div className={styles.heroRight}>
-          <div className={styles.uiLang} role="radiogroup" aria-label={t.interfaceLanguage}>
-            {(['pt', 'en'] as const).map((lang) => (
-              <button
-                key={lang}
-                type="button"
-                role="radio"
-                aria-checked={settings.uiLanguage === lang}
-                className={settings.uiLanguage === lang ? styles.langOn : ''}
-                onClick={() => set('uiLanguage', lang)}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
+    <>
+      <form className={styles.screen} onSubmit={submit} noValidate>
+        <header className={styles.hero}>
+          <div className={styles.heroText}>
+            <h1 className={styles.title}>Tick Talk</h1>
+            <p className={styles.tagline}>{t.tagline}</p>
           </div>
-          <MiniSquares />
-        </div>
-      </header>
-
-      <div className={styles.body}>
-        <section className={`panel ${styles.modePanel}`} aria-labelledby={`${ids}-mode`}>
-          <h2 id={`${ids}-mode`} className={styles.panelTitle}>
-            {t.howToPlay}
-          </h2>
-          <ScreenModePicker value={settings.screenMode} onChange={(m) => set('screenMode', m)} />
-          <QrConnect
-            url={props.phoneUrl}
-            connected={link.connected}
-            server={link.serverStatus}
-            teamPhones={settings.screenMode === 'teamPhones'}
-          />
-        </section>
-
-        <div className={styles.side}>
-          <section className={`panel ${styles.teamsPanel}`} aria-labelledby={`${ids}-teams`}>
-            <h2 id={`${ids}-teams`} className={styles.panelTitle}>
-              {t.teams}
-            </h2>
-            <ul className={styles.teamList}>
-              {teams.map((team, i) => {
-                const errs = teamErrors(i);
-                const nameId = `${ids}-name-${i}`;
-                const playersId = `${ids}-players-${i}`;
-                const errId = `${ids}-err-${i}`;
-                const label = team.name || t.teamPlaceholder(i + 1);
-                // Column labels only show above the first row; the others keep them for screen readers.
-                const labelClass = i === 0 ? '' : 'visually-hidden';
-                return (
-                  <li key={i} className={`${styles.teamRow} ${errs.length ? styles.rowError : ''}`}>
-                    <button
-                      type="button"
-                      className={styles.pawnButton}
-                      onClick={() => cycleColor(i)}
-                      aria-label={t.changeColor(label)}
-                      style={{ '--pawn': `var(--pawn-${team.color})` } as CSSProperties}
-                    >
-                      <Pawn color={team.color} label={teamInitial(label)} size={38} />
-                    </button>
-                    <div className={styles.fieldName}>
-                      <label htmlFor={nameId} className={labelClass}>
-                        {t.teamName}
-                      </label>
-                      <input
-                        id={nameId}
-                        value={team.name}
-                        placeholder={t.teamPlaceholder(i + 1)}
-                        onChange={(e) => updateTeam(i, { name: e.target.value })}
-                        aria-invalid={errs.some((e) => e.kind === 'teamName') || undefined}
-                        aria-describedby={errs.length ? errId : undefined}
-                        maxLength={32}
-                        autoComplete="off"
-                      />
-                    </div>
-                    <div className={styles.fieldPlayers}>
-                      <label htmlFor={playersId} className={labelClass}>
-                        {t.players}
-                      </label>
-                      <input
-                        id={playersId}
-                        value={team.players}
-                        placeholder={t.playersPlaceholder}
-                        onChange={(e) => updateTeam(i, { players: e.target.value })}
-                        aria-invalid={errs.some((e) => e.kind !== 'teamName') || undefined}
-                        aria-describedby={errs.length ? errId : undefined}
-                        autoComplete="off"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      className={styles.removeButton}
-                      onClick={() => onTeams(teams.filter((_, k) => k !== i))}
-                      disabled={teams.length <= 2}
-                      aria-label={t.removeTeam(label)}
-                    >
-                      <XIcon size={20} />
-                    </button>
-                    {errs.length > 0 && (
-                      <p id={errId} className={styles.rowErrorText} role="alert">
-                        {errs.map(errorText).join(' ')}
-                      </p>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-            <button type="button" className={styles.addButton} onClick={addTeam} disabled={teams.length >= MAX_TEAMS}>
-              <PlusIcon size={18} /> {t.addTeam}
-            </button>
-          </section>
-
-          <section className={`panel ${styles.rulesPanel}`} aria-label={t.houseRules}>
-            <Segmented
-              id={`${ids}-time`}
-              label={t.timePerTurn}
-              value={settings.turnSeconds}
-              onChange={(v) => set('turnSeconds', v)}
-              options={[30, 45, 60].map((s) => ({ value: s as 30 | 45 | 60, label: `${s} s` }))}
-            />
-            <Segmented
-              id={`${ids}-lang`}
-              label={t.cardLanguage}
-              value={settings.language}
-              onChange={(v) => set('language', v)}
-              options={[
-                { value: 'pt', label: 'Português' },
-                { value: 'en', label: 'English' },
-              ]}
-            />
-          </section>
-
-          <footer className={styles.footer}>
-            <div className={styles.messages}>
-              {generalErrors.map((e) => (
-                <p key={e.kind} className={styles.error} role="alert">
-                  {errorText(e)}
-                </p>
-              ))}
-              {link.connected === 0 && <p className={styles.warning}>{t.noPhoneWarning}</p>}
-            </div>
-            <div className={styles.footerButtons}>
-              {props.hasSaved && (
-                <button type="button" className="btn btn-outline btn-lg" onClick={props.onContinue}>
-                  {t.continueSaved}
+          <div className={styles.heroRight}>
+            <div className={styles.uiLang} role="radiogroup" aria-label={t.interfaceLanguage}>
+              {(['pt', 'en'] as const).map((lang) => (
+                <button
+                  key={lang}
+                  type="button"
+                  role="radio"
+                  aria-checked={settings.uiLanguage === lang}
+                  className={settings.uiLanguage === lang ? styles.langOn : ''}
+                  onClick={() => set('uiLanguage', lang)}
+                >
+                  {lang.toUpperCase()}
                 </button>
-              )}
-              <button type="submit" className="btn btn-primary btn-lg">
-                {t.startGame}
-              </button>
+              ))}
             </div>
-          </footer>
+            <MiniSquares />
+          </div>
+        </header>
+
+        <div className={styles.body}>
+          <section className={`panel ${styles.modePanel}`} aria-labelledby={`${ids}-mode`}>
+            <h2 id={`${ids}-mode`} className={styles.panelTitle}>
+              {t.howToPlay}
+            </h2>
+            <ScreenModePicker value={settings.screenMode} onChange={(m) => set('screenMode', m)} />
+            <QrConnect
+              url={props.phoneUrl}
+              connected={link.connected}
+              server={link.serverStatus}
+              teamPhones={settings.screenMode === 'teamPhones'}
+            />
+          </section>
+
+          <div className={styles.side}>
+            <section className={`panel ${styles.teamsPanel}`} aria-labelledby={`${ids}-teams`}>
+              <div className={styles.panelHeader}>
+                <h2 id={`${ids}-teams`} className={styles.panelTitle}>
+                  {t.teams}
+                </h2>
+                <button type="button" className={styles.shuffleButton} onClick={() => setShuffling(true)}>
+                  <ShuffleIcon size={18} /> {t.shuffleTeams}
+                </button>
+              </div>
+              <ul className={styles.teamList}>
+                {teams.map((team, i) => {
+                  const errs = teamErrors(i);
+                  const nameId = `${ids}-name-${i}`;
+                  const playersId = `${ids}-players-${i}`;
+                  const errId = `${ids}-err-${i}`;
+                  const label = team.name || t.teamPlaceholder(i + 1);
+                  // Column labels only show above the first row; the others keep them for screen readers.
+                  const labelClass = i === 0 ? '' : 'visually-hidden';
+                  return (
+                    <li key={i} className={`${styles.teamRow} ${errs.length ? styles.rowError : ''}`}>
+                      <button
+                        type="button"
+                        className={styles.pawnButton}
+                        onClick={() => cycleColor(i)}
+                        aria-label={t.changeColor(label)}
+                        style={
+                          {
+                            '--pawn': `var(--pawn-${team.color})`,
+                          } as CSSProperties
+                        }
+                      >
+                        <Pawn color={team.color} label={teamInitial(label)} size={38} />
+                      </button>
+                      <div className={styles.fieldName}>
+                        <label htmlFor={nameId} className={labelClass}>
+                          {t.teamName}
+                        </label>
+                        <input
+                          id={nameId}
+                          value={team.name}
+                          placeholder={t.teamPlaceholder(i + 1)}
+                          onChange={(e) => updateTeam(i, { name: e.target.value })}
+                          aria-invalid={errs.some((e) => e.kind === 'teamName') || undefined}
+                          aria-describedby={errs.length ? errId : undefined}
+                          maxLength={32}
+                          autoComplete="off"
+                        />
+                      </div>
+                      <div className={styles.fieldPlayers}>
+                        <label htmlFor={playersId} className={labelClass}>
+                          {t.players}
+                        </label>
+                        <input
+                          id={playersId}
+                          value={team.players}
+                          placeholder={t.playersPlaceholder}
+                          onChange={(e) => updateTeam(i, { players: e.target.value })}
+                          aria-invalid={errs.some((e) => e.kind !== 'teamName') || undefined}
+                          aria-describedby={errs.length ? errId : undefined}
+                          autoComplete="off"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        className={styles.removeButton}
+                        onClick={() => onTeams(teams.filter((_, k) => k !== i))}
+                        disabled={teams.length <= 2}
+                        aria-label={t.removeTeam(label)}
+                      >
+                        <XIcon size={20} />
+                      </button>
+                      {errs.length > 0 && (
+                        <p id={errId} className={styles.rowErrorText} role="alert">
+                          {errs.map(errorText).join(' ')}
+                        </p>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+              <button type="button" className={styles.addButton} onClick={addTeam} disabled={teams.length >= MAX_TEAMS}>
+                <PlusIcon size={18} /> {t.addTeam}
+              </button>
+            </section>
+
+            <section className={`panel ${styles.rulesPanel}`} aria-label={t.houseRules}>
+              <Segmented
+                id={`${ids}-time`}
+                label={t.timePerTurn}
+                value={settings.turnSeconds}
+                onChange={(v) => set('turnSeconds', v)}
+                options={[30, 45, 60].map((s) => ({
+                  value: s as 30 | 45 | 60,
+                  label: `${s} s`,
+                }))}
+              />
+              <Segmented
+                id={`${ids}-lang`}
+                label={t.cardLanguage}
+                value={settings.language}
+                onChange={(v) => set('language', v)}
+                options={[
+                  { value: 'pt', label: 'Português' },
+                  { value: 'en', label: 'English' },
+                ]}
+              />
+            </section>
+
+            <footer className={styles.footer}>
+              <div className={styles.messages}>
+                {generalErrors.map((e) => (
+                  <p key={e.kind} className={styles.error} role="alert">
+                    {errorText(e)}
+                  </p>
+                ))}
+                {link.connected === 0 && <p className={styles.warning}>{t.noPhoneWarning}</p>}
+              </div>
+              <div className={styles.footerButtons}>
+                {props.hasSaved && (
+                  <button type="button" className="btn btn-outline btn-lg" onClick={props.onContinue}>
+                    {t.continueSaved}
+                  </button>
+                )}
+                <button type="submit" className="btn btn-primary btn-lg">
+                  {t.startGame}
+                </button>
+              </div>
+            </footer>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+      {shuffling && <ShuffleTeamsModal teams={teams} onApply={onTeams} onClose={() => setShuffling(false)} />}
+    </>
   );
 }

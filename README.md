@@ -33,7 +33,7 @@ Isto faz a build e arranca o servidor local em `0.0.0.0:5174`. No terminal apare
 Depois, no PC:
 
 1. Escolhe **como vão jogar** (ver abaixo).
-2. Escreve as **equipas** (2 a 6) e os jogadores de cada uma, **pela ordem em que explicam**, separados por vírgulas. Toca no peão para mudar a cor.
+2. Escreve as **equipas** (2 a 6) e os jogadores de cada uma, **pela ordem em que explicam**, separados por vírgulas. Toca no peão para mudar a cor. Para equipas ao calhas, carrega em **Sortear equipas**, escreve os nomes de todas as pessoas e escolhe quantas equipas: o jogo reparte-as ao acaso e os nomes das equipas ficam como estão.
 3. Escolhe as **regras da casa**: tempo por vez e língua das cartas. Joga-se sempre com o baralho todo.
 4. Carrega em **Começar o jogo**.
 

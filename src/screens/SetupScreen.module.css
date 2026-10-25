@@ -109,6 +109,32 @@
   padding: 20px 24px;
 }
 
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.shuffleButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--outline);
+  background: transparent;
+  color: var(--chalk);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.shuffleButton:hover {
+  border-color: var(--chalk);
+}
+
 .teamList {
   list-style: none;
   margin: 0;

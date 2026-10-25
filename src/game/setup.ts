@@ -43,6 +43,46 @@ export function validateSetup(teams: TeamDraft[]): SetupError[] {
   return errors;
 }
 
+export type ShuffleError = { kind: 'tooFewPlayers'; needed: number } | { kind: 'repeatedName'; name: string };
+
+/** Why a list of names can't be split into `teamCount` teams, or null if it can. */
+export function shuffleError(names: string[], teamCount: number): ShuffleError | null {
+  const seen = new Set<string>();
+  for (const name of names) {
+    const key = name.toLowerCase();
+    if (seen.has(key)) return { kind: 'repeatedName', name };
+    seen.add(key);
+  }
+  const needed = teamCount * MIN_PLAYERS;
+  return names.length < needed ? { kind: 'tooFewPlayers', needed } : null;
+}
+
+/**
+ * Random teams from a list of names: shuffled, then dealt one at a time so team sizes differ
+ * by at most one. Team names and colours stay as they were; extra teams get a free colour and
+ * no name, so the players still name them.
+ */
+export function randomTeams(
+  names: string[],
+  teamCount: number,
+  current: TeamDraft[],
+  random: () => number = Math.random,
+): TeamDraft[] {
+  const shuffled = [...names];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const used = current.slice(0, teamCount).map((t) => t.color);
+  return Array.from({ length: teamCount }, (_, i) => {
+    const kept = current[i];
+    const color = kept?.color ?? nextFreeColor(used);
+    if (!kept) used.push(color);
+    const players = shuffled.filter((_, k) => k % teamCount === i);
+    return { name: kept?.name ?? '', color, players: players.join(', ') };
+  });
+}
+
 export function nextFreeColor(used: PawnColor[], after?: PawnColor): PawnColor {
   const start = after ? PAWN_COLORS.indexOf(after) + 1 : 0;
   for (let k = 0; k < PAWN_COLORS.length; k++) {
