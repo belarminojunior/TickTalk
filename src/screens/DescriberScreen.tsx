@@ -131,6 +131,7 @@ export function DescriberScreen({
   const statusMessage = (() => {
     if (status === 'replaced') return { title: t.replacedDescriberTitle, body: t.replacedDescriberHelp, takeOver: true };
     if (status === 'busy') return { title: t.busy, body: t.busyHelp };
+    if (status === 'blocked') return { title: t.blockedTitle, body: t.blockedHelp };
     if (status === 'reconnecting') return { title: t.reconnecting, body: t.sameWifi };
     if (status === 'connecting') return { title: t.reconnecting, body: t.waitingHostHelp };
     if (status === 'waitingHost') return { title: t.waitingHost, body: t.waitingHostHelp };

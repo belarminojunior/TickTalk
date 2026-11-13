@@ -1,3 +1,4 @@
+import { iceServers } from './iceServers';
 import { PROTOCOL_VERSION } from './protocol';
 import { BaseTransport, HOST_ID, SERVER_ID } from './transport';
 
@@ -51,7 +52,9 @@ export type CreatePeer = (id?: string) => Promise<PeerLike>;
 /** Loads PeerJS only when needed (it is a browser-only library). */
 const createRealPeer: CreatePeer = async (id) => {
   const { Peer } = await import('peerjs');
-  return (id ? new Peer(id, { debug: 0 }) : new Peer({ debug: 0 })) as unknown as PeerLike;
+  // Our own STUN/TURN list: PeerJS's built-in relays no longer answer.
+  const options = { debug: 0 as const, config: { iceServers: iceServers() } };
+  return (id ? new Peer(id, options) : new Peer(options)) as unknown as PeerLike;
 };
 
 export interface PeerTransportOptions {
@@ -72,6 +75,8 @@ const NO_ROOM_RETRY = 4000;
 const SILENT_LINK = 8000;
 /** Table: tries to get its old code back (a reloaded page may still hold it for a moment). */
 const SAME_CODE_TRIES = 4;
+/** Phone: after this many calls that found the table but couldn't connect, the network is to blame. */
+const BLOCKED_AFTER = 2;
 const MAX_BACKOFF = 8000;
 
 const notice = (body: Record<string, unknown>) => ({ v: PROTOCOL_VERSION, ...body });
@@ -90,6 +95,8 @@ export class PeerTransport extends BaseTransport {
   private dialTimer: ReturnType<typeof setTimeout> | null = null;
   private outbox: unknown[] = [];
   private lastHeard = 0;
+  /** Phone: calls in a row that reached the table but never opened (a network that blocks it). */
+  private failedDials = 0;
   private closed = false;
   private readonly createPeer: CreatePeer;
   private readonly newCode: () => string;
@@ -125,7 +132,7 @@ export class PeerTransport extends BaseTransport {
 
   private async start(): Promise<void> {
     if (this.closed) return;
-    if (this.status !== 'noRoom' && this.status !== 'replaced') this.setStatus('connecting');
+    if (!['noRoom', 'replaced', 'blocked'].includes(this.status)) this.setStatus('connecting');
     let peer: PeerLike;
     try {
       peer = await this.createPeer(this.role === 'host' && this.code ? peerIdFor(this.code) : undefined);
@@ -196,15 +203,27 @@ export class PeerTransport extends BaseTransport {
     const peer = this.peer;
     if (!peer || peer.destroyed || !this.code) return;
     const conn = peer.connect(peerIdFor(this.code), { reliable: true, serialization: 'json', metadata: { id: this.id } });
+    let opened = false;
+    let given = false;
+    // The call never opened (timed out, or the connection failed on the way): try again, and
+    // after a couple of tries say that this network doesn't let the phone reach the table.
+    const notConnected = () => {
+      if (opened || given || this.closed) return;
+      given = true;
+      this.clearDialTimer();
+      conn.close();
+      this.failedDials += 1;
+      if (this.failedDials >= BLOCKED_AFTER && this.status !== 'noRoom') this.setStatus('blocked');
+      this.redial();
+    };
     this.clearDialTimer();
     this.dialTimer = setTimeout(() => {
       this.dialTimer = null;
-      if (!conn.open) {
-        conn.close();
-        this.redial();
-      }
+      notConnected();
     }, DIAL_TIMEOUT);
     conn.on('open', () => {
+      opened = true;
+      this.failedDials = 0;
       this.clearDialTimer();
       this.conns.set(HOST_ID, conn);
       this.lastHeard = Date.now();
@@ -221,6 +240,10 @@ export class PeerTransport extends BaseTransport {
       this.emitMessage(HOST_ID, data);
     });
     const gone = () => {
+      if (!opened) {
+        notConnected();
+        return;
+      }
       if (this.conns.get(HOST_ID) !== conn) return;
       this.conns.delete(HOST_ID);
       this.emitMessage(SERVER_ID, notice({ kind: 'host-status', online: false }));
@@ -247,6 +270,7 @@ export class PeerTransport extends BaseTransport {
     if (this.role === 'describer' && type === 'peer-unavailable') {
       // Wrong code, or the table isn't open (yet).
       this.clearDialTimer();
+      this.failedDials = 0;
       this.setStatus('noRoom');
       this.redial(NO_ROOM_RETRY);
       return;
@@ -276,7 +300,7 @@ export class PeerTransport extends BaseTransport {
 
   private retry(): void {
     if (this.closed) return;
-    if (this.status !== 'noRoom') this.setStatus('connecting');
+    if (this.status !== 'noRoom' && this.status !== 'blocked') this.setStatus('connecting');
     this.later(() => void this.start(), this.nextBackoff());
   }
 

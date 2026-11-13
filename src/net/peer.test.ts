@@ -1,3 +1,4 @@
+import { iceServers } from './iceServers';
 import { PeerTransport, peerIdFor, randomRoomCode, type ConnLike, type PeerLike } from './peer';
 import { HOST_ID, SERVER_ID } from './transport';
 
@@ -208,5 +209,43 @@ describe('PeerTransport (rooms without a server)', () => {
 
   it('room codes are 4 letters without I or O', () => {
     for (let i = 0; i < 200; i++) expect(randomRoomCode()).toMatch(/^[A-HJ-NP-Z]{4}$/);
+  });
+
+  it("a phone whose network can't reach the table says so, keeps trying, and recovers", async () => {
+    const b = broker();
+    const table = new PeerTransport('host', HOST_ID, { createPeer: b.createPeer, newCode: () => 'KQTR' });
+    await flush();
+    b.peers[0].emit('open');
+    const phone = new PeerTransport('describer', 'c-1', { createPeer: b.createPeer, room: 'KQTR' });
+    await flush();
+    b.peers[1].emit('open');
+    // The calls reach the table but never open (no route between the two networks).
+    await vi.advanceTimersByTimeAsync(12_100);
+    expect(phone.status).toBe('connecting');
+    await vi.advanceTimersByTimeAsync(1100 + 12_100);
+    expect(phone.status).toBe('blocked');
+    // The phone joins the table's Wi-Fi: the next call opens.
+    await vi.advanceTimersByTimeAsync(2100);
+    const dials = b.peers[1].dials;
+    b.link(dials[dials.length - 1], b.peers[0]);
+    expect(phone.status).toBe('open');
+    phone.close();
+    table.close();
+  });
+});
+
+describe('iceServers', () => {
+  it('always has STUN; adds a TURN relay only when one is configured', () => {
+    expect(iceServers({}).every((s) => String(s.urls).includes('stun:'))).toBe(true);
+    const withRelay = iceServers({
+      VITE_TURN_URLS: 'turn:relay.example.com:3478, turns:relay.example.com:443?transport=tcp, http://nope',
+      VITE_TURN_USERNAME: 'u',
+      VITE_TURN_CREDENTIAL: 'p',
+    });
+    expect(withRelay.at(-1)).toEqual({
+      urls: ['turn:relay.example.com:3478', 'turns:relay.example.com:443?transport=tcp'],
+      username: 'u',
+      credential: 'p',
+    });
   });
 });

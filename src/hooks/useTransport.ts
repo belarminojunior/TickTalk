@@ -444,7 +444,7 @@ function sendTeamViews(host: Transport, hub: TeamHub, state: GameState, now: num
   }
 }
 
-export type DescriberStatus = 'connecting' | 'ready' | 'busy' | 'waitingHost' | 'reconnecting' | 'replaced' | 'noRoom';
+export type DescriberStatus = 'connecting' | 'ready' | 'busy' | 'waitingHost' | 'reconnecting' | 'replaced' | 'noRoom' | 'blocked';
 
 export interface DescriberClient {
   view: DescriberView | null;
@@ -573,6 +573,8 @@ export function useDescriberClient(
         setStatus('replaced');
       } else if (s === 'noRoom') {
         setStatus('noRoom');
+      } else if (s === 'blocked') {
+        setStatus('blocked');
       }
     });
 

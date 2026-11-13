@@ -77,7 +77,17 @@ Se a ligação cair, o tempo pára e a mesa mostra **“Telemóvel desligado”*
 
 ### Como funciona a ligação
 
-A mesa e os telemóveis falam diretamente uns com os outros (WebRTC, com a biblioteca [PeerJS](https://peerjs.com/)). Para se encontrarem, usam por um instante o serviço público e gratuito do PeerJS (só para a apresentação; o jogo não passa por lá). Em redes que bloqueiam ligações diretas (algumas redes móveis ou de empresas), o PeerJS usa um retransmissor gratuito.
+A mesa e os telemóveis falam diretamente uns com os outros (WebRTC, com a biblioteca [PeerJS](https://peerjs.com/)). Para se encontrarem, usam por um instante o serviço público e gratuito do PeerJS (só para a apresentação; o jogo não passa por lá). Servidores STUN públicos (Google e Cloudflare) ajudam a ligação direta a atravessar a maioria das redes.
+
+**Telemóveis em dados móveis ou redes fechadas.** Algumas redes (muitas redes móveis, Wi-Fi de empresas, VPNs) não deixam ligar diretamente: aí é preciso um **retransmissor (TURN)**. Os retransmissores gratuitos do PeerJS deixaram de responder, por isso, sem TURN, esse telemóvel mostra “Não consigo ligar à mesa a partir desta rede” e pede para usar o mesmo Wi-Fi que a mesa (no mesmo Wi-Fi liga sempre). Para que funcione em qualquer rede, cria uma conta num serviço TURN (há vários com plano gratuito) e põe os dados dele nas variáveis de ambiente da Vercel (*Settings → Environment Variables*), depois faz *Redeploy*:
+
+| Variável | Exemplo |
+|---|---|
+| `VITE_TURN_URLS` | `turn:relay.exemplo.com:3478,turns:relay.exemplo.com:443?transport=tcp` |
+| `VITE_TURN_USERNAME` | o utilizador que o serviço te der |
+| `VITE_TURN_CREDENTIAL` | a palavra-passe que o serviço te der |
+
+Estes dados ficam no código do site (qualquer pessoa os pode ver): usa credenciais próprias para isto, com limite de uso no serviço.
 
 ## Publicar (deploy)
 
@@ -143,6 +153,6 @@ O **anfitrião (a mesa) é a fonte da verdade**: o estado vive só aí, num redu
 ## Limitações conhecidas
 
 - Para a mesa e os telemóveis se encontrarem, o jogo usa o serviço público do PeerJS; se esse serviço estiver em baixo, não é possível abrir salas.
-- Em algumas redes muito fechadas a ligação direta falha e passa pelo retransmissor do PeerJS, que pode ser mais lento.
+- Sem um retransmissor TURN configurado, um telemóvel numa rede que bloqueia ligações diretas (por exemplo, alguns dados móveis) não consegue entrar; no mesmo Wi-Fi que a mesa funciona sempre.
 - Com um telemóvel por pessoa, quem chega depois de o jogo começar não pode entrar numa equipa: começa-se um jogo novo (as equipas ficam).
 - As palavras repetem-se entre cartas diferentes (cada palavra aparece em média 1–2 vezes no baralho).

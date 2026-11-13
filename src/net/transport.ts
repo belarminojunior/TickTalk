@@ -7,8 +7,9 @@ export type TransportKind = 'local' | 'broadcast' | 'peer';
 /**
  * "replaced": another page with the same role took this one's place (no automatic reconnect).
  * "noRoom": the room code is wrong, or its table isn't open yet (keeps retrying slowly).
+ * "blocked": the table is there, but this device's network doesn't let it connect (keeps trying).
  */
-export type LinkStatus = 'connecting' | 'open' | 'closed' | 'replaced' | 'noRoom';
+export type LinkStatus = 'connecting' | 'open' | 'closed' | 'replaced' | 'noRoom' | 'blocked';
 
 export type MessageHandler = (from: string, body: unknown) => void;
 export type StatusHandler = (status: LinkStatus) => void;
