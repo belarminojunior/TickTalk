@@ -34,4 +34,21 @@ describe('DescriberScreen', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Passar a vez · Tomás (As Gazelas)' }));
     expect(onCommand).toHaveBeenCalledWith({ type: 'NEXT_TEAM' });
   });
+
+  it('asks for the room code when the phone has none, and says when a code is wrong', async () => {
+    const onRoom = vi.fn();
+    const { rerender } = render(
+      <DescriberScreen view={null} anchor={0} status="connecting" mode="phone" now={() => 0} onCommand={vi.fn()} room={null} onRoom={onRoom} />,
+    );
+    expect(screen.getByRole('heading', { name: 'Em que sala vais jogar?' })).toBeInTheDocument();
+    await userEvent.type(screen.getByLabelText('Código da sala'), 'kq');
+    await userEvent.click(screen.getByRole('button', { name: 'Entrar' }));
+    expect(screen.getByText('O código tem 4 letras.')).toBeInTheDocument();
+    await userEvent.type(screen.getByLabelText('Código da sala'), 'tr');
+    await userEvent.click(screen.getByRole('button', { name: 'Entrar' }));
+    expect(onRoom).toHaveBeenCalledWith('KQTR');
+
+    rerender(<DescriberScreen view={null} anchor={0} status="noRoom" mode="phone" now={() => 0} onCommand={vi.fn()} room="ZZZZ" onRoom={onRoom} />);
+    expect(screen.getByRole('alert')).toHaveTextContent('Não encontrei a sala ZZZZ.');
+  });
 });

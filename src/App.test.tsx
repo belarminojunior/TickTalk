@@ -201,8 +201,9 @@ describe('full game (one phone per team)', () => {
     expect(await gazelles.findByText('2 de 10 acertadas')).toBeInTheDocument();
     expect(gazelles.queryAllByRole('button', { pressed: false })).toHaveLength(0);
 
-    // Time is up: only the Gazelles' phone gets the card to validate.
-    act(() => setClock(31_000));
+    // The turn ends: only the Gazelles' phone gets the card to validate. (Ended from the phone,
+    // not by jumping the test clock, which would also make the table think the phones went quiet.)
+    await user.click(lions.getByRole('button', { name: 'Terminar a vez' }));
     expect(await gazelles.findByRole('heading', { name: 'Validem a vez dos Leões' }, { timeout: 3000 })).toBeInTheDocument();
     expect(await table.findByText('A validar no telemóvel das Gazelas…')).toBeInTheDocument();
     expect(table.queryByRole('heading', { name: /validam a vez/ })).not.toBeInTheDocument();
@@ -255,8 +256,8 @@ describe('full game (one phone per person)', () => {
     await markWord(user, ana, 1);
     expect(await pedro.findByText('2 de 10 acertadas')).toBeInTheDocument();
 
-    // Time is up: both Gazelles' phones get the card; Rita cancels a word, Tomás confirms.
-    act(() => setClock(31_000));
+    // The turn ends: both Gazelles' phones get the card; Rita cancels a word, Tomás confirms.
+    await user.click(ana.getByRole('button', { name: 'Terminar a vez' }));
     expect(await tomas.findByRole('heading', { name: 'Validem a vez dos Leões' }, { timeout: 3000 })).toBeInTheDocument();
     expect(await rita.findByRole('heading', { name: 'Validem a vez dos Leões' })).toBeInTheDocument();
     expect(table.queryAllByRole('group', { name: /^Validar/ })).toHaveLength(0);

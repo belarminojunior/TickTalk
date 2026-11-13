@@ -15,6 +15,7 @@ import type { DescriberStatus } from '../hooks/useTransport';
 import { useT } from '../i18n';
 import { useTickSounds } from './sounds';
 import { Lobby, NameEntry, WhoAreYou, type SetPlayer } from './PlayerPhoneScreens';
+import { RoomEntry } from './RoomEntry';
 import { PhoneValidation, SpectatorScreen, TeamPicker } from './TeamPhoneScreens';
 import styles from './DescriberScreen.module.css';
 
@@ -31,6 +32,10 @@ export interface DescriberScreenProps {
   onJoinTeam?: (team: string | null) => void;
   /** One phone per person: who this phone is (null = forget me). */
   onPlayer?: SetPlayer;
+  /** The room this phone is in (null: none yet). Only with rooms (the real app). */
+  room?: string | null;
+  /** Opens another room (the code typed on the phone). Asks for a code when there is none. */
+  onRoom?: (code: string) => void;
 }
 
 const LOCKED_PHASES = ['timeUp', 'validating', 'moving'];
@@ -46,6 +51,8 @@ export function DescriberScreen({
   onTakeOver,
   onJoinTeam,
   onPlayer,
+  room = null,
+  onRoom,
 }: DescriberScreenProps) {
   const t = useT();
   const remaining = useCountdown(view?.timer.remainingMs ?? 0, !!view?.timer.running, anchor, now);
@@ -207,7 +214,9 @@ export function DescriberScreen({
       </div>
 
       <main className={styles.content}>
-        {statusMessage ? (
+        {onRoom && (!room || status === 'noRoom') ? (
+          <RoomEntry notFound={status === 'noRoom' ? room : null} onRoom={onRoom} />
+        ) : statusMessage ? (
           <div className={styles.message}>
             <h1>{statusMessage.title}</h1>
             <p>{statusMessage.body}</p>

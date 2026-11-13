@@ -1,22 +1,25 @@
 /**
- * Tick Talk local server:
+ * Tick Talk server (on the PC, or deployed on the internet):
  *  - serves the build (dist/) with an SPA fallback (/, /explicar);
- *  - /api/info returns the PC's local network addresses;
- *  - /ws relays messages between the table and the describer's phone.
+ *  - /api/info returns the PC's local network addresses; /healthz says it is up;
+ *  - /ws relays messages between each table and its phones, one room per table.
  *
- * Usage: `npm run play` (build + server on 0.0.0.0:5174) or `npm run dev` (with Vite).
+ * Usage: `npm run play` (build + server on 0.0.0.0:5174), `npm run dev` (with Vite), or
+ * `npm run build && npm start` on a host (listens on $PORT).
  */
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import QRCode from 'qrcode';
 import { WebSocketServer, type WebSocket } from 'ws';
 import { lanAddresses } from './network';
-import { Relay, isValidClientId, type Connection } from './relay';
+import { isValidClientId, type Connection } from './relay';
+import { Rooms } from './rooms';
 
 const DEV = process.argv.includes('--dev');
-const PORT = Number(process.env.TICKTALK_PORT ?? 5174);
+// TICKTALK_PORT wins over PORT: some launchers set PORT for other tools (e.g. Vite's 5173).
+// Hosting platforms set PORT.
+const PORT = Number(process.env.TICKTALK_PORT ?? process.env.PORT ?? 5174);
 const HOST = process.env.TICKTALK_HOST ?? '0.0.0.0';
 /** Port the phone should open: in dev mode it is Vite's. */
 const PAGE_PORT = DEV ? Number(process.env.VITE_PORT ?? 5173) : PORT;
@@ -55,6 +58,11 @@ function serveFile(res: ServerResponse, file: string, cache: boolean): void {
 function handleHttp(req: IncomingMessage, res: ServerResponse): void {
   const url = new URL(req.url ?? '/', 'http://localhost');
 
+  if (url.pathname === '/healthz') {
+    sendJson(res, 200, { ok: true, rooms: rooms.count });
+    return;
+  }
+
   if (url.pathname === '/api/info') {
     sendJson(res, 200, { addresses: lanAddresses(), port: PAGE_PORT, dev: DEV });
     return;
@@ -87,11 +95,28 @@ function handleHttp(req: IncomingMessage, res: ServerResponse): void {
   serveFile(res, path.join(distDir, 'index.html'), false);
 }
 
-const relay = new Relay();
+const rooms = new Rooms();
 const server = createServer(handleHttp);
 const wss = new WebSocketServer({ noServer: true, maxPayload: 64 * 1024 });
 
 const alive = new WeakMap<WebSocket, boolean>();
+
+/** A phone sends a heartbeat every 2 s plus a few taps; anything far beyond that is dropped. */
+const PHONE_MESSAGES_PER_10S = 100;
+
+function rateLimiter(): () => boolean {
+  let windowStart = Date.now();
+  let count = 0;
+  return () => {
+    const now = Date.now();
+    if (now - windowStart > 10_000) {
+      windowStart = now;
+      count = 0;
+    }
+    count += 1;
+    return count <= PHONE_MESSAGES_PER_10S;
+  };
+}
 
 server.on('upgrade', (req, socket, head) => {
   const url = new URL(req.url ?? '/', 'http://localhost');
@@ -114,20 +139,27 @@ wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
   ws.on('pong', () => alive.set(ws, true));
 
   if (role === 'host') {
-    relay.addHost(conn);
-    log(`Mesa ligada.`);
-    ws.on('message', (data) => relay.fromHost(conn, data.toString()));
+    // The table asks for the room it had (code + secret); it may get a new one.
+    const room = rooms.hostJoin(conn, { code: url.searchParams.get('room'), secret: url.searchParams.get('secret') });
+    if (!room) {
+      ws.close(1013, 'server full');
+      return;
+    }
+    log(`Mesa ligada à sala ${room.code} (${rooms.count} salas).`);
+    ws.on('message', (data) => room.relay.fromHost(conn, data.toString()));
     ws.on('close', () => {
-      relay.removeHost(conn);
-      log('Mesa desligada.');
+      rooms.hostLeft(room, conn, Date.now());
+      log(`Mesa da sala ${room.code} desligada.`);
     });
   } else if (role === 'describer' && isValidClientId(id)) {
-    relay.addDescriber(id, conn);
-    log(`Tela de quem explica ligada (${relay.describerCount}).`);
-    ws.on('message', (data) => relay.fromDescriber(id, conn, data.toString()));
+    const room = rooms.describerJoin(url.searchParams.get('room'), id, conn);
+    if (!room) return;
+    const allowed = rateLimiter();
+    log(`Telemóvel ligado à sala ${room.code} (${room.relay.describerCount}).`);
+    ws.on('message', (data) => allowed() && room.relay.fromDescriber(id, conn, data.toString()));
     ws.on('close', () => {
-      relay.removeDescriber(id, conn);
-      log(`Tela de quem explica desligada (${relay.describerCount}).`);
+      rooms.describerLeft(room, id, conn, Date.now());
+      log(`Telemóvel desligado da sala ${room.code} (${room.relay.describerCount}).`);
     });
   } else {
     ws.close(4002, 'bad role');
@@ -146,6 +178,9 @@ const heartbeat = setInterval(() => {
   }
 }, 5000);
 
+// Forget rooms nobody has used for hours.
+const roomSweep = setInterval(() => rooms.sweep(Date.now()), 60_000);
+
 function log(message: string): void {
   const time = new Date().toLocaleTimeString('pt-PT', { hour12: false });
   console.log(`[${time}] ${message}`);
@@ -159,30 +194,26 @@ server.on('error', (err: NodeJS.ErrnoException) => {
   throw err;
 });
 
-server.listen(PORT, HOST, async () => {
+server.listen(PORT, HOST, () => {
   const addresses = lanAddresses();
   const lines = [
     '',
     '  Tick Talk',
     '',
     `  Mesa (neste PC):     http://localhost:${PAGE_PORT}/`,
-    ...addresses.map((ip, i) => `  ${i === 0 ? 'Telemóvel:          ' : '                     '} http://${ip}:${PAGE_PORT}/explicar`),
+    ...addresses.map((ip, i) => `  ${i === 0 ? 'Na rede local:      ' : '                     '} http://${ip}:${PAGE_PORT}/`),
+    '',
+    '  Abre a mesa no PC: aparece o código da sala e um QR code para os telemóveis.',
+    '  Na rede local, se o telemóvel não abrir, permite o Node.js na firewall do Windows.',
     '',
   ];
   console.log(lines.join('\n'));
-  if (addresses.length === 0) {
-    console.log('  Não encontrei nenhuma rede local. Liga o PC ao Wi-Fi para usar o telemóvel.\n');
-  } else {
-    const qr = await QRCode.toString(`http://${addresses[0]}:${PAGE_PORT}/explicar`, { type: 'terminal', small: true });
-    console.log(qr);
-    console.log('  Lê o código com a câmara do telemóvel (na mesma rede Wi-Fi).');
-    console.log('  Se não abrir, permite o Node.js na firewall do Windows (redes privadas).\n');
-  }
   if (DEV) console.log(`  Servidor WebSocket em :${PORT} (o Vite reencaminha /ws e /api).\n`);
 });
 
 function shutdown(): void {
   clearInterval(heartbeat);
+  clearInterval(roomSweep);
   for (const ws of wss.clients) ws.close(1001, 'server shutdown');
   server.close(() => process.exit(0));
   setTimeout(() => process.exit(0), 500).unref();

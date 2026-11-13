@@ -22,7 +22,7 @@ import {
 } from '../net/protocol';
 import { TeamHub, type TeamHubEvent } from '../net/teamHub';
 import { HOST_ID, SERVER_ID, type LinkStatus, type Transport } from '../net/transport';
-import { WebSocketTransport } from '../net/websocket';
+import { WebSocketTransport, type RoomKey } from '../net/websocket';
 
 export type ServerStatus = 'connecting' | 'online' | 'offline';
 
@@ -34,6 +34,8 @@ export interface HostLink {
   serverStatus: ServerStatus;
   /** Another window opened the table and took over the server connection. */
   replaced: boolean;
+  /** The room code the phones join (null until the server has confirmed it). */
+  room: string | null;
   /** Takes the connection back (the other window becomes "replaced"). */
   takeOver: () => void;
   /** A phone per team or per person: ids of the teams that have a phone connected. */
@@ -57,12 +59,42 @@ export interface LobbySetup {
 
 const NO_LOBBY: LobbySetup = { teams: [], language: 'pt' };
 
+/**
+ * Wall clock for "has this phone gone quiet?". Not the game clock (`now`), which tests move
+ * forward in jumps to make time run out; that would look like every phone going silent.
+ */
+const liveNow = () => performance.now();
+
 function takeOverTransport(transport: Transport | null | undefined): void {
   if (transport instanceof WebSocketTransport) transport.takeOver();
 }
 
+const ROOM_KEY = 'ticktalk.room';
+
+/** The table keeps its room (code + secret), so after a reload the phones find it at the same code. */
+function loadRoom(): RoomKey | null {
+  try {
+    const raw = JSON.parse(window.localStorage.getItem(ROOM_KEY) ?? 'null') as Partial<RoomKey> | null;
+    return raw && typeof raw.code === 'string' && typeof raw.secret === 'string' ? { code: raw.code, secret: raw.secret } : null;
+  } catch {
+    return null;
+  }
+}
+
+function storeRoom(room: RoomKey): void {
+  try {
+    window.localStorage.setItem(ROOM_KEY, JSON.stringify(room));
+  } catch {
+    /* ignore */
+  }
+}
+
 function createHostTransport(factory?: () => Transport): Transport {
-  return factory ? factory() : new WebSocketTransport('host', HOST_ID);
+  return factory ? factory() : new WebSocketTransport('host', HOST_ID, { room: loadRoom(), onRoom: storeRoom });
+}
+
+function roomOf(transport: Transport): string | null {
+  return transport instanceof WebSocketTransport ? transport.room : null;
 }
 
 /** Turns a describer command into a reducer action. */
@@ -112,6 +144,7 @@ export function useHostLink(
   const [slowConnect, setSlowConnect] = useState(false);
   const [teamsWithPhone, setTeamsWithPhone] = useState<string[]>([]);
   const [roster, setRoster] = useState<RosterPlayer[]>([]);
+  const [room, setRoom] = useState<string | null>(null);
   const hubRef = useRef<DescriberHub | null>(null);
   const teamHubRef = useRef<TeamHub | null>(null);
   const playerHubRef = useRef<PlayerHub | null>(null);
@@ -171,9 +204,9 @@ export function useHostLink(
         }
       };
 
-      const offMessage = host.onMessage((from, body) => handlePlayers(playerHub.receive(from, body, nowRef.current(), teamIds())));
+      const offMessage = host.onMessage((from, body) => handlePlayers(playerHub.receive(from, body, liveNow(), teamIds())));
       const offStatus = host.onStatus(setTransportStatus);
-      const sweep = setInterval(() => handlePlayers(playerHub.sweep(nowRef.current())), 1000);
+      const sweep = setInterval(() => handlePlayers(playerHub.sweep(liveNow())), 1000);
       const bye = () => {
         for (const id of playerHub.peerIds()) host.send(id, msg.hostBye());
       };
@@ -221,9 +254,9 @@ export function useHostLink(
         setTeamsWithPhone(teamHub.takenTeams());
       };
 
-      const offMessage = host.onMessage((from, body) => handleTeams(teamHub.receive(from, body, nowRef.current(), teamIds())));
+      const offMessage = host.onMessage((from, body) => handleTeams(teamHub.receive(from, body, liveNow(), teamIds())));
       const offStatus = host.onStatus(setTransportStatus);
-      const sweep = setInterval(() => handleTeams(teamHub.sweep(nowRef.current())), 1000);
+      const sweep = setInterval(() => handleTeams(teamHub.sweep(liveNow())), 1000);
       const bye = () => {
         for (const id of teamHub.peerIds()) host.send(id, msg.hostBye());
       };
@@ -267,9 +300,9 @@ export function useHostLink(
       setDescriberOnline(hub.activeId !== null);
     };
 
-    const offMessage = host.onMessage((from, body) => handle(hub.receive(from, body, nowRef.current())));
+    const offMessage = host.onMessage((from, body) => handle(hub.receive(from, body, liveNow())));
     const offStatus = host.onStatus(setTransportStatus);
-    const sweep = setInterval(() => handle(hub.sweep(nowRef.current())), 1000);
+    const sweep = setInterval(() => handle(hub.sweep(liveNow())), 1000);
     const bye = () => {
       if (hub.activeId) host.send(hub.activeId, msg.hostBye());
     };
@@ -308,6 +341,16 @@ export function useHostLink(
     if (!hub?.activeId) return;
     link.host.send(hub.activeId, msg.state(describerView(state, now())));
   }, [state, link, now, lobby]);
+
+  // The server tells the table its room as soon as it connects.
+  useEffect(() => {
+    if (!link) return;
+    setRoom(roomOf(link.host));
+    return link.host.onMessage((from, body) => {
+      const notice = from === SERVER_ID ? parseServerNotice(body) : null;
+      if (notice?.kind === 'room') setRoom(notice.code);
+    });
+  }, [link]);
 
   useEffect(() => {
     if (transportStatus === 'open') {
@@ -369,6 +412,7 @@ export function useHostLink(
     removeTeamAt,
     serverStatus,
     replaced: transportStatus === 'replaced',
+    room,
     takeOver,
   };
 }
@@ -395,7 +439,7 @@ function sendTeamViews(host: Transport, hub: TeamHub, state: GameState, now: num
   }
 }
 
-export type DescriberStatus = 'connecting' | 'ready' | 'busy' | 'waitingHost' | 'reconnecting' | 'replaced';
+export type DescriberStatus = 'connecting' | 'ready' | 'busy' | 'waitingHost' | 'reconnecting' | 'replaced' | 'noRoom';
 
 export interface DescriberClient {
   view: DescriberView | null;
@@ -522,6 +566,8 @@ export function useDescriberClient(
         setStatus(everConnected ? 'reconnecting' : 'connecting');
       } else if (s === 'replaced') {
         setStatus('replaced');
+      } else if (s === 'noRoom') {
+        setStatus('noRoom');
       }
     });
 

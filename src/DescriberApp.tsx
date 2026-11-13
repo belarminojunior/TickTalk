@@ -4,6 +4,7 @@ import type { Language } from './game/types';
 import { useDescriberClient } from './hooks/useTransport';
 import { useWakeLock } from './hooks/useWakeLock';
 import { I18nProvider } from './i18n';
+import { roomFromLocation } from './net/room';
 import { stableClientId, type Transport } from './net/transport';
 import { WebSocketTransport } from './net/websocket';
 import { DescriberScreen } from './screens/DescriberScreen';
@@ -16,12 +17,15 @@ function guessLanguage(): Language {
 export function DescriberApp() {
   const config = useConfig();
   const [transport, setTransport] = useState<Transport | null>(null);
+  // The room comes from the address (the QR code has it); without one, the phone asks for it.
+  const [room] = useState(() => roomFromLocation(window.location.search));
 
   useEffect(() => {
-    const t = new WebSocketTransport('describer', stableClientId());
+    if (!room) return;
+    const t = new WebSocketTransport('describer', stableClientId(), { room });
     setTransport(t);
     return () => t.close();
-  }, []);
+  }, [room]);
 
   // When the phone comes back from the lock screen, reconnect straight away.
   useEffect(() => {
@@ -55,6 +59,11 @@ export function DescriberApp() {
         onTakeOver={client.takeOver}
         onJoinTeam={client.joinTeam}
         onPlayer={client.setPlayer}
+        room={room}
+        onRoom={(code) => {
+          // A fresh page in the new room (simplest way to start over cleanly).
+          window.location.search = `?sala=${code}`;
+        }}
       />
     </I18nProvider>
   );

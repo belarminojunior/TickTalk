@@ -1,5 +1,5 @@
 /**
- * Relays messages between the table (host) and the describer screens.
+ * Relays messages between the table (host) and the describer screens of one room.
  * Knows nothing about the game rules: it only delivers {to, body} envelopes and reports who leaves.
  */
 
@@ -19,7 +19,7 @@ export function isValidClientId(id: unknown): id is string {
   return typeof id === 'string' && ID_PATTERN.test(id) && id !== HOST_ID && id !== SERVER_ID;
 }
 
-function envelope(from: string, body: unknown): string {
+export function envelope(from: string, body: unknown): string {
   return JSON.stringify({ from, body });
 }
 
@@ -48,6 +48,15 @@ export class Relay {
 
   get hasHost(): boolean {
     return this.host !== null;
+  }
+
+  hasDescriber(id: string): boolean {
+    return this.describers.has(id);
+  }
+
+  /** Nobody connected (no table, no phones). */
+  get isEmpty(): boolean {
+    return this.host === null && this.describers.size === 0;
   }
 
   /** A new table replaces the previous one (e.g. after a page reload). */

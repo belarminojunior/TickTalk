@@ -13,6 +13,7 @@ export function QrConnect({
   server,
   compact,
   mode = 'phone',
+  room = null,
 }: {
   url: string | null;
   connected: number;
@@ -20,6 +21,8 @@ export function QrConnect({
   compact?: boolean;
   /** With a phone per team or per person, everyone opens the same address. */
   mode?: ScreenMode;
+  /** The room code, for typing it on a phone instead of scanning. */
+  room?: string | null;
 }) {
   const t = useT();
   const text = {
@@ -49,7 +52,15 @@ export function QrConnect({
         {dataUrl && url ? <img src={dataUrl} alt={t.qrAlt(url)} /> : <span className={styles.placeholder} aria-hidden="true" />}
       </div>
       <div className={styles.text}>
-        <h3 className={styles.title}>{text[0]}</h3>
+        <div className={styles.titleRow}>
+          <h3 className={styles.title}>{text[0]}</h3>
+          {room && (
+            <p className={styles.room} aria-label={`${t.roomLabel} ${room}`}>
+              <span>{t.roomLabel}</span>
+              <strong data-testid="room-code">{room}</strong>
+            </p>
+          )}
+        </div>
         {server === 'offline' ? (
           <p className={styles.warn}>{t.serverMissing}</p>
         ) : (

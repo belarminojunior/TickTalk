@@ -4,8 +4,11 @@ export const HOST_ID = 'host';
 export const SERVER_ID = 'server';
 
 export type TransportKind = 'local' | 'broadcast' | 'websocket';
-/** "replaced": another page with the same role took this one's place (no automatic reconnect). */
-export type LinkStatus = 'connecting' | 'open' | 'closed' | 'replaced';
+/**
+ * "replaced": another page with the same role took this one's place (no automatic reconnect).
+ * "noRoom": the room code is wrong, or its table isn't open yet (keeps retrying slowly).
+ */
+export type LinkStatus = 'connecting' | 'open' | 'closed' | 'replaced' | 'noRoom';
 
 export type MessageHandler = (from: string, body: unknown) => void;
 export type StatusHandler = (status: LinkStatus) => void;

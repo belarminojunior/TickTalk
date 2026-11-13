@@ -1,22 +1,47 @@
-import { BaseTransport, HOST_ID } from './transport';
+import { parseServerNotice } from './protocol';
+import { BaseTransport, HOST_ID, SERVER_ID } from './transport';
 
 export type WsRole = 'host' | 'describer';
 
 /** Close codes the server uses when another page replaces this one (see server/relay.ts). */
 export const REPLACED_CLOSE_CODES: readonly number[] = [4000, 4001];
+/** The room doesn't exist (see server/rooms.ts). */
+export const NO_ROOM_CLOSE_CODE = 4004;
 
 const MIN_BACKOFF = 500;
 const MAX_BACKOFF = 4000;
+/** A wrong room code: try again now and then, in case the table opens it. */
+const NO_ROOM_RETRY = 4000;
+
+/** A table's room: the code everyone sees, and the secret only the table keeps. */
+export interface RoomKey {
+  code: string;
+  secret: string;
+}
+
+export interface WebSocketOptions {
+  /** Phones: the room code to join. Tables: the room they had (to take it back). */
+  room?: string | RoomKey | null;
+  /** Tables: the server assigned (or confirmed) the room. */
+  onRoom?: (room: RoomKey) => void;
+  /** Tests: a fixed URL. */
+  url?: string;
+}
 
 /** WebSocket URL on the same address that served the page. */
-export function defaultWsUrl(role: WsRole, id: string): string {
+export function defaultWsUrl(role: WsRole, id: string, room?: string | RoomKey | null): string {
   const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   const params = new URLSearchParams({ role, id });
+  if (typeof room === 'string') params.set('room', room);
+  else if (room) {
+    params.set('room', room.code);
+    params.set('secret', room.secret);
+  }
   return `${proto}//${window.location.host}/ws?${params}`;
 }
 
 /**
- * PC + phone: the local server relays the messages.
+ * The server relays the messages, within one room.
  * Reconnects on its own when the connection drops (with growing back-off).
  */
 export class WebSocketTransport extends BaseTransport {
@@ -26,20 +51,30 @@ export class WebSocketTransport extends BaseTransport {
   private retryTimer: ReturnType<typeof setTimeout> | null = null;
   private closed = false;
   private outbox: string[] = [];
-  private url: string;
+  private roomKey: string | RoomKey | null;
 
-  constructor(readonly role: WsRole, id: string = HOST_ID, url?: string) {
+  constructor(
+    readonly role: WsRole,
+    id: string = HOST_ID,
+    private options: WebSocketOptions = {},
+  ) {
     super(id);
-    this.url = url ?? defaultWsUrl(role, id);
+    this.roomKey = options.room ?? null;
     this.connect();
+  }
+
+  /** The room code (for a table: once the server has confirmed it). */
+  get room(): string | null {
+    return typeof this.roomKey === 'string' ? this.roomKey : this.roomKey?.code ?? null;
   }
 
   private connect(): void {
     if (this.closed) return;
-    this.setStatus('connecting');
+    // While the room is missing, keep saying so between retries (no flicker to "connecting").
+    if (this.status !== 'noRoom') this.setStatus('connecting');
     let socket: WebSocket;
     try {
-      socket = new WebSocket(this.url);
+      socket = new WebSocket(this.options.url ?? defaultWsUrl(this.role, this.id, this.roomKey));
     } catch {
       this.scheduleReconnect();
       return;
@@ -62,6 +97,14 @@ export class WebSocketTransport extends BaseTransport {
       if (typeof data !== 'object' || data === null) return;
       const { from, body } = data as { from?: unknown; body?: unknown };
       if (typeof from !== 'string') return;
+      if (from === SERVER_ID && this.role === 'host') {
+        const notice = parseServerNotice(body);
+        if (notice?.kind === 'room') {
+          // Reconnections ask for this room again.
+          this.roomKey = { code: notice.code, secret: notice.secret };
+          this.options.onRoom?.(this.roomKey);
+        }
+      }
       this.emitMessage(from, body);
     };
     socket.onclose = (event) => {
@@ -73,16 +116,21 @@ export class WebSocketTransport extends BaseTransport {
         this.setStatus('replaced');
         return;
       }
+      if (event.code === NO_ROOM_CLOSE_CODE) {
+        this.setStatus('noRoom');
+        this.scheduleReconnect(NO_ROOM_RETRY);
+        return;
+      }
       this.setStatus('connecting');
       this.scheduleReconnect();
     };
     socket.onerror = () => socket.close();
   }
 
-  private scheduleReconnect(): void {
+  private scheduleReconnect(fixedDelay?: number): void {
     if (this.closed || this.retryTimer) return;
-    const delay = this.backoff;
-    this.backoff = Math.min(MAX_BACKOFF, this.backoff * 2);
+    const delay = fixedDelay ?? this.backoff;
+    if (fixedDelay === undefined) this.backoff = Math.min(MAX_BACKOFF, this.backoff * 2);
     this.retryTimer = setTimeout(() => {
       this.retryTimer = null;
       this.connect();

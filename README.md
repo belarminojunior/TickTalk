@@ -2,7 +2,9 @@
 
 **Explica cinco palavras antes que o tempo acabe.**
 
-Um jogo de tabuleiro para o browser, para jogar em equipas à volta de um PC. Quem explica vê uma carta com 5 palavras e tenta que a sua equipa as adivinhe em 30 segundos. O peão avança uma casa por cada palavra acertada (com um telemóvel por equipa, a equipa adversária pode anular as que quebraram as regras). Ganha quem chegar primeiro à Chegada.
+Um jogo de tabuleiro para o browser, para jogar em equipas à volta de um PC. Quem explica vê uma carta com 5 palavras e tenta que a sua equipa as adivinhe em 30 segundos. O peão avança uma casa por cada palavra acertada (com um telemóvel por equipa ou por pessoa, a equipa adversária pode anular as que quebraram as regras). Ganha quem chegar primeiro à Chegada.
+
+Cada mesa abre uma **sala** com um código de 4 letras (por exemplo `KQTR`): os telemóveis entram nessa sala, na mesma rede Wi-Fi ou pela internet, se o jogo estiver publicado num servidor (ver [Publicar](#publicar-deploy)).
 
 A novidade são as **telas separadas**: quem explica vê a carta (no telemóvel, numa segunda janela ou no próprio PC) e os outros veem a mesa, com os acertos a aparecer ao vivo, sem revelar as palavras.
 
@@ -27,8 +29,9 @@ npm run play
 Isto faz a build e arranca o servidor local em `0.0.0.0:5174`. No terminal aparecem:
 
 - o endereço da mesa: **http://localhost:5174/** (abre no PC, de preferência em ecrã inteiro com F11);
-- o endereço para o telemóvel: `http://<IP do PC>:5174/explicar`;
-- um QR code com esse endereço.
+- o endereço do PC na rede local, `http://<IP do PC>:5174/`.
+
+Na mesa aparece o **código da sala** e um **QR code** que abre `…/explicar?sala=CÓDIGO` no telemóvel. Quem abrir só `…/explicar` escreve o código no telemóvel.
 
 Depois, no PC:
 
@@ -39,12 +42,13 @@ Depois, no PC:
 
 O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, aparece **Continuar jogo guardado** na configuração.
 
-### Os dois modos de jogo
+### Os três modos de jogo
 
-| Modo | Mesa | Quem explica |
+| Modo | Mesa | Telemóveis |
 |---|---|---|
-| **PC + telemóvel** (recomendado) | PC/TV em `/` | Telemóvel em `/explicar`, passa de mão em mão a cada vez |
-| **Um telemóvel por equipa** | PC/TV em `/` | Cada equipa tem o seu telemóvel em `/explicar`: quem explica usa o da sua equipa e a equipa adversária valida no dela |
+| **PC + telemóvel** | PC/TV em `/` | Um telemóvel, passa de mão em mão a cada vez. Sem validação |
+| **Um telemóvel por equipa** | PC/TV em `/` | Cada equipa tem o seu: quem explica usa o da sua equipa e a equipa adversária valida no dela |
+| **Um telemóvel por pessoa** | PC/TV em `/` | Cada pessoa usa o seu: escreve o nome, escolhe a equipa, e vê a carta quando é a sua vez de explicar |
 
 ### Um telemóvel por equipa
 
@@ -55,11 +59,23 @@ O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, apar
 - Se o telemóvel da equipa que valida não estiver ligado, valida-se na mesa. Se o telemóvel da equipa que joga cair, o tempo pára.
 - Nos cartões das equipas, na mesa, aparece "telemóvel ligado" ou "sem telemóvel".
 
+### Um telemóvel por pessoa
+
+- Cada pessoa lê o QR code da mesa (ou escreve o código da sala), escreve **o seu nome** e toca na **sua equipa**. Pode trocar de equipa ou de nome até o jogo começar. Dois telemóveis ligados não podem ter o mesmo nome.
+- Na mesa, cada equipa mostra quem entrou (com um × para tirar alguém). **Sortear equipas** mistura toda a gente que entrou pelas equipas, ao acaso. Quem explica primeiro, em cada equipa, é quem entrou primeiro nela.
+- Os nomes e as cores das equipas escrevem-se na mesa, como nos outros modos.
+- **Durante a vez**, só o telemóvel de quem explica mostra a carta. Os colegas de equipa veem "A tua equipa está a jogar: adivinha!", o tempo e os acertos; as outras equipas veem a vez sem as palavras.
+- **No fim da vez**, todos os telemóveis da equipa adversária (a seguinte) recebem a carta para validar: qualquer pessoa dessa equipa pode anular palavras e confirmar. A mesa só mostra "A validar no telemóvel das Gazelas…".
+- Quem explica passa a vez no seu telemóvel. Se o telemóvel de quem explica cair, o tempo pára.
+- Se alguém trocar de telemóvel a meio do jogo, o telemóvel novo pergunta "Quem és tu?" e mostra os nomes dos jogadores.
+
 ## Ligar o telemóvel
 
-1. O telemóvel tem de estar **na mesma rede Wi-Fi** que o PC.
-2. Lê o QR code (no terminal ou no ecrã de configuração) com a câmara, ou escreve o endereço `http://<IP do PC>:5174/explicar` no browser do telemóvel.
+1. Com `npm run play`, o telemóvel tem de estar **na mesma rede Wi-Fi** que o PC. Com o jogo publicado num servidor, basta ter internet.
+2. Lê o QR code do ecrã de configuração com a câmara, ou abre `…/explicar` no browser do telemóvel e escreve o **código da sala** que aparece na mesa.
 3. Na configuração aparece **“1 telemóvel ligado”**.
+
+O código da sala fica guardado no PC: se recarregares a mesa, ela volta à mesma sala e os telemóveis voltam a ligar-se sozinhos. Um código errado mostra “Não encontrei a sala”.
 
 Durante o jogo o telemóvel passa de mão em mão: em cada vez, quem explica carrega em **Estou pronto/a** e depois em **Começar**. O ecrã do telemóvel não se apaga enquanto o jogo está aberto (Wake Lock, nos browsers que o suportam).
 
@@ -80,6 +96,17 @@ Se o telemóvel não abrir a página:
    ```
 
 Se o PC tiver várias redes (VPN, máquinas virtuais), o terminal mostra todos os endereços; usa o da rede Wi-Fi.
+
+## Publicar (deploy)
+
+O jogo é um único servidor Node (páginas + WebSocket), por isso pode ser publicado em qualquer serviço que corra Node ou Docker com WebSockets (por exemplo Render, Railway, Fly.io ou um VPS). Cada mesa abre a sua sala, por isso vários grupos podem jogar ao mesmo tempo no mesmo servidor.
+
+- **Com Node:** comando de build `npm ci && npm run build`, comando de arranque `npm start`. O servidor escuta na porta da variável `PORT` (que estes serviços definem).
+- **Com Docker:** há um `Dockerfile` pronto (`docker build -t tick-talk .` e `docker run -p 8080:8080 tick-talk`).
+- **Verificação de saúde:** `GET /healthz` responde `{"ok":true,…}`.
+- Usa **HTTPS** (os serviços acima dão-no de origem): a página liga-se por `wss://` sozinha e o ecrã do telemóvel não se apaga (Wake Lock).
+- As salas vivem na memória do servidor. Se o servidor reiniciar, cada mesa recria a sua sala com o mesmo código quando se volta a ligar, e o jogo continua (o estado está guardado no browser do PC). Usa **uma só instância** do servidor: as salas não são partilhadas entre instâncias.
+- Uma sala vazia é apagada ao fim de 6 horas. Cada sala aceita até 40 telemóveis.
 
 ## Regras
 
@@ -114,17 +141,18 @@ npm run cards   # volta a gerar as cartas a partir de scripts/generate-cards.mjs
 
 No modo `dev`, abre `http://localhost:5173/` no PC e `http://<IP do PC>:5173/explicar` no telemóvel (o Vite reencaminha `/ws` e `/api` para o servidor).
 
-A porta do servidor pode ser mudada com a variável `TICKTALK_PORT` (por omissão 5174).
+A porta do servidor pode ser mudada com a variável `TICKTALK_PORT` (ou `PORT`; por omissão 5174). `TICKTALK_PORT` tem prioridade.
 
 ### Estrutura
 
 ```
-server/            servidor Node: serve dist/, /api/info, relay WebSocket em /ws, QR no terminal
+server/            servidor Node: serve dist/, /api/info, /healthz, salas e relay WebSocket em /ws
 scripts/           gerador das cartas (listas de palavras PT e EN)
 src/
   game/            regras puras: reducer, seletores (vistas da mesa e de quem explica), tabuleiro,
                    baralho, gravação
-  net/             protocolo versionado, DescriberHub (um explicador de cada vez), TeamHub (um telemóvel por equipa) e o transporte:
+  net/             protocolo versionado, DescriberHub (um explicador de cada vez), TeamHub (um telemóvel por equipa),
+                   PlayerHub (um telemóvel por pessoa) e o transporte:
                    WebSocketTransport (e LocalTransport, em memória, para os testes)
   components/      Tabuleiro, peões, cartas, painéis…
   screens/         Configuração, Mesa, Quem explica, Validação, fim da vez
@@ -139,7 +167,8 @@ O **anfitrião (a mesa) é a fonte da verdade**: o estado vive só aí, num redu
 
 ## Limitações conhecidas
 
-- O servidor guarda só uma mesa de cada vez (uma partida por servidor).
+- As salas vivem na memória de uma instância do servidor (não escala para várias instâncias).
+- Com um telemóvel por pessoa, quem chega depois de o jogo começar não pode entrar numa equipa: começa-se um jogo novo (as equipas ficam).
 - O modo telemóvel precisa do servidor (`npm run play` ou `npm run dev`); `vite preview` sozinho não chega.
 - Sem HTTPS, alguns browsers de telemóvel não dão Wake Lock; nesse caso, aumenta o tempo de bloqueio do ecrã do telemóvel.
 - As palavras repetem-se entre cartas diferentes (cada palavra aparece em média 1–2 vezes no baralho).

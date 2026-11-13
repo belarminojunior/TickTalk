@@ -60,7 +60,7 @@ export function HostApp() {
     [teamDrafts, uiLanguage],
   );
   const link = useHostLink(mode, state, dispatch, config.now, config.createHostTransport, lobby);
-  const phoneUrl = usePhoneUrl(true);
+  const phoneUrl = usePhoneUrl(true, link.room);
 
   // The host clock: time only runs here.
   useInterval(() => dispatch({ type: 'TICK', now: config.now() }), 200, state.phase === 'describing');

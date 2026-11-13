@@ -15,6 +15,14 @@
   font-size: 20px;
 }
 
+.roomInput {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
 .input:focus-visible {
   outline: 2px solid var(--yellow);
   outline-offset: 1px;

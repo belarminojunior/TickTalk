@@ -349,7 +349,7 @@ function HandoffPanel({ view, dispatch, link, mode, phoneUrl }: TableScreenProps
       {link.describerOnline ? (
         turn.ready && <StatusPill tone="ok">{t.readyStatus(turn.describer)}</StatusPill>
       ) : (
-        <QrConnect url={phoneUrl} connected={link.connected} server={link.serverStatus} compact mode={mode} />
+        <QrConnect url={phoneUrl} connected={link.connected} server={link.serverStatus} compact mode={mode} room={link.room} />
       )}
 
       <button type="button" className="btn btn-outline" onClick={() => dispatch({ type: 'HANDOFF', skipDescriber: true })}>

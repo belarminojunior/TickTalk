@@ -141,6 +141,7 @@ export function SetupScreen(props: SetupScreenProps) {
               connected={link.connected}
               server={link.serverStatus}
               mode={settings.screenMode}
+              room={link.room}
             />
           </section>
 

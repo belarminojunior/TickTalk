@@ -53,7 +53,9 @@ export type HostMessage =
 /** Messages from the WebSocket server (not the host). */
 export type ServerNotice =
   | { v: 1; kind: 'peer-left'; id: string }
-  | { v: 1; kind: 'host-status'; online: boolean };
+  | { v: 1; kind: 'host-status'; online: boolean }
+  // To the table: its room code, and the secret that lets it take the room back later.
+  | { v: 1; kind: 'room'; code: string; secret: string };
 
 function isObject(x: unknown): x is Record<string, unknown> {
   return typeof x === 'object' && x !== null && !Array.isArray(x);
@@ -166,6 +168,9 @@ export function parseServerNotice(raw: unknown): ServerNotice | null {
   if (raw.kind === 'peer-left' && typeof raw.id === 'string') return { v: 1, kind: 'peer-left', id: raw.id };
   if (raw.kind === 'host-status' && typeof raw.online === 'boolean') {
     return { v: 1, kind: 'host-status', online: raw.online };
+  }
+  if (raw.kind === 'room' && typeof raw.code === 'string' && typeof raw.secret === 'string') {
+    return { v: 1, kind: 'room', code: raw.code, secret: raw.secret };
   }
   return null;
 }

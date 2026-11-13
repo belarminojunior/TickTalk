@@ -301,6 +301,15 @@ const pt = {
   yourTeam: (name: string): string => `A tua equipa: ${name}`,
   changeTeam: 'Trocar de equipa',
 
+  // Rooms
+  roomLabel: 'Sala',
+  roomTitle: 'Em que sala vais jogar?',
+  roomHelp: 'Escreve o código de 4 letras que aparece no ecrã do PC.',
+  roomCode: 'Código da sala',
+  roomNotFound: (code: string): string => `Não encontrei a sala ${code}. Confirma o código no PC (ou espera que a mesa abra).`,
+  roomInvalid: 'O código tem 4 letras.',
+  enterRoom: 'Entrar',
+
   // One phone per person
   connectEveryone: 'Liga os telemóveis de todos',
   connectEveryoneHelpBefore: 'Cada pessoa lê o código ou abre ',
@@ -612,6 +621,14 @@ const en: Strings = {
   refusedTeam: (name) => `${name} already has a phone. Pick another team.`,
   yourTeam: (name) => `Your team: ${name}`,
   changeTeam: 'Change team',
+
+  roomLabel: 'Room',
+  roomTitle: 'Which room are you playing in?',
+  roomHelp: 'Type the 4-letter code shown on the PC screen.',
+  roomCode: 'Room code',
+  roomNotFound: (code) => `Couldn’t find room ${code}. Check the code on the PC (or wait for the table to open).`,
+  roomInvalid: 'The code has 4 letters.',
+  enterRoom: 'Join',
 
   connectEveryone: 'Connect everyone’s phones',
   connectEveryoneHelpBefore: 'Each person scans the code or opens ',

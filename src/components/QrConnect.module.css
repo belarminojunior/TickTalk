@@ -38,6 +38,33 @@
   min-width: 0;
 }
 
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.room {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 2px 12px;
+  border-radius: 10px;
+  background: var(--table);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.room strong {
+  color: var(--yellow);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: 0.12em;
+}
+
 .title {
   font-family: var(--font-body);
   font-weight: 700;
