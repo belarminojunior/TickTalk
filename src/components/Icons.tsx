@@ -98,6 +98,12 @@ export const XIcon = (p: IconProps) => (
   </Svg>
 );
 
+export const MinusIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M5 12h14" />
+  </Svg>
+);
+
 export const PlusIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M12 5v14M5 12h14" />

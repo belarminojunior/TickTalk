@@ -155,9 +155,9 @@
 }
 
 @media (max-width: 1180px) {
-  .grid { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 760px) {
-  .cards { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: minmax(0, 1fr); }
 }

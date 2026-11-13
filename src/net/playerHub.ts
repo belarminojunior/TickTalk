@@ -1,6 +1,6 @@
 import type { PhoneIssue } from '../game/selectors';
 import { PEER_TIMEOUT_MS } from './hub';
-import { parseClientMessage, parseServerNotice, type DescriberCommand, type PlayerInfo } from './protocol';
+import { parseClientMessage, parseServerNotice, type DescriberCommand, type PlayerInfo, type TeamEdit } from './protocol';
 import { SERVER_ID } from './transport';
 
 /** Someone who joined from their own phone. */
@@ -17,6 +17,8 @@ export type PlayerHubEvent =
   /** Send this phone its view. */
   | { type: 'sync'; id: string }
   | { type: 'command'; id: string; player: { name: string; team: string | null }; command: DescriberCommand }
+  /** Before the game: someone in a team named it (players come from who joined, not from here). */
+  | { type: 'team-edit'; id: string; team: string; edit: TeamEdit }
   /** A phone left; `player` is who it was (if anyone). */
   | { type: 'left'; id: string; player: { name: string; team: string | null } | null }
   | { type: 'peers-changed'; count: number }
@@ -114,6 +116,12 @@ export class PlayerHub {
     if (message.kind === 'command') {
       const player = this.playerOf(from);
       if (player) events.push({ type: 'command', id: from, player: { name: player.name, team: player.team }, command: message.command });
+      return events;
+    }
+
+    if (message.kind === 'team') {
+      const player = this.playerOf(from);
+      if (player?.team) events.push({ type: 'team-edit', id: from, team: player.team, edit: { name: message.name } });
       return events;
     }
 

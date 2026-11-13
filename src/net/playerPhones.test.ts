@@ -132,8 +132,8 @@ describe('PlayerHub', () => {
 describe('phone views (one phone per person)', () => {
   const LOBBY: Lobby = {
     teams: [
-      { id: 't1', name: 'Os Leões', color: 'red' },
-      { id: 't2', name: 'As Gazelas', color: 'green' },
+      { id: 't1', name: 'Os Leões', chosenName: 'Os Leões', color: 'red', players: [] },
+      { id: 't2', name: 'As Gazelas', chosenName: 'As Gazelas', color: 'green', players: [] },
     ],
     roster: [
       { name: 'Ana', team: 't1', online: true },

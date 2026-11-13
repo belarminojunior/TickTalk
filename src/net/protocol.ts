@@ -31,6 +31,17 @@ export interface PlayerInfo {
 }
 
 export const MAX_NAME_LENGTH = 24;
+export const MAX_TEAM_NAME_LENGTH = 32;
+const MAX_TEAM_PLAYERS = 10;
+
+/**
+ * Before the game, a phone sets its team: the name (empty = keep "Grupo A") and, with one
+ * phone per team, who plays (in describing order).
+ */
+export interface TeamEdit {
+  name: string;
+  players?: string[];
+}
 
 /** Describer → host. */
 export type ClientMessage =
@@ -41,6 +52,8 @@ export type ClientMessage =
   | { v: 1; kind: 'join'; team: string | null }
   // One phone per person: the person wrote their name or chose a team (null = forget me).
   | { v: 1; kind: 'me'; player: PlayerInfo | null }
+  // Before the game: this phone's team (its name, and with one phone per team, its players).
+  | ({ v: 1; kind: 'team' } & TeamEdit)
   | { v: 1; kind: 'bye' }
   | { v: 1; kind: 'command'; command: DescriberCommand };
 
@@ -126,6 +139,15 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
         ...(player === undefined ? {} : { player }),
       };
     }
+    case 'team': {
+      if (typeof raw.name !== 'string') return null;
+      const name = raw.name.replace(/\s+/g, ' ').trim();
+      if (name.length > MAX_TEAM_NAME_LENGTH) return null;
+      if (raw.players === undefined) return { v: 1, kind: 'team', name };
+      if (!Array.isArray(raw.players) || raw.players.length > MAX_TEAM_PLAYERS) return null;
+      const players = raw.players.map(cleanName).filter((p): p is string => p !== null);
+      return { v: 1, kind: 'team', name, players };
+    }
     case 'me': {
       if (raw.player === null) return { v: 1, kind: 'me', player: null };
       const player = parsePlayer(raw.player);
@@ -189,6 +211,7 @@ export const msg = {
     ...(player ? { player } : {}),
   }),
   me: (player: PlayerInfo | null): ClientMessage => ({ v: 1, kind: 'me', player }),
+  team: (edit: TeamEdit): ClientMessage => ({ v: 1, kind: 'team', ...edit }),
   join: (team: string | null): ClientMessage => ({ v: 1, kind: 'join', team }),
   bye: (): ClientMessage => ({ v: 1, kind: 'bye' }),
   command: (command: DescriberCommand): ClientMessage => ({ v: 1, kind: 'command', command }),

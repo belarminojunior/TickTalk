@@ -12,14 +12,18 @@ import { useT } from '../i18n';
 import type { DescriberCommand } from '../net/protocol';
 import styles from './TeamPhoneScreens.module.css';
 
-/** "Qual é a tua equipa?" — the first screen of each phone, once the game has started. */
+/**
+ * "Qual é o teu grupo?" — the first screen of each phone: before the game it picks a group
+ * (then writes the team there); during the game, "Qual é a tua equipa?" brings a phone back in.
+ */
 export function TeamPicker({ view, onJoin }: { view: DescriberView; onJoin: (team: string) => void }) {
   const t = useT();
   const refused = view.teamsList.find((x) => x.id === view.you.refusedTeam);
+  const setup = view.phase === 'setup';
   return (
     <section className={styles.panel}>
-      <h1 className={styles.title}>{t.pickTeamTitle}</h1>
-      <p className={styles.muted}>{t.pickTeamHelp}</p>
+      <h1 className={styles.title}>{setup ? t.pickGroupTitle : t.pickTeamTitle}</h1>
+      <p className={styles.muted}>{setup ? t.pickGroupHelp : t.pickTeamHelp}</p>
       {refused && (
         <p className={styles.warning} role="alert">
           {t.refusedTeam(refused.name)}

@@ -1,24 +1,26 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { loadMuted, setMuted } from './audio/sfx';
 import { ReplacedNotice } from './components/ReplacedNotice';
 import { useConfig } from './config';
 import { CARDS } from './data/cards';
 import { DEFAULT_SETTINGS, createInitialState, gameReducer } from './game/reducer';
 import { tableView } from './game/selectors';
-import { toTeamSetup, withRoster, type TeamDraft } from './game/setup';
+import { gameDrafts, parsePlayers, teamIdAt, toTeamSetup, type TeamDraft } from './game/setup';
 import { clearSavedGame, loadGame, loadSetup, saveGame, saveSetup } from './game/storage';
 import type { GameState, Settings } from './game/types';
 import { useInterval } from './hooks/useTimer';
 import { useHostLink, type LobbySetup } from './hooks/useTransport';
+import type { TeamEdit } from './net/protocol';
 import { usePhoneUrl } from './hooks/usePhoneUrl';
 import { I18nProvider } from './i18n';
 import { STRINGS } from './i18n/strings';
 import { SetupScreen } from './screens/SetupScreen';
 import { TableScreen } from './screens/TableScreen';
 
+/** Two groups to start with ("Grupo A", "Grupo B"): the PC never names teams. */
 const DEFAULT_TEAMS: TeamDraft[] = [
-  { name: 'Os Leões', color: 'red', players: '' },
-  { name: 'As Gazelas', color: 'green', players: '' },
+  { name: '', color: 'red', players: '' },
+  { name: '', color: 'green', players: '' },
 ];
 
 /** What matters for saving (not the timer, which changes 5 times a second). */
@@ -51,13 +53,29 @@ export function HostApp() {
   const mode = inSetup ? draft.screenMode : state.settings.screenMode;
   const uiLanguage = inSetup ? draft.uiLanguage : state.settings.uiLanguage ?? 'pt';
 
-  // One phone per person: the phones see the setup rows (with the names shown on the table).
+  // A phone per team or per person: before the game, the phones name their team (and, one
+  // phone per team, write who plays).
+  const onTeamEdit = useCallback((teamId: string, edit: TeamEdit) => {
+    setTeamDrafts((teams) =>
+      teams.map((team, i) =>
+        teamIdAt(i) === teamId ? { ...team, name: edit.name, ...(edit.players ? { players: edit.players.join(', ') } : {}) } : team,
+      ),
+    );
+  }, []);
+
+  // The phones see the setup rows, with the names shown on the table.
   const lobby = useMemo<LobbySetup>(
     () => ({
-      teams: teamDrafts.map((d, i) => ({ name: d.name.trim() || STRINGS[uiLanguage].teamPlaceholder(i + 1), color: d.color })),
+      teams: teamDrafts.map((d, i) => ({
+        name: d.name.trim() || STRINGS[uiLanguage].groupLabel(i),
+        chosenName: d.name.trim(),
+        color: d.color,
+        players: parsePlayers(d.players),
+      })),
       language: uiLanguage,
+      onTeamEdit,
     }),
-    [teamDrafts, uiLanguage],
+    [teamDrafts, uiLanguage, onTeamEdit],
   );
   const link = useHostLink(mode, state, dispatch, config.now, config.createHostTransport, lobby);
   const phoneUrl = usePhoneUrl(true, link.room);
@@ -91,12 +109,22 @@ export function HostApp() {
     dispatch({
       type: 'SETUP',
       settings: draft,
-      // One phone per person: each team is whoever picked it on their phone.
-      teams: (draft.screenMode === 'playerPhones' ? withRoster(teamDrafts, link.roster) : teamDrafts).map(toTeamSetup),
+      // Teams without a name are "Grupo A", "Grupo B"…
+      teams: gameDrafts(draft.screenMode, teamDrafts, link.roster, STRINGS[draft.uiLanguage].personLabel).map((d, i) =>
+        toTeamSetup(d, STRINGS[draft.uiLanguage].groupLabel(i)),
+      ),
       // Every game uses the whole deck (all packs).
       cards: CARDS[draft.language],
       seed: config.seed(),
     });
+  };
+
+  // With one phone per team, each group's phone writes its players: start from empty lists.
+  const changeSettings = (next: Settings) => {
+    if (next.screenMode === 'teamPhones' && draft.screenMode !== 'teamPhones') {
+      setTeamDrafts((teams) => teams.map((team) => ({ ...team, players: '' })));
+    }
+    setDraft(next);
   };
 
   const continueSaved = () => {
@@ -127,7 +155,7 @@ export function HostApp() {
       {inSetup ? (
         <SetupScreen
           settings={draft}
-          onSettings={setDraft}
+          onSettings={changeSettings}
           teams={teamDrafts}
           onTeams={setTeamDrafts}
           link={link}

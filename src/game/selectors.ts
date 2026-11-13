@@ -129,7 +129,15 @@ export interface DescriberView {
    * Teams to pick from, and whether each already has a phone (one phone per team) or who
    * is in it (one phone per person).
    */
-  teamsList: { id: string; name: string; color: Team['color']; taken: boolean; members: string[] }[];
+  teamsList: {
+    id: string;
+    name: string;
+    color: Team['color'];
+    taken: boolean;
+    members: string[];
+    /** Before the game: the name the team chose ('' while it is still "Grupo A"). */
+    chosenName: string;
+  }[];
   /** One phone per person, mid-game, on a phone that isn't anyone yet: the players to pick from. */
   claimable: { team: string; name: string; online: boolean }[];
   /** The checking team's phone, while validating: both sides with marks and cancellations. */
@@ -214,8 +222,26 @@ export function phoneView(
   state: GameState,
   now: number,
   phone: { teamId: string | null; refusedTeam: string | null; takenTeams: readonly string[] },
+  lobby?: Lobby,
 ): DescriberView {
   const base = describerView(state, now);
+  // Before the game: each phone picks its group, then writes the team's name and players.
+  if (state.phase === 'setup' && lobby) {
+    return {
+      ...base,
+      mode: 'teamPhones',
+      language: lobby.language,
+      you: { teamId: phone.teamId, role: 'spectator', refusedTeam: phone.refusedTeam, name: null, issue: null },
+      teamsList: lobby.teams.map((t) => ({
+        id: t.id,
+        name: t.name,
+        color: t.color,
+        taken: t.id !== phone.teamId && phone.takenTeams.includes(t.id),
+        members: [...t.players],
+        chosenName: t.chosenName,
+      })),
+    };
+  }
   if (state.settings.screenMode !== 'teamPhones') return base;
 
   const { turn } = state;
@@ -237,6 +263,7 @@ export function phoneView(
       color: t.color,
       taken: t.id !== phone.teamId && phone.takenTeams.includes(t.id),
       members: [],
+      chosenName: '',
     })),
   };
   return withRole(view, state, role);
@@ -271,8 +298,11 @@ export interface PlayerPhone {
 
 /** One phone per person: what every phone needs to know before and during the game. */
 export interface Lobby {
-  /** The setup rows (ids "t1"…), used before the game starts. */
-  teams: { id: string; name: string; color: PawnColor }[];
+  /**
+   * The setup rows (ids "t1"…), used before the game starts: the name to show ("Grupo A" until
+   * the team picks one), the chosen name ('' if none) and, with one phone per team, its players.
+   */
+  teams: { id: string; name: string; chosenName: string; color: PawnColor; players: string[] }[];
   /** Everyone who joined from a phone. */
   roster: { name: string; team: string | null; online: boolean }[];
   /** The table's interface language (the game's settings only exist once it starts). */
@@ -303,7 +333,10 @@ export function playerPhoneView(state: GameState, now: number, phone: PlayerPhon
       language: lobby.language,
       you: { ...you, teamId: player?.team ?? null },
       teamsList: lobby.teams.map((t) => ({
-        ...t,
+        id: t.id,
+        name: t.name,
+        color: t.color,
+        chosenName: t.chosenName,
         taken: false,
         members: lobby.roster.filter((p) => p.team === t.id).map((p) => p.name),
       })),
@@ -325,7 +358,7 @@ export function playerPhoneView(state: GameState, now: number, phone: PlayerPhon
     ...base,
     mode: 'playerPhones',
     you: { ...you, teamId: myTeam?.id ?? null, role },
-    teamsList: state.teams.map((t) => ({ id: t.id, name: t.name, color: t.color, taken: false, members: [...t.players] })),
+    teamsList: state.teams.map((t) => ({ id: t.id, name: t.name, color: t.color, taken: false, members: [...t.players], chosenName: '' })),
     claimable: myTeam ? [] : state.teams.flatMap((t) => t.players.map((name) => ({ team: t.id, name, online: online(t.id, name) }))),
   };
   return withRole(view, state, role);

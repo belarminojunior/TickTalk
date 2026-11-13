@@ -1,11 +1,17 @@
-import type { PawnColor, TeamSetup } from './types';
+import type { PawnColor, ScreenMode, TeamSetup } from './types';
 import { PAWN_COLORS } from './types';
 
 export const MIN_TEAMS = 2;
 export const MAX_TEAMS = 6;
 export const MIN_PLAYERS = 2;
+export const MAX_PLAYERS = 10;
 
-/** A form row: players come as comma-separated text. */
+/** Groups are lettered A, B, C… until someone gives the team a name. */
+export function groupLetter(index: number): string {
+  return 'ABCDEFGHIJ'[index] ?? String(index + 1);
+}
+
+/** A form row: players come as comma-separated text. An empty name means "Grupo A". */
 export interface TeamDraft {
   name: string;
   color: PawnColor;
@@ -19,13 +25,22 @@ export function parsePlayers(text: string): string[] {
     .filter(Boolean);
 }
 
-export function toTeamSetup(draft: TeamDraft): TeamSetup {
-  return { name: draft.name.trim(), color: draft.color, players: parsePlayers(draft.players) };
+/** @param groupName the name a team without one gets ("Grupo A"). */
+export function toTeamSetup(draft: TeamDraft, groupName: string): TeamSetup {
+  return { name: draft.name.trim() || groupName, color: draft.color, players: parsePlayers(draft.players) };
+}
+
+/**
+ * PC + one phone: nobody types names. Each group just has N people, called "Pessoa 1", …
+ * (`label` gives the name for a number, in the interface language).
+ */
+export function numberedPlayers(count: number, label: (n: number) => string): string {
+  const n = Math.min(MAX_PLAYERS, Math.max(MIN_PLAYERS, count));
+  return Array.from({ length: n }, (_, i) => label(i + 1)).join(', ');
 }
 
 export type SetupError =
   | { kind: 'tooFewTeams' }
-  | { kind: 'teamName'; team: number }
   | { kind: 'teamPlayers'; team: number }
   | { kind: 'duplicatePlayers'; team: number };
 
@@ -33,7 +48,6 @@ export function validateSetup(teams: TeamDraft[]): SetupError[] {
   const errors: SetupError[] = [];
   if (teams.length < MIN_TEAMS) errors.push({ kind: 'tooFewTeams' });
   teams.forEach((t, team) => {
-    if (!t.name.trim()) errors.push({ kind: 'teamName', team });
     const players = parsePlayers(t.players);
     if (players.length < MIN_PLAYERS) errors.push({ kind: 'teamPlayers', team });
     else if (new Set(players.map((p) => p.toLowerCase())).size !== players.length) {
@@ -57,27 +71,6 @@ export function shuffleError(names: string[], teamCount: number): ShuffleError |
   return names.length < needed ? { kind: 'tooFewPlayers', needed } : null;
 }
 
-/**
- * Random teams from a list of names: shuffled, then dealt one at a time so team sizes differ
- * by at most one. Team names and colours stay as they were; extra teams get a free colour and
- * no name, so the players still name them.
- */
-export function randomTeams(
-  names: string[],
-  teamCount: number,
-  current: TeamDraft[],
-  random: () => number = Math.random,
-): TeamDraft[] {
-  const dealt = dealRandomly(names, teamCount, random);
-  const used = current.slice(0, teamCount).map((t) => t.color);
-  return dealt.map((players, i) => {
-    const kept = current[i];
-    const color = kept?.color ?? nextFreeColor(used);
-    if (!kept) used.push(color);
-    return { name: kept?.name ?? '', color, players: players.join(', ') };
-  });
-}
-
 /** Shuffles, then deals one at a time into `count` groups (sizes differ by at most one). */
 export function dealRandomly<T>(items: readonly T[], count: number, random: () => number = Math.random): T[][] {
   const shuffled = [...items];
@@ -91,6 +84,27 @@ export function dealRandomly<T>(items: readonly T[], count: number, random: () =
 /** Setup row ids, as the game will number the teams. */
 export function teamIdAt(index: number): string {
   return `t${index + 1}`;
+}
+
+/**
+ * The teams the game starts with, by mode: one phone per person → whoever joined each group;
+ * PC + one phone → the group's numbered people (at least 2); one phone per team → as written
+ * on each group's phone.
+ */
+export function gameDrafts(
+  mode: ScreenMode,
+  teams: TeamDraft[],
+  roster: readonly { name: string; team: string | null }[],
+  personLabel: (n: number) => string,
+): TeamDraft[] {
+  if (mode === 'playerPhones') return withRoster(teams, roster);
+  if (mode === 'phone') {
+    return teams.map((t) => {
+      const count = parsePlayers(t.players).length;
+      return count >= MIN_PLAYERS ? t : { ...t, players: numberedPlayers(count, personLabel) };
+    });
+  }
+  return teams;
 }
 
 /**

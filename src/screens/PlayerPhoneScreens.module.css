@@ -107,3 +107,85 @@
 .claimList :global(button) {
   min-height: 52px;
 }
+
+/* Team name / players forms (before the game) */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.people {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.people li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.people .input {
+  min-height: 50px;
+  font-size: 18px;
+}
+
+.number {
+  color: var(--muted);
+  font-weight: 700;
+  text-align: right;
+}
+
+.removePerson {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+}
+
+.removePerson:hover:not(:disabled) {
+  color: var(--chalk);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.removePerson:disabled {
+  opacity: 0.3;
+}
+
+.addPerson {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1.5px dashed var(--outline);
+  background: transparent;
+  color: var(--chalk);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.synced {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #7fdc9b;
+  font-size: 15px;
+}

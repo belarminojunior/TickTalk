@@ -225,10 +225,10 @@
 }
 
 @media (max-width: 1100px) {
-  .main { grid-template-columns: 1fr; }
+  .main { grid-template-columns: minmax(0, 1fr); }
   .right { max-height: none; overflow: visible; }
   .boardBox { width: 100%; }
-  .header { grid-template-columns: 1fr; }
+  .header { grid-template-columns: minmax(0, 1fr); }
   .headerCenter, .headerRight { justify-content: flex-start; }
 }
 

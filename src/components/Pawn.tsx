@@ -12,6 +12,9 @@ export interface PawnProps {
 }
 
 export function teamInitial(name: string): string {
+  // "Grupo A" / "Group B": the group's letter.
+  const group = /^(grupo|group)\s+(\S)$/i.exec(name.trim());
+  if (group) return group[2].toUpperCase();
   const cleaned = name.replace(/^(os|as|o|a|the)\s+/i, '').trim();
   return (cleaned[0] ?? name[0] ?? '?').toUpperCase();
 }

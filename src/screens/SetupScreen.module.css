@@ -145,7 +145,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  min-height: 50px;
+  min-height: 44px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -157,12 +157,16 @@
   align-items: center;
   gap: 4px;
   min-height: 36px;
-  padding: 0 4px 0 14px;
+  padding: 0 14px;
   border-radius: 999px;
   background: var(--table);
   border: 1.5px solid var(--outline);
   font-weight: 500;
   font-size: 16px;
+}
+
+.chipRemovable {
+  padding-right: 4px;
 }
 
 .chip button {
@@ -209,12 +213,88 @@
 
 .teamRow {
   display: grid;
-  grid-template-columns: auto minmax(0, 0.9fr) minmax(0, 1.3fr) auto;
-  align-items: end;
+  grid-template-columns: auto minmax(0, 0.75fr) minmax(0, 1.4fr);
+  align-items: center;
   gap: 12px;
-  padding: 10px 12px;
+  padding: 8px 14px 8px 8px;
   border-radius: 16px;
   background: var(--panel-2);
+}
+
+.groupInfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.groupName {
+  font-weight: 700;
+  font-size: 19px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.groupTag {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.groupPeople {
+  min-width: 0;
+}
+
+.groupsHelp {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.headerTools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* "− 3 +" */
+.stepper {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--table);
+}
+
+.stepper button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--panel-2);
+  color: var(--chalk);
+  display: grid;
+  place-items: center;
+}
+
+.stepper button:hover:not(:disabled) {
+  background: var(--outline);
+}
+
+.stepper button:disabled {
+  opacity: 0.35;
+}
+
+.stepper output {
+  min-width: 34px;
+  padding: 0 6px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 17px;
+  white-space: nowrap;
 }
 
 .rowError {
@@ -237,87 +317,6 @@
   border-radius: 50%;
 }
 
-.fieldName,
-.fieldPlayers {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-}
-
-.fieldName label,
-.fieldPlayers label {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.teamRow input {
-  width: 100%;
-  min-height: 50px;
-  padding: 0 14px;
-  border-radius: 12px;
-  border: 1.5px solid var(--outline);
-  background: var(--table);
-  color: var(--chalk);
-  font-size: 18px;
-}
-
-.teamRow input::placeholder {
-  color: #8a7e72;
-}
-
-.teamRow input:focus-visible {
-  outline: 2px solid var(--yellow);
-  outline-offset: 1px;
-  border-color: var(--yellow);
-}
-
-.teamRow input[aria-invalid='true'] {
-  border-color: var(--danger);
-}
-
-.removeButton {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  border: 1.5px solid var(--outline);
-  background: transparent;
-  color: var(--chalk);
-  display: grid;
-  place-items: center;
-}
-
-.removeButton:hover:not(:disabled) {
-  border-color: var(--chalk);
-}
-
-.removeButton:disabled {
-  opacity: 0.35;
-}
-
-.addButton {
-  align-self: flex-start;
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 0 22px;
-  border-radius: 999px;
-  border: 1.5px dashed var(--outline);
-  background: transparent;
-  color: var(--chalk);
-  font-weight: 500;
-  font-size: 17px;
-}
-
-.addButton:hover:not(:disabled) {
-  border-color: var(--chalk);
-}
-
-.addButton:disabled {
-  opacity: 0.4;
-}
 
 .rulesPanel {
   display: grid;
@@ -382,19 +381,23 @@
 
 /* Narrower screens (tablets, phones): one column, the page scrolls normally. */
 @media (max-width: 1099px) {
-  .body { grid-template-columns: 1fr; }
+  .body { grid-template-columns: minmax(0, 1fr); }
   .side { grid-template-rows: auto; }
   .modePanel, .teamList { overflow: visible; }
 }
 
+/* Phones: everything stacks; group rows put the people under the name. */
 @media (max-width: 720px) {
-  .screen { padding: 18px 16px 32px; }
-  .title { font-size: 38px; }
-  .hero { flex-direction: column; align-items: flex-start; }
-  .rulesPanel { grid-template-columns: 1fr; }
-  .teamRow { grid-template-columns: auto minmax(0, 1fr) auto; }
-  .fieldPlayers { grid-column: 1 / -1; }
-  .removeButton { grid-row: 1; grid-column: 3; }
+  .screen { padding: 16px 16px 28px; gap: 14px; }
+  .title { font-size: 34px; }
+  .tagline { font-size: 16px; }
+  .hero { gap: 12px; }
+  .heroRight > span { display: none; }
+  .modePanel, .teamsPanel { padding: 16px; }
+  .rulesPanel { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 14px; }
+  .panelTitle { font-size: 21px; }
+  .teamRow { grid-template-columns: auto minmax(0, 1fr); row-gap: 6px; padding: 8px 12px 10px 6px; }
+  .teamRow > .stepper, .groupPeople { grid-column: 2; justify-self: start; }
   .rowErrorText { grid-column: 1 / -1; }
   .footer { flex-direction: column; align-items: stretch; }
   .footerButtons { width: 100%; }

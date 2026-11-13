@@ -30,9 +30,14 @@ Abre o site (publicado, ou `npm run play` no PC) e escolhe:
 Depois, na mesa:
 
 1. Escolhe **como vão jogar** (ver abaixo).
-2. Escreve as **equipas** (2 a 6) e os jogadores de cada uma, **pela ordem em que explicam**, separados por vírgulas. Toca no peão para mudar a cor. Para equipas ao calhas, carrega em **Sortear equipas**, escreve os nomes de todas as pessoas e escolhe quantas equipas: o jogo reparte-as ao acaso e os nomes das equipas ficam como estão.
+2. Escolhe o **número de grupos** (2 a 6). No PC não se escrevem nomes: os grupos chamam-se **Grupo A, Grupo B…** até alguém lhes dar um nome no telemóvel (se ninguém der, jogam como “Grupo A”). Toca no peão para mudar a cor.
+   - **PC + telemóvel:** escolhe quantas pessoas tem cada grupo (− 3 pessoas +). Ninguém escreve nomes: a cada vez, a mesa diz quem explica (“Pessoa 2 · Grupo A”).
+   - **Um telemóvel por equipa:** cada grupo escolhe o seu no telemóvel e escreve lá o nome da equipa e quem joga.
+   - **Um telemóvel por pessoa:** cada pessoa entra com o seu nome e escolhe um grupo; **Sortear equipas** mistura toda a gente; depois, alguém do grupo dá o nome à equipa.
 3. Escolhe as **regras da casa**: tempo por vez e língua das cartas. Joga-se sempre com o baralho todo.
 4. Carrega em **Começar o jogo**.
+
+O site funciona também no telemóvel (até a mesa, embora seja melhor num ecrã grande).
 
 O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, aparece **Continuar jogo guardado** na configuração. A mesa guarda também o código da sala: se recarregares, volta à mesma sala e os telemóveis voltam a ligar-se sozinhos.
 
@@ -48,7 +53,8 @@ Para jogar no PC sem publicar, `npm run play` faz a build e abre o site em `http
 
 ### Um telemóvel por equipa
 
-- Todas as equipas abrem o **mesmo endereço** (ou leem o mesmo QR code). Quando o jogo começa, cada telemóvel escolhe a sua equipa ("Qual é a tua equipa?") e fica a lembrar-se dela. Cada equipa só pode ter um telemóvel.
+- Todos os grupos abrem o **mesmo endereço** (ou leem o mesmo QR code). Cada telemóvel escolhe o seu grupo (“Qual é o teu grupo?”) e preenche lá o **nome da equipa** (opcional) e **quem joga**, pela ordem em que explicam. O PC mostra tudo à medida que se escreve (“Já aparece no PC.”). Cada grupo só pode ter um telemóvel.
+- Se um telemóvel se ligar já a meio do jogo, escolhe a sua equipa (“Qual é a tua equipa?”).
 - **Na vez da tua equipa**, o telemóvel funciona como no modo normal: carta, palavras, "Passar a vez".
 - **Quando a tua equipa valida** a vez de outra, o telemóvel mostra os dois lados da carta com **Válida | Anular** e o botão para confirmar. A validação aparece só no telemóvel dessa equipa; a mesa mostra apenas "A validar no telemóvel das Gazelas…".
 - **Nas outras alturas**, o telemóvel mostra de quem é a vez, o contador e o tempo, mas nunca as palavras.
@@ -57,9 +63,9 @@ Para jogar no PC sem publicar, `npm run play` faz a build e abre o site em `http
 
 ### Um telemóvel por pessoa
 
-- Cada pessoa lê o QR code da mesa (ou escreve o código da sala), escreve **o seu nome** e toca na **sua equipa**. Pode trocar de equipa ou de nome até o jogo começar. Dois telemóveis ligados não podem ter o mesmo nome.
-- Na mesa, cada equipa mostra quem entrou (com um × para tirar alguém). **Sortear equipas** mistura toda a gente que entrou pelas equipas, ao acaso. Quem explica primeiro, em cada equipa, é quem entrou primeiro nela.
-- Os nomes e as cores das equipas escrevem-se na mesa, como nos outros modos.
+- Cada pessoa lê o QR code da mesa (ou escreve o código da sala), escreve **o seu nome** e toca num **grupo** (Grupo A, B…). Pode trocar de grupo ou de nome até o jogo começar. Dois telemóveis ligados não podem ter o mesmo nome.
+- Na mesa, cada grupo mostra quem entrou (com um × para tirar alguém). **Sortear equipas** mistura toda a gente pelos grupos, ao acaso. Quem explica primeiro, em cada grupo, é quem entrou primeiro nele.
+- Depois de sortear, **qualquer pessoa do grupo** escreve o nome da equipa no telemóvel; os outros veem-no logo. Sortear outra vez volta a “Grupo A, B…”.
 - **Durante a vez**, só o telemóvel de quem explica mostra a carta. Os colegas de equipa veem "A tua equipa está a jogar: adivinha!", o tempo e os acertos; as outras equipas veem a vez sem as palavras.
 - **No fim da vez**, todos os telemóveis da equipa adversária (a seguinte) recebem a carta para validar: qualquer pessoa dessa equipa pode anular palavras e confirmar. A mesa só mostra "A validar no telemóvel das Gazelas…".
 - Quem explica passa a vez no seu telemóvel. Se o telemóvel de quem explica cair, o tempo pára.

@@ -4,7 +4,8 @@ import { SwapIcon } from '../components/Icons';
 import { Pawn, teamInitial } from '../components/Pawn';
 import type { DescriberView } from '../game/selectors';
 import { useT } from '../i18n';
-import { MAX_NAME_LENGTH, cleanName } from '../net/protocol';
+import { MAX_NAME_LENGTH, cleanName, type TeamEdit } from '../net/protocol';
+import { TeamNameField } from './TeamForm';
 import styles from './TeamPhoneScreens.module.css';
 import own from './PlayerPhoneScreens.module.css';
 
@@ -74,7 +75,18 @@ export function NameEntry({
 }
 
 /** Before the game: pick a team, or (once in one) wait for the start with the team list. */
-export function Lobby({ view, onPlayer, onRename }: { view: DescriberView; onPlayer: SetPlayer; onRename: () => void }) {
+export function Lobby({
+  view,
+  onPlayer,
+  onRename,
+  onEditTeam,
+}: {
+  view: DescriberView;
+  onPlayer: SetPlayer;
+  onRename: () => void;
+  /** Names the team (anyone in the group may). */
+  onEditTeam: (edit: TeamEdit) => void;
+}) {
   const t = useT();
   const name = view.you.name!;
   const mine = view.teamsList.find((x) => x.id === view.you.teamId);
@@ -118,6 +130,7 @@ export function Lobby({ view, onPlayer, onRename }: { view: DescriberView; onPla
           <h1 className={styles.title}>{t.yourTeam(mine.name)}</h1>
         </div>
       </div>
+      <TeamNameField key={mine.id} view={view} onEdit={onEditTeam} />
       <ul className={own.memberList} aria-label={mine.name}>
         {mine.members.map((member) => (
           <li key={member} className={member === name ? own.me : undefined}>

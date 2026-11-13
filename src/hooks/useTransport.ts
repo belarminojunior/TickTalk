@@ -19,6 +19,7 @@ import {
   parseServerNotice,
   type DescriberCommand,
   type PlayerInfo,
+  type TeamEdit,
 } from '../net/protocol';
 import { TeamHub, type TeamHubEvent } from '../net/teamHub';
 import { HOST_ID, SERVER_ID, type LinkStatus, type Transport } from '../net/transport';
@@ -50,14 +51,28 @@ export interface HostLink {
   removeTeamAt: (index: number) => void;
 }
 
-/** One phone per person, before the game: the setup rows and the table's language. */
+/** A phone per team or per person, before the game: the setup rows and the table's language. */
 export interface LobbySetup {
-  /** The setup rows, with the name to show (a placeholder if still empty). */
-  teams: { name: string; color: PawnColor }[];
+  /**
+   * The setup rows: the name to show ("Grupo A" until the team chooses one), the chosen name
+   * ('' if none) and the players (one phone per team: as written on that phone).
+   */
+  teams: { name: string; chosenName: string; color: PawnColor; players: string[] }[];
   language: Language;
+  /** A phone named its team (and, one phone per team, wrote its players). Setup only. */
+  onTeamEdit?: (teamId: string, edit: TeamEdit) => void;
 }
 
 const NO_LOBBY: LobbySetup = { teams: [], language: 'pt' };
+
+/** The lobby as the phones see it (ids "t1"…). */
+function lobbyFor(lobby: LobbySetup, roster: RosterPlayer[]): Lobby {
+  return {
+    teams: lobby.teams.map((t, i) => ({ id: `t${i + 1}`, name: t.name, chosenName: t.chosenName, color: t.color, players: t.players })),
+    roster: roster.map((p) => ({ name: p.name, team: p.team, online: p.online })),
+    language: lobby.language,
+  };
+}
 
 /**
  * Wall clock for "has this phone gone quiet?". Not the game clock (`now`), which tests move
@@ -190,6 +205,9 @@ export function useHostLink(
             case 'command':
               if (mayPlayerCommand(stateRef.current, e.player, e.command)) dispatch(commandToAction(e.command, t));
               break;
+            case 'team-edit':
+              if (stateRef.current.phase === 'setup') lobbyRef.current.onTeamEdit?.(e.team, { name: e.edit.name });
+              break;
             case 'left': {
               const { turn, teams } = stateRef.current;
               const describing = turn && e.player && teams[turn.teamIndex]?.id === e.player.team && turn.describer === e.player.name;
@@ -233,7 +251,9 @@ export function useHostLink(
       // One phone per team: every phone gets its own view; commands are checked per team.
       const teamHub = new TeamHub();
       teamHubRef.current = teamHub;
-      const teamIds = () => stateRef.current.teams.map((t) => t.id);
+      // Before the game the phones pick a setup row (group); afterwards, a game team.
+      const teamIds = () =>
+        stateRef.current.phase === 'setup' ? lobbyRef.current.teams.map((_, i) => `t${i + 1}`) : stateRef.current.teams.map((t) => t.id);
 
       const handleTeams = (events: TeamHubEvent[]) => {
         let resync = false;
@@ -246,6 +266,9 @@ export function useHostLink(
             case 'command':
               if (mayCommand(stateRef.current, e.team, e.command)) dispatch(commandToAction(e.command, t));
               break;
+            case 'team-edit':
+              if (stateRef.current.phase === 'setup') lobbyRef.current.onTeamEdit?.(e.team, e.edit);
+              break;
             case 'left': {
               const { turn, teams } = stateRef.current;
               if (turn && e.team && teams[turn.teamIndex]?.id === e.team) dispatch({ type: 'DESCRIBER_DISCONNECTED', now: t });
@@ -257,7 +280,7 @@ export function useHostLink(
               break;
           }
         }
-        if (resync) sendTeamViews(host, teamHub, stateRef.current, nowRef.current());
+        if (resync) sendTeamViews(host, teamHub, stateRef.current, nowRef.current(), lobbyRef.current);
         setTeamsWithPhone(teamHub.takenTeams());
       };
 
@@ -337,8 +360,8 @@ export function useHostLink(
     }
     const teamHub = teamHubRef.current;
     if (teamHub) {
-      teamHub.pruneTeams(state.teams.map((t) => t.id));
-      sendTeamViews(link.host, teamHub, state, now());
+      teamHub.pruneTeams(state.phase === 'setup' ? lobby.teams.map((_, i) => `t${i + 1}`) : state.teams.map((t) => t.id));
+      sendTeamViews(link.host, teamHub, state, now(), lobby);
       setTeamsWithPhone(teamHub.takenTeams());
       return;
     }
@@ -424,12 +447,7 @@ export function useHostLink(
 
 /** Sends each phone (or only `only`) its own view, in "one phone per person" mode. */
 function sendPlayerViews(host: Transport, hub: PlayerHub, state: GameState, now: number, lobby: LobbySetup, only?: string[]): void {
-  const roster = hub.roster();
-  const shared: Lobby = {
-    teams: lobby.teams.map((t, i) => ({ id: `t${i + 1}`, name: t.name, color: t.color })),
-    roster: roster.map((p) => ({ name: p.name, team: p.team, online: p.online })),
-    language: lobby.language,
-  };
+  const shared = lobbyFor(lobby, hub.roster());
   for (const id of only ?? hub.peerIds()) {
     const player = hub.playerOf(id);
     const phone = { player: player ? { name: player.name, team: player.team } : null, issue: hub.issueOf(id) };
@@ -437,10 +455,11 @@ function sendPlayerViews(host: Transport, hub: PlayerHub, state: GameState, now:
   }
 }
 
-function sendTeamViews(host: Transport, hub: TeamHub, state: GameState, now: number): void {
+function sendTeamViews(host: Transport, hub: TeamHub, state: GameState, now: number, lobby: LobbySetup): void {
   const takenTeams = hub.takenTeams();
+  const shared = lobbyFor(lobby, []);
   for (const id of hub.peerIds()) {
-    host.send(id, msg.state(phoneView(state, now, { teamId: hub.teamOf(id), refusedTeam: hub.refusedOf(id), takenTeams })));
+    host.send(id, msg.state(phoneView(state, now, { teamId: hub.teamOf(id), refusedTeam: hub.refusedOf(id), takenTeams }, shared)));
   }
 }
 
@@ -460,6 +479,8 @@ export interface DescriberClient {
   joinTeam: (team: string | null) => void;
   /** One phone per person: who this phone is (null = forget me, to start again). */
   setPlayer: (player: { name: string; team: string | null } | null) => void;
+  /** Before the game: this phone's team name (and, one phone per team, its players). */
+  editTeam: (edit: TeamEdit) => void;
 }
 
 /** One phone per person: what the phone remembers about its person (the table may forget). */
@@ -682,5 +703,7 @@ export function useDescriberClient(
     [transport],
   );
 
-  return { view, anchor, status, language, send, takeOver, joinTeam, setPlayer };
+  const editTeam = useCallback((edit: TeamEdit) => transport?.send(HOST_ID, msg.team(edit)), [transport]);
+
+  return { view, anchor, status, language, send, takeOver, joinTeam, setPlayer, editTeam };
 }

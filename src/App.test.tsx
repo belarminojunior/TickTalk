@@ -35,19 +35,24 @@ function TestPhone({ transport, store }: { transport: Transport; store: PlayerSt
         onCommand={client.send}
         onJoinTeam={client.joinTeam}
         onPlayer={client.setPlayer}
+        onEditTeam={client.editTeam}
       />
     </I18nProvider>
   );
 }
 
-function setup(mode: ScreenMode = 'phone', phones = 1) {
-  saveSetup({
-    settings: { ...DEFAULT_SETTINGS, screenMode: mode },
-    teams: [
-      { name: 'Os Leões', color: 'red', players: 'Ana, Pedro' },
-      { name: 'As Gazelas', color: 'green', players: 'Tomás, Rita' },
-    ],
-  });
+const NAMED_TEAMS = [
+  { name: 'Os Leões', color: 'red' as const, players: 'Ana, Pedro' },
+  { name: 'As Gazelas', color: 'green' as const, players: 'Tomás, Rita' },
+];
+/** A fresh setup: groups without names or people yet. */
+const FRESH_GROUPS = [
+  { name: '', color: 'red' as const, players: '' },
+  { name: '', color: 'green' as const, players: '' },
+];
+
+function setup(mode: ScreenMode = 'phone', phones = 1, teams = NAMED_TEAMS) {
+  saveSetup({ settings: { ...DEFAULT_SETTINGS, screenMode: mode }, teams });
   let clock = 0;
   const user = userEvent.setup();
   const bus = new LocalBus();
@@ -271,5 +276,67 @@ describe('full game (one phone per person)', () => {
     expect(within(teamCard(table, 'Os Leões')).getByText('1')).toBeInTheDocument();
     expect(await tomas.findByRole('button', { name: 'Estou pronto/a' })).toBeInTheDocument();
     expect(rita.queryByRole('button', { name: 'Estou pronto/a' })).not.toBeInTheDocument();
+  });
+});
+
+describe('setting up the groups', () => {
+  it('PC + one phone: no names to type; each group just has a number of people', async () => {
+    const { user, table, phones } = setup('phone', 1, FRESH_GROUPS);
+    expect(table.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(table.getByText('Grupo A')).toBeInTheDocument();
+    const groupA = table.getByRole('group', { name: 'Grupo A: 2 pessoas' });
+    await user.click(within(groupA).getByRole('button', { name: 'Mais uma pessoa no Grupo A' }));
+    expect(within(groupA).getByText('3 pessoas')).toBeInTheDocument();
+    await user.click(table.getByRole('button', { name: 'Mais um grupo' }));
+    expect(table.getByText('Grupo C')).toBeInTheDocument();
+
+    await user.click(table.getByRole('button', { name: 'Começar o jogo' }));
+    expect(await phones[0].findByText('Passa o telemóvel a Pessoa 1')).toBeInTheDocument();
+    expect(table.getByText('Passa o telemóvel a Pessoa 1 (Grupo A)')).toBeInTheDocument();
+  });
+
+  it('one phone per team: each phone picks its group and writes the team name and who plays', async () => {
+    const { user, table, phones } = setup('teamPhones', 2, FRESH_GROUPS);
+    const [first, second] = phones;
+    expect(await first.findByRole('heading', { name: 'Qual é o teu grupo?' })).toBeInTheDocument();
+    await user.click(first.getByRole('button', { name: /Grupo A/ }));
+    await user.click(await second.findByRole('button', { name: /Grupo B/ }));
+
+    // The first group writes its team on its phone; the PC shows it as it arrives.
+    await user.type(await first.findByLabelText('Nome da equipa'), 'Os Leões');
+    await user.type(first.getByLabelText('Nome 1'), 'Ana');
+    await user.type(first.getByLabelText('Nome 2'), 'Pedro');
+    expect(await table.findByText('Os Leões', {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(table.getByText('Pedro')).toBeInTheDocument();
+    expect(await first.findByText('Já aparece no PC.')).toBeInTheDocument();
+
+    // The second group adds a third person and keeps the default name.
+    await user.type(await second.findByLabelText('Nome 1'), 'Tomás');
+    await user.type(second.getByLabelText('Nome 2'), 'Rita');
+    await user.click(second.getByRole('button', { name: 'Adicionar pessoa' }));
+    await user.type(second.getByLabelText('Nome 3'), 'Bia');
+    expect(await table.findByText('Bia', {}, { timeout: 3000 })).toBeInTheDocument();
+
+    await user.click(table.getByRole('button', { name: 'Começar o jogo' }));
+    // The game starts with those teams; each phone keeps its group.
+    expect(await first.findByRole('button', { name: 'Estou pronto/a' })).toBeInTheDocument();
+    expect(await second.findByText('Vez dos Leões')).toBeInTheDocument();
+    expect(within(teamCard(table, 'Grupo B')).getByText('Grupo B')).toBeInTheDocument();
+  });
+
+  it('one phone per person: someone in the group names the team on their phone', async () => {
+    const { user, table, phones } = setup('playerPhones', 2, FRESH_GROUPS);
+    const [ana, pedro] = phones;
+    await user.type(await ana.findByLabelText('O teu nome'), 'Ana');
+    await user.click(ana.getByRole('button', { name: 'Continuar' }));
+    await user.click(await ana.findByRole('button', { name: /Grupo A/ }));
+    await user.type(await pedro.findByLabelText('O teu nome'), 'Pedro');
+    await user.click(pedro.getByRole('button', { name: 'Continuar' }));
+    await user.click(await pedro.findByRole('button', { name: /Grupo A/ }));
+
+    await user.type(await pedro.findByLabelText('Nome da equipa'), 'Os Leões');
+    expect(await table.findByText('Os Leões', {}, { timeout: 3000 })).toBeInTheDocument();
+    // Ana's phone shows the name Pedro chose.
+    await waitFor(() => expect(ana.getByLabelText('Nome da equipa')).toHaveValue('Os Leões'));
   });
 });

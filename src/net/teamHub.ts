@@ -1,11 +1,13 @@
 import { PEER_TIMEOUT_MS } from './hub';
-import { parseClientMessage, parseServerNotice, type DescriberCommand } from './protocol';
+import { parseClientMessage, parseServerNotice, type DescriberCommand, type TeamEdit } from './protocol';
 import { SERVER_ID } from './transport';
 
 export type TeamHubEvent =
   /** Send this phone its view (it said hello, pinged, or changed team). */
   | { type: 'sync'; id: string }
   | { type: 'command'; id: string; team: string; command: DescriberCommand }
+  /** Before the game: the team's phone set its name and players. */
+  | { type: 'team-edit'; id: string; team: string; edit: TeamEdit }
   /** A phone left; `team` is the team it was playing for (if any). */
   | { type: 'left'; id: string; team: string | null }
   | { type: 'peers-changed'; count: number };
@@ -79,6 +81,11 @@ export class TeamHub {
 
     // One phone per person only.
     if (message.kind === 'me') return events;
+    if (message.kind === 'team') {
+      const { name, players } = message;
+      if (peer.team) events.push({ type: 'team-edit', id: from, team: peer.team, edit: { name, players: players ?? [] } });
+      return events;
+    }
 
     // hello / ping carry the team the phone remembers; join is an explicit choice.
     const wanted = message.team;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { play, unlockAudio } from '../audio/sfx';
 import { Board } from '../components/Board';
 import { CardFace, HiddenWords, TwoSidedCard } from '../components/Card';
@@ -10,12 +10,13 @@ import type { DescriberView } from '../game/selectors';
 import type { ScreenMode, Side } from '../game/types';
 import { useKeyboard } from '../hooks/useKeyboard';
 import { useCountdown } from '../hooks/useTimer';
-import type { DescriberCommand } from '../net/protocol';
+import type { DescriberCommand, TeamEdit } from '../net/protocol';
 import type { DescriberStatus } from '../hooks/useTransport';
 import { useT } from '../i18n';
 import { useTickSounds } from './sounds';
 import { Lobby, NameEntry, WhoAreYou, type SetPlayer } from './PlayerPhoneScreens';
 import { RoomEntry } from './RoomEntry';
+import { TeamForm } from './TeamForm';
 import { PhoneValidation, SpectatorScreen, TeamPicker } from './TeamPhoneScreens';
 import styles from './DescriberScreen.module.css';
 
@@ -32,6 +33,8 @@ export interface DescriberScreenProps {
   onJoinTeam?: (team: string | null) => void;
   /** One phone per person: who this phone is (null = forget me). */
   onPlayer?: SetPlayer;
+  /** Before the game: names this phone's team (one phone per team: also its players). */
+  onEditTeam?: (edit: TeamEdit) => void;
   /** The room this phone is in (null: none yet). Only with rooms (the real app). */
   room?: string | null;
   /** Opens another room (the code typed on the phone). Asks for a code when there is none. */
@@ -51,6 +54,7 @@ export function DescriberScreen({
   onTakeOver,
   onJoinTeam,
   onPlayer,
+  onEditTeam,
   room = null,
   onRoom,
 }: DescriberScreenProps) {
@@ -63,7 +67,9 @@ export function DescriberScreen({
   // A phone per team or per person: this phone may be the describer's, a teammate's, the
   // checking team's, or another team's.
   const playerMode = view?.mode === 'playerPhones';
+  const teamPhonesSetup = view?.mode === 'teamPhones' && phase === 'setup';
   const teamMode = (view?.mode === 'teamPhones' || playerMode) && phase !== 'setup';
+  const editTeam = useCallback((edit: TeamEdit) => onEditTeam?.(edit), [onEditTeam]);
   const [renaming, setRenaming] = useState(false);
   const setPlayer: SetPlayer = (player) => {
     setRenaming(false);
@@ -136,7 +142,7 @@ export function DescriberScreen({
     if (status === 'connecting') return { title: t.reconnecting, body: t.waitingHostHelp };
     if (status === 'waitingHost') return { title: t.waitingHost, body: t.waitingHostHelp };
     // One phone per person: before the game, the phone is where people join.
-    if (!view || (phase === 'setup' && !playerMode)) return { title: t.waitingGame, body: t.waitingGameHelp };
+    if (!view || (phase === 'setup' && !playerMode && !teamPhonesSetup)) return { title: t.waitingGame, body: t.waitingGameHelp };
     return null;
   })();
 
@@ -238,7 +244,11 @@ export function DescriberScreen({
             }
           />
         ) : playerMode && view && phase === 'setup' ? (
-          <Lobby view={view} onPlayer={setPlayer} onRename={() => setRenaming(true)} />
+          <Lobby view={view} onPlayer={setPlayer} onRename={() => setRenaming(true)} onEditTeam={editTeam} />
+        ) : teamPhonesSetup && view && !view.you.teamId ? (
+          <TeamPicker view={view} onJoin={(team) => onJoinTeam?.(team)} />
+        ) : teamPhonesSetup && view ? (
+          <TeamForm key={view.you.teamId} view={view} onEdit={editTeam} onChangeGroup={() => onJoinTeam?.(null)} />
         ) : playerMode && view && !view.you.teamId ? (
           <WhoAreYou view={view} onPlayer={setPlayer} />
         ) : teamMode && view && !view.you.teamId ? (

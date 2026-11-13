@@ -75,6 +75,7 @@
 
 .code {
   flex: 1;
+  width: 100%;
   min-width: 0;
   min-height: 64px;
   padding: 0 14px;
@@ -111,6 +112,6 @@
 @media (max-width: 720px) {
   .screen { justify-content: flex-start; padding: 28px 16px; gap: 24px; }
   .title { font-size: 48px; }
-  .choices { grid-template-columns: 1fr; }
+  .choices { grid-template-columns: minmax(0, 1fr); }
   .choice { padding: 22px 20px; }
 }

@@ -59,6 +59,7 @@ export function DescriberApp() {
         onTakeOver={client.takeOver}
         onJoinTeam={client.joinTeam}
         onPlayer={client.setPlayer}
+        onEditTeam={client.editTeam}
         room={room}
         onRoom={(code) => {
           // A fresh page in the new room (simplest way to start over cleanly).
