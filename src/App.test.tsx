@@ -5,7 +5,7 @@ import { HostApp } from './HostApp';
 import { DEFAULT_SETTINGS } from './game/reducer';
 import { saveSetup } from './game/storage';
 import type { ScreenMode } from './game/types';
-import { useDescriberClient } from './hooks/useTransport';
+import { memoryPlayerStore, useDescriberClient, type PlayerStore } from './hooks/useTransport';
 import { I18nProvider } from './i18n';
 import { LocalBus, LocalTransport } from './net/local';
 import { HOST_ID, type Transport } from './net/transport';
@@ -20,9 +20,10 @@ type User = ReturnType<typeof userEvent.setup>;
 type Scope = BoundFunctions<typeof queries>;
 
 /** A phone: the same screen the real /explicar page shows, on its own transport. */
-function TestPhone({ transport }: { transport: Transport }) {
+function TestPhone({ transport, store }: { transport: Transport; store: PlayerStore }) {
   const config = useConfig();
-  const client = useDescriberClient(transport, config.now);
+  // Each phone remembers its own person (they all share one page here).
+  const client = useDescriberClient(transport, config.now, store);
   return (
     <I18nProvider language="pt">
       <DescriberScreen
@@ -33,6 +34,7 @@ function TestPhone({ transport }: { transport: Transport }) {
         now={config.now}
         onCommand={client.send}
         onJoinTeam={client.joinTeam}
+        onPlayer={client.setPlayer}
       />
     </I18nProvider>
   );
@@ -63,7 +65,7 @@ function setup(mode: ScreenMode = 'phone', phones = 1) {
   const phoneScopes = Array.from({ length: phones }, (_, i) => {
     const { container } = render(
       <ConfigProvider config={config}>
-        <TestPhone transport={new LocalTransport(bus, `phone-${i + 1}`)} />
+        <TestPhone transport={new LocalTransport(bus, `phone-${i + 1}`)} store={memoryPlayerStore(`key-phone-${i + 1}`)} />
       </ConfigProvider>,
     );
     return within(container);
@@ -217,5 +219,56 @@ describe('full game (one phone per team)', () => {
     expect(within(teamCard(table, 'Os Leões')).getByText('1')).toBeInTheDocument();
     expect(await gazelles.findByRole('button', { name: 'Estou pronto/a' })).toBeInTheDocument();
     expect(await lions.findByText('Vez das Gazelas')).toBeInTheDocument();
+  });
+});
+
+describe('full game (one phone per person)', () => {
+  /** On a phone: write the name, then pick the team. */
+  async function join(user: User, phone: Scope, name: string, team: RegExp) {
+    await user.type(await phone.findByLabelText('O teu nome'), name);
+    await user.click(phone.getByRole('button', { name: 'Continuar' }));
+    await user.click(await phone.findByRole('button', { name: team }));
+    await phone.findByRole('heading', { name: /A tua equipa/ });
+  }
+
+  it('everyone joins from their own phone; only the describer sees the words; the other team checks', async () => {
+    const { user, setClock, table, phones } = setup('playerPhones', 4);
+    const [ana, pedro, tomas, rita] = phones;
+
+    await join(user, ana, 'Ana', /Os Leões/);
+    await join(user, pedro, 'Pedro', /Os Leões/);
+    await join(user, tomas, 'Tomás', /As Gazelas/);
+    await join(user, rita, 'Rita', /As Gazelas/);
+    // The table lists who joined each team; the phones see their teammates.
+    expect(await table.findByRole('button', { name: 'Tirar Rita da equipa' })).toBeInTheDocument();
+    expect(await ana.findByText('Pedro')).toBeInTheDocument();
+    await user.click(table.getByRole('button', { name: 'Começar o jogo' }));
+
+    // Ana describes; Pedro guesses on his phone, without the words; the Gazelles watch.
+    await readyAndStart(user, ana);
+    expect(await pedro.findByText('A tua equipa está a jogar: adivinha!')).toBeInTheDocument();
+    expect(pedro.queryAllByRole('button', { pressed: false })).toHaveLength(0);
+    expect(await tomas.findByText('Vez dos Leões')).toBeInTheDocument();
+    setClock(1000);
+    await markWord(user, ana, 0);
+    setClock(2000);
+    await markWord(user, ana, 1);
+    expect(await pedro.findByText('2 de 10 acertadas')).toBeInTheDocument();
+
+    // Time is up: both Gazelles' phones get the card; Rita cancels a word, Tomás confirms.
+    act(() => setClock(31_000));
+    expect(await tomas.findByRole('heading', { name: 'Validem a vez dos Leões' }, { timeout: 3000 })).toBeInTheDocument();
+    expect(await rita.findByRole('heading', { name: 'Validem a vez dos Leões' })).toBeInTheDocument();
+    expect(table.queryAllByRole('group', { name: /^Validar/ })).toHaveLength(0);
+    await user.click(within(rita.getAllByRole('group', { name: /^Validar/ })[0]).getByRole('button', { name: 'Anular' }));
+    await user.click(tomas.getByRole('button', { name: 'Confirmar e avançar' }));
+
+    // Only Ana passes the turn; then Tomás describes, on his own phone.
+    const pass = await ana.findByRole('button', { name: 'Passar a vez · Tomás (As Gazelas)' }, { timeout: 3000 });
+    expect(pedro.queryByRole('button', { name: /Passar a vez/ })).not.toBeInTheDocument();
+    await user.click(pass);
+    expect(within(teamCard(table, 'Os Leões')).getByText('1')).toBeInTheDocument();
+    expect(await tomas.findByRole('button', { name: 'Estou pronto/a' })).toBeInTheDocument();
+    expect(rita.queryByRole('button', { name: 'Estou pronto/a' })).not.toBeInTheDocument();
   });
 });

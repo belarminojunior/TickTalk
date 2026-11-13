@@ -77,6 +77,9 @@ export class TeamHub {
       return events;
     }
 
+    // One phone per person only.
+    if (message.kind === 'me') return events;
+
     // hello / ping carry the team the phone remembers; join is an explicit choice.
     const wanted = message.team;
     if (wanted !== undefined) this.claim(from, peer, wanted, teams);

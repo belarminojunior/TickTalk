@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
+import type { ScreenMode } from '../game/types';
 import { useT } from '../i18n';
 import styles from './QrConnect.module.css';
 
@@ -11,16 +12,21 @@ export function QrConnect({
   connected,
   server,
   compact,
-  teamPhones = false,
+  mode = 'phone',
 }: {
   url: string | null;
   connected: number;
   server: ServerStatus;
   compact?: boolean;
-  /** One phone per team: every team opens the same address. */
-  teamPhones?: boolean;
+  /** With a phone per team or per person, everyone opens the same address. */
+  mode?: ScreenMode;
 }) {
   const t = useT();
+  const text = {
+    phone: [t.connectPhone, t.connectPhoneHelpBefore, t.connectPhoneHelpAfter],
+    teamPhones: [t.connectTeamPhones, t.connectTeamPhonesHelpBefore, t.connectTeamPhonesHelpAfter],
+    playerPhones: [t.connectEveryone, t.connectEveryoneHelpBefore, t.connectEveryoneHelpAfter],
+  }[mode];
   const [dataUrl, setDataUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -43,14 +49,14 @@ export function QrConnect({
         {dataUrl && url ? <img src={dataUrl} alt={t.qrAlt(url)} /> : <span className={styles.placeholder} aria-hidden="true" />}
       </div>
       <div className={styles.text}>
-        <h3 className={styles.title}>{teamPhones ? t.connectTeamPhones : t.connectPhone}</h3>
+        <h3 className={styles.title}>{text[0]}</h3>
         {server === 'offline' ? (
           <p className={styles.warn}>{t.serverMissing}</p>
         ) : (
           <p className={styles.help}>
-            {teamPhones ? t.connectTeamPhonesHelpBefore : t.connectPhoneHelpBefore}
+            {text[1]}
             <strong className={styles.url}>{url ?? '…'}</strong>
-            {teamPhones ? t.connectTeamPhonesHelpAfter : t.connectPhoneHelpAfter}
+            {text[2]}
           </p>
         )}
         {server !== 'offline' && (

@@ -1,18 +1,19 @@
+/* Three compact rows (icon · title and description), so the setup page still fits a laptop screen. */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 16px;
+  row-gap: 2px;
+  align-items: center;
   text-align: left;
-  padding: 24px;
-  min-height: 190px;
-  border-radius: 20px;
+  padding: 14px 18px;
+  border-radius: 18px;
   background: var(--panel-2);
   border: 2px solid #3a3a3a;
   color: var(--chalk);
@@ -28,8 +29,8 @@
 }
 
 .icon {
+  grid-row: span 2;
   color: var(--chalk);
-  margin-bottom: 4px;
 }
 
 .selected .icon {
@@ -38,16 +39,12 @@
 
 .title {
   font-weight: 700;
-  font-size: 21px;
+  font-size: 19px;
   line-height: 1.2;
 }
 
 .desc {
   color: var(--muted);
-  font-size: 16px;
-}
-
-@media (max-width: 640px) {
-  .grid { grid-template-columns: 1fr; }
-  .card { min-height: 0; }
+  font-size: 15px;
+  line-height: 1.35;
 }

@@ -20,12 +20,27 @@ export type DescriberCommand =
 /** Commands that only the checking team may send (never the team whose turn it is). */
 export const VALIDATION_COMMANDS: readonly DescriberCommand['type'][] = ['SET_VALIDATION', 'CONFIRM_VALIDATION'];
 
+/**
+ * One phone per person: who this phone is. `key` is a random id the phone keeps, so the
+ * table recognises it after a reload; `team` is a team id or null (not chosen yet).
+ */
+export interface PlayerInfo {
+  key: string;
+  name: string;
+  team: string | null;
+}
+
+export const MAX_NAME_LENGTH = 24;
+
 /** Describer → host. */
 export type ClientMessage =
   // `team`: the team this phone plays for (one phone per team mode); ignored otherwise.
-  | { v: 1; kind: 'hello'; team?: string | null }
-  | { v: 1; kind: 'ping'; team?: string | null }
+  // `player`: who this phone is (one phone per person mode); ignored otherwise.
+  | { v: 1; kind: 'hello'; team?: string | null; player?: PlayerInfo }
+  | { v: 1; kind: 'ping'; team?: string | null; player?: PlayerInfo }
   | { v: 1; kind: 'join'; team: string | null }
+  // One phone per person: the person wrote their name or chose a team (null = forget me).
+  | { v: 1; kind: 'me'; player: PlayerInfo | null }
   | { v: 1; kind: 'bye' }
   | { v: 1; kind: 'command'; command: DescriberCommand };
 
@@ -79,13 +94,40 @@ function parseTeamId(raw: unknown): string | null | undefined {
   return typeof raw === 'string' && /^[A-Za-z0-9_-]{1,16}$/.test(raw) ? raw : undefined;
 }
 
+/** Trims and collapses spaces; null if empty or too long. */
+export function cleanName(raw: unknown): string | null {
+  if (typeof raw !== 'string') return null;
+  const name = raw.replace(/\s+/g, ' ').trim();
+  return name.length > 0 && name.length <= MAX_NAME_LENGTH ? name : null;
+}
+
+function parsePlayer(raw: unknown): PlayerInfo | undefined {
+  if (!isObject(raw)) return undefined;
+  const { key } = raw;
+  const name = cleanName(raw.name);
+  const team = parseTeamId(raw.team);
+  if (typeof key !== 'string' || !/^[A-Za-z0-9_-]{4,40}$/.test(key) || !name || team === undefined) return undefined;
+  return { key, name, team };
+}
+
 export function parseClientMessage(raw: unknown): ClientMessage | null {
   if (!isObject(raw) || raw.v !== PROTOCOL_VERSION) return null;
   switch (raw.kind) {
     case 'hello':
     case 'ping': {
       const team = parseTeamId(raw.team);
-      return team === undefined ? { v: 1, kind: raw.kind } : { v: 1, kind: raw.kind, team };
+      const player = parsePlayer(raw.player);
+      return {
+        v: 1,
+        kind: raw.kind,
+        ...(team === undefined ? {} : { team }),
+        ...(player === undefined ? {} : { player }),
+      };
+    }
+    case 'me': {
+      if (raw.player === null) return { v: 1, kind: 'me', player: null };
+      const player = parsePlayer(raw.player);
+      return player ? { v: 1, kind: 'me', player } : null;
     }
     case 'join': {
       const team = parseTeamId(raw.team);
@@ -129,8 +171,19 @@ export function parseServerNotice(raw: unknown): ServerNotice | null {
 }
 
 export const msg = {
-  hello: (team?: string | null): ClientMessage => (team === undefined ? { v: 1, kind: 'hello' } : { v: 1, kind: 'hello', team }),
-  ping: (team?: string | null): ClientMessage => (team === undefined ? { v: 1, kind: 'ping' } : { v: 1, kind: 'ping', team }),
+  hello: (team?: string | null, player?: PlayerInfo | null): ClientMessage => ({
+    v: 1,
+    kind: 'hello',
+    ...(team === undefined ? {} : { team }),
+    ...(player ? { player } : {}),
+  }),
+  ping: (team?: string | null, player?: PlayerInfo | null): ClientMessage => ({
+    v: 1,
+    kind: 'ping',
+    ...(team === undefined ? {} : { team }),
+    ...(player ? { player } : {}),
+  }),
+  me: (player: PlayerInfo | null): ClientMessage => ({ v: 1, kind: 'me', player }),
   join: (team: string | null): ClientMessage => ({ v: 1, kind: 'join', team }),
   bye: (): ClientMessage => ({ v: 1, kind: 'bye' }),
   command: (command: DescriberCommand): ClientMessage => ({ v: 1, kind: 'command', command }),

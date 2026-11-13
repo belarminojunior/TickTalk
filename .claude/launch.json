@@ -18,6 +18,13 @@
         "dev"
       ],
       "port": 5173
+    },
+    {
+      "name": "play-check",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx", "server/index.ts"],
+      "env": { "TICKTALK_PORT": "5180" },
+      "port": 5180
     }
   ]
 }

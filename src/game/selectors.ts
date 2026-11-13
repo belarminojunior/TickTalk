@@ -8,6 +8,7 @@ import type {
   Language,
   Move,
   PauseReason,
+  PawnColor,
   Phase,
   ScreenMode,
   Settings,
@@ -104,19 +105,33 @@ function cardWords(card: NonNullable<GameState['turn']>['card'] & object): Recor
   return { blue: [...card.blue.words], yellow: [...card.yellow.words] };
 }
 
-/** What a phone is for, right now (one phone per team mode; otherwise always "describer"). */
-export type PhoneRole = 'describer' | 'validator' | 'spectator';
+/**
+ * What a phone is for, right now (with a phone per team or per person; otherwise always
+ * "describer"). "guesser": a teammate of the describer, on their own phone.
+ */
+export type PhoneRole = 'describer' | 'guesser' | 'validator' | 'spectator';
+
+/** One phone per person: why this phone has no player right now. */
+export type PhoneIssue = 'nameTaken' | 'removed';
 
 export interface DescriberView {
   phase: Phase;
   language: Language;
   mode: ScreenMode;
-  /** This phone: its team (one phone per team) and its role right now. */
-  you: { teamId: string | null; role: PhoneRole; refusedTeam: string | null };
+  /**
+   * This phone: its team and its role right now. One phone per person: also the person's
+   * name (null until they write it) and why the table refused it.
+   */
+  you: { teamId: string | null; role: PhoneRole; refusedTeam: string | null; name: string | null; issue: PhoneIssue | null };
   /** Name of the team that checks this turn (the next team). */
   checking: string | null;
-  /** Teams to pick from (one phone per team), and whether each already has a phone. */
-  teamsList: { id: string; name: string; color: Team['color']; taken: boolean }[];
+  /**
+   * Teams to pick from, and whether each already has a phone (one phone per team) or who
+   * is in it (one phone per person).
+   */
+  teamsList: { id: string; name: string; color: Team['color']; taken: boolean; members: string[] }[];
+  /** One phone per person, mid-game, on a phone that isn't anyone yet: the players to pick from. */
+  claimable: { team: string; name: string; online: boolean }[];
   /** The checking team's phone, while validating: both sides with marks and cancellations. */
   validation: {
     team: string;
@@ -181,9 +196,10 @@ export function describerView(state: GameState, now: number): DescriberView {
     winner,
     endOfTurn: endOfTurnFor(state),
     mode: state.settings.screenMode,
-    you: { teamId: null, role: 'describer', refusedTeam: null },
+    you: { teamId: null, role: 'describer', refusedTeam: null, name: null, issue: null },
     checking: state.teams.length > 1 ? validatorTeam(state).name : null,
     teamsList: [],
+    claimable: [],
     validation: null,
   };
 }
@@ -214,21 +230,28 @@ export function phoneView(
 
   const view: DescriberView = {
     ...base,
-    you: { teamId: phone.teamId, role, refusedTeam: phone.refusedTeam },
+    you: { teamId: phone.teamId, role, refusedTeam: phone.refusedTeam, name: null, issue: null },
     teamsList: state.teams.map((t) => ({
       id: t.id,
       name: t.name,
       color: t.color,
       taken: t.id !== phone.teamId && phone.takenTeams.includes(t.id),
+      members: [],
     })),
   };
+  return withRole(view, state, role);
+}
+
+/** Only the describer sees the words; the checking team gets the card to validate. */
+function withRole(view: DescriberView, state: GameState, role: PhoneRole): DescriberView {
+  const { turn } = state;
   if (role !== 'describer') {
     view.words = null;
     view.cardNumber = null;
   }
   if (role === 'validator' && turn?.card) {
     view.validation = {
-      team: playing!.name,
+      team: state.teams[turn.teamIndex].name,
       describer: turn.describer,
       side: turn.side,
       cardNumber: cardNumber(turn.card),
@@ -238,6 +261,87 @@ export function phoneView(
     };
   }
   return view;
+}
+
+/** One phone per person: who this phone is, as the table knows it. */
+export interface PlayerPhone {
+  player: { name: string; team: string | null } | null;
+  issue: PhoneIssue | null;
+}
+
+/** One phone per person: what every phone needs to know before and during the game. */
+export interface Lobby {
+  /** The setup rows (ids "t1"…), used before the game starts. */
+  teams: { id: string; name: string; color: PawnColor }[];
+  /** Everyone who joined from a phone. */
+  roster: { name: string; team: string | null; online: boolean }[];
+  /** The table's interface language (the game's settings only exist once it starts). */
+  language: Language;
+}
+
+/**
+ * The view for one phone in "one phone per person" mode. Before the game: the teams to
+ * choose from, with who is in each. During the game, by role: the describer gets the words,
+ * their teammates follow the turn, the checking team validates, everyone else watches.
+ * A phone that isn't one of the game's players gets the list of players to pick from.
+ */
+export function playerPhoneView(state: GameState, now: number, phone: PlayerPhone, lobby: Lobby): DescriberView {
+  const base = describerView(state, now);
+  const { player } = phone;
+  const you: DescriberView['you'] = {
+    teamId: null,
+    role: 'spectator',
+    refusedTeam: null,
+    name: player?.name ?? null,
+    issue: phone.issue,
+  };
+
+  if (state.phase === 'setup') {
+    return {
+      ...base,
+      mode: 'playerPhones',
+      language: lobby.language,
+      you: { ...you, teamId: player?.team ?? null },
+      teamsList: lobby.teams.map((t) => ({
+        ...t,
+        taken: false,
+        members: lobby.roster.filter((p) => p.team === t.id).map((p) => p.name),
+      })),
+      words: null,
+      cardNumber: null,
+    };
+  }
+
+  const { turn } = state;
+  const myTeam = player?.team ? state.teams.find((t) => t.id === player.team && t.players.includes(player.name)) : undefined;
+  const playing = turn ? state.teams[turn.teamIndex] : null;
+  const checking = state.teams.length > 1 ? validatorTeam(state) : null;
+  let role: PhoneRole = 'spectator';
+  if (myTeam && playing && myTeam.id === playing.id) role = player!.name === turn!.describer ? 'describer' : 'guesser';
+  else if (myTeam && checking && myTeam.id === checking.id && state.phase === 'validating') role = 'validator';
+
+  const online = (team: string, name: string) => lobby.roster.some((p) => p.online && p.team === team && p.name === name);
+  const view: DescriberView = {
+    ...base,
+    mode: 'playerPhones',
+    you: { ...you, teamId: myTeam?.id ?? null, role },
+    teamsList: state.teams.map((t) => ({ id: t.id, name: t.name, color: t.color, taken: false, members: [...t.players] })),
+    claimable: myTeam ? [] : state.teams.flatMap((t) => t.players.map((name) => ({ team: t.id, name, online: online(t.id, name) }))),
+  };
+  return withRole(view, state, role);
+}
+
+/**
+ * Who may send which command in "one phone per person" mode: only the describer runs the
+ * turn (from handoff to passing it on); anyone in the checking team may validate.
+ */
+export function mayPlayerCommand(state: GameState, player: { name: string; team: string | null }, command: { type: string }): boolean {
+  if (!state.turn || state.teams.length < 2 || !player.team) return false;
+  if (command.type === 'SET_VALIDATION' || command.type === 'CONFIRM_VALIDATION') {
+    return state.phase === 'validating' && validatorTeam(state).id === player.team;
+  }
+  const playing = state.teams[state.turn.teamIndex];
+  return playing.id === player.team && player.name === state.turn.describer;
 }
 
 /**

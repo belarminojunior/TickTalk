@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { play, unlockAudio } from '../audio/sfx';
 import { Board } from '../components/Board';
 import { CardFace, HiddenWords, TwoSidedCard } from '../components/Card';
@@ -14,6 +14,7 @@ import type { DescriberCommand } from '../net/protocol';
 import type { DescriberStatus } from '../hooks/useTransport';
 import { useT } from '../i18n';
 import { useTickSounds } from './sounds';
+import { Lobby, NameEntry, WhoAreYou, type SetPlayer } from './PlayerPhoneScreens';
 import { PhoneValidation, SpectatorScreen, TeamPicker } from './TeamPhoneScreens';
 import styles from './DescriberScreen.module.css';
 
@@ -28,6 +29,8 @@ export interface DescriberScreenProps {
   onTakeOver?: () => void;
   /** One phone per team: choose this phone's team (null = none). */
   onJoinTeam?: (team: string | null) => void;
+  /** One phone per person: who this phone is (null = forget me). */
+  onPlayer?: SetPlayer;
 }
 
 const LOCKED_PHASES = ['timeUp', 'validating', 'moving'];
@@ -42,6 +45,7 @@ export function DescriberScreen({
   onCommand,
   onTakeOver,
   onJoinTeam,
+  onPlayer,
 }: DescriberScreenProps) {
   const t = useT();
   const remaining = useCountdown(view?.timer.remainingMs ?? 0, !!view?.timer.running, anchor, now);
@@ -49,8 +53,15 @@ export function DescriberScreen({
   const describing = phase === 'describing';
   const markedTotal = view ? view.marked.blue.filter(Boolean).length + view.marked.yellow.filter(Boolean).length : 0;
 
-  // One phone per team: this phone may be the playing team's, the checking team's, or another.
-  const teamMode = view?.mode === 'teamPhones' && phase !== 'setup';
+  // A phone per team or per person: this phone may be the describer's, a teammate's, the
+  // checking team's, or another team's.
+  const playerMode = view?.mode === 'playerPhones';
+  const teamMode = (view?.mode === 'teamPhones' || playerMode) && phase !== 'setup';
+  const [renaming, setRenaming] = useState(false);
+  const setPlayer: SetPlayer = (player) => {
+    setRenaming(false);
+    onPlayer?.(player);
+  };
   const role = view?.you?.role ?? 'describer';
   const isDescriber = !teamMode || (!!view?.you.teamId && role === 'describer');
 
@@ -116,7 +127,8 @@ export function DescriberScreen({
     if (status === 'reconnecting') return { title: t.reconnecting, body: t.sameWifi };
     if (status === 'connecting') return { title: t.reconnecting, body: t.waitingHostHelp };
     if (status === 'waitingHost') return { title: t.waitingHost, body: t.waitingHostHelp };
-    if (!view || phase === 'setup') return { title: t.waitingGame, body: t.waitingGameHelp };
+    // One phone per person: before the game, the phone is where people join.
+    if (!view || (phase === 'setup' && !playerMode)) return { title: t.waitingGame, body: t.waitingGameHelp };
     return null;
   })();
 
@@ -205,12 +217,26 @@ export function DescriberScreen({
               </button>
             )}
           </div>
+        ) : playerMode && view && phase === 'setup' && (!view.you.name || view.you.issue || renaming) ? (
+          <NameEntry
+            view={view}
+            onPlayer={setPlayer}
+            onCancel={
+              view.you.name
+                ? () => (view.you.issue ? setPlayer({ name: view.you.name!, team: view.you.teamId }) : setRenaming(false))
+                : undefined
+            }
+          />
+        ) : playerMode && view && phase === 'setup' ? (
+          <Lobby view={view} onPlayer={setPlayer} onRename={() => setRenaming(true)} />
+        ) : playerMode && view && !view.you.teamId ? (
+          <WhoAreYou view={view} onPlayer={setPlayer} />
         ) : teamMode && view && !view.you.teamId ? (
           <TeamPicker view={view} onJoin={(team) => onJoinTeam?.(team)} />
         ) : teamMode && view && role === 'validator' ? (
           <PhoneValidation view={view} onCommand={onCommand} />
-        ) : teamMode && view && role === 'spectator' ? (
-          <SpectatorScreen view={view} remaining={remaining} onChangeTeam={() => onJoinTeam?.(null)} />
+        ) : teamMode && view && (role === 'spectator' || role === 'guesser') ? (
+          <SpectatorScreen view={view} remaining={remaining} onChangeTeam={playerMode ? undefined : () => onJoinTeam?.(null)} />
         ) : (
           view &&
           team && (

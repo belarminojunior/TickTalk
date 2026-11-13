@@ -6,7 +6,17 @@ import { Pawn, teamInitial } from '../components/Pawn';
 import { QrConnect } from '../components/QrConnect';
 import { ScreenModePicker } from '../components/ScreenModePicker';
 import { ShuffleTeamsModal } from '../components/ShuffleTeamsModal';
-import { MAX_TEAMS, nextFreeColor, validateSetup, type SetupError, type TeamDraft } from '../game/setup';
+import {
+  MAX_TEAMS,
+  dealRandomly,
+  nextFreeColor,
+  shuffleError,
+  teamIdAt,
+  validateSetup,
+  withRoster,
+  type SetupError,
+  type TeamDraft,
+} from '../game/setup';
 import type { Settings } from '../game/types';
 import type { HostLink } from '../hooks/useTransport';
 import { useT } from '../i18n';
@@ -34,9 +44,15 @@ export function SetupScreen(props: SetupScreenProps) {
   const ids = useId();
   const [errors, setErrors] = useState<SetupError[] | null>(null);
   const [shuffling, setShuffling] = useState(false);
+  const [shuffleMessage, setShuffleMessage] = useState<string | null>(null);
   const set = <K extends keyof Settings>(key: K, value: Settings[K]) => onSettings({ ...settings, [key]: value });
 
-  const currentErrors = errors ? validateSetup(teams) : [];
+  // One phone per person: the players are whoever joined each team from their phone.
+  const playerMode = settings.screenMode === 'playerPhones';
+  const gameTeams = playerMode ? withRoster(teams, link.roster) : teams;
+  const withoutTeam = playerMode ? link.roster.filter((p) => !p.team || !teams.some((_, i) => teamIdAt(i) === p.team)) : [];
+
+  const currentErrors = errors ? validateSetup(gameTeams) : [];
   const teamErrors = (i: number) => currentErrors.filter((e) => 'team' in e && e.team === i);
 
   const updateTeam = (i: number, patch: Partial<TeamDraft>) =>
@@ -53,15 +69,38 @@ export function SetupScreen(props: SetupScreenProps) {
     updateTeam(i, { color: nextFreeColor(used, teams[i].color) });
   };
 
+  const removeTeam = (i: number) => {
+    onTeams(teams.filter((_, k) => k !== i));
+    if (playerMode) link.removeTeamAt(i);
+  };
+
+  /** Mixes everyone who joined from a phone into the current teams. */
+  const shufflePlayers = () => {
+    const error = shuffleError(
+      link.roster.map((p) => p.name),
+      teams.length,
+    );
+    if (error) {
+      setShuffleMessage(error.kind === 'tooFewPlayers' ? t.shuffleErrors.tooFewPlayers(error.needed) : t.shuffleErrors.repeatedName(error.name));
+      return;
+    }
+    setShuffleMessage(null);
+    const dealt = dealRandomly(
+      link.roster.map((p) => p.key),
+      teams.length,
+    );
+    link.assignPlayers(Object.fromEntries(dealt.map((keys, i) => [teamIdAt(i), keys])));
+  };
+
   const submit = (e: FormEvent) => {
     e.preventDefault();
     unlockAudio();
-    const found = validateSetup(teams);
+    const found = validateSetup(gameTeams);
     setErrors(found);
     if (found.length === 0) props.onStart();
   };
 
-  const errorText = (e: SetupError) => t.errors[e.kind];
+  const errorText = (e: SetupError) => (playerMode && e.kind === 'teamPlayers' ? t.needPhonesPerTeam : t.errors[e.kind]);
   const generalErrors = currentErrors.filter((e) => !('team' in e));
 
   return (
@@ -101,7 +140,7 @@ export function SetupScreen(props: SetupScreenProps) {
               url={props.phoneUrl}
               connected={link.connected}
               server={link.serverStatus}
-              teamPhones={settings.screenMode === 'teamPhones'}
+              mode={settings.screenMode}
             />
           </section>
 
@@ -111,10 +150,15 @@ export function SetupScreen(props: SetupScreenProps) {
                 <h2 id={`${ids}-teams`} className={styles.panelTitle}>
                   {t.teams}
                 </h2>
-                <button type="button" className={styles.shuffleButton} onClick={() => setShuffling(true)}>
+                <button type="button" className={styles.shuffleButton} onClick={playerMode ? shufflePlayers : () => setShuffling(true)}>
                   <ShuffleIcon size={18} /> {t.shuffleTeams}
                 </button>
               </div>
+              {shuffleMessage && playerMode && (
+                <p className={styles.shuffleMessage} role="alert">
+                  {shuffleMessage}
+                </p>
+              )}
               <ul className={styles.teamList}>
                 {teams.map((team, i) => {
                   const errs = teamErrors(i);
@@ -154,24 +198,45 @@ export function SetupScreen(props: SetupScreenProps) {
                           autoComplete="off"
                         />
                       </div>
-                      <div className={styles.fieldPlayers}>
-                        <label htmlFor={playersId} className={labelClass}>
-                          {t.players}
-                        </label>
-                        <input
-                          id={playersId}
-                          value={team.players}
-                          placeholder={t.playersPlaceholder}
-                          onChange={(e) => updateTeam(i, { players: e.target.value })}
-                          aria-invalid={errs.some((e) => e.kind !== 'teamName') || undefined}
-                          aria-describedby={errs.length ? errId : undefined}
-                          autoComplete="off"
-                        />
-                      </div>
+                      {playerMode ? (
+                        <div className={styles.fieldPlayers}>
+                          <span id={playersId} className={labelClass}>
+                            {t.playersFromPhones}
+                          </span>
+                          <ul className={styles.chips} aria-labelledby={playersId} aria-describedby={errs.length ? errId : undefined}>
+                            {link.roster
+                              .filter((p) => p.team === teamIdAt(i))
+                              .map((p) => (
+                                <li key={p.key} className={`${styles.chip} ${p.online ? '' : styles.chipOffline}`}>
+                                  <span>{p.online ? p.name : t.playerOffline(p.name)}</span>
+                                  <button type="button" onClick={() => link.removePlayer(p.key)} aria-label={t.removePlayer(p.name)}>
+                                    <XIcon size={14} />
+                                  </button>
+                                </li>
+                              ))}
+                            {!link.roster.some((p) => p.team === teamIdAt(i)) && <li className={styles.chipsEmpty}>{t.noPlayersYet}</li>}
+                          </ul>
+                        </div>
+                      ) : (
+                        <div className={styles.fieldPlayers}>
+                          <label htmlFor={playersId} className={labelClass}>
+                            {t.players}
+                          </label>
+                          <input
+                            id={playersId}
+                            value={team.players}
+                            placeholder={t.playersPlaceholder}
+                            onChange={(e) => updateTeam(i, { players: e.target.value })}
+                            aria-invalid={errs.some((e) => e.kind !== 'teamName') || undefined}
+                            aria-describedby={errs.length ? errId : undefined}
+                            autoComplete="off"
+                          />
+                        </div>
+                      )}
                       <button
                         type="button"
                         className={styles.removeButton}
-                        onClick={() => onTeams(teams.filter((_, k) => k !== i))}
+                        onClick={() => removeTeam(i)}
                         disabled={teams.length <= 2}
                         aria-label={t.removeTeam(label)}
                       >
@@ -186,6 +251,7 @@ export function SetupScreen(props: SetupScreenProps) {
                   );
                 })}
               </ul>
+              {withoutTeam.length > 0 && <p className={styles.withoutTeam}>{t.withoutTeam(withoutTeam.map((p) => p.name))}</p>}
               <button type="button" className={styles.addButton} onClick={addTeam} disabled={teams.length >= MAX_TEAMS}>
                 <PlusIcon size={18} /> {t.addTeam}
               </button>

@@ -161,6 +161,15 @@ export const TeamPhonesIcon = (p: IconProps) => (
   </Svg>
 );
 
+export const PlayerPhonesIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="1.5" y="6" width="5.5" height="12" rx="1.3" />
+    <rect x="9.25" y="4" width="5.5" height="12" rx="1.3" />
+    <rect x="17" y="6" width="5.5" height="12" rx="1.3" />
+    <path d="M3.5 21h1.5M11.25 19h1.5M19 21h1.5" />
+  </Svg>
+);
+
 
 
 export const UndoIcon = (p: IconProps) => (

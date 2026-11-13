@@ -7,11 +7,18 @@ export type PackId = 'people' | 'places' | 'things' | 'entertainment' | 'footbal
 export const PACK_IDS: PackId[] = ['people', 'places', 'things', 'entertainment', 'football', 'anime', 'mozambique'];
 
 export type Language = 'pt' | 'en';
-/** phone: one shared phone, passed to each describer · teamPhones: one phone per team. */
-export type ScreenMode = 'phone' | 'teamPhones';
-export const SCREEN_MODES: ScreenMode[] = ['phone', 'teamPhones'];
+/**
+ * phone: one shared phone, passed to each describer · teamPhones: one phone per team ·
+ * playerPhones: everyone on their own phone (each person writes their name and picks a team).
+ */
+export type ScreenMode = 'phone' | 'teamPhones' | 'playerPhones';
+export const SCREEN_MODES: ScreenMode[] = ['phone', 'teamPhones', 'playerPhones'];
+/** Several phones at once, each one bound to a team (and, per person, to a player). */
+export function hasPhonePerTeam(mode: ScreenMode): boolean {
+  return mode === 'teamPhones' || mode === 'playerPhones';
+}
 export type TurnSeconds = 30 | 45 | 60;
-/** Validation only exists with one phone per team: the next team checks on its own phone. */
+/** Validation only exists with a phone per team (or per person): the next team checks on its own phone(s). */
 export type ValidationMode = 'nextTeam' | 'none';
 
 export interface Settings {
@@ -25,9 +32,9 @@ export interface Settings {
   uiLanguage: Language;
 }
 
-/** One phone per team → the next team validates; one shared phone → no validation. */
+/** A phone per team or per person → the next team validates; one shared phone → no validation. */
 export function validationFor(mode: ScreenMode): ValidationMode {
-  return mode === 'teamPhones' ? 'nextTeam' : 'none';
+  return hasPhonePerTeam(mode) ? 'nextTeam' : 'none';
 }
 
 export interface CardSide {

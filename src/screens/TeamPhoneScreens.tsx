@@ -46,23 +46,28 @@ export function TeamPicker({ view, onJoin }: { view: DescriberView; onJoin: (tea
   );
 }
 
-/** Small bar with this phone's team and a way to change it. */
-function YourTeam({ view, onChangeTeam }: { view: DescriberView; onChangeTeam: () => void }) {
+/** Small bar with this phone's team (and person), and a way to change team (one phone per team). */
+function YourTeam({ view, onChangeTeam }: { view: DescriberView; onChangeTeam?: () => void }) {
   const t = useT();
   const mine = view.teamsList.find((x) => x.id === view.you.teamId);
   if (!mine) return null;
   return (
     <div className={styles.yourTeam}>
       <Pawn color={mine.color} label={teamInitial(mine.name)} size={34} />
-      <span className={styles.yourTeamName}>{t.yourTeam(mine.name)}</span>
-      <button type="button" className="btn btn-outline" onClick={onChangeTeam}>
-        <SwapIcon size={16} /> {t.changeTeam}
-      </button>
+      <span className={styles.yourTeamName}>{view.you.name ? t.youAre(view.you.name, mine.name) : t.yourTeam(mine.name)}</span>
+      {onChangeTeam && (
+        <button type="button" className="btn btn-outline" onClick={onChangeTeam}>
+          <SwapIcon size={16} /> {t.changeTeam}
+        </button>
+      )}
     </div>
   );
 }
 
-/** Phones of the teams not playing (and not checking): the turn, live, without any words. */
+/**
+ * Phones of the teams not playing (and not checking) — and, with a phone per person, the
+ * describer's teammates: the turn, live, without any words.
+ */
 export function SpectatorScreen({
   view,
   remaining,
@@ -70,7 +75,7 @@ export function SpectatorScreen({
 }: {
   view: DescriberView;
   remaining: number;
-  onChangeTeam: () => void;
+  onChangeTeam?: () => void;
 }) {
   const t = useT();
   const team = view.team;
@@ -125,7 +130,7 @@ export function SpectatorScreen({
           <div className={styles.turnHead}>
             <Pawn color={team.color} label={teamInitial(team.name)} size={48} />
             <div>
-              <p className={styles.eyebrow}>{t.turnOf(team.name)}</p>
+              <p className={styles.eyebrow}>{view.you.role === 'guesser' ? t.yourTeamPlaying : t.turnOf(team.name)}</p>
               {view.describer && (
                 <h1 className={styles.title}>
                   {view.phase === 'handoff' ? t.aboutToExplain(view.describer) : t.isExplaining(view.describer)}

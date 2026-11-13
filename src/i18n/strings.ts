@@ -40,10 +40,12 @@ const pt = {
   modeTitle: {
     phone: 'PC + telemóvel de quem explica',
     teamPhones: 'Um telemóvel por equipa',
+    playerPhones: 'Um telemóvel por pessoa',
   } as Record<ScreenMode, string>,
   modeDesc: {
     phone: 'O PC mostra a mesa a todos. Quem explica abre a carta no telemóvel, na mesma rede Wi-Fi.',
     teamPhones: 'Cada equipa usa o seu telemóvel: quem explica vê a carta e, no fim, a equipa adversária valida no telemóvel dela.',
+    playerPhones: 'Cada pessoa usa o seu telemóvel: escreve o nome, escolhe a equipa e vê a carta quando for a sua vez de explicar.',
   } as Record<ScreenMode, string>,
   recommended: 'Recomendado',
   connectPhone: 'Liga o telemóvel',
@@ -97,10 +99,12 @@ const pt = {
   live: {
     phone: 'Ao vivo · a tela de quem explica está ligada',
     teamPhones: 'Ao vivo · o telemóvel da equipa está ligado',
+    playerPhones: 'Ao vivo · o telemóvel de quem explica está ligado',
   } as Record<ScreenMode, string>,
   describerOffline: {
     phone: 'Telemóvel desligado',
     teamPhones: 'Telemóvel da equipa desligado',
+    playerPhones: 'Telemóvel de quem explica desligado',
   } as Record<ScreenMode, string>,
   rules: 'Regras',
   soundOn: 'Som ligado',
@@ -132,18 +136,26 @@ const pt = {
   passDevice: {
     phone: 'Passa o telemóvel',
     teamPhones: 'Passa o telemóvel da equipa',
+    playerPhones: 'Vez de explicar',
   } as Record<ScreenMode, string>,
   passTo: (mode: ScreenMode, name: string, team: string): string =>
-    mode === 'teamPhones' ? `${name} explica, com o telemóvel ${ofTeamPt(team)}` : `Passa o telemóvel a ${name} (${team})`,
+    mode === 'playerPhones'
+      ? `${name} explica (${team}), no próprio telemóvel`
+      : mode === 'teamPhones'
+        ? `${name} explica, com o telemóvel ${ofTeamPt(team)}`
+        : `Passa o telemóvel a ${name} (${team})`,
   handoffHelp: (mode: ScreenMode): string =>
-    mode === 'teamPhones'
-      ? 'Quando estiver tudo pronto, carrega em Começar no telemóvel da equipa.'
-      : 'Quando estiver tudo pronto, carrega em Começar no telemóvel.',
+    mode === 'playerPhones'
+      ? 'Quando estiver tudo pronto, quem explica carrega em Começar no seu telemóvel.'
+      : mode === 'teamPhones'
+        ? 'Quando estiver tudo pronto, carrega em Começar no telemóvel da equipa.'
+        : 'Quando estiver tudo pronto, carrega em Começar no telemóvel.',
   readyStatus: (name: string): string => `${name} está pronto/a. O tempo começa já a seguir.`,
   skipDescriber: 'Trocar quem explica',
   waitingDescriber: {
     phone: 'À espera do telemóvel…',
     teamPhones: 'À espera do telemóvel da equipa…',
+    playerPhones: 'À espera do telemóvel de quem explica…',
   } as Record<ScreenMode, string>,
   paused: 'Pausa',
   pausedHelp: 'O tempo parou.',
@@ -205,6 +217,7 @@ const pt = {
   passOnDevice: {
     phone: 'Quem explica passa a vez no telemóvel.',
     teamPhones: 'Quem explica passa a vez no telemóvel da equipa.',
+    playerPhones: 'Quem explica passa a vez no seu telemóvel.',
   } as Record<ScreenMode, string>,
   noMove: 'O peão fica onde está.',
 
@@ -241,8 +254,8 @@ const pt = {
       body: 'O peão avança uma casa por cada palavra acertada e a vez passa à equipa seguinte, pela ordem.',
     },
     {
-      title: 'Validação (um telemóvel por equipa)',
-      body: 'Quando cada equipa tem o seu telemóvel, no fim da vez a equipa seguinte vê as palavras marcadas no telemóvel dela e pode anular as que quebraram as regras. A decisão é final. Com um só telemóvel não há validação.',
+      title: 'Validação (telemóvel por equipa ou por pessoa)',
+      body: 'Quando cada equipa (ou cada pessoa) tem o seu telemóvel, no fim da vez a equipa seguinte vê as palavras marcadas e pode anular as que quebraram as regras. A decisão é final. Com um só telemóvel não há validação.',
     },
   ],
   shortcuts: 'Atalhos de teclado',
@@ -273,8 +286,9 @@ const pt = {
   undoHit: 'Desfazer último acerto',
   describerHelp2: 'Não digas a palavra, partes dela, nem “rima com”.',
   endTurn: 'Terminar a vez',
-  handoffTitle: (_mode: ScreenMode, name: string): string => `Passa o telemóvel a ${toPersonPt(name)}`,
-  handoffDevice: { phone: 'Passa o telemóvel', teamPhones: 'Passa o telemóvel' } as Record<ScreenMode, string>,
+  handoffTitle: (mode: ScreenMode, name: string): string =>
+    mode === 'playerPhones' ? `${name}, és tu a explicar` : `Passa o telemóvel a ${toPersonPt(name)}`,
+  handoffDevice: { phone: 'Passa o telemóvel', teamPhones: 'Passa o telemóvel', playerPhones: 'É a tua vez' } as Record<ScreenMode, string>,
 
   // One phone per team
   connectTeamPhones: 'Liga os telemóveis das equipas',
@@ -286,6 +300,34 @@ const pt = {
   refusedTeam: (name: string): string => `${name} já tem um telemóvel. Escolhe outra equipa.`,
   yourTeam: (name: string): string => `A tua equipa: ${name}`,
   changeTeam: 'Trocar de equipa',
+
+  // One phone per person
+  connectEveryone: 'Liga os telemóveis de todos',
+  connectEveryoneHelpBefore: 'Cada pessoa lê o código ou abre ',
+  connectEveryoneHelpAfter: ', escreve o seu nome e escolhe a equipa.',
+  playersFromPhones: 'Jogadores (entram pelo telemóvel)',
+  noPlayersYet: 'Ainda ninguém escolheu esta equipa.',
+  withoutTeam: (names: string[]): string => `Ainda sem equipa: ${joinNames(names, 'e')}`,
+  removePlayer: (name: string): string => `Tirar ${name} da equipa`,
+  playerOffline: (name: string): string => `${name} (desligado)`,
+  needPhonesPerTeam: 'Esta equipa precisa de pelo menos 2 pessoas. Peçam a mais alguém para a escolher no telemóvel.',
+  nameTitle: 'Como te chamas?',
+  nameHelp: 'É o nome que a tua equipa e a mesa vão ver.',
+  nameLabel: 'O teu nome',
+  namePlaceholder: 'Ana',
+  nameTaken: 'Já há alguém ligado com esse nome. Usa outro (por exemplo, com a inicial do apelido).',
+  removedByTable: 'A mesa tirou-te da lista. Escreve o teu nome para voltares a entrar.',
+  hello: (name: string): string => `Olá, ${name}!`,
+  pickTeamHelpPlayer: 'Toca na equipa em que vais jogar. Podes trocar até o jogo começar.',
+  nobodyYet: 'Ainda ninguém',
+  lobbyWaiting: 'À espera que o jogo comece no PC. Deixa esta página aberta.',
+  changeName: 'Mudar o nome',
+  whoAreYouTitle: 'Quem és tu?',
+  whoAreYouHelp: 'O jogo já começou. Toca no teu nome.',
+  alreadyConnected: 'já ligado',
+  notInList: 'Não estás na lista? Quem está no PC pode começar um jogo novo contigo.',
+  yourTeamPlaying: 'A tua equipa está a jogar: adivinha!',
+  youAre: (name: string, team: string): string => `${name} · ${team}`,
   turnOf: (team: string): string => `Vez ${ofTeamPt(team)}`,
   spectatorHelp: 'As palavras só aparecem no telemóvel de quem explica.',
   checkingNow: (validator: string): string => `${validator} ${isPluralPt(validator) ? 'estão' : 'está'} a validar.`,
@@ -335,10 +377,11 @@ const en: Strings = {
   interfaceLanguage: 'Interface language',
 
   howToPlay: 'How will you play?',
-  modeTitle: { phone: 'PC + describer’s phone', teamPhones: 'One phone per team' },
+  modeTitle: { phone: 'PC + describer’s phone', teamPhones: 'One phone per team', playerPhones: 'One phone per person' },
   modeDesc: {
     phone: 'The PC shows the table to everyone. The describer opens the card on a phone, on the same Wi-Fi.',
     teamPhones: 'Each team uses its own phone: the describer sees the card and, at the end, the other team checks it on theirs.',
+    playerPhones: 'Everyone uses their own phone: write your name, pick a team, and see the card when it’s your turn to describe.',
   },
   recommended: 'Recommended',
   connectPhone: 'Connect the phone',
@@ -390,8 +433,9 @@ const en: Strings = {
   live: {
     phone: 'Live · the describer’s screen is connected',
     teamPhones: 'Live · the team’s phone is connected',
+    playerPhones: 'Live · the describer’s phone is connected',
   },
-  describerOffline: { phone: 'Phone disconnected', teamPhones: 'Team phone disconnected' },
+  describerOffline: { phone: 'Phone disconnected', teamPhones: 'Team phone disconnected', playerPhones: 'Describer’s phone disconnected' },
   rules: 'Rules',
   soundOn: 'Sound on',
   soundOff: 'Sound off',
@@ -417,16 +461,25 @@ const en: Strings = {
   atSeconds: (s) => `at ${s} s`,
   noHitsYet: 'No hits yet.',
   slotLabel: (side, n, hit) => `${side === 'blue' ? 'Blue' : 'Yellow'} side, word ${n}: ${hit ? 'guessed' : 'not yet'}`,
-  passDevice: { phone: 'Pass the phone', teamPhones: 'Pass the team phone' },
+  passDevice: { phone: 'Pass the phone', teamPhones: 'Pass the team phone', playerPhones: 'Turn to describe' },
   passTo: (mode, name, team) =>
-    mode === 'teamPhones' ? `${name} describes, on ${possessiveEn(team)} phone` : `Pass the phone to ${name} (${team})`,
+    mode === 'playerPhones'
+      ? `${name} describes (${team}), on their own phone`
+      : mode === 'teamPhones'
+        ? `${name} describes, on ${possessiveEn(team)} phone`
+        : `Pass the phone to ${name} (${team})`,
   handoffHelp: (mode) =>
-    mode === 'teamPhones' ? 'When everyone is ready, press Start on the team phone.' : 'When everyone is ready, press Start on the phone.',
+    mode === 'playerPhones'
+      ? 'When everyone is ready, the describer presses Start on their phone.'
+      : mode === 'teamPhones'
+        ? 'When everyone is ready, press Start on the team phone.'
+        : 'When everyone is ready, press Start on the phone.',
   readyStatus: (name) => `${name} is ready. The timer starts next.`,
   skipDescriber: 'Change describer',
   waitingDescriber: {
     phone: 'Waiting for the phone…',
     teamPhones: 'Waiting for the team phone…',
+    playerPhones: 'Waiting for the describer’s phone…',
   },
   paused: 'Paused',
   pausedHelp: 'The timer is stopped.',
@@ -482,6 +535,7 @@ const en: Strings = {
   passOnDevice: {
     phone: 'The describer passes the turn on the phone.',
     teamPhones: 'The describer passes the turn on the team phone.',
+    playerPhones: 'The describer passes the turn on their phone.',
   },
   noMove: 'The pawn stays put.',
 
@@ -516,8 +570,8 @@ const en: Strings = {
       body: 'The pawn moves one square per guessed word, and play passes to the next team, in order.',
     },
     {
-      title: 'Checking (one phone per team)',
-      body: 'When each team has its own phone, at the end of the turn the next team sees the marked words on its phone and may cancel any that broke the rules. Their decision is final. With a single phone there is no checking.',
+      title: 'Checking (a phone per team or per person)',
+      body: 'When each team (or each person) has a phone, at the end of the turn the next team sees the marked words and may cancel any that broke the rules. Their decision is final. With a single phone there is no checking.',
     },
   ],
   shortcuts: 'Keyboard shortcuts',
@@ -546,8 +600,8 @@ const en: Strings = {
   undoHit: 'Undo last hit',
   describerHelp2: 'Don’t say the word, parts of it, or “rhymes with”.',
   endTurn: 'End turn',
-  handoffTitle: (_mode, name) => `Pass the phone to ${name}`,
-  handoffDevice: { phone: 'Pass the phone', teamPhones: 'Pass the phone' },
+  handoffTitle: (mode, name) => (mode === 'playerPhones' ? `${name}, you’re describing` : `Pass the phone to ${name}`),
+  handoffDevice: { phone: 'Pass the phone', teamPhones: 'Pass the phone', playerPhones: 'Your turn' },
 
   connectTeamPhones: 'Connect the team phones',
   connectTeamPhonesHelpBefore: 'Each team scans the code or opens ',
@@ -558,6 +612,33 @@ const en: Strings = {
   refusedTeam: (name) => `${name} already has a phone. Pick another team.`,
   yourTeam: (name) => `Your team: ${name}`,
   changeTeam: 'Change team',
+
+  connectEveryone: 'Connect everyone’s phones',
+  connectEveryoneHelpBefore: 'Each person scans the code or opens ',
+  connectEveryoneHelpAfter: ', writes their name and picks a team.',
+  playersFromPhones: 'Players (join from their phones)',
+  noPlayersYet: 'Nobody has picked this team yet.',
+  withoutTeam: (names) => `No team yet: ${joinNames(names, 'and')}`,
+  removePlayer: (name) => `Take ${name} off the team`,
+  playerOffline: (name) => `${name} (disconnected)`,
+  needPhonesPerTeam: 'This team needs at least 2 people. Ask someone else to pick it on their phone.',
+  nameTitle: 'What’s your name?',
+  nameHelp: 'It’s the name your team and the table will see.',
+  nameLabel: 'Your name',
+  namePlaceholder: 'Ann',
+  nameTaken: 'Someone with that name is already connected. Use another (for example, with your surname’s initial).',
+  removedByTable: 'The table took you off the list. Write your name to join again.',
+  hello: (name) => `Hi, ${name}!`,
+  pickTeamHelpPlayer: 'Tap the team you’ll play for. You can change until the game starts.',
+  nobodyYet: 'Nobody yet',
+  lobbyWaiting: 'Waiting for the game to start on the PC. Keep this page open.',
+  changeName: 'Change name',
+  whoAreYouTitle: 'Who are you?',
+  whoAreYouHelp: 'The game has started. Tap your name.',
+  alreadyConnected: 'already connected',
+  notInList: 'Not on the list? Whoever is at the PC can start a new game with you.',
+  yourTeamPlaying: 'Your team is playing: guess!',
+  youAre: (name, team) => `${name} · ${team}`,
   turnOf: (team) => `${possessiveEn(team)} turn`,
   spectatorHelp: 'The words only show on the describer’s phone.',
   checkingNow: (validator) => `${validator} are checking.`,

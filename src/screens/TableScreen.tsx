@@ -12,7 +12,7 @@ import { TimerRing } from '../components/TimerRing';
 import { WinScreen } from '../components/WinScreen';
 import { markedCount as countMarked, type GameAction } from '../game/reducer';
 import { provisionalPosition, validatorTeam, type TableView } from '../game/selectors';
-import type { ScreenMode } from '../game/types';
+import { hasPhonePerTeam, type ScreenMode } from '../game/types';
 import { useKeyboard } from '../hooks/useKeyboard';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { useCountdown } from '../hooks/useTimer';
@@ -140,10 +140,10 @@ export function TableScreen(props: TableScreenProps) {
   // The describer passes the turn on the phone; the table only does it as a fallback,
   // when that phone is not connected.
   const passOnTable = !link.describerOnline;
-  // One phone per team: the checking team validates on its own phone, and the table only
-  // says so. If that phone isn't connected, the table validates as before.
+  // A phone per team or per person: the checking team validates on its own phone(s), and the
+  // table only says so. If none of them is connected, the table validates as before.
   const checkedOnPhone =
-    mode === 'teamPhones' && view.teams.length > 1 && link.teamsWithPhone.includes(validatorTeam(view).id);
+    hasPhonePerTeam(mode) && view.teams.length > 1 && link.teamsWithPhone.includes(validatorTeam(view).id);
 
   const next = () => {
     unlockAudio();
@@ -215,7 +215,7 @@ export function TableScreen(props: TableScreenProps) {
             teams={view.teams}
             activeIndex={turn?.teamIndex ?? null}
             positions={positions}
-            phones={mode === 'teamPhones' ? link.teamsWithPhone : undefined}
+            phones={hasPhonePerTeam(mode) ? link.teamsWithPhone : undefined}
           />
         </div>
 
@@ -349,7 +349,7 @@ function HandoffPanel({ view, dispatch, link, mode, phoneUrl }: TableScreenProps
       {link.describerOnline ? (
         turn.ready && <StatusPill tone="ok">{t.readyStatus(turn.describer)}</StatusPill>
       ) : (
-        <QrConnect url={phoneUrl} connected={link.connected} server={link.serverStatus} compact teamPhones={mode === 'teamPhones'} />
+        <QrConnect url={phoneUrl} connected={link.connected} server={link.serverStatus} compact mode={mode} />
       )}
 
       <button type="button" className="btn btn-outline" onClick={() => dispatch({ type: 'HANDOFF', skipDescriber: true })}>

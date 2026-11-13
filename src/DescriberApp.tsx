@@ -54,6 +54,7 @@ export function DescriberApp() {
         onCommand={client.send}
         onTakeOver={client.takeOver}
         onJoinTeam={client.joinTeam}
+        onPlayer={client.setPlayer}
       />
     </I18nProvider>
   );

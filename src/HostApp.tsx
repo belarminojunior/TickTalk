@@ -1,17 +1,18 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { loadMuted, setMuted } from './audio/sfx';
 import { ReplacedNotice } from './components/ReplacedNotice';
 import { useConfig } from './config';
 import { CARDS } from './data/cards';
 import { DEFAULT_SETTINGS, createInitialState, gameReducer } from './game/reducer';
 import { tableView } from './game/selectors';
-import { toTeamSetup, type TeamDraft } from './game/setup';
+import { toTeamSetup, withRoster, type TeamDraft } from './game/setup';
 import { clearSavedGame, loadGame, loadSetup, saveGame, saveSetup } from './game/storage';
 import type { GameState, Settings } from './game/types';
 import { useInterval } from './hooks/useTimer';
-import { useHostLink } from './hooks/useTransport';
+import { useHostLink, type LobbySetup } from './hooks/useTransport';
 import { usePhoneUrl } from './hooks/usePhoneUrl';
 import { I18nProvider } from './i18n';
+import { STRINGS } from './i18n/strings';
 import { SetupScreen } from './screens/SetupScreen';
 import { TableScreen } from './screens/TableScreen';
 
@@ -50,7 +51,15 @@ export function HostApp() {
   const mode = inSetup ? draft.screenMode : state.settings.screenMode;
   const uiLanguage = inSetup ? draft.uiLanguage : state.settings.uiLanguage ?? 'pt';
 
-  const link = useHostLink(mode, state, dispatch, config.now, config.createHostTransport);
+  // One phone per person: the phones see the setup rows (with the names shown on the table).
+  const lobby = useMemo<LobbySetup>(
+    () => ({
+      teams: teamDrafts.map((d, i) => ({ name: d.name.trim() || STRINGS[uiLanguage].teamPlaceholder(i + 1), color: d.color })),
+      language: uiLanguage,
+    }),
+    [teamDrafts, uiLanguage],
+  );
+  const link = useHostLink(mode, state, dispatch, config.now, config.createHostTransport, lobby);
   const phoneUrl = usePhoneUrl(true);
 
   // The host clock: time only runs here.
@@ -71,13 +80,19 @@ export function HostApp() {
     document.documentElement.lang = uiLanguage;
   }, [uiLanguage]);
 
+  // The setup survives a reload of the table (people may already be joining from their phones).
+  useEffect(() => {
+    if (inSetup) saveSetup({ settings: draft, teams: teamDrafts });
+  }, [inSetup, draft, teamDrafts]);
+
 
   const start = () => {
     saveSetup({ settings: draft, teams: teamDrafts });
     dispatch({
       type: 'SETUP',
       settings: draft,
-      teams: teamDrafts.map(toTeamSetup),
+      // One phone per person: each team is whoever picked it on their phone.
+      teams: (draft.screenMode === 'playerPhones' ? withRoster(teamDrafts, link.roster) : teamDrafts).map(toTeamSetup),
       // Every game uses the whole deck (all packs).
       cards: CARDS[draft.language],
       seed: config.seed(),

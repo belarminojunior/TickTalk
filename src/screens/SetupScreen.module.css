@@ -135,6 +135,67 @@
   border-color: var(--chalk);
 }
 
+.shuffleMessage {
+  color: var(--danger-text);
+  font-size: 15px;
+}
+
+/* One phone per person: who joined each team, as chips. */
+.chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 36px;
+  padding: 0 4px 0 14px;
+  border-radius: 999px;
+  background: var(--table);
+  border: 1.5px solid var(--outline);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.chip button {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+}
+
+.chip button:hover {
+  color: var(--chalk);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.chipOffline {
+  color: var(--muted);
+  border-style: dashed;
+}
+
+.chipsEmpty {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.withoutTeam {
+  color: var(--yellow);
+  font-size: 15px;
+}
+
 .teamList {
   list-style: none;
   margin: 0;

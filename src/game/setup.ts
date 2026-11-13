@@ -68,19 +68,43 @@ export function randomTeams(
   current: TeamDraft[],
   random: () => number = Math.random,
 ): TeamDraft[] {
-  const shuffled = [...names];
+  const dealt = dealRandomly(names, teamCount, random);
+  const used = current.slice(0, teamCount).map((t) => t.color);
+  return dealt.map((players, i) => {
+    const kept = current[i];
+    const color = kept?.color ?? nextFreeColor(used);
+    if (!kept) used.push(color);
+    return { name: kept?.name ?? '', color, players: players.join(', ') };
+  });
+}
+
+/** Shuffles, then deals one at a time into `count` groups (sizes differ by at most one). */
+export function dealRandomly<T>(items: readonly T[], count: number, random: () => number = Math.random): T[][] {
+  const shuffled = [...items];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  const used = current.slice(0, teamCount).map((t) => t.color);
-  return Array.from({ length: teamCount }, (_, i) => {
-    const kept = current[i];
-    const color = kept?.color ?? nextFreeColor(used);
-    if (!kept) used.push(color);
-    const players = shuffled.filter((_, k) => k % teamCount === i);
-    return { name: kept?.name ?? '', color, players: players.join(', ') };
-  });
+  return Array.from({ length: count }, (_, i) => shuffled.filter((_, k) => k % count === i));
+}
+
+/** Setup row ids, as the game will number the teams. */
+export function teamIdAt(index: number): string {
+  return `t${index + 1}`;
+}
+
+/**
+ * One phone per person: the rows' players are whoever picked each team on their phone
+ * (in the order they joined, which is the order they describe).
+ */
+export function withRoster(teams: TeamDraft[], roster: readonly { name: string; team: string | null }[]): TeamDraft[] {
+  return teams.map((team, i) => ({
+    ...team,
+    players: roster
+      .filter((p) => p.team === teamIdAt(i))
+      .map((p) => p.name)
+      .join(', '),
+  }));
 }
 
 export function nextFreeColor(used: PawnColor[], after?: PawnColor): PawnColor {

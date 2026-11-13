@@ -1,12 +1,12 @@
 import type { ScreenMode } from '../game/types';
 import { useT } from '../i18n';
-import { DevicesIcon, TeamPhonesIcon } from './Icons';
+import { DevicesIcon, PlayerPhonesIcon, TeamPhonesIcon } from './Icons';
 import styles from './ScreenModePicker.module.css';
 
-const MODES: ScreenMode[] = ['phone', 'teamPhones'];
-const ICONS = { phone: DevicesIcon, teamPhones: TeamPhonesIcon };
+const MODES: ScreenMode[] = ['phone', 'teamPhones', 'playerPhones'];
+const ICONS = { phone: DevicesIcon, teamPhones: TeamPhonesIcon, playerPhones: PlayerPhonesIcon };
 
-/** Two large cards: PC + the describer's phone / One phone per team. */
+/** The three ways to play: PC + the describer's phone / one phone per team / one phone per person. */
 export function ScreenModePicker({ value, onChange }: { value: ScreenMode; onChange: (m: ScreenMode) => void }) {
   const t = useT();
   return (
@@ -23,7 +23,7 @@ export function ScreenModePicker({ value, onChange }: { value: ScreenMode; onCha
             className={`${styles.card} ${selected ? styles.selected : ''}`}
             onClick={() => onChange(mode)}
           >
-            <Icon size={34} className={styles.icon} />
+            <Icon size={32} className={styles.icon} />
             <span className={styles.title}>{t.modeTitle[mode]}</span>
             <span className={styles.desc}>{t.modeDesc[mode]}</span>
           </button>
