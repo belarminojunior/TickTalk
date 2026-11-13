@@ -302,9 +302,8 @@ const pt = {
   changeTeam: 'Trocar de equipa',
 
   // A phone whose network doesn't let it reach the table
-  blockedTitle: 'Não consigo ligar à mesa a partir desta rede',
-  blockedHelp:
-    'A sala existe, mas a rede deste telemóvel (por exemplo, dados móveis) não deixa ligar diretamente à mesa. Liga o telemóvel ao mesmo Wi-Fi que a mesa, ou desliga a VPN. O telemóvel continua a tentar sozinho.',
+  blockedTitle: 'A ligação à mesa está a falhar',
+  blockedHelp: 'A sala existe, mas a rede deste telemóvel está a bloquear a ligação. Se tiveres uma VPN ligada, desliga-a. O telemóvel continua a tentar sozinho.',
 
   // Home
   homeCreate: 'Criar sala',
@@ -633,9 +632,8 @@ const en: Strings = {
   yourTeam: (name) => `Your team: ${name}`,
   changeTeam: 'Change team',
 
-  blockedTitle: 'Can’t reach the table from this network',
-  blockedHelp:
-    'The room exists, but this phone’s network (for example, mobile data) won’t let it connect directly to the table. Join the same Wi-Fi as the table, or turn off the VPN. The phone keeps trying on its own.',
+  blockedTitle: 'The connection to the table is failing',
+  blockedHelp: 'The room exists, but this phone’s network is blocking the connection. If a VPN is on, turn it off. The phone keeps trying on its own.',
 
   homeCreate: 'Create room',
   homeCreateHelp: 'This screen becomes the table: it shows everyone the board, and the room code for the phones to join.',

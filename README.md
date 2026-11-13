@@ -79,7 +79,7 @@ Se a ligação cair, o tempo pára e a mesa mostra **“Telemóvel desligado”*
 
 A mesa e os telemóveis falam diretamente uns com os outros (WebRTC, com a biblioteca [PeerJS](https://peerjs.com/)). Para se encontrarem, usam por um instante o serviço público e gratuito do PeerJS (só para a apresentação; o jogo não passa por lá). Servidores STUN públicos (Google e Cloudflare) ajudam a ligação direta a atravessar a maioria das redes.
 
-**Telemóveis em dados móveis ou redes fechadas.** Algumas redes (muitas redes móveis, Wi-Fi de empresas, VPNs) não deixam ligar diretamente: aí é preciso um **retransmissor (TURN)**. Os retransmissores gratuitos do PeerJS deixaram de responder, por isso, sem TURN, esse telemóvel mostra “Não consigo ligar à mesa a partir desta rede” e pede para usar o mesmo Wi-Fi que a mesa (no mesmo Wi-Fi liga sempre). Para que funcione em qualquer rede, cria uma conta num serviço TURN (há vários com plano gratuito) e põe os dados dele nas variáveis de ambiente da Vercel (*Settings → Environment Variables*), depois faz *Redeploy*:
+**Para funcionar em qualquer rede (configurar uma vez).** Os telemóveis não precisam de estar na mesma rede que a mesa, mas muitas redes (dados móveis, Wi-Fi de empresas, VPNs) não deixam ligar diretamente: aí as mensagens passam por um **retransmissor (TURN)**. Os retransmissores gratuitos do PeerJS deixaram de responder, por isso é preciso um teu: cria uma conta num serviço TURN (há vários com plano gratuito) e põe os dados dele nas variáveis de ambiente da Vercel (*Settings → Environment Variables*), depois faz *Redeploy*. Sem isto, um telemóvel numa dessas redes mostra “A ligação à mesa está a falhar”.
 
 | Variável | Exemplo |
 |---|---|
