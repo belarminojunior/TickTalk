@@ -54,10 +54,9 @@ const pt = {
   qrAlt: (url: string): string => `Código QR para abrir ${url}`,
   phonesConnected: (n: number): string =>
     n === 0 ? 'Nenhum telemóvel ligado' : n === 1 ? '1 telemóvel ligado' : `${n} telemóveis ligados`,
-  serverConnecting: 'A procurar o servidor local…',
-  serverMissing: 'Servidor local não encontrado. Arranca o jogo com “npm run play” para usar o telemóvel.',
-  serverUnreachable: 'Não consegui ligar ao servidor do jogo. Confirma a ligação à internet; se acabou de acordar, espera um minuto.',
-  sameWifi: 'O telemóvel tem de estar na mesma rede Wi-Fi que este PC.',
+  serverConnecting: 'A abrir a sala…',
+  serverUnreachable: 'Não consegui abrir a sala. Confirma a ligação à internet; o jogo tenta outra vez sozinho.',
+  sameWifi: 'Confirma que o telemóvel tem internet.',
   teams: 'Equipas',
   teamName: 'Nome da equipa',
   players: 'Jogadores, pela ordem em que explicam',
@@ -302,6 +301,12 @@ const pt = {
   yourTeam: (name: string): string => `A tua equipa: ${name}`,
   changeTeam: 'Trocar de equipa',
 
+  // Home
+  homeCreate: 'Criar sala',
+  homeCreateHelp: 'Este ecrã fica a mesa: mostra o tabuleiro a todos e o código da sala para os telemóveis entrarem.',
+  homeJoin: 'Entrar numa sala',
+  homeJoinHelp: 'Escreve o código de 4 letras que aparece na mesa.',
+
   // Rooms
   roomLabel: 'Sala',
   roomTitle: 'Em que sala vais jogar?',
@@ -399,10 +404,9 @@ const en: Strings = {
   connectPhoneHelpAfter: '. The phone is passed from hand to hand each turn.',
   qrAlt: (url) => `QR code to open ${url}`,
   phonesConnected: (n) => (n === 0 ? 'No phone connected' : n === 1 ? '1 phone connected' : `${n} phones connected`),
-  serverConnecting: 'Looking for the local server…',
-  serverMissing: 'Local server not found. Start the game with “npm run play” to use a phone.',
-  serverUnreachable: 'Couldn’t reach the game server. Check the internet connection; if it was asleep, wait a minute.',
-  sameWifi: 'The phone must be on the same Wi-Fi network as this PC.',
+  serverConnecting: 'Opening the room…',
+  serverUnreachable: 'Couldn’t open the room. Check the internet connection; the game keeps trying.',
+  sameWifi: 'Check that the phone is online.',
   teams: 'Teams',
   teamName: 'Team name',
   players: 'Players, in the order they describe',
@@ -623,6 +627,11 @@ const en: Strings = {
   refusedTeam: (name) => `${name} already has a phone. Pick another team.`,
   yourTeam: (name) => `Your team: ${name}`,
   changeTeam: 'Change team',
+
+  homeCreate: 'Create room',
+  homeCreateHelp: 'This screen becomes the table: it shows everyone the board, and the room code for the phones to join.',
+  homeJoin: 'Join a room',
+  homeJoinHelp: 'Type the 4-letter code shown on the table.',
 
   roomLabel: 'Room',
   roomTitle: 'Which room are you playing in?',

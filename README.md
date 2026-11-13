@@ -4,7 +4,7 @@
 
 Um jogo de tabuleiro para o browser, para jogar em equipas à volta de um PC. Quem explica vê uma carta com 5 palavras e tenta que a sua equipa as adivinhe em 30 segundos. O peão avança uma casa por cada palavra acertada (com um telemóvel por equipa ou por pessoa, a equipa adversária pode anular as que quebraram as regras). Ganha quem chegar primeiro à Chegada.
 
-Cada mesa abre uma **sala** com um código de 4 letras (por exemplo `KQTR`): os telemóveis entram nessa sala, na mesma rede Wi-Fi ou pela internet, se o jogo estiver publicado num servidor (ver [Publicar](#publicar-deploy)).
+Na página inicial há **Criar sala** (este ecrã fica a mesa) e **Entrar numa sala** (para os telemóveis). Cada sala tem um código de 4 letras (por exemplo `KQTR`). Não é preciso servidor: a mesa e os telemóveis ligam-se diretamente uns aos outros pela internet (WebRTC), por isso o jogo é só um site estático (por exemplo na Vercel).
 
 A novidade são as **telas separadas**: quem explica vê a carta (no telemóvel, numa segunda janela ou no próprio PC) e os outros veem a mesa, com os acertos a aparecer ao vivo, sem revelar as palavras.
 
@@ -22,25 +22,21 @@ npm install
 
 ## Jogar
 
-```bash
-npm run play
-```
+Abre o site (publicado, ou `npm run play` no PC) e escolhe:
 
-Isto faz a build e arranca o servidor local em `0.0.0.0:5174`. No terminal aparecem:
+- **Criar sala** no PC ou TV que vai ser a mesa (de preferência em ecrã inteiro, com F11). A mesa abre em `/mesa` e mostra o **código da sala** e um **QR code**.
+- **Entrar numa sala** em cada telemóvel: escreve o código, ou lê o QR code da mesa (abre `/explicar?sala=CÓDIGO`).
 
-- o endereço da mesa: **http://localhost:5174/** (abre no PC, de preferência em ecrã inteiro com F11);
-- o endereço do PC na rede local, `http://<IP do PC>:5174/`.
-
-Na mesa aparece o **código da sala** e um **QR code** que abre `…/explicar?sala=CÓDIGO` no telemóvel. Quem abrir só `…/explicar` escreve o código no telemóvel.
-
-Depois, no PC:
+Depois, na mesa:
 
 1. Escolhe **como vão jogar** (ver abaixo).
 2. Escreve as **equipas** (2 a 6) e os jogadores de cada uma, **pela ordem em que explicam**, separados por vírgulas. Toca no peão para mudar a cor. Para equipas ao calhas, carrega em **Sortear equipas**, escreve os nomes de todas as pessoas e escolhe quantas equipas: o jogo reparte-as ao acaso e os nomes das equipas ficam como estão.
 3. Escolhe as **regras da casa**: tempo por vez e língua das cartas. Joga-se sempre com o baralho todo.
 4. Carrega em **Começar o jogo**.
 
-O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, aparece **Continuar jogo guardado** na configuração.
+O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, aparece **Continuar jogo guardado** na configuração. A mesa guarda também o código da sala: se recarregares, volta à mesma sala e os telemóveis voltam a ligar-se sozinhos.
+
+Para jogar no PC sem publicar, `npm run play` faz a build e abre o site em `http://localhost:5174/`; os telemóveis abrem o endereço de rede que o terminal mostra (`http://<IP do PC>:5174/`). Mesmo assim precisa de internet, para a mesa e os telemóveis se encontrarem.
 
 ### Os três modos de jogo
 
@@ -71,48 +67,25 @@ O jogo fica guardado no browser do PC a cada jogada. Se fechares a página, apar
 
 ## Ligar o telemóvel
 
-1. Com `npm run play`, o telemóvel tem de estar **na mesma rede Wi-Fi** que o PC. Com o jogo publicado num servidor, basta ter internet.
-2. Lê o QR code do ecrã de configuração com a câmara, ou abre `…/explicar` no browser do telemóvel e escreve o **código da sala** que aparece na mesa.
-3. Na configuração aparece **“1 telemóvel ligado”**.
+1. No telemóvel, abre o site e carrega em **Entrar numa sala**, ou lê o QR code da mesa com a câmara.
+2. Escreve o **código da sala** que aparece na mesa. Um código errado mostra “Não encontrei a sala” (e o telemóvel entra sozinho assim que a mesa abrir essa sala).
+3. Na mesa aparece **“1 telemóvel ligado”**.
 
-O código da sala fica guardado no PC: se recarregares a mesa, ela volta à mesma sala e os telemóveis voltam a ligar-se sozinhos. Um código errado mostra “Não encontrei a sala”.
+O telemóvel e a mesa só precisam de internet; não têm de estar na mesma rede Wi-Fi. O ecrã do telemóvel não se apaga enquanto o jogo está aberto (Wake Lock, nos browsers que o suportam, em HTTPS).
 
-Durante o jogo o telemóvel passa de mão em mão: em cada vez, quem explica carrega em **Estou pronto/a** e depois em **Começar**. O ecrã do telemóvel não se apaga enquanto o jogo está aberto (Wake Lock, nos browsers que o suportam).
+Se a ligação cair, o tempo pára e a mesa mostra **“Telemóvel desligado”**. O telemóvel volta a ligar-se sozinho; carrega em **Retomar** para continuar.
 
-Se a ligação cair, o tempo pára e a mesa mostra **“Telemóvel desligado”**. O telemóvel volta a ligar-se sozinho; carrega em **Retomar** para continuar. Só um telemóvel pode explicar de cada vez: um segundo telemóvel vê “Já há alguém a explicar”.
+### Como funciona a ligação
 
-### Firewall do Windows
-
-Na primeira vez que corres `npm run play`, o Windows pode perguntar se deixa o **Node.js** comunicar na rede. Escolhe **Redes privadas** e carrega em **Permitir acesso**.
-
-Se o telemóvel não abrir a página:
-
-1. Confirma que a rede Wi-Fi do PC está marcada como **Privada** (Definições → Rede e Internet → Wi-Fi → a tua rede → Tipo de perfil de rede: Privada).
-2. Abre **Segurança do Windows → Firewall e proteção de rede → Permitir uma aplicação através da firewall**, carrega em **Alterar definições** e marca **Node.js JavaScript Runtime** na coluna **Privada**.
-3. Em alternativa, numa janela do PowerShell **como administrador**:
-
-   ```powershell
-   New-NetFirewallRule -DisplayName "Tick Talk" -Direction Inbound -Protocol TCP -LocalPort 5174 -Action Allow -Profile Private
-   ```
-
-Se o PC tiver várias redes (VPN, máquinas virtuais), o terminal mostra todos os endereços; usa o da rede Wi-Fi.
+A mesa e os telemóveis falam diretamente uns com os outros (WebRTC, com a biblioteca [PeerJS](https://peerjs.com/)). Para se encontrarem, usam por um instante o serviço público e gratuito do PeerJS (só para a apresentação; o jogo não passa por lá). Em redes que bloqueiam ligações diretas (algumas redes móveis ou de empresas), o PeerJS usa um retransmissor gratuito.
 
 ## Publicar (deploy)
 
-O jogo é um único servidor Node (páginas + WebSocket), por isso pode ser publicado em qualquer serviço que corra Node ou Docker com WebSockets (por exemplo Render, Railway, Fly.io ou um VPS). Cada mesa abre a sua sala, por isso vários grupos podem jogar ao mesmo tempo no mesmo servidor.
+O jogo é um **site estático**: não há servidor para manter.
 
-> **Vercel, Netlify ou GitHub Pages sozinhos não chegam:** só servem as páginas, não o servidor das salas (`/ws`). A página diz então que não consegue ligar ao servidor.
-
-**Render (recomendado, grátis):** em [render.com](https://render.com), *New → Blueprint*, escolhe este repositório e confirma. O `render.yaml` já tem tudo (build, arranque, `/healthz`). O jogo fica em `https://<nome>.onrender.com`. No plano grátis o servidor adormece ao fim de 15 minutos sem ninguém; a primeira visita acorda-o (cerca de 1 minuto).
-
-**Manter as páginas na Vercel:** publica primeiro o servidor no Render (como acima). Depois, no projeto da Vercel, em *Settings → Environment Variables*, cria `VITE_SERVER_URL` com o endereço do Render (por exemplo `https://tick-talk.onrender.com`) e faz *Redeploy*. As páginas da Vercel passam a ligar-se a esse servidor; o `vercel.json` encaminha `/explicar` para a aplicação.
-
-- **Com Node:** comando de build `npm ci && npm run build`, comando de arranque `npm start`. O servidor escuta na porta da variável `PORT` (que estes serviços definem).
-- **Com Docker:** há um `Dockerfile` pronto (`docker build -t tick-talk .` e `docker run -p 8080:8080 tick-talk`).
-- **Verificação de saúde:** `GET /healthz` responde `{"ok":true,…}`.
-- Usa **HTTPS** (os serviços acima dão-no de origem): a página liga-se por `wss://` sozinha e o ecrã do telemóvel não se apaga (Wake Lock).
-- As salas vivem na memória do servidor. Se o servidor reiniciar, cada mesa recria a sua sala com o mesmo código quando se volta a ligar, e o jogo continua (o estado está guardado no browser do PC). Usa **uma só instância** do servidor: as salas não são partilhadas entre instâncias.
-- Uma sala vazia é apagada ao fim de 6 horas. Cada sala aceita até 40 telemóveis.
+- **Vercel:** importa o repositório. O `vercel.json` já tem o comando de build (`npm run build`), a pasta (`dist`) e o encaminhamento de `/mesa` e `/explicar` para a aplicação.
+- **Outros (Netlify, GitHub Pages, Cloudflare Pages…):** publica a pasta `dist` e encaminha todas as rotas para `index.html`.
+- Usa HTTPS (os serviços acima dão-no de origem): o WebRTC e o Wake Lock precisam dele fora do `localhost`.
 
 ## Regras
 
@@ -139,33 +112,29 @@ O jogo é um único servidor Node (páginas + WebSocket), por isso pode ser publ
 ## Desenvolvimento
 
 ```bash
-npm run dev     # Vite (5173) + servidor WebSocket (5174), acessível na rede local
+npm run dev     # Vite em 5173, acessível na rede local
 npm test        # testes (Vitest + React Testing Library)
 npm run build   # verificação de tipos + build de produção em dist/
+npm run play    # build + vite preview em 5174 (rede local)
 npm run cards   # volta a gerar as cartas a partir de scripts/generate-cards.mjs
 ```
-
-No modo `dev`, abre `http://localhost:5173/` no PC e `http://<IP do PC>:5173/explicar` no telemóvel (o Vite reencaminha `/ws` e `/api` para o servidor).
-
-A porta do servidor pode ser mudada com a variável `TICKTALK_PORT` (ou `PORT`; por omissão 5174). `TICKTALK_PORT` tem prioridade.
 
 ### Estrutura
 
 ```
-server/            servidor Node: serve dist/, /api/info, /healthz, salas e relay WebSocket em /ws
 scripts/           gerador das cartas (listas de palavras PT e EN)
 src/
   game/            regras puras: reducer, seletores (vistas da mesa e de quem explica), tabuleiro,
                    baralho, gravação
   net/             protocolo versionado, DescriberHub (um explicador de cada vez), TeamHub (um telemóvel por equipa),
-                   PlayerHub (um telemóvel por pessoa) e o transporte:
-                   WebSocketTransport (e LocalTransport, em memória, para os testes)
+                   PlayerHub (um telemóvel por pessoa) e o transporte: PeerTransport (WebRTC/PeerJS, salas)
+                   e LocalTransport (em memória, para os testes)
   components/      Tabuleiro, peões, cartas, painéis…
-  screens/         Configuração, Mesa, Quem explica, Validação, fim da vez
+  screens/         Início, Configuração, Mesa, Quem explica, Validação, fim da vez
   hooks/, audio/, i18n/, data/
 ```
 
-O **anfitrião (a mesa) é a fonte da verdade**: o estado vive só aí, num reducer puro. A tela de quem explica envia apenas comandos (`READY`, `START`, `TOGGLE_WORD`, `PAUSE`, `RESUME`, `END_EARLY`) e recebe a sua vista. As palavras da carta só são enviadas para a tela de quem explica; a mesa só as mostra a partir da validação.
+O **anfitrião (a mesa) é a fonte da verdade**: o estado vive só aí, num reducer puro. Os telemóveis enviam apenas comandos (`READY`, `START`, `TOGGLE_WORD`, `PAUSE`, `RESUME`, `END_EARLY`, validação…) e recebem a sua vista. As palavras da carta só são enviadas para o telemóvel de quem explica (e, no fim, para a equipa que valida); a mesa só as mostra a partir da validação.
 
 ### Cartas
 
@@ -173,8 +142,7 @@ O **anfitrião (a mesa) é a fonte da verdade**: o estado vive só aí, num redu
 
 ## Limitações conhecidas
 
-- As salas vivem na memória de uma instância do servidor (não escala para várias instâncias).
+- Para a mesa e os telemóveis se encontrarem, o jogo usa o serviço público do PeerJS; se esse serviço estiver em baixo, não é possível abrir salas.
+- Em algumas redes muito fechadas a ligação direta falha e passa pelo retransmissor do PeerJS, que pode ser mais lento.
 - Com um telemóvel por pessoa, quem chega depois de o jogo começar não pode entrar numa equipa: começa-se um jogo novo (as equipas ficam).
-- O modo telemóvel precisa do servidor (`npm run play` ou `npm run dev`); `vite preview` sozinho não chega.
-- Sem HTTPS, alguns browsers de telemóvel não dão Wake Lock; nesse caso, aumenta o tempo de bloqueio do ecrã do telemóvel.
 - As palavras repetem-se entre cartas diferentes (cada palavra aparece em média 1–2 vezes no baralho).

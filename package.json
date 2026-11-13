@@ -5,20 +5,18 @@
   "description": "Tick Talk: explica cinco palavras antes que o tempo acabe.",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n server,vite -c yellow,cyan \"tsx watch server/index.ts --dev\" \"vite\"",
-    "build": "tsc -p tsconfig.json && tsc -p tsconfig.server.json && vite build",
-    "play": "npm run build && tsx server/index.ts",
-    "start": "tsx server/index.ts",
+    "dev": "vite --host",
+    "build": "tsc -p tsconfig.json && vite build",
+    "play": "npm run build && vite preview --host --port 5174 --strictPort",
     "test": "vitest run",
     "test:watch": "vitest",
     "cards": "node scripts/generate-cards.mjs"
   },
   "dependencies": {
+    "peerjs": "^1.5.5",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "tsx": "^4.19.2",
-    "ws": "^8.18.0"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
@@ -29,9 +27,7 @@
     "@types/qrcode": "^1.5.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@types/ws": "^8.5.13",
     "@vitejs/plugin-react": "^4.3.4",
-    "concurrently": "^9.1.0",
     "jsdom": "^25.0.1",
     "typescript": "^5.6.3",
     "vite": "^5.4.11",

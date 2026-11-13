@@ -3,7 +3,7 @@ export const HOST_ID = 'host';
 /** Sender of WebSocket server notices. */
 export const SERVER_ID = 'server';
 
-export type TransportKind = 'local' | 'broadcast' | 'websocket';
+export type TransportKind = 'local' | 'broadcast' | 'peer';
 /**
  * "replaced": another page with the same role took this one's place (no automatic reconnect).
  * "noRoom": the room code is wrong, or its table isn't open yet (keeps retrying slowly).

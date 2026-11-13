@@ -22,7 +22,7 @@ import {
 } from '../net/protocol';
 import { TeamHub, type TeamHubEvent } from '../net/teamHub';
 import { HOST_ID, SERVER_ID, type LinkStatus, type Transport } from '../net/transport';
-import { WebSocketTransport, type RoomKey } from '../net/websocket';
+import { PeerTransport } from '../net/peer';
 
 export type ServerStatus = 'connecting' | 'online' | 'offline';
 
@@ -66,35 +66,35 @@ const NO_LOBBY: LobbySetup = { teams: [], language: 'pt' };
 const liveNow = () => performance.now();
 
 function takeOverTransport(transport: Transport | null | undefined): void {
-  if (transport instanceof WebSocketTransport) transport.takeOver();
+  if (transport instanceof PeerTransport) transport.takeOver();
 }
 
 const ROOM_KEY = 'ticktalk.room';
 
-/** The table keeps its room (code + secret), so after a reload the phones find it at the same code. */
-function loadRoom(): RoomKey | null {
+/** The table keeps its room code, so after a reload the phones find it at the same code. */
+function loadRoom(): string | null {
   try {
-    const raw = JSON.parse(window.localStorage.getItem(ROOM_KEY) ?? 'null') as Partial<RoomKey> | null;
-    return raw && typeof raw.code === 'string' && typeof raw.secret === 'string' ? { code: raw.code, secret: raw.secret } : null;
+    const code = window.localStorage.getItem(ROOM_KEY);
+    return code && /^[A-HJ-NP-Z]{4}$/.test(code) ? code : null;
   } catch {
     return null;
   }
 }
 
-function storeRoom(room: RoomKey): void {
+function storeRoom(code: string): void {
   try {
-    window.localStorage.setItem(ROOM_KEY, JSON.stringify(room));
+    window.localStorage.setItem(ROOM_KEY, code);
   } catch {
     /* ignore */
   }
 }
 
 function createHostTransport(factory?: () => Transport): Transport {
-  return factory ? factory() : new WebSocketTransport('host', HOST_ID, { room: loadRoom(), onRoom: storeRoom });
+  return factory ? factory() : new PeerTransport('host', HOST_ID, { room: loadRoom(), onRoom: storeRoom });
 }
 
 function roomOf(transport: Transport): string | null {
-  return transport instanceof WebSocketTransport ? transport.room : null;
+  return transport instanceof PeerTransport ? transport.room : null;
 }
 
 /** Turns a describer command into a reducer action. */
@@ -155,13 +155,21 @@ export function useHostLink(
   const nowRef = useRef(now);
   nowRef.current = now;
 
+  // One connection (one room) for the table's whole life.
   useEffect(() => {
     const host = createHostTransport(factoryRef.current);
+    setLink({ host });
+    return () => host.close();
+  }, []);
+
+  // Switching mode keeps the room: only the way phones are handled changes.
+  useEffect(() => {
+    if (!link) return;
+    const { host } = link;
     setConnected(0);
     setDescriberOnline(false);
     setTeamsWithPhone([]);
     setRoster([]);
-    setLink({ host });
 
     if (mode === 'playerPhones') {
       // One phone per person: each phone is someone; commands are checked per person.
@@ -217,7 +225,6 @@ export function useHostLink(
         clearInterval(sweep);
         offMessage();
         offStatus();
-        host.close();
         playerHubRef.current = null;
       };
     }
@@ -267,7 +274,6 @@ export function useHostLink(
         clearInterval(sweep);
         offMessage();
         offStatus();
-        host.close();
         teamHubRef.current = null;
       };
     }
@@ -314,10 +320,9 @@ export function useHostLink(
       clearInterval(sweep);
       offMessage();
       offStatus();
-      host.close();
       hubRef.current = null;
     };
-  }, [mode, dispatch]);
+  }, [mode, dispatch, link]);
 
   // Every state change (timer included) goes to the active describer — or, with a phone
   // per team or per person, to every phone (each with its own view).

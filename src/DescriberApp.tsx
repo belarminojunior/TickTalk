@@ -6,7 +6,7 @@ import { useWakeLock } from './hooks/useWakeLock';
 import { I18nProvider } from './i18n';
 import { roomFromLocation } from './net/room';
 import { stableClientId, type Transport } from './net/transport';
-import { WebSocketTransport } from './net/websocket';
+import { PeerTransport } from './net/peer';
 import { DescriberScreen } from './screens/DescriberScreen';
 
 function guessLanguage(): Language {
@@ -22,14 +22,14 @@ export function DescriberApp() {
 
   useEffect(() => {
     if (!room) return;
-    const t = new WebSocketTransport('describer', stableClientId(), { room });
+    const t = new PeerTransport('describer', stableClientId(), { room });
     setTransport(t);
     return () => t.close();
   }, [room]);
 
   // When the phone comes back from the lock screen, reconnect straight away.
   useEffect(() => {
-    if (!(transport instanceof WebSocketTransport)) return;
+    if (!(transport instanceof PeerTransport)) return;
     const onVisible = () => document.visibilityState === 'visible' && transport.reconnectNow();
     document.addEventListener('visibilitychange', onVisible);
     window.addEventListener('online', onVisible);
