@@ -28,16 +28,34 @@ export interface WebSocketOptions {
   url?: string;
 }
 
-/** WebSocket URL on the same address that served the page. */
+/**
+ * Where the game server is. Normally the same address that served the page; when the pages
+ * are hosted somewhere that can't run it (e.g. Vercel), the build sets VITE_SERVER_URL to the
+ * server's address (e.g. https://tick-talk.onrender.com).
+ */
+export function serverAddress(configured: string | undefined = import.meta.env.VITE_SERVER_URL): { secure: boolean; host: string } {
+  if (configured) {
+    try {
+      const url = new URL(configured);
+      return { secure: url.protocol === 'https:' || url.protocol === 'wss:', host: url.host };
+    } catch {
+      /* fall back to this page's address */
+    }
+  }
+  return { secure: window.location.protocol === 'https:', host: window.location.host };
+}
+
+/** WebSocket URL of the game server. */
 export function defaultWsUrl(role: WsRole, id: string, room?: string | RoomKey | null): string {
-  const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const server = serverAddress();
+  const proto = server.secure ? 'wss:' : 'ws:';
   const params = new URLSearchParams({ role, id });
   if (typeof room === 'string') params.set('room', room);
   else if (room) {
     params.set('room', room.code);
     params.set('secret', room.secret);
   }
-  return `${proto}//${window.location.host}/ws?${params}`;
+  return `${proto}//${server.host}/ws?${params}`;
 }
 
 /**

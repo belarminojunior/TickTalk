@@ -101,6 +101,12 @@ Se o PC tiver várias redes (VPN, máquinas virtuais), o terminal mostra todos o
 
 O jogo é um único servidor Node (páginas + WebSocket), por isso pode ser publicado em qualquer serviço que corra Node ou Docker com WebSockets (por exemplo Render, Railway, Fly.io ou um VPS). Cada mesa abre a sua sala, por isso vários grupos podem jogar ao mesmo tempo no mesmo servidor.
 
+> **Vercel, Netlify ou GitHub Pages sozinhos não chegam:** só servem as páginas, não o servidor das salas (`/ws`). A página diz então que não consegue ligar ao servidor.
+
+**Render (recomendado, grátis):** em [render.com](https://render.com), *New → Blueprint*, escolhe este repositório e confirma. O `render.yaml` já tem tudo (build, arranque, `/healthz`). O jogo fica em `https://<nome>.onrender.com`. No plano grátis o servidor adormece ao fim de 15 minutos sem ninguém; a primeira visita acorda-o (cerca de 1 minuto).
+
+**Manter as páginas na Vercel:** publica primeiro o servidor no Render (como acima). Depois, no projeto da Vercel, em *Settings → Environment Variables*, cria `VITE_SERVER_URL` com o endereço do Render (por exemplo `https://tick-talk.onrender.com`) e faz *Redeploy*. As páginas da Vercel passam a ligar-se a esse servidor; o `vercel.json` encaminha `/explicar` para a aplicação.
+
 - **Com Node:** comando de build `npm ci && npm run build`, comando de arranque `npm start`. O servidor escuta na porta da variável `PORT` (que estes serviços definem).
 - **Com Docker:** há um `Dockerfile` pronto (`docker build -t tick-talk .` e `docker run -p 8080:8080 tick-talk`).
 - **Verificação de saúde:** `GET /healthz` responde `{"ok":true,…}`.

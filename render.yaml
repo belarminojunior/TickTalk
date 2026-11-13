@@ -1,0 +1,13 @@
+# Render blueprint: the whole game (pages + rooms/WebSocket server) as one web service.
+# On render.com: New → Blueprint → pick this repository.
+services:
+  - type: web
+    name: tick-talk
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"

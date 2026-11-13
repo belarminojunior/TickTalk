@@ -1,4 +1,4 @@
-import { WebSocketTransport } from './websocket';
+import { WebSocketTransport, serverAddress } from './websocket';
 
 /** Fake WebSocket: keeps its instances so the test can open and close them. */
 class FakeSocket {
@@ -105,5 +105,14 @@ describe('WebSocketTransport', () => {
     FakeSocket.instances[1].open();
     expect(t.status).toBe('open');
     t.close();
+  });
+});
+
+describe('serverAddress', () => {
+  it('uses the configured game server (pages hosted elsewhere), or else this page’s address', () => {
+    expect(serverAddress('https://tick-talk.onrender.com')).toEqual({ secure: true, host: 'tick-talk.onrender.com' });
+    expect(serverAddress('http://192.168.0.5:5174')).toEqual({ secure: false, host: '192.168.0.5:5174' });
+    expect(serverAddress(undefined)).toEqual({ secure: window.location.protocol === 'https:', host: window.location.host });
+    expect(serverAddress('not a url')).toEqual({ secure: window.location.protocol === 'https:', host: window.location.host });
   });
 });

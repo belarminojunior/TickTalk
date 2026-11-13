@@ -6,6 +6,11 @@ import styles from './QrConnect.module.css';
 
 export type ServerStatus = 'connecting' | 'online' | 'offline';
 
+/** Opened on the PC itself (npm run play), as opposed to a deployed site. */
+function isLocalPage(): boolean {
+  return ['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname);
+}
+
 /** QR code generated locally + address + phone connection status. */
 export function QrConnect({
   url,
@@ -62,7 +67,7 @@ export function QrConnect({
           )}
         </div>
         {server === 'offline' ? (
-          <p className={styles.warn}>{t.serverMissing}</p>
+          <p className={styles.warn}>{isLocalPage() ? t.serverMissing : t.serverUnreachable}</p>
         ) : (
           <p className={styles.help}>
             {text[1]}
